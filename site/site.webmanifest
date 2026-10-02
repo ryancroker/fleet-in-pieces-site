@@ -1,0 +1,15 @@
+{
+  "name": "Fleet in Pieces",
+  "short_name": "Fleet in Pieces",
+  "description": "Physics-heavy space fleet combat. In development for PC / Steam.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#06090c",
+  "theme_color": "#06090c",
+  "icons": [
+    {"src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+  ]
+}

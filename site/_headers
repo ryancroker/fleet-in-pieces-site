@@ -1,0 +1,24 @@
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'
+
+/config.js
+  Cache-Control: public, max-age=0, must-revalidate
+/script.js
+  Cache-Control: public, max-age=0, must-revalidate
+/styles.css
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Stable media names: cache briefly, never immutable. Rename/bump filenames before longer caching.
+/assets/*
+  Cache-Control: public, max-age=3600
+
+# Do not index a temporary pages.dev address as a second copy of the canonical site.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+https://:branch.:project.pages.dev/*
+  X-Robots-Tag: noindex

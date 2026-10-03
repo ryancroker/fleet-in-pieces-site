@@ -26,17 +26,17 @@ The existing Git-integrated Pages project uses these settings. Reuse it rather t
 | Root directory | Leave blank / repository root |
 | Environment variables | None |
 
-Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. The Pages site is verified. The Free custom-domain zone is active and both domain associations exist; the remaining DNS record edits are awaiting Ryan in the dashboard. No paid feature is required.
+Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. The Pages site is verified. The custom domain and both domain associations are active. DNS setup is complete. No paid feature is required.
 
 Official references: [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/), [build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/), [custom headers](https://developers.cloudflare.com/pages/configuration/headers/).
 
-## PAGES LIVE; CUSTOM DOMAIN PENDING — October 2, 2026
+## CUSTOM DOMAIN LIVE — October 2, 2026
 
 Live at **[fleet-in-pieces-site.pages.dev](https://fleet-in-pieces-site.pages.dev/)** from the public repository **[ryancroker/fleet-in-pieces-site](https://github.com/ryancroker/fleet-in-pieces-site)**. Git-backed production deployment `cf9447e2-7a97-4501-8772-bad7372aeb93` succeeded from `main` commit `2a2bc509c8bf213f561e08b374755b32d74e2551`. GitHub and Cloudflare authentication/integration work. Reuse this repository and Pages project; do not force-push.
 
 Live Chrome review at 390×844 and 1440×1000 found no overflow, home-page errors or failed requests. Videos play; the phone hero starts paused and desktop autoplay works. All 24 public assets match local hashes. HTTPS is valid, the Pages address has `noindex`, metadata resources return 200, and the custom 404 works. Python urllib received Cloudflare error 1010; the successful verification used Chrome. JSON receipts/screenshots: `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002`.
 
-**Nameservers are changed; custom-domain DNS records are still pending.** Ryan completed the Porkbun change himself. Registry RDAP confirms `eva.ns.cloudflare.com` and `kurt.ns.cloudflare.com`; Free zone `5f8a0986440847178750fab9fc7a0b28` is **ACTIVE**. Both `fleetinpieces.space` and `www.fleetinpieces.space` are attached to Pages but remain pending with **“CNAME record not set”**. Wrangler DNS API access returned 403 (`pages:write` / `zone:read` only), so the assistant has made no DNS record edits. Ryan has the dashboard instructions below; completion is not yet confirmed. Custom-domain HTTPS is not verified. Do not put credentials in this repository or chat.
+**Custom domain is live.** Ryan completed DNS setup; both `fleetinpieces.space` and `www.fleetinpieces.space` are active in Pages, and the apex site was verified in Chrome over HTTPS. Visual edits ship through the existing GitHub `main` integration. Do not change DNS or hosting infrastructure for these edits.
 
 ## External links — one obvious file
 
@@ -76,17 +76,8 @@ Only the hero can autoplay, and only above 600px with normal motion/data prefere
 
 See **[QUALITY_REVIEW.md](QUALITY_REVIEW.md)** for the completed browser checks and their limits. The local review uses the machine's existing headless Chrome and existing tooling outside this repository; no npm dependency is part of the site.
 
-## Remaining custom-domain DNS work
+## Custom domain and hero update
 
-Ryan has the following dashboard instructions. The nameserver change is complete; the record edits remain unconfirmed:
+The domain connection is complete. Use https://fleetinpieces.space/ as the canonical address; www is also active. Do not repeat provisioning steps or change DNS/hosting settings for visual edits.
 
-| Item | Last confirmed / imported value | Required dashboard change |
-| --- | --- | --- |
-| Authoritative nameservers | `eva.ns.cloudflare.com`, `kurt.ns.cloudflare.com` | Complete; no further change |
-| Apex `@` | A `207.207.210.229` and A `207.207.210.107` | Replace both with proxied CNAME `fleet-in-pieces-site.pages.dev`, Auto TTL |
-| `www` | CNAME `pixie.porkbun.com` | Change target to `fleet-in-pieces-site.pages.dev`, Auto TTL |
-| Wildcard `*` | CNAME `pixie.porkbun.com` | Remove the parking record |
-
-After Ryan confirms these record edits, verify both Pages custom-domain statuses and TLS certificates become active. Then check `https://fleetinpieces.space/`, `https://www.fleetinpieces.space/`, assets, a missing route and mobile media before calling either custom domain live.
-
-This follows [Cloudflare's custom-domain instructions](https://developers.cloudflare.com/pages/configuration/custom-domains/). Nameserver activation alone does not establish working site records or HTTPS.
+The October2 hero update uses the approved transparent RGBA wordmark as an820px centered desktop masthead above the headline/gameplay columns. Phone/tablet layouts retain the compact inline logo. The graphite/navy gradient, tighter phone spacing and tiny red divider preserve the pale-blue CTA hierarchy. The existing GitHub integration deployed commit `4aacdf5efca6344a12e33d931bdf7393fedd1a42` successfully as deployment `4ad81ccd-25dc-4898-a827-cdb06588c1e7`. See MEDIA_SOURCES.md for the logo provenance.

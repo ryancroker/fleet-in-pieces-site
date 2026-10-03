@@ -40,7 +40,7 @@ The bridge must be optional. Community authentication must never start requiring
 
 Run `node scripts/prepare-site.mjs` after changing authored content, HTML, CSS or browser JS. It emits the static briefing and content-fingerprinted CSS/JS, then updates every HTML consumer. It uses only Node built-ins and is an authoring command; the Cloudflare build command remains blank and output stays `site`. Keep old fingerprinted assets for cached pages. Stable source filenames remain editable and available for old clients.
 
-Install the pinned server dependency from the lockfile before local Pages bundling. Keep Pages preview disconnected from production D1. Use local D1 for registration, recovery, allegiance and posting review; do not seed public identities or discussions for QA.
+After dependency changes, install the lockfile and run `node scripts/prepare-auth.mjs`; commit the server-only bundle and third-party license notices in `functions/_lib/vendor/`. The required blank Pages build command skips dependency installation, so production imports this prepared module instead of resolving an npm package. Pinned esbuild is only a local authoring dependency. Keep Pages preview disconnected from production D1. Use local D1 for registration, recovery, allegiance and posting review; do not seed public identities or discussions for QA.
 
 Before the first production migration, export the live D1 database to a private local path outside the public site, record current row counts and existing IDs, apply the additive migrations, and confirm those historical records are unchanged before deployment. Keep the signing secret stable. Do not drop tables, replace databases or alter DNS/paid plans as part of this work.
 

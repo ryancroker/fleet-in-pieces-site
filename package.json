@@ -5,5 +5,8 @@
   "description": "Static Fleet in Pieces site with a small Pages Functions community API",
   "dependencies": {
     "@simplewebauthn/server": "14.0.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

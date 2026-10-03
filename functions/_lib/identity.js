@@ -1,4 +1,4 @@
-import { generateRegistrationOptions, verifyRegistrationResponse, generateAuthenticationOptions, verifyAuthenticationResponse } from '@simplewebauthn/server';
+import { generateRegistrationOptions, verifyRegistrationResponse, generateAuthenticationOptions, verifyAuthenticationResponse } from './vendor/webauthn.js';
 import { fail, json, keysOnly, limits, textField, digest } from './community.js';
 
 const encoder = new TextEncoder();

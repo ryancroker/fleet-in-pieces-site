@@ -12,7 +12,7 @@ Keep the existing Cloudflare Pages project `fleet-in-pieces-site`, GitHub reposi
 
 Pages Functions run on the Workers runtime, with production D1 `COMMUNITY_DB`. Routes are `/api/*`, `/i/*` and `/u/*`; other pages/media are static. `wrangler.toml` intentionally gives previews no production database. Use local D1 for review. Only `site/` is public static output; server code, game source, local database state, secrets and QA profiles stay outside it.
 
-Use **Node 22** and `npm ci` for locked server dependencies. `@simplewebauthn/server` is explicitly authorized and pinned to **14.0.3**; it verifies passkeys server-side. Browser authentication uses native WebAuthn. Keep HTML/CSS/vanilla JS: no frontend framework, font CDN, analytics or unrelated dependencies without Ryan's instruction. A local authoring step is now part of this repo even though the Pages build command remains blank.
+Use **Node 22** and `npm ci` for locked authoring dependencies. Run `node scripts/prepare-auth.mjs` after dependency changes and commit `functions/_lib/vendor/` plus its license notices. Pages with the required blank command skips npm installation, so identity.js imports this prepared server-only bundle. esbuild 0.28.2 is a pinned local authoring dependency only. `@simplewebauthn/server` is explicitly authorized and pinned to **14.0.3**; it verifies passkeys server-side. Browser authentication uses native WebAuthn. Keep HTML/CSS/vanilla JS: no frontend framework, font CDN, analytics or unrelated dependencies without Ryan's instruction. A local authoring step is now part of this repo even though the Pages build command remains blank.
 
 ## Authoring and release caching
 

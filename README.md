@@ -25,14 +25,15 @@ Browsing, voting, submitting ideas and replying never require registration. The 
 
 ## Authoring and release assets
 
-Use **Node 22**. Install the locked server dependency before local Pages bundling:
+Use **Node 22** for authoring. Install locked dependencies and prepare the committed server bundle after a dependency change:
 
 ```powershell
 npm ci
+node scripts/prepare-auth.mjs
 node scripts/prepare-site.mjs
 ```
 
-`@simplewebauthn/server` is pinned to **14.0.3** in `package.json` and the lockfile. It is a server-only WebAuthn verification dependency; browser code uses native WebAuthn. The authoring script itself uses only Node built-ins. Pages must use Node 22 when installing dependencies and bundling Functions; the deployed frontend still has no framework or build command.
+`@simplewebauthn/server` is pinned to **14.0.3** in `package.json` and the lockfile. It is a server-only WebAuthn verification dependency; browser code uses native WebAuthn. The authoring script itself uses only Node built-ins. With the required blank build command, Pages skips npm installation. `prepare-auth.mjs` uses pinned esbuild 0.28.2 to package the four verification/option exports and dependency license notices into `functions/_lib/vendor/`. Commit this server-only output whenever the dependency lock changes. Pages bundles the committed module without installing npm packages; the deployed frontend has no framework or build command.
 
 Edit `content/systems.json` and `templates/system.html` for system briefings. `prepare-site.mjs` writes the generated page, currently `site/systems/missiles.html`, and applies the shared navigation. New real content also needs an additive registry migration using the same stable content ID. Do not edit generated briefing HTML as the lasting source of a content change.
 

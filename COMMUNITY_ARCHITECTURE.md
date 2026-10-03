@@ -28,13 +28,13 @@ Allegiance is a single parent with an indexed transitive closure. Moving or leav
 
 ## Commerce stays separate
 
-There is no shop in this release. Future navigation may call it **Quartermaster**. Merchandise must allow guest checkout without a Fleet identity or allegiance.
+**Quartermaster** now links directly to the Fourthwall first-shirt product from navigation, grouped footers and a compact homepage notice. There is no embedded shop or community-to-order integration. Merchandise must allow guest checkout without a Fleet identity or allegiance.
 
 A dedicated checkout/print-on-demand provider will own payment, tax, receipts, customer email, shipping address and fulfillment. Do not add those fields to Fleet profiles or collect card information in this application.
 
 If a logged-in member chooses to associate a purchase, the backend may pass their opaque `profiles.id` through provider-supported, server-controlled checkout metadata. Do not accept an arbitrary client-supplied user ID as purchase ownership. A future authenticated, idempotent provider webhook may record only the required community ID, product ID, order status, purchase date and optional provider order ID. Verify webhook signatures and deduplicate events before granting any purchase mark. Keep private provider-order identifiers out of public profiles.
 
-The bridge must be optional. Community authentication must never start requiring email because checkout does. No commerce provider, order table, webhook, purchase badge or customer-data integration is activated by this pass.
+The bridge must be optional. Community authentication must never start requiring email because checkout does. The Fourthwall link does not activate a provider API, order table, webhook, purchase badge or customer-data integration.
 
 ## Prepare and publish
 

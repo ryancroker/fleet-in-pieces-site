@@ -3,12 +3,19 @@ import {readFile, writeFile, readdir, mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
+import {runInNewContext} from 'node:vm';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
 const read = async file => (await readFile(file, 'utf8')).replace(/\r\n?/g, '\n');
 const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const nav = '<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/fleet">Fleet</a><a href="/systems">Systems</a><a href="/community">Community</a><a href="/register" data-register-link>Register</a></nav></header>';
+const configContext = {window:{}};
+runInNewContext(await read(path.join(site,'config.js')), configContext, {timeout:1000});
+const quartermasterURL = configContext.window.FLEET_CONFIG.QUARTERMASTER_URL;
+const productURL = new URL(quartermasterURL);
+if(productURL.protocol!=='https:' || productURL.hostname!=='fleet-in-pieces-shop.fourthwall.com' || productURL.username || productURL.password) throw Error('Invalid Quartermaster destination');
+const quartermasterLink = `<a href="${escape(quartermasterURL)}" data-quartermaster target="_blank" rel="noopener noreferrer" aria-label="Quartermaster (opens in a new tab)">Quartermaster ↗</a>`;
+const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/fleet">Fleet</a><a href="/systems">Systems</a><a href="/community">Community</a><a href="/register" data-register-link>Register</a>${quartermasterLink}</nav></header>`;
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
 const contents = JSON.parse(await read(path.join(root, 'content/systems.json')));
@@ -42,6 +49,9 @@ for(const asset of assets){
 for(const file of await htmlFiles(site)){
   let html=await read(file);
   html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav);
+  // Preserve each page's existing footer links and copy; add procurement once.
+  html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,footer => footer.includes('data-quartermaster') ? footer : footer.replace('<small>',quartermasterLink+'<small>'));
+  html=html.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>/g,tag => tag.replace(/\bhref="[^"]*"/,`href="${escape(quartermasterURL)}"`));
   for(const script of ['config','script','hub']){
     if(!new RegExp(`src="/${script}(?:\\.[a-f0-9]{12})?\\.js"`).test(html)) html=html.replace('</head>',`  <script src="/${script}.js" defer></script>\n</head>`);
   }

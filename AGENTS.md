@@ -6,6 +6,12 @@
 
 Read README.md and COMMUNITY_ARCHITECTURE.md before detailed work. This repository is separate from the older private Sites prototype in `../FleetInPieces`; do not publish it through Sites or copy that project's `.openai` identity.
 
+## Quartermaster — first merchandise issue, October 3, 2026
+
+Ryan authorized a small external Fourthwall link, not an embedded shop or commerce backend. `site/config.js` owns `QUARTERMASTER_URL`; `scripts/prepare-site.mjs` reads it during authoring, emits the shared navigation/footer link and synchronizes every `data-quartermaster` href. All merchandise links use `target="_blank" rel="noopener noreferrer"`. Navigation uses three columns/two rows at phone widths, with 44px targets. The homepage's compact text-first FIRST DEPLOYMENT notice follows the existing community/register content and precedes the footer. No suitable product image is currently shipped; do not substitute gameplay or placeholder artwork. Keep existing gameplay/community/Register behavior and Steam/TikTok links. No DNS, account, paid-plan, database or checkout settings changed.
+
+Local static preparation, syntax/Worker bundle and browser checks at320/390/820/1440 passed, including exact/safe links, new-tab navigation, existing anchor preservation and community feed/filter reads. Evidence: `../../Saved/SourceChanges/Quartermaster_20261003`. Publish through ordinary main push; inspect the live result before claiming deployment.
+
 ## Hosting and source boundaries
 
 Keep the existing Cloudflare Pages project `fleet-in-pieces-site`, GitHub repository `ryancroker/fleet-in-pieces-site`, production branch `main`, framework None, blank build command and output `site`. Apex `fleetinpieces.space` and `www.fleetinpieces.space` already have domain associations. Do not repeat DNS setup, create a replacement project, force-push, change paid plans or alter account settings for routine site work.
@@ -22,7 +28,7 @@ The script replaces the former manual three-page community-CSS fingerprint proce
 
 ## Pages and community behavior
 
-`/` is a real branded game/community homepage with bounded trending and recently implemented sections; it no longer redirects to missiles. `/game` preserves the full marketing overview and authentic media. `/systems` lists available briefings, `/community` provides bounded discovery, `/fleet` introduces the register and callsign lookup, and `/register` manages optional identity. Primary navigation is Game / Fleet / Systems / Community / Register.
+`/` is a real branded game/community homepage with bounded trending and recently implemented sections; it no longer redirects to missiles. `/game` preserves the full marketing overview and authentic media. `/systems` lists available briefings, `/community` provides bounded discovery, `/fleet` introduces the register and callsign lookup, and `/register` manages optional identity. Primary navigation is Game / Fleet / Systems / Community / Register / Quartermaster.
 
 `/systems/missiles` is the first reusable content briefing: CURRENT, prominent authentic footage, contribution form, discussion and real implemented-from-feedback history. Only the actual missile content object is seeded. Do not invent ship catalogs, activity, vote counts, implementations or release promises. The clip is archived authentic development footage, not proof of today's game build.
 
@@ -42,7 +48,7 @@ Claims are explicit and limited to activity owned by the same signed browser tok
 
 Swear Allegiance moves the whole subordinate branch, and leaving retains that branch. Preserve atomic closure-table guards against cycles and the current bounds of 12 levels/2,000 members per connected command tree. More advanced politics, commissions and automatic promotions remain future work.
 
-See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for commerce separation. There is **no store in this pass**. Future checkout must allow guests and keep payment, tax, customer email, shipping and fulfillment with a provider. An optional server-controlled opaque profile association must not turn community authentication into a customer-data system. No provider, order table, webhook or purchase badge is active.
+See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for commerce separation. Quartermaster links directly to the external Fourthwall product; there is **no embedded store or account-purchase integration**. Checkout must allow guests and keep payment, tax, customer email, shipping and fulfillment with a provider. An optional server-controlled opaque profile association must not turn community authentication into a customer-data system. No provider API, order table, webhook or purchase badge is active.
 
 ## Moderation, release and acceptance
 

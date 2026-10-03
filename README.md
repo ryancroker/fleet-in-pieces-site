@@ -19,7 +19,7 @@ Game and development-community website for **https://fleetinpieces.space**. Publ
 | `/i/{id}` | Permanent idea detail and reply thread; existing links and IDs remain valid |
 | `/crew` | Private developer moderation desk |
 
-The homepage no longer redirects to missiles. Explicit `/index` and `/index.html` aliases return to `/`. Primary navigation is Game, Fleet, Systems, Community and Register.
+The homepage no longer redirects to missiles. Explicit `/index` and `/index.html` aliases return to `/`. Primary navigation is Game, Fleet, Systems, Community, Register and the external Quartermaster.
 
 Browsing, voting, submitting ideas and replying never require registration. The idea form keeps its 8–2,000 character body and optional handle; it adds no title, tags, email or category requirement. Guest handles and drafts are remembered locally. Public ideas, replies and votes live in D1, never simulated browser storage. Authored game information and media remain readable without JavaScript; live discussions, discovery and register actions need JavaScript.
 
@@ -124,3 +124,9 @@ The `/game` hero may autoplay only under its existing desktop/motion/data rules;
 Preserve plain-text rendering, same-origin JSON mutations, signed browser identity, request idempotency, server-side rate limits, parameterized SQL and report/hide tools. The application stores daily salted IP hashes for limits, not raw IP addresses. Cookie clearing is not identity verification, and shared-network limits can affect several visitors.
 
 Profanity is allowed. Pattern checks and the hidden spam field catch some obvious links/private information, but contextual abuse still needs human moderation. Failed requests show honest retry states and preserve drafts. Votes represent enthusiasm, not command authority.
+
+## Quartermaster first issue
+
+Quartermaster links to `https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt` from the shared desktop/mobile navigation, existing grouped footers, and the compact FIRST DEPLOYMENT notice near the bottom of the homepage. All links open a new tab with `noopener noreferrer`; no Fleet identity is sent. No embedded checkout or purchase integration is added.
+
+Change the destination in `site/config.js` (`QUARTERMASTER_URL`) and run `node scripts/prepare-site.mjs` to update every static link and release reference. The text-first treatment deliberately uses no placeholder product image. Community APIs, authentication, database and hosting settings are unaffected.

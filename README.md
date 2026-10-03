@@ -127,3 +127,7 @@ A signed browser cookie limits casual repeat votes. Server-side rate limits appl
 Profanity is allowed. Public text is never interpreted as HTML. Obvious outside links/private-information patterns and a hidden spam field are checked; contextual abuse still needs reports and human moderation. There is no blanket claim that software can recognize every threat or private detail. Read failures preserve the static page and show an honest retry state; failed submissions preserve drafts. Free-tier limits can temporarily make community actions unavailable without removing stored discussions. No paid plan or DNS change is part of this feature.
 
 Official implementation references: [Pages Functions configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/), [D1 bindings](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases), [D1 limits and recovery window](https://developers.cloudflare.com/d1/platform/limits/).
+
+### Community publication verified
+
+Community Phase1 is live at https://fleetinpieces.space/systems/missiles. GitHub main commit24ccaf440bc0611730350667aadcc1afcfdeef7c deployed successfully as CloudflarePages94733054-1523-48b9-978a-0eeef5f9c69c. ProductionD1 binding and encrypted secret names were verified;390/1440 custom-domain and Pages browser checks passed. Both apex/www use HTTPS and canonical missile URLs; the production crew key unlocked the empty inbox. Seven changed assets match committed Git hashes. Production contains no review posts.

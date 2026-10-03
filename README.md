@@ -135,3 +135,5 @@ Community Phase1 is live at https://fleetinpieces.space/systems/missiles. GitHub
 ## Community is the default landing page
 
 Visiting https://fleetinpieces.space/ opens the live missile community at `/systems/missiles`. The game overview, approved logo/hero, dev diary and Steam status remain available at **https://fleetinpieces.space/game**, linked as “The game” from Community. The move uses static Pages redirects; it does not change the Worker API, D1, DNS or account configuration. The302 redirect lets the default grow into a broader community hub later without permanently caching the missiles-only destination.
+
+The default community destination includes a short branded landing section that introduces the game before the missiles discussion. Returning visitors can use “Join the discussion” to jump to the composer/feed. The full game overview remains at `/game`.

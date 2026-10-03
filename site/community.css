@@ -7,3 +7,16 @@
 @media(min-width:801px){.community-page:not(.crew-page) .community-main:not(.thread-main){display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:70px;align-items:start}.community-page:not(.crew-page) .community-main:not(.thread-main)>.community-intro{margin-bottom:0}.community-page:not(.crew-page) .system-current{max-width:none;grid-template-columns:minmax(0,1fr) 120px;gap:24px;margin-bottom:0;align-items:start;padding-bottom:24px}.community-page:not(.crew-page) .system-current h2{font-size:1.75rem}.community-page:not(.crew-page) .current-facts{font-size:.9375rem;margin-top:15px}.community-grid{grid-column:1/-1;margin-top:35px}.connection-notice{grid-column:1/-1}}
 @media(min-width:801px) and (max-width:1150px){.community-page:not(.crew-page) .community-main:not(.thread-main){column-gap:35px}.community-page:not(.crew-page) .system-current{grid-template-columns:minmax(0,1fr) 100px;gap:18px}}
 @media(max-width:580px){.community-intro{margin-bottom:18px}.system-current{margin-bottom:22px;padding-bottom:20px}.idea-composer>.eyebrow{display:none}.idea-composer h2{margin-top:0}.form-intro{margin-bottom:15px}}
+
+/* Introduce the game before its first community discussion. */
+.community-landing{grid-column:1/-1;text-align:center;position:relative;margin-bottom:40px;padding:0 24px 34px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 40%,#08101866,transparent 70%)}
+.community-landing:after{content:'';position:absolute;bottom:-1px;left:calc(50% - 32px);width:64px;height:1px;background:linear-gradient(90deg,transparent,#653438,transparent)}
+.community-wordmark{width:min(660px,75%);height:auto;margin:0 auto 20px;filter:brightness(.62) saturate(.7)}
+.community-landing h1{font-size:clamp(2rem,3.25vw,2.8rem);max-width:1000px;margin:14px auto 0;line-height:1.1}
+.landing-summary{text-wrap:balance;max-width:700px;margin:18px auto 0;color:var(--muted);font-size:1.0625rem;line-height:1.65}
+.community-landing .actions{justify-content:center;margin-top:24px}
+.landing-note{color:var(--faint);font-size:.8125rem;line-height:1.6;margin-top:15px}
+.community-page[data-community-system] .community-intro h2{font-size:clamp(2.6rem,4vw,3.5rem);margin:12px 0 14px}
+#discussion{scroll-margin-top:28px}
+@media(max-width:800px){.community-landing{padding-inline:0;margin-bottom:30px;padding-bottom:28px}.community-wordmark{width:min(500px,85%);margin-bottom:18px}.landing-summary{font-size:1rem}}
+@media(max-width:580px){.community-wordmark{width:100%;margin-bottom:19px}.community-landing h1{font-size:2.05rem;margin-top:12px;line-height:1.12}.community-landing .eyebrow{font-size:.6875rem}.landing-summary{margin-top:15px;font-size:.9375rem}.community-landing .actions{gap:10px;margin-top:20px;flex-wrap:wrap}.community-landing .button{min-height:46px;padding:11px 13px;font-size:.75rem}.landing-note{font-size:.75rem;margin-top:13px}.community-page[data-community-system] .community-intro h2{font-size:2.7rem;margin-top:10px}}

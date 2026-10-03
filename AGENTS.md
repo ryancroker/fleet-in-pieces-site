@@ -29,3 +29,7 @@ Community Phase1 is live at https://fleetinpieces.space/systems/missiles. GitHub
 ## Default landing — October 3, 2026
 
 Ryan wants Community to be the default. `/` (and explicit index aliases) redirects to `/systems/missiles` via static `_redirects`; the tiny `index.html` is a no-JavaScript redirect/fallback for simple static previews. Preserve the approved marketing page and hero at `/game` (`site/game.html`). Community “The game” links go to `/game`; its own section anchors stay local. Brand/home links return to Community. The sitemap lists `/game` and `/systems/missiles`, with matching canonical/OG metadata. Backend, database, DNS and account settings are unchanged by this routing edit.
+
+## Community introduction — October 3, 2026
+
+Ryan clarified that the default community page still needs a landing introduction explaining the game. `site/systems/missiles.html` now starts with a compact approved transparent wordmark, game-genre headline, finite-fleet description and development status. “Join the discussion” jumps to `#discussion`; “See the game” opens `/game#gameplay`. Keep this context above the missiles topic and avoid turning it into another long marketing page. The introductory headline is the page H1; Missiles is H2. CSS is scoped in community.css; shared thread/admin layouts stay independent.

@@ -2,7 +2,7 @@
 
 Game and development-community website for **https://fleetinpieces.space**. Public pages use HTML, CSS and vanilla JavaScript. Cloudflare Pages Functions provide the D1-backed community and optional Fleet Register. There is no frontend framework, external font service, analytics or commerce implementation.
 
-**Community expansion — source ready; publication pending root verification.** The existing custom domain and Pages project are established. This handoff does not claim that the new homepage, migrations or passkey flows have been deployed or accepted on Ryan's phone. Historical deployment receipts describe earlier releases only.
+**Community expansion is live — October 3, 2026.** Published through GitHub main commit `3293639b39af460f181135fb735f694af08873dd`, Cloudflare deployment `1a0b0abb-3c18-4284-899b-1c9dc6dc62c4` (October 3, 2026). Apex and www HTTPS, Register API/RP, Pages noindex/canonical-host auth guard, original /i/1, canonical/OG resources, release asset hashes and 390/1440px layouts verified in Chrome. All original 10 ideas, 2 replies, 10 votes and 10 history rows compared unchanged after migrations 0002/0003. Local anonymous posting/reply/vote/report, developer implementation filter/discovery, native WebAuthn with virtual credentials (signup/signin/add key/recovery/claim), profile and whole-branch move/leave/cycle checks passed. No public QA identities/posts. Ryan owns real-phone/Windows Hello prompts and passkey sync acceptance. Evidence: `../../Saved/SourceChanges/FleetCommunityExpansion_20261003`.
 
 ## Pages and participation
 
@@ -107,7 +107,7 @@ Reuse the existing Git-integrated Cloudflare Pages project and repository; do no
 
 Before the first expansion deployment, export the live database to a private path outside `site/`, record existing IDs/counts, apply reviewed additive migrations **0002 and 0003**, and verify the historical records remain intact. Both migrations must precede Functions that read the new columns. Then publish the reviewed source through the existing GitHub `main` integration. Do not drop tables or replace D1 as a frontend rollback.
 
-Publication remains pending root verification. Confirm the Git-backed deployment, actual apex/www pages, fingerprinted assets, API and preserved `/i/{id}` links. Ryan owns real-device passkey prompts and phone acceptance; a successful bundle or virtual credential does not prove device sync or biometric UX. Earlier browser receipts in `QUALITY_REVIEW.md` and `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002` cover earlier releases only.
+For future releases, confirm the Git-backed deployment, actual apex/www pages, fingerprinted assets, API and preserved `/i/{id}` links. Ryan owns real-device passkey prompts and phone acceptance; a successful bundle or virtual credential does not prove device sync or biometric UX. Earlier browser receipts in `QUALITY_REVIEW.md` and `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002` cover earlier releases only.
 
 ## Branding, links and media
 

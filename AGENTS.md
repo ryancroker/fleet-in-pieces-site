@@ -2,7 +2,7 @@
 
 ## Current handoff — community expansion, October 3, 2026
 
-Source is ready for the expanded game/community site; **publication is pending root verification**. Do not present this handoff as a successful production deployment or Ryan's real-device acceptance. Existing domain/Pages setup is established, but older release receipts do not validate this expansion.
+**Community expansion is live; real-device acceptance remains Ryan's.** Published through GitHub main commit `3293639b39af460f181135fb735f694af08873dd`, Cloudflare deployment `1a0b0abb-3c18-4284-899b-1c9dc6dc62c4` (October 3, 2026). Apex and www HTTPS, Register API/RP, Pages noindex/canonical-host auth guard, original /i/1, canonical/OG resources, release asset hashes and 390/1440px layouts verified in Chrome. All original 10 ideas, 2 replies, 10 votes and 10 history rows compared unchanged after migrations 0002/0003. Local anonymous posting/reply/vote/report, developer implementation filter/discovery, native WebAuthn with virtual credentials (signup/signin/add key/recovery/claim), profile and whole-branch move/leave/cycle checks passed. No public QA identities/posts. Ryan owns real-phone/Windows Hello prompts and passkey sync acceptance. Evidence: `../../Saved/SourceChanges/FleetCommunityExpansion_20261003`.
 
 Read README.md and COMMUNITY_ARCHITECTURE.md before detailed work. This repository is separate from the older private Sites prototype in `../FleetInPieces`; do not publish it through Sites or copy that project's `.openai` identity.
 
@@ -50,7 +50,7 @@ Protect `/api/admin` on the server, not by hiding `/crew`. Secrets COMMUNITY_ADM
 
 Before production migration, export D1 privately outside `site/`, record existing IDs/counts, apply reviewed additive migrations 0002 and 0003, and verify preservation before deploying the new Functions. Do not rebuild/drop production tables or replace D1 for a frontend rollback. No public test posts or identities: review against isolated local D1.
 
-Ryan requested small real-browser website checks around 390px and desktop widths; do not replace them with elaborate internal harnesses. Successful syntax/bundle checks do not establish live behavior. Ryan owns real-phone/passkey acceptance; virtual credentials do not prove platform sync or biometric prompts. Record actual publication evidence only after the root verification succeeds.
+Ryan requested small real-browser website checks around 390px and desktop widths; do not replace them with elaborate internal harnesses. Successful syntax/bundle checks do not establish live behavior. Ryan owns real-phone/passkey acceptance; virtual credentials do not prove platform sync or biometric prompts. Keep future release receipts scoped to what was actually checked.
 
 ## Branding and authentic media
 

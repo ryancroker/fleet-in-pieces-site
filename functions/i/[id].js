@@ -11,10 +11,11 @@ export async function onRequest(context) {
   let status = 200, idea = null, id = null;
   try {
     id = positiveId(context.params.id);
-    idea = await database(env).prepare('SELECT id,body FROM ideas WHERE id=? AND hidden=0').bind(id).first();
+    idea = await database(env).prepare(`SELECT i.id,i.body,c.title AS content_title,c.path AS content_path
+      FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1`).bind(id).first();
     if (!idea) status = 404;
   } catch (error) { status = error instanceof ApiError && error.status === 404 ? 404 : 503; }
-  const title = idea ? `${[...idea.body.replace(/\s+/g, ' ')].slice(0, 80).join('')} — Fleet in Pieces` : status === 404 ? 'Idea not found — Fleet in Pieces' : 'Community temporarily unavailable — Fleet in Pieces';
+  const title = idea ? `${[...idea.body.replace(/\s+/g, ' ')].slice(0, 80).join('')} — ${idea.content_title} — Fleet in Pieces` : status === 404 ? 'Idea not found — Fleet in Pieces' : 'Community temporarily unavailable — Fleet in Pieces';
   const description = idea ? [...idea.body.replace(/\s+/g, ' ')].slice(0, 180).join('') : status === 404 ? 'This discussion is unavailable. Explore the missile ideas board.' : 'Please try the community board again in a moment.';
   const canonical = `${ORIGIN}${id ? '/i/' + id : '/systems/missiles'}`;
   if (status !== 200 || new URL(request.url).hostname.endsWith('.pages.dev') || new URL(request.url).hostname === 'localhost') headers.set('X-Robots-Tag', 'noindex');
@@ -34,6 +35,8 @@ export async function onRequest(context) {
       if (!body.includes(token)) throw new Error('Missing shell token');
       body = body.replaceAll(token, htmlEscape(value));
     }
+    body = body.replaceAll('__IDEA_CONTENT_PATH__', htmlEscape(idea?.content_path || '/systems/missiles'))
+      .replaceAll('__IDEA_CONTENT_TITLE__', htmlEscape(idea?.content_title || 'Missiles'));
     return new Response(request.method === 'HEAD' ? null : body, { status, headers });
   } catch {
     headers.set('X-Robots-Tag', 'noindex');

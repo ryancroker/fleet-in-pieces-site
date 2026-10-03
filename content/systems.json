@@ -1,0 +1,28 @@
+[
+  {
+    "id": "system-missiles",
+    "slug": "missiles",
+    "kind": "system",
+    "title": "Missiles",
+    "tagline": "A weapon. An argument. Your next questionable idea.",
+    "description": "Physical missiles in Fleet in Pieces: finite ammunition, powered guidance, shared targeting and point defense. See the development footage and contribute an idea.",
+    "status": "Current / in development",
+    "facts": [
+      "Physical launch tubes",
+      "Shared targeting information",
+      "Finite ammunition and powered guidance",
+      "Point defense interception",
+      "Physical hull and component damage"
+    ],
+    "media": {
+      "src": "/assets/video/missile-range.mp4",
+      "poster": "/assets/images/missile-range-poster.webp",
+      "width": 576,
+      "height": 1024,
+      "title": "Missile range",
+      "description": "Archived development footage. Work in progress."
+    },
+    "question": "What should missiles do?",
+    "placeholder": "What if missiles could…"
+  }
+]

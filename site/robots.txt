@@ -3,5 +3,6 @@ Allow: /
 Disallow: /api/
 Disallow: /crew
 Disallow: /idea
+Disallow: /profile
 
 Sitemap: https://fleetinpieces.space/sitemap.xml

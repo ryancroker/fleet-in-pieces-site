@@ -1,6 +1,18 @@
 // Web-platform APIs only: this file runs in Cloudflare Pages Functions.
 export const PAGE_SIZE = 25;
 export const STATUSES = new Set(['new', 'reviewing', 'planned', 'building', 'implemented', 'declined']);
+// Labels are deliberate Fleet Command decisions, never inferred popularity promises.
+export const STATUS_PRESETS = Object.freeze({
+  submitted: { status: 'new', label: 'SUBMITTED' },
+  popular: { status: 'new', label: 'POPULAR' },
+  looking: { status: 'reviewing', label: 'LOOKING AT THIS' },
+  prototyping: { status: 'building', label: 'PROTOTYPING' },
+  planned: { status: 'planned', label: 'PLANNED' },
+  implemented: { status: 'implemented', label: 'IMPLEMENTED' },
+  no: { status: 'declined', label: 'NO' },
+  breaks_everything: { status: 'declined', label: 'THIS WOULD BREAK EVERYTHING' },
+  technically_possible: { status: 'reviewing', label: 'TECHNICALLY POSSIBLE, UNFORTUNATELY' }
+});
 const COOKIE_AGE = 180 * 24 * 60 * 60;
 const encoder = new TextEncoder();
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -30,6 +42,7 @@ export function securityHeaders(html = false) {
 export function json(value, session, status = 200) {
   const headers = securityHeaders();
   if (session?.cookie) headers.append('Set-Cookie', session.cookie);
+  for (const cookie of session?.cookies || []) headers.append('Set-Cookie', cookie);
   if (status === 429) headers.set('Retry-After', '60');
   return new Response(JSON.stringify(value), { status, headers });
 }
@@ -172,15 +185,15 @@ export function screenPublic(text) {
   }
 }
 export function postFields(data, reply = false) {
-  keysOnly(data, reply ? ['body', 'handle', 'request_id', 'website'] : ['system', 'body', 'handle', 'request_id', 'website']);
+  keysOnly(data, reply ? ['body', 'handle', 'request_id', 'website'] : ['system', 'content_id', 'contribution_type', 'body', 'handle', 'request_id', 'website']);
   if (data.website !== undefined && (typeof data.website !== 'string' || data.website.trim())) fail(422, 'submission_rejected', 'That submission could not be accepted.');
-  if (!reply && data.system !== 'missiles') fail(400, 'invalid_system', 'Choose the missiles discussion.');
+  if (!reply && data.contribution_type !== undefined && data.contribution_type !== 'idea') fail(400, 'invalid_contribution', 'This form accepts ideas.');
   if (typeof data.request_id !== 'string' || !UUID.test(data.request_id)) fail(400, 'invalid_request_id', 'Please refresh the page and try again.');
   const body = textField(data.body, reply ? 'Reply' : 'Idea', reply ? 2 : 8, reply ? 1500 : 2000);
   const handle = textField(data.handle ?? '', 'Handle', 0, 32, false);
   const folded = handle.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase();
   const compact = folded.replace(/[^a-z0-9]/g, '');
-  if (/(?:developer|administrator|moderator|fleetinpieces|official)/.test(compact) ||
+  if (/(?:developer|administrator|moderator|fleetinpieces|fleetcommand|official)/.test(compact) ||
       /^(?:ryan(?:croker|dev|admin)?|dev|admin|mod|staff|team|fip(?:dev|admin|team))$/.test(compact) ||
       /(?:^|[^a-z0-9])(?:ryan|admin|dev|staff)(?:$|[^a-z0-9])/.test(folded)) {
     fail(422, 'reserved_handle', 'That handle is reserved for the developer. Please choose another or leave it blank.');
@@ -234,27 +247,78 @@ export async function authorizeAdmin(request, env, db, session) {
   await limits(db, session, [['admin', session.actor, 120, 60], ['admin-ip', session.ip, 300, 60]]);
 }
 export function paginate(rows) { return { rows: rows.slice(0, PAGE_SIZE), has_more: rows.length > PAGE_SIZE }; }
+export function statusKey(status, label) {
+  if (label) return Object.keys(STATUS_PRESETS).find(key => STATUS_PRESETS[key].status === status && STATUS_PRESETS[key].label === label.toUpperCase()) || null;
+  return { new: 'submitted', reviewing: 'looking', planned: 'planned', building: 'prototyping', implemented: 'implemented', declined: 'no' }[status] || null;
+}
+export async function contentFor(db, selector = {}) {
+  const id = selector.content_id;
+  const slug = selector.system;
+  if (id !== undefined && (typeof id !== 'string' || !/^[a-z0-9][a-z0-9_-]{0,79}$/.test(id))) fail(400, 'invalid_content', 'Choose a valid content page.');
+  if (slug !== undefined && (typeof slug !== 'string' || !/^[a-z0-9][a-z0-9-]{0,99}$/.test(slug))) fail(400, 'invalid_system', 'Choose a valid content page.');
+  const row = await db.prepare(`SELECT id,slug,title,kind,path FROM content_objects WHERE ${id ? 'id' : 'slug'}=? AND is_public=1`)
+    .bind(id || slug || 'missiles').first();
+  if (!row || (slug !== undefined && row.slug !== slug)) fail(404, 'content_not_found', 'That content page is not available.');
+  return row;
+}
+export function contentJson(row) {
+  const list = value => { try { const parsed = JSON.parse(value); return Array.isArray(parsed) ? parsed : []; } catch { return []; } };
+  return { id: row.id, slug: row.slug, title: row.title, kind: row.kind, path: row.path, summary: row.summary, current: list(row.current_json), media: list(row.media_json) };
+}
+export function authorJson(row, prefix = 'author_') {
+  if (row[prefix + 'id'] === null || row[prefix + 'id'] === undefined) return null;
+  const id = row[prefix + 'id'];
+  return { id, callsign: row[prefix + 'callsign'], rank: row[prefix + 'rank'] || null, path: '/u/' + id };
+}
+// Resolve explicit claimed aliases in SQL; anonymous identities stay valid on their own.
+// The two placeholders are the current actor twice. No actor hashes leave the API.
+export const VOTED_SQL = `EXISTS(SELECT 1 FROM votes v WHERE v.idea_id=i.id AND
+  (v.actor_hash=? OR v.actor_hash IN (SELECT actor_hash FROM profile_actors
+    WHERE profile_id=(SELECT profile_id FROM profile_actors WHERE actor_hash=?))))`;
+export const VOTE_COUNT_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash))
+  FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=?`;
+const AUTHOR_COLUMNS = 'p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank';
 export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.status,i.status_label,i.developer_response,
-  i.votes,i.created_at,i.updated_at,i.implemented_at,
+  i.votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
+  c.id AS content_id,c.slug AS content_slug,c.title AS content_title,c.kind AS content_kind,c.path AS content_path,
+  ${AUTHOR_COLUMNS},lr.id AS latest_reply_id,substr(lr.body,1,240) AS latest_reply_body,
+  length(lr.body)>240 AS latest_reply_truncated,lr.handle AS latest_reply_handle,lr.created_at AS latest_reply_created_at,
+  lp.id AS latest_author_id,lp.callsign AS latest_author_callsign,lpr.label AS latest_author_rank,
   (SELECT COUNT(*) FROM replies r WHERE r.idea_id=i.id AND r.hidden=0) AS reply_count,
-  EXISTS(SELECT 1 FROM votes v WHERE v.idea_id=i.id AND v.actor_hash=?) AS voted`;
+  ${VOTED_SQL} AS voted`;
+export const IDEA_FROM = `FROM ideas i JOIN content_objects c ON c.id=i.content_id
+  LEFT JOIN profiles p ON p.id=i.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id
+  LEFT JOIN replies lr ON lr.id=(SELECT id FROM replies WHERE idea_id=i.id AND hidden=0 ORDER BY id DESC LIMIT 1)
+  LEFT JOIN profiles lp ON lp.id=lr.profile_id LEFT JOIN rank_definitions lpr ON lpr.id=lp.rank_id`;
+export const REPLY_COLUMNS = `r.id,r.idea_id,r.body,r.handle,r.created_at,${AUTHOR_COLUMNS}`;
+export const REPLY_FROM = `FROM replies r JOIN ideas i ON i.id=r.idea_id JOIN content_objects c ON c.id=i.content_id
+  LEFT JOIN profiles p ON p.id=r.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id`;
 export function ideaJson(row, admin = false) {
   const idea = {
-    id: row.id, system: row.system, body: row.body, handle: row.handle,
+    id: row.id, system: row.content_slug || row.system, body: row.body, handle: row.handle,
     status: row.status, status_label: row.status_label, developer_response: row.developer_response,
     votes: row.votes, reply_count: row.reply_count, voted: Boolean(row.voted),
-    created_at: row.created_at, updated_at: row.updated_at, implemented_at: row.implemented_at
+    created_at: row.created_at, updated_at: row.updated_at, implemented_at: row.implemented_at,
+    contribution_type: row.contribution_type,
+    content: { id: row.content_id, slug: row.content_slug, title: row.content_title, kind: row.content_kind, path: row.content_path },
+    status_key: statusKey(row.status, row.status_label),
+    command_responded: Boolean(row.command_at || row.status !== 'new' || row.status_label || row.developer_response),
+    command_at: row.command_at, author: authorJson(row),
+    latest_reply: row.latest_reply_id ? {
+      id: row.latest_reply_id, body: row.latest_reply_body, truncated: Boolean(row.latest_reply_truncated),
+      handle: row.latest_reply_handle, created_at: row.latest_reply_created_at, author: authorJson(row, 'latest_author_')
+    } : null
   };
   if (admin) idea.hidden = Boolean(row.hidden);
   return idea;
 }
 export function replyJson(row, admin = false) {
-  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, created_at: row.created_at };
+  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, created_at: row.created_at, author: authorJson(row) };
   if (admin) { reply.hidden = Boolean(row.hidden); reply.updated_at = row.updated_at; }
   return reply;
 }
 export async function getIdea(db, id, actor, admin = false) {
-  const row = await db.prepare(`SELECT ${IDEA_COLUMNS}${admin ? ',i.hidden' : ''} FROM ideas i WHERE i.id=?${admin ? '' : ' AND i.hidden=0'}`).bind(actor, id).first();
+  const row = await db.prepare(`SELECT ${IDEA_COLUMNS}${admin ? ',i.hidden' : ''} ${IDEA_FROM} WHERE i.id=?${admin ? '' : ' AND i.hidden=0 AND c.is_public=1'}`).bind(actor, actor, id).first();
   if (!row) fail(404, 'not_found', 'That discussion was not found.');
   return ideaJson(row, admin);
 }

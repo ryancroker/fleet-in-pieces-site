@@ -1,4 +1,3 @@
-# The community is the default entry. Keep this temporary so future systems can become the landing page.
-/ /systems/missiles 302
-/index.html /systems/missiles 302
-/index /systems/missiles 302
+# The community homepage is a real page. Preserve explicit index aliases.
+/index.html / 302
+/index / 302

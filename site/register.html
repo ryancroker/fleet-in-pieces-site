@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fleet Register — Fleet in Pieces</title>
+  <meta name="description" content="An optional callsign, a passkey, and a place in the fleet. No email or password.">
+  <meta name="robots" content="noindex,follow"><link rel="canonical" href="https://fleetinpieces.space/register">
+  <meta name="theme-color" content="#06090c"><link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.e9cdba902a0a.css"><link rel="stylesheet" href="/community.b21239bbe037.css"><link rel="stylesheet" href="/register.f130862292b7.css">
+  <script src="/register.429b81d053c8.js" defer></script>
+  <script src="/config.314f89b484c8.js" defer></script>
+  <script src="/script.1c0445cf0261.js" defer></script>
+  <script src="/hub.012fc2a8a304.js" defer></script>
+</head>
+<body class="community-page register-page" data-register-page>
+  <a class="skip-link" href="#main">Skip to Fleet Register</a>
+  <header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/fleet">Fleet</a><a href="/systems">Systems</a><a href="/community">Community</a><a href="/register" data-register-link>Register</a></nav></header>
+  <main id="main" class="wrap register-main">
+    <div class="page-intro"><p class="eyebrow">Fleet administration / voluntary paperwork</p><h1>Put a name<br>on the record.</h1><p>A callsign. A passkey. A place in the fleet. Registration is optional: you can still read, vote, suggest and reply without it.</p></div>
+    <p id="register-feedback" class="register-feedback" role="status" aria-live="polite">Checking your fleet record…</p>
+    <section id="recovery-result" class="recovery-result" aria-labelledby="recovery-result-title" hidden>
+      <p class="eyebrow">Private / shown once</p><h2 id="recovery-result-title">Save your recovery code.</h2>
+      <p>Keep this code somewhere private, separate from your device. It can replace your passkeys if you lose access. Anyone with your callsign and this code can take over your record.</p>
+      <label for="recovery-output">Your new recovery code</label><textarea id="recovery-output" rows="3" readonly spellcheck="false" autocomplete="off"></textarea>
+      <div class="register-actions"><button class="button secondary" id="copy-recovery" type="button">Copy code</button><button class="button secondary" id="download-recovery" type="button">Download code</button><button class="button primary" id="saved-recovery" type="button">I’ve saved it</button></div>
+      <p id="recovery-feedback" class="register-feedback" role="status" aria-live="polite"></p><p class="register-note">No email recovery. If you lose every passkey and this code, we cannot restore your access. Leaving this page clears the displayed code.</p>
+    </section>
+    <div id="signed-out" class="register-grid" hidden>
+      <section class="register-panel" aria-labelledby="create-heading"><p class="eyebrow">01 / enlist</p><h2 id="create-heading">Choose your callsign.</h2><p>Your device will save a passkey and ask you to verify with its screen lock, fingerprint or face. No password to remember.</p>
+        <form id="register-form"><label for="callsign">Public callsign</label><input id="callsign" name="callsign" required minlength="3" maxlength="24" pattern="[A-Za-z0-9][A-Za-z0-9_\-]{2,23}" autocomplete="username webauthn" autocapitalize="none" spellcheck="false" placeholder="Your callsign"><p class="register-note">3–24 letters, numbers, underscores or hyphens. Everyone starts as a Recruit.</p><label class="register-check"><input id="claim-on-register" type="checkbox"><span>Attach this browser’s existing ideas, replies and votes to my record.</span></label><p class="register-note">This is optional and permanent. Original contributions and votes are preserved.</p><div class="form-trap" aria-hidden="true"><label for="register-website">Website</label><input id="register-website" tabindex="-1" autocomplete="off"></div><button class="button primary" type="submit">Create a passkey</button></form>
+      </section>
+      <section class="register-panel" aria-labelledby="signin-heading"><p class="eyebrow">02 / return to duty</p><h2 id="signin-heading">Already on the roster?</h2><p>Use a saved passkey. Your browser can offer a nearby device if your key lives elsewhere.</p><button id="signin" class="button secondary" type="button">Sign in with a passkey</button>
+        <details class="register-details"><summary>Lost access to your passkeys?</summary><p>Use your private recovery code to create a new passkey. Completing recovery removes all old passkeys, signs out every session and replaces the recovery code.</p><form id="recover-form"><label for="recover-callsign">Callsign</label><input id="recover-callsign" required maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false"><label for="recover-code">Private recovery code</label><input id="recover-code" type="password" required maxlength="100" autocomplete="off" autocapitalize="none" spellcheck="false"><label class="register-check"><input id="recover-confirm" type="checkbox" required><span>Replace all existing passkeys with a new one.</span></label><button class="button secondary" type="submit">Recover with a new passkey</button></form></details>
+      </section>
+    </div>
+    <div id="signed-in" hidden>
+      <section class="register-panel identity-summary"><p class="eyebrow">Active record</p><h2 id="signed-in-callsign"></h2><p id="signed-in-rank"></p><div class="register-actions"><a id="my-record" class="button primary" href="/fleet">View my record</a><button id="signout" class="button secondary" type="button">Sign out</button></div></section>
+      <div class="register-grid">
+        <section class="register-panel"><h2>Your passkeys.</h2><p>You can keep up to eight passkeys. Add one on another device for a second way back in. Keep at least one.</p><ul id="passkey-list" class="passkey-list"></ul><form id="add-passkey-form"><label for="passkey-label">Name for this passkey</label><input id="passkey-label" maxlength="40" value="Additional passkey" required autocomplete="off"><button class="button secondary" type="submit">Add a passkey</button></form><button id="reauthenticate" class="text-button" type="button">Sign in again for security changes</button><p class="register-note">Security changes require a passkey sign-in within the last ten minutes.</p></section>
+        <section class="register-panel"><h2>Keep your access.</h2><p>Replacing your recovery code makes the previous code unusable and signs out other sessions. Your passkeys stay registered.</p><form id="rotate-recovery-form"><label class="register-check"><input required type="checkbox" id="rotate-confirm"><span>Replace my existing recovery code.</span></label><button class="button secondary" type="submit">Get a new recovery code</button></form>
+          <div id="claim-existing" class="register-subsection" hidden><h3>Bring your dispatches.</h3><p>This browser has anonymous activity you can attach to your record. This permanent link preserves original contributions and votes.</p><form id="claim-form"><label class="register-check"><input type="checkbox" required id="claim-confirm"><span>Attach this browser’s activity to my record.</span></label><button class="button secondary" type="submit">Claim browser activity</button></form></div>
+        </section>
+      </div>
+    </div>
+    <p class="register-footnote">No email, password, billing details or shipping address. Your public record contains your callsign, rank, allegiance and community contributions. <a href="/systems/missiles">Back to the discussion →</a></p>
+    <noscript><p>Passkeys and the Fleet Register need JavaScript. You can still browse the game and system briefings.</p></noscript>
+  </main>
+  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public.</p></div><div class="footer-end"><a href="/fleet">Find a fleet record</a><small>© 2026 Fleet in Pieces</small></div></footer>
+</body></html>

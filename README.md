@@ -1,139 +1,125 @@
 # Fleet in Pieces
 
-Production static website for **https://fleetinpieces.space**. HTML, CSS and a small vanilla JavaScript enhancement. No framework, package manager, build step, external fonts, analytics, database, backend, cookies or signup form.
+Game and development-community website for **https://fleetinpieces.space**. Public pages use HTML, CSS and vanilla JavaScript. Cloudflare Pages Functions provide the D1-backed community and optional Fleet Register. There is no frontend framework, external font service, analytics or commerce implementation.
 
-## Preview locally
+**Community expansion — source ready; publication pending root verification.** The existing custom domain and Pages project are established. This handoff does not claim that the new homepage, migrations or passkey flows have been deployed or accepted on Ryan's phone. Historical deployment receipts describe earlier releases only.
 
-With Python 3 already installed:
+## Pages and participation
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Real homepage: game introduction, bounded trending ideas and recently implemented ideas |
+| `/game` | Preserved game overview, approved branding/gameplay, dev diary and Steam status |
+| `/systems` | Available game-system briefings; missiles are the only seeded content object |
+| `/systems/missiles` | Current missile behavior, authentic development clip, idea composer and discussion |
+| `/community` | Bounded cross-content discovery, without an infinite generic social feed |
+| `/fleet` | Fleet Register introduction and callsign lookup |
+| `/register` | Optional passkey registration, sign-in, recovery and account security |
+| `/u/{uuid}` | Public profile, contribution totals, allegiance and empty vessel assignment |
+| `/i/{id}` | Permanent idea detail and reply thread; existing links and IDs remain valid |
+| `/crew` | Private developer moderation desk |
+
+The homepage no longer redirects to missiles. Explicit `/index` and `/index.html` aliases return to `/`. Primary navigation is Game, Fleet, Systems, Community and Register.
+
+Browsing, voting, submitting ideas and replying never require registration. The idea form keeps its 8–2,000 character body and optional handle; it adds no title, tags, email or category requirement. Guest handles and drafts are remembered locally. Public ideas, replies and votes live in D1, never simulated browser storage. Authored game information and media remain readable without JavaScript; live discussions, discovery and register actions need JavaScript.
+
+## Authoring and release assets
+
+Use **Node 22**. Install the locked server dependency before local Pages bundling:
+
+```powershell
+npm ci
+node scripts/prepare-site.mjs
+```
+
+`@simplewebauthn/server` is pinned to **14.0.3** in `package.json` and the lockfile. It is a server-only WebAuthn verification dependency; browser code uses native WebAuthn. The authoring script itself uses only Node built-ins. Pages must use Node 22 when installing dependencies and bundling Functions; the deployed frontend still has no framework or build command.
+
+Edit `content/systems.json` and `templates/system.html` for system briefings. `prepare-site.mjs` writes the generated page, currently `site/systems/missiles.html`, and applies the shared navigation. New real content also needs an additive registry migration using the same stable content ID. Do not edit generated briefing HTML as the lasting source of a content change.
+
+Run the script after changing authored content, HTML, CSS or browser JavaScript. It normalizes release bytes to UTF-8/LF, creates content-fingerprinted CSS/JS files and updates HTML references together. Keep stable source filenames editable, never change an existing fingerprinted file, and retain old release copies for cached HTML. This replaces the old manual community-CSS fingerprint procedure. Review and commit the generated output with its source; Cloudflare publishes the prepared `site/` directory.
+
+A returning-browser cache failure previously combined new HTML with old community CSS. Source `_headers` requested revalidation, but the live custom domain returned a four-hour browser lifetime. Fingerprinted filenames address that mismatch without DNS or account-level cache changes. Verify the actual release asset URL and a returning-browser reload after layout changes.
+
+## Local preview
+
+For static layout only:
 
 ```powershell
 python preview.py
 ```
 
-Open **http://127.0.0.1:4173/**. Stop with Ctrl+C. The optional preview server reproduces the custom 404 and path-based security headers. It is a development convenience outside `site/`; Cloudflare serves only static files.
+Open **http://127.0.0.1:4173/**. The helper reproduces static paths, the custom 404 and security headers, but it does not run Functions, D1 or passkeys.
 
-## Cloudflare Pages settings
-
-The existing Git-integrated Pages project uses these settings. Reuse it rather than creating a duplicate.
-
-| Setting | Value |
-| --- | --- |
-| Project name | `fleet-in-pieces-site` |
-| Production branch | `main` |
-| Framework preset | `None` |
-| Build command | **Leave blank** — no build |
-| Build output directory | `site` |
-| Root directory | Leave blank / repository root |
-| Server secrets | `COMMUNITY_ADMIN_KEY`, `COMMUNITY_SIGNING_KEY` (encrypted) |
-
-Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. The Pages site is verified. The custom domain and both domain associations are active. DNS setup is complete. No paid feature is required.
-
-Official references: [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/), [build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/), [custom headers](https://developers.cloudflare.com/pages/configuration/headers/).
-
-## CUSTOM DOMAIN LIVE — October 2, 2026
-
-Live at **[fleet-in-pieces-site.pages.dev](https://fleet-in-pieces-site.pages.dev/)** from the public repository **[ryancroker/fleet-in-pieces-site](https://github.com/ryancroker/fleet-in-pieces-site)**. Git-backed production deployment `cf9447e2-7a97-4501-8772-bad7372aeb93` succeeded from `main` commit `2a2bc509c8bf213f561e08b374755b32d74e2551`. GitHub and Cloudflare authentication/integration work. Reuse this repository and Pages project; do not force-push.
-
-Live Chrome review at 390×844 and 1440×1000 found no overflow, home-page errors or failed requests. Videos play; the phone hero starts paused and desktop autoplay works. All 24 public assets match local hashes. HTTPS is valid, the Pages address has `noindex`, metadata resources return 200, and the custom 404 works. Python urllib received Cloudflare error 1010; the successful verification used Chrome. JSON receipts/screenshots: `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002`.
-
-**Custom domain is live.** Ryan completed DNS setup; both `fleetinpieces.space` and `www.fleetinpieces.space` are active in Pages, and the apex site was verified in Chrome over HTTPS. Visual edits ship through the existing GitHub `main` integration. Do not change DNS or hosting infrastructure for these edits.
-
-## External links — one obvious file
-
-Edit **`site/config.js`**:
-
-```js
-SITE_URL: 'https://fleetinpieces.space',
-STEAM_URL: '',
-TIKTOK_URL: 'https://www.tiktok.com/@fleet_in_pieces',
-YOUTUBE_URL: '',
-CONTACT_EMAIL: '',
-```
-
-Paste the real HTTPS Steam store URL into `STEAM_URL`, commit and push. Every Steam CTA, the Steam social button and the availability text update automatically. Until then the main CTAs lead to an honest coming-soon explanation. No fake app ID, date, price, multiplayer promise or review score is shipped. The dummy URL used in local QA was injected into an isolated browser only and is absent from the production files.
-
-Unknown YouTube/contact links are hidden; the footer has a plain contact-coming-soon note. There is no email signup, per Ryan's decision. The static TikTok anchor is a deliberate no-JavaScript fallback to the currently confirmed handle. If the TikTok handle itself changes, update that one fallback in `game.html` as well as the config. All page content, section links, native video controls and current TikTok access work without JavaScript. Keep the canonical/OG URLs, robots and sitemap fixed to the purchased production domain; `SITE_URL` is its documented value, not a runtime rewrite of crawler metadata.
-
-## Media
-
-All required logo, posters, clips, social card and icons are included. See **[ASSET_CHECKLIST.md](ASSET_CHECKLIST.md)** for exact filenames, optional landscape-hero inputs and replacement targets. **[MEDIA_SOURCES.md](MEDIA_SOURCES.md)** documents the existing footage and edits. No watermarked social download, third-party music or generated gameplay is used. Videos have no audio track.
-
-The included hero is portrait. An optional clean landscape background can be enabled with `HERO_WIDE_VIDEO` and `HERO_WIDE_POSTER` in the same config, after placing those files at their documented paths. Leave both blank until supplied; there are no requests for missing placeholders in the current site.
-
-Only the hero can autoplay, and only above 600px with normal motion/data preferences. Phones, reduced motion, data saver and slow connections stay on the poster until Play is pressed. Feature clips always wait for Play. All clips pause out of view or when the tab is hidden; playing one pauses the others. Native controls remain available if JavaScript fails.
-
-## Files and behavior
-
-- `site/` contains the public static assets, including six compact gameplay clips. Root `functions/` adds the community API and shareable idea routes.
-- `game.html`, `styles.css`, `script.js`, `config.js` define the game overview. The root `_redirects` rule and `index.html` fallback open Community by default.
-- `404.html` is the actual missing-page response on Pages; it prevents accidental SPA-style fallback.
-- `robots.txt` and `sitemap.xml` use the canonical domain; the sitemap lists the home page and missiles page. Private tools and API routes are not indexed.
-- `site.webmanifest`, SVG favicon and PNG icons are included. This is a website, not an offline app; no service worker is installed.
-- `_headers` supplies a self-only CSP, frame protection, MIME protection, referrer policy and restricted unused browser permissions. It also prevents indexing temporary Pages hostnames.
-- CSS/JavaScript revalidate on every visit. Stable media filenames cache for one hour, without `immutable`. If replacing a media file immediately after launch, rename/version it and update its references to avoid stale browser copies.
-
-## Review
-
-See **[QUALITY_REVIEW.md](QUALITY_REVIEW.md)** for the completed browser checks and their limits. The local review uses the machine's existing headless Chrome and existing tooling outside this repository; no npm dependency is part of the site.
-
-## Custom domain and hero update
-
-The domain connection is complete. Use https://fleetinpieces.space/ as the canonical address; www is also active. Do not repeat provisioning steps or change DNS/hosting settings for visual edits.
-
-The October2 hero update uses the approved transparent RGBA wordmark as an820px centered desktop masthead above the headline/gameplay columns. Phone/tablet layouts retain the compact inline logo. The graphite/navy gradient, tighter phone spacing and tiny red divider preserve the pale-blue CTA hierarchy. The existing GitHub integration deployed commit `4aacdf5efca6344a12e33d931bdf7393fedd1a42` successfully as deployment `4ad81ccd-25dc-4898-a827-cdb06588c1e7`. See MEDIA_SOURCES.md for the logo provenance.
-
-## Community — missiles first
-
-`/systems/missiles` is the first system discussion. Visitors can post instantly, vote, reply and report without an account. Names are optional and unverified; an empty name becomes Anonymous Crew Member. Handles and drafts stay in browser storage; public posts live in D1. Short links `/i/<id>` retain the original discussion. There are no sample posts or synthetic votes in production.
-
-A small Pages Functions layer runs on Cloudflare's Workers runtime. `_routes.json` invokes it only for `/api/*` and `/i/*`; the marketing page, media and system page remain static. The existing GitHub main → Pages workflow, blank build and output `site` remain in place. `wrangler.toml` defines production D1 and intentionally disables D1 access in preview deployments. Do not bind previews to production for testing.
-
-### Developer desk
-
-Open **https://fleetinpieces.space/crew** and enter the key from the local ignored `.community-admin-key.txt` file. The page holds it in memory only; Lock or reload clears it. The API verifies it on every privileged request. Do not paste this key into a public idea, screenshot, commit or URL. If the file is lost, rotate COMMUNITY_ADMIN_KEY using Wrangler rather than trying to recover the cloud secret. Keep COMMUNITY_SIGNING_KEY stable across releases: rotating it invalidates existing anonymous browser identities and their ability to remove old votes.
-
-Use Ideas & responses to set a real status, optional custom label and developer response. Use Reports to inspect reported content, hide/restore it and resolve a report. Original text and author credit remain intact; status/response changes are recorded in D1. Hidden ideas and their replies disappear from public API/thread pages. Votes represent enthusiasm, not command authority.
-
-### Local development
-
-Use the installed Wrangler CLI (or `npx wrangler` where available). The repository itself has no npm/runtime package dependencies:
+For community and identity behavior, use the installed Wrangler CLI:
 
 ```powershell
 npx wrangler d1 migrations apply COMMUNITY_DB --local
 npx wrangler pages dev site --ip 127.0.0.1 --port 4174 --d1 COMMUNITY_DB=a27dbf92-3ecb-4b41-9428-2d76ba7a558e
 ```
 
-The explicit local `--d1` override is needed because Pages dev uses preview settings; it still uses isolated local storage. The compatibility date is pinned to the installed runtime, May22,2026.
+Open **http://localhost:4174/** for passkeys; `localhost` is the supported development RP, rather than the numeric loopback URL. The explicit local D1 override is needed because Pages dev uses preview settings. It still uses isolated local storage in ignored `.wrangler/state`. Stop either preview with Ctrl+C.
 
-Create an ignored `.dev.vars` with separate local values for COMMUNITY_ADMIN_KEY and COMMUNITY_SIGNING_KEY. Never use the production admin key in local QA fixtures. Local data persists in ignored `.wrangler/state`; the `--local` database is isolated from production. The original `preview.py` is suitable for static layout only; community actions require Wrangler.
+Create ignored `.dev.vars` with separate local `COMMUNITY_ADMIN_KEY` and `COMMUNITY_SIGNING_KEY` values. Never use production credentials in local fixtures. Exercise posting, identity and allegiance against local D1; do not create public review posts or identities.
 
-### Publishing schema and code
+## Community data and developer responses
 
-Apply reviewed additive migrations before pushing code that needs them:
+`content_objects.id` permanently owns a discussion. The existing missile object is `system-missiles`, with slug `missiles` and path `/systems/missiles`. Migration 0002 adds the registry, backfills existing ideas and retains the legacy `system` column for old clients. It does not rebuild idea, reply or vote tables. `contribution_types` is a foundation for later submissions; only ordinary ideas are enabled now.
 
-```powershell
-npx wrangler d1 migrations apply COMMUNITY_DB --remote
-git add <the reviewed source files>
-git commit -m "Describe the community change"
-git push origin main
-```
+System feeds default to Top, with New, Dev responded and Implemented filters. `/api/discovery` returns at most six trending and four implemented ideas. Trending uses real recent activity within a bounded candidate set; empty data stays empty. `/api/content` exposes the real published content registry. There is no fabricated ship catalog, popularity or feedback history.
 
-Verify the Git-backed deployment and the actual custom-domain page/API. Do not force-push or replace the Pages project. A static-only rollback can temporarily leave discussions unavailable while keeping D1 data; never drop database tables as part of a frontend rollback. Before destructive schema work, export D1 to a private, ignored path and review Cloudflare's current recovery documentation.
+The developer desk offers nine deliberate Fleet Command presets: SUBMITTED, POPULAR, LOOKING AT THIS, PROTOTYPING, PLANNED, IMPLEMENTED, NO, THIS WOULD BREAK EVERYTHING, and TECHNICALLY POSSIBLE, UNFORTUNATELY. They map to the existing normalized states. Custom labels and previous decisions remain intact. POPULAR is an editorial choice, not an automatic vote threshold. Only ideas actually marked implemented enter implementation records.
 
-### Abuse and privacy boundaries
+Open **https://fleetinpieces.space/crew** with the key from ignored `.community-admin-key.txt`. The page holds the key in memory; Lock or reload clears it, and the API checks it on every privileged request. Reports support inspection, hide/restore and resolution. Hidden ideas and their replies disappear from public views. Moderation preserves original text and author credit, with status/response history in D1.
 
-A signed browser cookie limits casual repeat votes. Server-side rate limits apply to both browser identity and a daily salted IP hash; raw IP addresses are not stored by this application. Clearing cookies is not identity verification, and shared-network limits can affect several visitors. Public names are not verified identities.
+Keep `COMMUNITY_SIGNING_KEY` stable: rotating it invalidates anonymous browser identities and can prevent guests from removing old votes. Never place admin keys, session cookies or recovery codes in public posts, URLs, screenshots, logs or commits.
 
-Profanity is allowed. Public text is never interpreted as HTML. Obvious outside links/private-information patterns and a hidden spam field are checked; contextual abuse still needs reports and human moderation. There is no blanket claim that software can recognize every threat or private detail. Read failures preserve the static page and show an honest retry state; failed submissions preserve drafts. Free-tier limits can temporarily make community actions unavailable without removing stored discussions. No paid plan or DNS change is part of this feature.
+## Optional Fleet Register
 
-Official implementation references: [Pages Functions configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/), [D1 bindings](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases), [D1 limits and recovery window](https://developers.cloudflare.com/d1/platform/limits/).
+Registration uses a public callsign and device passkey, without email or passwords. Guest participation remains available. Registered profiles have opaque UUIDs and start as **Recruit**. Rank definitions are data-driven; rank and promotion eligibility are distinct, with no automatic promotion rule or fabricated vessel assignment.
 
-### Community publication verified
+A high-entropy recovery code is shown once; only its hash is stored. Recovery enrolls a new passkey, replaces the old keys, revokes old sessions and rotates the recovery code. Members can add another passkey or replace their recovery code after recent sign-in. Losing all passkeys and the recovery code may mean losing access. Production passkeys use the canonical game domain; temporary Pages hosts direct visitors there.
 
-Community Phase1 is live at https://fleetinpieces.space/systems/missiles. GitHub main commit24ccaf440bc0611730350667aadcc1afcfdeef7c deployed successfully as CloudflarePages94733054-1523-48b9-978a-0eeef5f9c69c. ProductionD1 binding and encrypted secret names were verified;390/1440 custom-domain and Pages browser checks passed. Both apex/www use HTTPS and canonical missile URLs; the production crew key unlocked the empty inbox. Seven changed assets match committed Git hashes. Production contains no review posts.
+Claiming existing browser activity is explicit. Original idea/reply IDs and raw vote actors are retained; claimed aliases count as one registered voter's support. An account is not proof of a real-world identity. Profiles expose public callsigns, join date, rank, contribution totals and command relationships, not credential material or customer information.
 
-## Community is the default landing page
+Swear Allegiance assigns one superior and moves the entire subordinate branch. Leaving takes that branch along. Atomic database guards prevent cycles; the current limits are 12 command levels and 2,000 members per connected command tree. Advanced politics, vessel outfitting and browser combat are not implemented.
 
-Visiting https://fleetinpieces.space/ opens the live missile community at `/systems/missiles`. The game overview, approved logo/hero, dev diary and Steam status remain available at **https://fleetinpieces.space/game**, linked as “The game” from Community. The move uses static Pages redirects; it does not change the Worker API, D1, DNS or account configuration. The302 redirect lets the default grow into a broader community hub later without permanently caching the missiles-only destination.
+See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for the data model and future commerce separation. No shop, checkout provider, order table, webhook or purchase badge is built. Future commerce must allow guest checkout, leave payment/shipping/customer data with its provider, and keep any optional profile association separate from community authentication.
 
-The default community destination includes a short branded landing section that introduces the game before the missiles discussion. Returning visitors can use “Join the discussion” to jump to the composer/feed. The full game overview remains at `/game`.
+## Hosting and publication
+
+Reuse the existing Git-integrated Cloudflare Pages project and repository; do not create another project, force-push, change DNS or alter paid plans for this work.
+
+| Setting | Value |
+| --- | --- |
+| Repository | `ryancroker/fleet-in-pieces-site` |
+| Pages project | `fleet-in-pieces-site` |
+| Production branch | `main` |
+| Framework preset | `None` |
+| Build command | Leave blank; prepared frontend assets are committed |
+| Build output | `site` |
+| Root directory | Repository root / blank |
+| Tooling Node version | `22` |
+| D1 binding | `COMMUNITY_DB` → `fleet-in-pieces-community` |
+| Encrypted secrets | `COMMUNITY_ADMIN_KEY`, `COMMUNITY_SIGNING_KEY` |
+
+`wrangler.toml` pins compatibility to May 22, 2026 and defines production D1. Preview deliberately has no production D1 binding. `_routes.json` invokes Functions for `/api/*`, `/i/*` and `/u/*`; the other pages and media are static. Only `site/` is public static output. `node_modules`, local secrets, database exports and QA profiles must stay outside it.
+
+Before the first expansion deployment, export the live database to a private path outside `site/`, record existing IDs/counts, apply reviewed additive migrations **0002 and 0003**, and verify the historical records remain intact. Both migrations must precede Functions that read the new columns. Then publish the reviewed source through the existing GitHub `main` integration. Do not drop tables or replace D1 as a frontend rollback.
+
+Publication remains pending root verification. Confirm the Git-backed deployment, actual apex/www pages, fingerprinted assets, API and preserved `/i/{id}` links. Ryan owns real-device passkey prompts and phone acceptance; a successful bundle or virtual credential does not prove device sync or biometric UX. Earlier browser receipts in `QUALITY_REVIEW.md` and `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002` cover earlier releases only.
+
+## Branding, links and media
+
+Keep the approved transparent wordmark `site/assets/logo/fleet-in-pieces-transparent.webp` (1348×240). Preserve the restrained dark graphite/naval presentation, dim logo and honest development status. Review meaningful layout changes at about 390px and desktop widths in a real browser; avoid elaborate internal test harnesses.
+
+External destinations are configured in `site/config.js`. Keep `SITE_URL` as `https://fleetinpieces.space`; canonical metadata is authored separately. Blank Steam, YouTube and contact values must remain honest unavailable states. Add only real destinations. Update static TikTok fallbacks in authored pages/templates when changing its handle. Steam CTAs become active when a real Steam URL is supplied.
+
+**[ASSET_CHECKLIST.md](ASSET_CHECKLIST.md)** lists media inputs; **[MEDIA_SOURCES.md](MEDIA_SOURCES.md)** records provenance. Use authentic silent gameplay, native aspect ratios and the approved logo. The missile clip is archived development footage, not proof of the current game build. No new game/editor launch, filming, watermarked social download, third-party music or invented gameplay is authorized by website work. Keep full source recordings and game files outside `site/`.
+
+The `/game` hero may autoplay only under its existing desktop/motion/data rules; phones and feature clips wait for explicit play. Preserve accessible native controls as the fallback. There is no service worker or offline application.
+
+## Abuse and privacy boundaries
+
+Preserve plain-text rendering, same-origin JSON mutations, signed browser identity, request idempotency, server-side rate limits, parameterized SQL and report/hide tools. The application stores daily salted IP hashes for limits, not raw IP addresses. Cookie clearing is not identity verification, and shared-network limits can affect several visitors.
+
+Profanity is allowed. Pattern checks and the hidden spam field catch some obvious links/private information, but contextual abuse still needs human moderation. Failed requests show honest retry states and preserve drafts. Votes represent enthusiasm, not command authority.

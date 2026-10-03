@@ -14,11 +14,11 @@ Open **http://127.0.0.1:4173/**. Stop with Ctrl+C. The optional preview server r
 
 ## Cloudflare Pages settings
 
-Connect the GitHub repository using **Pages → Import an existing Git repository**. Use a Git-integrated Pages project, not Workers or Direct Upload.
+The existing Git-integrated Pages project uses these settings. Reuse it rather than creating a duplicate.
 
 | Setting | Value |
 | --- | --- |
-| Project name | `fleet-in-pieces-site` (or the available name Cloudflare accepts) |
+| Project name | `fleet-in-pieces-site` |
 | Production branch | `main` |
 | Framework preset | `None` |
 | Build command | **Leave blank** — no build |
@@ -26,33 +26,17 @@ Connect the GitHub repository using **Pages → Import an existing Git repositor
 | Root directory | Leave blank / repository root |
 | Environment variables | None |
 
-Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. If a dashboard variant insists on a command, use `exit 0`, never the literal word `none`. Deploy to the assigned `*.pages.dev` address first. Do not connect the purchased domain until Ryan explicitly confirms Porkbun is ready. No paid feature is required.
+Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. The Pages site is verified. The Free custom-domain zone is active and both domain associations exist; the remaining DNS record edits are awaiting Ryan in the dashboard. No paid feature is required.
 
 Official references: [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/), [build configuration](https://developers.cloudflare.com/pages/configuration/build-configuration/), [custom headers](https://developers.cloudflare.com/pages/configuration/headers/).
 
-## Current publication state — October 2, 2026
+## PAGES LIVE; CUSTOM DOMAIN PENDING — October 2, 2026
 
-The local site is complete and reviewed. Git's credential manager lists the `ryancroker` GitHub account, but its saved credential was rejected by GitHub's API with HTTP 401. GitHub CLI is not installed. No working Cloudflare API credential or local Wrangler login was available; the app's browser-control runtime also failed to initialize. Therefore **no GitHub repository or Cloudflare project/deployment was created in this pass**. No DNS, Porkbun, nameservers, domain association, billing or subscription changes were made.
+Live at **[fleet-in-pieces-site.pages.dev](https://fleet-in-pieces-site.pages.dev/)** from the public repository **[ryancroker/fleet-in-pieces-site](https://github.com/ryancroker/fleet-in-pieces-site)**. Git-backed production deployment `cf9447e2-7a97-4501-8772-bad7372aeb93` succeeded from `main` commit `2a2bc509c8bf213f561e08b374755b32d74e2551`. GitHub and Cloudflare authentication/integration work. Reuse this repository and Pages project; do not force-push.
 
-To restore the existing GitHub account, run:
+Live Chrome review at 390×844 and 1440×1000 found no overflow, home-page errors or failed requests. Videos play; the phone hero starts paused and desktop autoplay works. All 24 public assets match local hashes. HTTPS is valid, the Pages address has `noindex`, metadata resources return 200, and the custom 404 works. Python urllib received Cloudflare error 1010; the successful verification used Chrome. JSON receipts/screenshots: `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002`.
 
-```powershell
-git credential-manager github login --username ryancroker --browser --force
-```
-
-Complete GitHub's own browser sign-in. Do not paste passwords/tokens into this repository or chat. Once signed in, the prepared local repository can be published without changing any files. If continuing manually:
-
-1. At [GitHub's new repository page](https://github.com/new), create **fleet-in-pieces-site**, Public, without initializing a README, license or gitignore (the local repository already has its initial commit).
-2. From this repository directory:
-
-```powershell
-git remote add origin https://github.com/ryancroker/fleet-in-pieces-site.git
-git push -u origin main
-```
-
-3. In Cloudflare: **Workers & Pages → Create application → Pages → Import an existing Git repository**. Authorize access to this repository, select it, enter the settings above and deploy. Keep the free setup. If a paid upgrade is requested, stop; it is not needed for this site.
-
-If a remote or repository already exists by then, reuse it after checking its contents; do not overwrite or force-push it. See [GitHub's existing-code guide](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github).
+**Nameservers are changed; custom-domain DNS records are still pending.** Ryan completed the Porkbun change himself. Registry RDAP confirms `eva.ns.cloudflare.com` and `kurt.ns.cloudflare.com`; Free zone `5f8a0986440847178750fab9fc7a0b28` is **ACTIVE**. Both `fleetinpieces.space` and `www.fleetinpieces.space` are attached to Pages but remain pending with **“CNAME record not set”**. Wrangler DNS API access returned 403 (`pages:write` / `zone:read` only), so the assistant has made no DNS record edits. Ryan has the dashboard instructions below; completion is not yet confirmed. Custom-domain HTTPS is not verified. Do not put credentials in this repository or chat.
 
 ## External links — one obvious file
 
@@ -92,15 +76,17 @@ Only the hero can autoplay, and only above 600px with normal motion/data prefere
 
 See **[QUALITY_REVIEW.md](QUALITY_REVIEW.md)** for the completed browser checks and their limits. The local review uses the machine's existing headless Chrome and existing tooling outside this repository; no npm dependency is part of the site.
 
-## Domain steps — only after Porkbun is ready and Ryan authorizes them
+## Remaining custom-domain DNS work
 
-Nothing in this section has been performed.
+Ryan has the following dashboard instructions. The nameserver change is complete; the record edits remain unconfirmed:
 
-1. First confirm the Git-connected `*.pages.dev` deployment works.
-2. To use the apex **fleetinpieces.space**, add that domain as a zone in the same Cloudflare account, using the Free option. Preserve any existing DNS records that need to survive.
-3. In Pages → `fleet-in-pieces-site` → **Custom domains → Set up a domain**, enter `fleetinpieces.space` and follow the setup.
-4. At Porkbun, replace the domain's authoritative nameservers with the **two exact nameservers Cloudflare assigns that zone**. Do not use guessed/example nameservers. An apex Pages domain requires the Cloudflare zone; a generic CNAME at Porkbun is not a substitute for this step.
-5. Let the zone become active. Pages creates/validates its DNS association. Wait for both the custom-domain status and TLS certificate to become active, then check `https://fleetinpieces.space/`, assets, `/404.html`, a missing route and the TikTok link on a phone.
-6. Once the final address works, use it in the TikTok bio. Connecting Steam later remains a one-value config edit.
+| Item | Last confirmed / imported value | Required dashboard change |
+| --- | --- | --- |
+| Authoritative nameservers | `eva.ns.cloudflare.com`, `kurt.ns.cloudflare.com` | Complete; no further change |
+| Apex `@` | A `207.207.210.229` and A `207.207.210.107` | Replace both with proxied CNAME `fleet-in-pieces-site.pages.dev`, Auto TTL |
+| `www` | CNAME `pixie.porkbun.com` | Change target to `fleet-in-pieces-site.pages.dev`, Auto TTL |
+| Wildcard `*` | CNAME `pixie.porkbun.com` | Remove the parking record |
 
-This follows [Cloudflare's apex-domain instructions](https://developers.cloudflare.com/pages/configuration/custom-domains/). The exact nameservers and `pages.dev` hostname cannot be known until the actual Cloudflare project/zone exists.
+After Ryan confirms these record edits, verify both Pages custom-domain statuses and TLS certificates become active. Then check `https://fleetinpieces.space/`, `https://www.fleetinpieces.space/`, assets, a missing route and mobile media before calling either custom domain live.
+
+This follows [Cloudflare's custom-domain instructions](https://developers.cloudflare.com/pages/configuration/custom-domains/). Nameserver activation alone does not establish working site records or HTTPS.

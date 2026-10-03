@@ -52,7 +52,7 @@ CONTACT_EMAIL: '',
 
 Paste the real HTTPS Steam store URL into `STEAM_URL`, commit and push. Every Steam CTA, the Steam social button and the availability text update automatically. Until then the main CTAs lead to an honest coming-soon explanation. No fake app ID, date, price, multiplayer promise or review score is shipped. The dummy URL used in local QA was injected into an isolated browser only and is absent from the production files.
 
-Unknown YouTube/contact links are hidden; the footer has a plain contact-coming-soon note. There is no email signup, per Ryan's decision. The static TikTok anchor is a deliberate no-JavaScript fallback to the currently confirmed handle. If the TikTok handle itself changes, update that one fallback in `index.html` as well as the config. All page content, section links, native video controls and current TikTok access work without JavaScript. Keep the canonical/OG URLs, robots and sitemap fixed to the purchased production domain; `SITE_URL` is its documented value, not a runtime rewrite of crawler metadata.
+Unknown YouTube/contact links are hidden; the footer has a plain contact-coming-soon note. There is no email signup, per Ryan's decision. The static TikTok anchor is a deliberate no-JavaScript fallback to the currently confirmed handle. If the TikTok handle itself changes, update that one fallback in `game.html` as well as the config. All page content, section links, native video controls and current TikTok access work without JavaScript. Keep the canonical/OG URLs, robots and sitemap fixed to the purchased production domain; `SITE_URL` is its documented value, not a runtime rewrite of crawler metadata.
 
 ## Media
 
@@ -65,7 +65,7 @@ Only the hero can autoplay, and only above 600px with normal motion/data prefere
 ## Files and behavior
 
 - `site/` contains the public static assets, including six compact gameplay clips. Root `functions/` adds the community API and shareable idea routes.
-- `index.html`, `styles.css`, `script.js`, `config.js` define the page.
+- `game.html`, `styles.css`, `script.js`, `config.js` define the game overview. The root `_redirects` rule and `index.html` fallback open Community by default.
 - `404.html` is the actual missing-page response on Pages; it prevents accidental SPA-style fallback.
 - `robots.txt` and `sitemap.xml` use the canonical domain; the sitemap lists the home page and missiles page. Private tools and API routes are not indexed.
 - `site.webmanifest`, SVG favicon and PNG icons are included. This is a website, not an offline app; no service worker is installed.
@@ -131,3 +131,7 @@ Official implementation references: [Pages Functions configuration](https://deve
 ### Community publication verified
 
 Community Phase1 is live at https://fleetinpieces.space/systems/missiles. GitHub main commit24ccaf440bc0611730350667aadcc1afcfdeef7c deployed successfully as CloudflarePages94733054-1523-48b9-978a-0eeef5f9c69c. ProductionD1 binding and encrypted secret names were verified;390/1440 custom-domain and Pages browser checks passed. Both apex/www use HTTPS and canonical missile URLs; the production crew key unlocked the empty inbox. Seven changed assets match committed Git hashes. Production contains no review posts.
+
+## Community is the default landing page
+
+Visiting https://fleetinpieces.space/ opens the live missile community at `/systems/missiles`. The game overview, approved logo/hero, dev diary and Steam status remain available at **https://fleetinpieces.space/game**, linked as “The game” from Community. The move uses static Pages redirects; it does not change the Worker API, D1, DNS or account configuration. The302 redirect lets the default grow into a broader community hub later without permanently caching the missiles-only destination.

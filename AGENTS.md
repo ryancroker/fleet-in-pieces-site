@@ -33,3 +33,9 @@ Ryan wants Community to be the default. `/` (and explicit index aliases) redirec
 ## Community introduction — October 3, 2026
 
 Ryan clarified that the default community page still needs a landing introduction explaining the game. `site/systems/missiles.html` now starts with a compact approved transparent wordmark, game-genre headline, finite-fleet description and development status. “Join the discussion” jumps to `#discussion`; “See the game” opens `/game#gameplay`. Keep this context above the missiles topic and avoid turning it into another long marketing page. The introductory headline is the page H1; Missiles is H2. CSS is scoped in community.css; shared thread/admin layouts stay independent.
+
+## Community stylesheet cache fix - October 3, 2026
+
+Ryan reported the new landing appearing in the left desktop column with a stretched, bright logo. Removing the new intro CSS reproduced it: new HTML plus an older cached community.css. The live custom domain returned Cache-Control public,max-age=14400,must-revalidate despite the source _headers requesting max-age=0. A fresh browser alone missed the returning-visitor failure.
+
+All three community HTML consumers now use a content-fingerprinted community.<sha256-first12>.css release asset. Keep community.css as the editable source and compatibility URL. After CSS edits, normalize its bytes to UTF-8/LF, calculate SHA-256, write a new fingerprinted copy and update the stylesheet href in missiles.html, idea.html and crew.html together. Never change an existing fingerprinted file; retain previous copies for cached HTML. The filename bypasses old browser/CDN entries without any account/cache-rule changes. Confirm the live page loads the fingerprinted stylesheet and the landing spans the full desktop grid, including a returning-browser reload.

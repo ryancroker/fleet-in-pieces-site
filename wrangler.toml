@@ -1,0 +1,14 @@
+name = "fleet-in-pieces-site"
+pages_build_output_dir = "./site"
+compatibility_date = "2026-05-22"
+
+[[d1_databases]]
+binding = "COMMUNITY_DB"
+database_name = "fleet-in-pieces-community"
+database_id = "a27dbf92-3ecb-4b41-9428-2d76ba7a558e"
+migrations_dir = "migrations"
+
+# Preview deployments deliberately have no access to public community data.
+# Wrangler's local development database is isolated from production automatically.
+[env.preview]
+d1_databases = []

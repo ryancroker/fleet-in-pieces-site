@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Missiles — Help Build Fleet in Pieces</title>
+  <meta name="description" content="See how missiles work in Fleet in Pieces. Suggest an idea, vote, and join the discussion. No account required. Questionable ideas welcome.">
+  <link rel="canonical" href="https://fleetinpieces.space/systems/missiles">
+  <meta name="theme-color" content="#06090c">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fleet in Pieces">
+  <meta property="og:title" content="Missiles — Help Build Fleet in Pieces">
+  <meta property="og:description" content="What should missiles do next? Suggest it. Vote on it. Argue about it. No account required.">
+  <meta property="og:url" content="https://fleetinpieces.space/systems/missiles">
+  <meta property="og:image" content="https://fleetinpieces.space/assets/images/social-card.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/community.css">
+  <script src="/community.js" defer></script>
+</head>
+<body class="community-page" data-community-system="missiles">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap"><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/#gameplay">The game</a><a href="https://www.tiktok.com/@fleet_in_pieces">TikTok</a></nav></header>
+  <main id="main" class="wrap community-main">
+    <div class="community-intro"><p class="eyebrow">Help build the fleet <span aria-hidden="true">/</span> Systems</p><h1>Missiles.</h1><p class="community-lede">A weapon. An argument. Your next questionable idea.</p></div>
+    <section class="system-current" aria-labelledby="current-title">
+      <div><p class="eyebrow" id="current-title">Current / in development</p><h2>What’s in the game.</h2><ul class="current-facts"><li>Launch from physical tubes. Steer using shared target reports.</li><li>Finite ammunition, fuel and flight time.</li><li>Point defense can intercept them. Hits damage real hulls and equipment.</li></ul></div>
+      <figure class="system-media"><video width="576" height="1024" controls muted playsinline preload="none" poster="/assets/images/missile-range-poster.webp" aria-label="Archived development footage from the Fleet in Pieces missile range"><source src="/assets/video/missile-range.mp4" type="video/mp4"><a href="/assets/video/missile-range.mp4">Watch missile range footage</a></video><figcaption>MISSILE RANGE<br>Archived development footage · tap to play</figcaption></figure>
+    </section>
+    <p class="connection-notice" data-offline hidden>You’re offline. Your draft stays here. Posting, voting and replies need a connection.</p>
+    <div class="community-grid">
+      <section class="idea-composer" aria-labelledby="suggest-title"><p class="eyebrow">Your orders are suggestions</p><h2 id="suggest-title">What should missiles do?</h2><p class="form-intro">No account. No waiting room. Post an idea and let the crew argue about it.</p>
+        <form id="idea-form" data-draft="missiles:idea">
+          <label for="idea-body">Your idea</label><textarea id="idea-body" name="body" rows="5" minlength="8" maxlength="2000" required placeholder="What if missiles could…" aria-describedby="idea-length"></textarea><p class="field-hint" id="idea-length">8–2,000 characters. One idea makes a better discussion. Outside links aren’t accepted yet.</p>
+          <label for="idea-handle">Name / handle <span class="optional">optional</span></label><input id="idea-handle" name="handle" maxlength="32" autocomplete="nickname" placeholder="Anonymous Crew Member" data-handle>
+          <div class="honeypot" aria-hidden="true"><label for="idea-website">Website</label><input id="idea-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <button class="button primary" type="submit" disabled>Post idea</button><p class="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+        <noscript><p class="form-feedback">JavaScript is needed to post, vote and load discussions. You can still read about the game and watch the footage.</p></noscript>
+        <p class="privacy-note">Names are unverified. Your optional handle and unfinished drafts are remembered in this browser.</p>
+        <details class="community-rules"><summary>A few ground rules</summary><p>Argue. Swear. Call an idea terrible. Don’t spam, impersonate people, post private information, threaten people or post illegal material. Use Report when something crosses that line.</p><p>Ideas and replies appear publicly. Don’t include anything you want kept private.</p></details>
+      </section>
+      <section class="community-feed" aria-labelledby="community-title"><div class="feed-heading"><div><p class="eyebrow">Community</p><h2 id="community-title">Make your case.</h2></div><div class="sort-controls" role="group" aria-label="Sort ideas"><button type="button" data-sort="top" aria-pressed="true">Top</button><button type="button" data-sort="new" aria-pressed="false">New</button></div></div><p class="voting-note">Votes represent enthusiasm, not command authority.</p><p class="feed-feedback" id="feed-feedback" role="status" aria-live="polite">Loading the crew’s ideas…</p><div id="idea-list" class="idea-list"></div><button class="button secondary load-more" id="more-ideas" type="button" hidden>More ideas</button><div class="feedback-history" hidden><p class="eyebrow">Implemented from feedback</p><p>Implemented ideas keep their original discussion, votes and developer response below. The history stays with the idea.</p></div></section>
+    </div>
+  </main>
+  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="https://www.tiktok.com/@fleet_in_pieces">Back to the TikTok</a><small>© 2026 Fleet in Pieces</small></div></footer>
+</body>
+</html>

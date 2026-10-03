@@ -13,3 +13,6 @@ qa-output/
 *.tar
 *.tar.gz
 *.tmp
+.dev.vars
+.dev.vars.*
+.community-admin-key.txt

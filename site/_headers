@@ -12,6 +12,16 @@
   Cache-Control: public, max-age=0, must-revalidate
 /styles.css
   Cache-Control: public, max-age=0, must-revalidate
+/community.css
+  Cache-Control: public, max-age=0, must-revalidate
+/community.js
+  Cache-Control: public, max-age=0, must-revalidate
+/crew.js
+  Cache-Control: public, max-age=0, must-revalidate
+/crew*
+  X-Robots-Tag: noindex, nofollow
+/idea*
+  X-Robots-Tag: noindex, nofollow
 
 # Stable media names: cache briefly, never immutable. Rename/bump filenames before longer caching.
 /assets/*

@@ -12,3 +12,7 @@
 /* Desktop masthead; the compact logo stays in the phone/tablet reading order. */
 .hero-logo-desktop{display:none}
 @media(min-width:1151px){.hero{padding-top:36px}.hero-logo-desktop{display:block;width:min(820px,70vw);margin:0 auto}.hero-logo-inline{display:none}.hero-inner{padding-top:20px}.hero-copy{align-self:start;padding-top:48px}.hero-copy>h1{margin-top:20px}}
+
+/* One clear entry into the first live system discussion. */
+.community-entry{display:flex;justify-content:space-between;align-items:center;gap:28px;padding-block:38px;border-bottom:1px solid var(--line)}.community-entry h2{font-size:clamp(1.4rem,2vw,1.9rem);margin:10px 0}.community-entry p:not(.eyebrow){color:var(--muted);font-size:.9375rem}.community-entry .button{flex-shrink:0}
+@media(max-width:580px){.site-header nav .nav-game{display:none}.community-entry{align-items:start;flex-direction:column;gap:20px;padding-block:30px}.community-entry .button{width:100%}.site-header nav{gap:16px}}

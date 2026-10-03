@@ -26,3 +26,11 @@ Security headers were served by the local preview during the browser pass, inclu
 The final visual style preserves Ryan's request for dimmer branding and near-black surfaces. The supplied logo/social card were checked for legibility; neither is generated gameplay.
 
 Limits: this establishes local Chrome behavior, not a live Cloudflare deployment, Safari/iOS verification, a worldwide network-speed benchmark or acceptance of the game's simulation. The actual domain is still awaiting user-controlled provisioning. GitHub's existing credential returned 401 and Cloudflare credentials were unavailable, so remote publishing could not be verified. Ryan owns final copy, clip choice and phone appearance approval.
+
+## Missile community review — October 3, 2026
+
+Real Chrome at390x844 and1440x1000, backed by Wrangler's isolated local D1, confirmed no horizontal overflow, no JavaScript exceptions and no failed page/asset/API requests during ordinary loading. The390px suggestion textarea fits inside the initial844px viewport (top685px,bottom831px); the desktop textarea starts634px down. Footage stays paused with no automatic video data load. Canonical metadata uses the production domain.
+
+A short local browser journey submitted an idea, voted, posted an anonymous reply, reported content, reopened `/i/1`, and opened the protected crew desk. Four concurrent repeat vote requests stayed at one vote. Developer status/response saved; hiding an idea made its API, thread URL and replies return404; restoring worked. Individual replies could be hidden/restored, reports resolved, and Lock removed private desk content. Markup in a developer response rendered literally. Failed link submissions retained editable drafts; draft/handle survived reload. Top/New controls and an independent browser read worked.
+
+Focused local API checks confirmed idempotent retried submission, cross-origin403, oversized-body413, and rejection of obvious private email, honeypot and official-impersonation inputs. These checks cover the implemented flow, not exhaustive abuse resistance or real-world identity guarantees. Ryan's phone acceptance remains authoritative. No public review posts were created; production D1 was independently confirmed empty before release. Evidence lives outside the site at `../../Saved/SourceChanges/FleetWebsiteCommunity_20261003`.

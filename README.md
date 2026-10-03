@@ -24,7 +24,7 @@ The existing Git-integrated Pages project uses these settings. Reuse it rather t
 | Build command | **Leave blank** — no build |
 | Build output directory | `site` |
 | Root directory | Leave blank / repository root |
-| Environment variables | None |
+| Server secrets | `COMMUNITY_ADMIN_KEY`, `COMMUNITY_SIGNING_KEY` (encrypted) |
 
 Cloudflare's Git integration guide explicitly allows a blank command for a site without a build. The Pages site is verified. The custom domain and both domain associations are active. DNS setup is complete. No paid feature is required.
 
@@ -64,10 +64,10 @@ Only the hero can autoplay, and only above 600px with normal motion/data prefere
 
 ## Files and behavior
 
-- `site/` is the complete deployable output, about **2.70 MiB** including all five videos.
+- `site/` contains the public static assets, including six compact gameplay clips. Root `functions/` adds the community API and shareable idea routes.
 - `index.html`, `styles.css`, `script.js`, `config.js` define the page.
 - `404.html` is the actual missing-page response on Pages; it prevents accidental SPA-style fallback.
-- `robots.txt` and `sitemap.xml` name the canonical root; the sitemap contains only the real home page.
+- `robots.txt` and `sitemap.xml` use the canonical domain; the sitemap lists the home page and missiles page. Private tools and API routes are not indexed.
 - `site.webmanifest`, SVG favicon and PNG icons are included. This is a website, not an offline app; no service worker is installed.
 - `_headers` supplies a self-only CSP, frame protection, MIME protection, referrer policy and restricted unused browser permissions. It also prevents indexing temporary Pages hostnames.
 - CSS/JavaScript revalidate on every visit. Stable media filenames cache for one hour, without `immutable`. If replacing a media file immediately after launch, rename/version it and update its references to avoid stale browser copies.
@@ -81,3 +81,49 @@ See **[QUALITY_REVIEW.md](QUALITY_REVIEW.md)** for the completed browser checks 
 The domain connection is complete. Use https://fleetinpieces.space/ as the canonical address; www is also active. Do not repeat provisioning steps or change DNS/hosting settings for visual edits.
 
 The October2 hero update uses the approved transparent RGBA wordmark as an820px centered desktop masthead above the headline/gameplay columns. Phone/tablet layouts retain the compact inline logo. The graphite/navy gradient, tighter phone spacing and tiny red divider preserve the pale-blue CTA hierarchy. The existing GitHub integration deployed commit `4aacdf5efca6344a12e33d931bdf7393fedd1a42` successfully as deployment `4ad81ccd-25dc-4898-a827-cdb06588c1e7`. See MEDIA_SOURCES.md for the logo provenance.
+
+## Community — missiles first
+
+`/systems/missiles` is the first system discussion. Visitors can post instantly, vote, reply and report without an account. Names are optional and unverified; an empty name becomes Anonymous Crew Member. Handles and drafts stay in browser storage; public posts live in D1. Short links `/i/<id>` retain the original discussion. There are no sample posts or synthetic votes in production.
+
+A small Pages Functions layer runs on Cloudflare's Workers runtime. `_routes.json` invokes it only for `/api/*` and `/i/*`; the marketing page, media and system page remain static. The existing GitHub main → Pages workflow, blank build and output `site` remain in place. `wrangler.toml` defines production D1 and intentionally disables D1 access in preview deployments. Do not bind previews to production for testing.
+
+### Developer desk
+
+Open **https://fleetinpieces.space/crew** and enter the key from the local ignored `.community-admin-key.txt` file. The page holds it in memory only; Lock or reload clears it. The API verifies it on every privileged request. Do not paste this key into a public idea, screenshot, commit or URL. If the file is lost, rotate COMMUNITY_ADMIN_KEY using Wrangler rather than trying to recover the cloud secret. Keep COMMUNITY_SIGNING_KEY stable across releases: rotating it invalidates existing anonymous browser identities and their ability to remove old votes.
+
+Use Ideas & responses to set a real status, optional custom label and developer response. Use Reports to inspect reported content, hide/restore it and resolve a report. Original text and author credit remain intact; status/response changes are recorded in D1. Hidden ideas and their replies disappear from public API/thread pages. Votes represent enthusiasm, not command authority.
+
+### Local development
+
+Use the installed Wrangler CLI (or `npx wrangler` where available). The repository itself has no npm/runtime package dependencies:
+
+```powershell
+npx wrangler d1 migrations apply COMMUNITY_DB --local
+npx wrangler pages dev site --ip 127.0.0.1 --port 4174 --d1 COMMUNITY_DB=a27dbf92-3ecb-4b41-9428-2d76ba7a558e
+```
+
+The explicit local `--d1` override is needed because Pages dev uses preview settings; it still uses isolated local storage. The compatibility date is pinned to the installed runtime, May22,2026.
+
+Create an ignored `.dev.vars` with separate local values for COMMUNITY_ADMIN_KEY and COMMUNITY_SIGNING_KEY. Never use the production admin key in local QA fixtures. Local data persists in ignored `.wrangler/state`; the `--local` database is isolated from production. The original `preview.py` is suitable for static layout only; community actions require Wrangler.
+
+### Publishing schema and code
+
+Apply reviewed additive migrations before pushing code that needs them:
+
+```powershell
+npx wrangler d1 migrations apply COMMUNITY_DB --remote
+git add <the reviewed source files>
+git commit -m "Describe the community change"
+git push origin main
+```
+
+Verify the Git-backed deployment and the actual custom-domain page/API. Do not force-push or replace the Pages project. A static-only rollback can temporarily leave discussions unavailable while keeping D1 data; never drop database tables as part of a frontend rollback. Before destructive schema work, export D1 to a private, ignored path and review Cloudflare's current recovery documentation.
+
+### Abuse and privacy boundaries
+
+A signed browser cookie limits casual repeat votes. Server-side rate limits apply to both browser identity and a daily salted IP hash; raw IP addresses are not stored by this application. Clearing cookies is not identity verification, and shared-network limits can affect several visitors. Public names are not verified identities.
+
+Profanity is allowed. Public text is never interpreted as HTML. Obvious outside links/private-information patterns and a hidden spam field are checked; contextual abuse still needs reports and human moderation. There is no blanket claim that software can recognize every threat or private detail. Read failures preserve the static page and show an honest retry state; failed submissions preserve drafts. Free-tier limits can temporarily make community actions unavailable without removing stored discussions. No paid plan or DNS change is part of this feature.
+
+Official implementation references: [Pages Functions configuration](https://developers.cloudflare.com/pages/functions/wrangler-configuration/), [D1 bindings](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases), [D1 limits and recovery window](https://developers.cloudflare.com/d1/platform/limits/).

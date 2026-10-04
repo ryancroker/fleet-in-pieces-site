@@ -1,0 +1,71 @@
+(() => {
+ 'use strict';
+ const creator=window.FleetCreator,overview=document.getElementById('crew-overview'),proposals=document.getElementById('crew-topics');
+ if(!creator||!overview)return;
+ const n=(tag,cls,value)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(value!==undefined)x.textContent=value;return x;};
+ const button=(label,action,cls='text-button')=>{const x=n('button',cls,label);x.type='button';x.addEventListener('click',action);return x;};
+ const link=(label,path,cls='back-link')=>{const x=n('a',cls,label);x.href=path;return x;};
+ const date=value=>new Date(value).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
+ let section='overview',days=7,epoch=0,loading=false,topicStatus='pending',topicOffset=0,topicVersion=0,topicBusy=false;
+ const topicSeen=new Set();
+ function navigate(value,view){window.dispatchEvent(new CustomEvent('fleet:desk-section',{detail:{section:value,view}}));}
+ function errorAt(host,error,retry){host.replaceChildren(n('p','form-feedback error',error.message),button('Try again',retry));}
+ function render(data){
+  const header=n('div','dashboard-heading'),heading=n('div');heading.append(n('p','eyebrow','Fleet Command / activity'),n('h2','','The state of the fleet.'));
+  const controls=n('div','sort-controls');for(const count of [7,30]){const b=button(`${count} days`,()=>{if(!loading){days=count;refresh();}});b.setAttribute('aria-pressed',String(days===count));controls.append(b);}controls.append(button('Refresh',refresh));header.append(heading,controls);
+  const metrics=n('div','dashboard-metrics');
+  for(const [kind,label] of [['idea','Ideas'],['reply','Crew replies'],['vote','Active votes'],['developer','Your replies'],['register','New registrations']]){
+   const item=n('div','dashboard-metric');item.append(n('span','',label),n('strong','',data.counts[kind]),n('small','',`${data.totals[kind]} total`));metrics.append(item);
+  }
+  const attention=n('div','dashboard-attention');
+  attention.append(button(`${data.attention.topics} topic proposal${data.attention.topics===1?'':'s'} to review`,()=>navigate('topics'),'button secondary'),button(`${data.attention.needs_response} suggestions without your reply`,()=>navigate('inbox','needs_response'),'text-button'),button(`${data.attention.reports} unresolved reports`,()=>navigate('inbox','reports'),'text-button'));
+  const trend=n('section','dashboard-panel');trend.append(n('h3','','Daily activity'),n('p','field-hint','Ideas, crew replies, active votes, your first replies, and registrations. Pacific calendar days; today is partial.'));
+  const chart=n('div','activity-chart');chart.setAttribute('role','img');const total=row=>row.idea+row.reply+row.vote+row.developer+row.register;const maximum=Math.max(1,...data.daily.map(total));
+  chart.setAttribute('aria-label',data.daily.map(row=>`${row.date}: ${total(row)} activities`).join('; '));
+  for(const row of data.daily){const column=n('div','activity-column'),bar=n('span','activity-bar');bar.style.height=`${total(row)/maximum*100}%`;column.title=`${row.date}: ${total(row)} — ${row.idea} ideas, ${row.reply} replies, ${row.vote} active votes, ${row.developer} developer replies, ${row.register} registrations`;column.append(bar);chart.append(column);}
+  const range=n('div','chart-range');range.append(n('span','',data.daily[0].date),n('span','','Today'));trend.append(chart,range);
+  const panels=n('div','dashboard-columns'),recent=n('section','dashboard-panel'),activity=n('section','dashboard-panel');recent.append(n('h3','','Recent dispatches'));
+  const labels={idea:'New idea',reply:'Crew reply',vote:'Active support',developer:'Your reply',developer_edit:'Your reply updated',register:'Joined the register'};
+  for(const event of data.recent){const row=n('article','activity-row'+(event.kind.startsWith('developer')?' activity-official':''));row.append(n('p','eyebrow',labels[event.kind]),n('p','',event.kind==='vote'?`${event.amount} active vote${event.amount===1?'':'s'} · ${event.content_title}`:`${event.author}${event.content_title&&event.kind!=='register'?' · '+event.content_title:''}`));if(event.body)row.append(n('p','activity-excerpt',event.body));const when=n('time','field-hint',date(event.created_at));when.dateTime=event.created_at;row.append(when);if(event.idea_id)row.append(link('Open discussion →','/i/'+event.idea_id));recent.append(row);}
+  if(!data.recent.length)recent.append(n('p','field-hint','No recorded activity in this period yet.'));
+  activity.append(n('h3','','Active discussions'));
+  for(const topic of data.topics){const row=n('div','activity-row');row.append(link(topic.content_title,topic.content_path),n('p','field-hint',`${topic.ideas} ideas · ${topic.replies} crew replies · ${topic.votes} active votes · ${topic.developer_replies} developer replies`));activity.append(row);}
+  if(!data.topics.length)activity.append(n('p','field-hint','No topic activity in this period yet.'));
+  const traffic=n('div','traffic-summary');traffic.append(n('p','eyebrow','Visitor traffic'),n('h3','','Available in Cloudflare'),n('p','field-hint','Traffic statistics are not connected to this desk. Community activity above is not a visitor count. Cloudflare has the site’s visitor report. Earlier developer and automated review visits cannot all be reliably separated.'));
+  const trafficLink=link('Open Cloudflare Web Analytics ↗',data.traffic.url);trafficLink.target='_blank';trafficLink.rel='noopener noreferrer';traffic.append(trafficLink);activity.append(traffic);panels.append(recent,activity);
+  overview.replaceChildren(header,metrics,attention,trend,panels,n('p','dashboard-footnote',`Updated ${date(data.as_of)}. Visible community records only. Votes still active today are grouped by their original date; removed votes are not a historical traffic log. Existing developer notes count as your official replies; edits appear in dispatches without adding another reply.`));
+ }
+ async function refresh(){
+  if(!creator.authorized()||section!=='overview'||loading)return;loading=true;const current=epoch;
+  if(!overview.children.length)overview.textContent='Loading activity…';
+  try{const data=await creator.api('/api/admin/dashboard?days='+days);if(current===epoch&&creator.authorized())render(data);}
+  catch(error){if(current===epoch&&creator.authorized())errorAt(overview,error,refresh);}
+  finally{if(current===epoch)loading=false;}
+ }
+ function field(form,label,name,value,max,multiline=false){const id='proposal-'+form.dataset.id+'-'+name,l=n('label','',label),input=n(multiline?'textarea':'input');l.htmlFor=id;input.id=id;input.name=name;input.value=value;input.maxLength=max;input.required=true;input.minLength=multiline?8:3;if(multiline)input.rows=4;form.append(l,input);return input;}
+ function proposalCard(item){
+  const card=n('article','topic-review crew-card');card.append(n('p','eyebrow',`${item.status} / proposal ${item.id}`),n('h3','',item.title));
+  const credit=n('div','topic-review-credit');credit.append(n('span','','Suggested by '),item.credit.path?link(item.credit.name,item.credit.path):n('strong','',item.credit.name));card.append(credit,n('p','crew-body',item.body),n('p','field-hint','Received '+date(item.created_at)));
+  if(item.status==='approved'){card.append(link('Open published topic →',item.path));return card;}
+  const form=n('form','topic-review-form');form.dataset.id=item.id;field(form,'Public topic title','title',item.title,100);field(form,'Public introduction','summary',item.body,2000,true);
+  form.append(n('p','field-hint','Publish creates a public discussion with the original submitter’s credit. The private submission above is retained.'));
+  const actions=n('div','actions'),publish=n('button','button primary','Publish topic');publish.type='submit';const note=n('p','form-feedback');note.setAttribute('role','status');
+  let saving=false;
+  async function decide(status){if(saving)return;if(status==='approved'&&!form.reportValidity())return;saving=true;[...form.elements].forEach(x=>x.disabled=true);note.textContent=status==='approved'?'Publishing…':'Filing privately…';
+   try{const result=await creator.api('/api/admin/topics/'+item.id,{method:'PATCH',body:JSON.stringify({revision:item.revision,status,title:form.elements.title.value,summary:form.elements.summary.value})});form.replaceChildren(n('p','form-feedback',status==='approved'?'Published. The original submitter is credited on the topic.':'Declined. This proposal remains private.'));if(result.path)form.append(link('Open published topic →',result.path));}
+   catch(error){note.textContent=error.message;note.classList.add('error');[...form.elements].forEach(x=>x.disabled=false);}
+   finally{saving=false;}
+  }
+  actions.append(publish);if(item.status!=='declined')actions.append(button('Decline privately',()=>decide('declined')));form.append(actions,note);form.addEventListener('submit',event=>{event.preventDefault();decide('approved');});card.append(form);return card;
+ }
+ async function loadTopics(reset=false){
+  if(!creator.authorized())return;if(!reset&&topicBusy)return;
+  if(reset){topicVersion++;topicOffset=0;topicSeen.clear();const heading=n('div','dashboard-heading'),controls=n('div','sort-controls');heading.append(n('h2','','Topic proposals.'));for(const status of ['pending','approved','declined']){const b=button(status[0].toUpperCase()+status.slice(1),()=>{topicStatus=status;loadTopics(true);});b.setAttribute('aria-pressed',String(topicStatus===status));controls.append(b);}controls.append(button('Refresh',()=>loadTopics(true)));heading.append(controls);const note=n('p','form-feedback');note.dataset.proposalFeedback='';note.setAttribute('role','status');const list=n('div');list.dataset.proposalList='';const more=button('Load more',()=>loadTopics());more.dataset.proposalMore='';more.hidden=true;proposals.replaceChildren(heading,n('p','section-note','Pending and declined proposals are visible only here. Publish one to open it to everyone, with the submitter’s credit.'),note,list,more);}
+  const current=topicVersion;topicBusy=true;const note=proposals.querySelector('[data-proposal-feedback]'),list=proposals.querySelector('[data-proposal-list]'),more=proposals.querySelector('[data-proposal-more]');note.textContent='Loading proposals…';more.disabled=true;
+  try{const data=await creator.api(`/api/admin/topics?status=${topicStatus}&offset=${topicOffset}`);if(current!==topicVersion||!creator.authorized())return;for(const item of data.proposals)if(!topicSeen.has(item.id)){topicSeen.add(item.id);list.append(proposalCard(item));}topicOffset+=data.proposals.length;more.hidden=!data.has_more;note.textContent=topicSeen.size?'':`No ${topicStatus} proposals.`;}
+  catch(error){if(current===topicVersion&&creator.authorized())errorAt(note,error,()=>loadTopics());}
+  finally{if(current===topicVersion){topicBusy=false;more.disabled=false;}}
+ }
+ window.FleetDashboard={show(value){section=value;if(value==='overview')refresh();if(value==='topics')loadTopics(true);},clear(){epoch++;topicVersion++;loading=topicBusy=false;overview.replaceChildren();proposals.replaceChildren();topicSeen.clear();}};
+ setInterval(()=>{if(!document.hidden)refresh();},60000);
+})();

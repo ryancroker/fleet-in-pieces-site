@@ -6,6 +6,7 @@ import {
 } from '../_lib/community.js';
 import { attachIdentity, routeIdentity } from '../_lib/identity.js';
 import { routeCreator, publicHistory } from '../_lib/creator.js';
+import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '../_lib/topics.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -165,15 +166,16 @@ async function discovery(db, session) {
       SELECT i.id FROM ideas i WHERE i.hidden=0 AND i.merged_into IS NULL ORDER BY (${GROUP_VOTES_SQL}) DESC,i.id DESC LIMIT 128
     ), candidates AS (SELECT id FROM recent_candidates UNION SELECT id FROM popular_candidates),
     ranked AS (
-      SELECT i.id,(${GROUP_VOTES_SQL}) AS support,
+      SELECT i.id,i.content_id,(${GROUP_VOTES_SQL}) AS support,
         3*(SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash)) FROM votes v
           LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id IN (SELECT g.id FROM ideas g WHERE (g.id=i.id OR g.merged_into=i.id) AND g.hidden=0) AND v.created_at>=?)
         +2*(SELECT COUNT(*) FROM replies r WHERE r.idea_id IN (SELECT g.id FROM ideas g WHERE (g.id=i.id OR g.merged_into=i.id) AND g.hidden=0) AND r.hidden=0 AND r.created_at>=?)
         +CASE WHEN i.created_at>=? THEN 1 ELSE 0 END AS activity
       FROM candidates candidate JOIN ideas i ON i.id=candidate.id JOIN content_objects c ON c.id=i.content_id
-      WHERE c.is_public=1 ORDER BY activity DESC,support DESC,i.id DESC LIMIT 6
-    ) SELECT ${IDEA_COLUMNS} ${IDEA_FROM} JOIN ranked ON ranked.id=i.id
-      WHERE i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 ORDER BY ranked.activity DESC,ranked.support DESC,i.id DESC`)
+      WHERE c.is_public=1
+    ), balanced AS (SELECT *,ROW_NUMBER() OVER(PARTITION BY content_id ORDER BY activity DESC,support DESC,id DESC) AS topic_position FROM ranked)
+    SELECT ${IDEA_COLUMNS} ${IDEA_FROM} JOIN balanced ON balanced.id=i.id
+      WHERE i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 ORDER BY balanced.topic_position,balanced.activity DESC,balanced.support DESC,i.id DESC LIMIT 6`)
     .bind(since, since, since, session.actor, session.actor);
   const implemented = db.prepare(`SELECT ${IDEA_COLUMNS} ${IDEA_FROM}
     WHERE i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 AND i.decision_key='implemented' ORDER BY i.implemented_at DESC,i.id DESC LIMIT 4`)
@@ -198,9 +200,12 @@ export async function onRequest(context) {
     if (request.method === 'GET') await publicReadLimit(db, session);
     const identityResponse = await routeIdentity({ request, env, db, session, url, path, data });
     if (identityResponse) return identityResponse;
+    if(request.method==='POST'&&path.length===1&&path[0]==='topic-proposals')return json(await proposeTopic(db,session,data),session);
     if (request.method === 'GET' && path.length === 1 && path[0] === 'content') {
-      const { results } = await db.prepare('SELECT id,slug,title,kind,path,summary,current_json,media_json FROM content_objects WHERE is_public=1 ORDER BY kind,title,id LIMIT 100').all();
-      return json({ content: results.map(contentJson) }, session);
+      const { results } = await db.prepare(`SELECT c.id,c.slug,c.title,c.kind,c.path,c.summary,c.current_json,c.media_json,${TOPIC_CREDIT_COLUMNS},
+        (SELECT COUNT(*) FROM ideas i WHERE i.content_id=c.id AND i.hidden=0 AND i.merged_into IS NULL) AS idea_count
+        FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.is_public=1 ORDER BY c.title,c.id LIMIT 100`).all();
+      return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null})) }, session);
     }
     if (request.method === 'GET' && path.length === 1 && path[0] === 'discovery') return json(await discovery(db, session), session);
     if (path[0] === 'ideas' && path.length === 1) {

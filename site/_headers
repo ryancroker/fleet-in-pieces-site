@@ -24,6 +24,10 @@
   X-Robots-Tag: noindex, nofollow
 /idea*
   X-Robots-Tag: noindex, nofollow
+/topic
+  X-Robots-Tag: noindex, nofollow
+/topic.html
+  X-Robots-Tag: noindex, nofollow
 
 # Stable media names: cache briefly, never immutable. Rename/bump filenames before longer caching.
 /assets/*

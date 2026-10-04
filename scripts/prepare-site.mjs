@@ -42,7 +42,7 @@ async function htmlFiles(folder) {
   }
   return files;
 }
-const assets = ['styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const assets = ['styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;

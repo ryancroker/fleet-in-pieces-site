@@ -1,5 +1,15 @@
 # Website quality review — October 2, 2026
 
+## Activity dashboard and topic proposals — October 3, 2026
+
+Local Chrome390x950 and1440x1000 passed the actual guest proposal form, private queue, owner publish form, attributed topic page, public idea/reply/vote flow, dashboard counts, attention shortcut and Lock. Screenshots inspected for the directory, owner dashboard, approval form, attribution and strongly highlighted developer reply. No horizontal overflow or runtime exceptions during this journey. The note count increased once for a new developer note and did not increase on editing it; recent activity identified the edit.
+
+Focused local privacy checks passed guest and foreign-origin rejection, private declined404/public-list absence, stale revision409, request retry/idempotency, changed-payload conflict and atomic single publication. Literal HTML and template-token strings stayed escaped. Discovery showed different topics before repeats. These were local fixtures only, not public submissions or actual moderation decisions. Actual mobile-device acceptance remains Ryan's.
+
+Authoring,24 JS syntax files,19 HTML documents and33 referenced local assets/fingerprint hashes passed; Pages Functions compiled. Migration0006 applied successfully in production after a private export. All previous fields and rows in14 persistent tables remained unchanged, including Ryan’s7 creator audit events and18 idea-history entries. The new proposals table was empty. Production export/preservation and deployment receipts live outside the repo in `../../Saved/SourceChanges/FleetActivityTopics_20261003`. Never publish its `private/` folder.
+
+
+
 ## Creator controls — October 3, 2026
 
 Chrome local review at390x950 and1440x950 exercised the actual Fleet Command unlock form, inbox filter, required-note validation, saving Already in Game, navigation to a public discussion, inline suggestion/reply controls, saving/reloading, and Lock. The390px editor is350px wide with no horizontal overflow even when advanced drawers are open. Inbox, editor and public-note screenshots were visually inspected. No browser runtime exceptions in the completed journey; guests receive neither inline controls nor the lazily loaded editor script. The password input clears on unlock and the session cookie is inaccessible to document.cookie. This is desktop Chrome viewport evidence; actual phone acceptance remains Ryan's.

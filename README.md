@@ -151,3 +151,14 @@ Change the purchase destination in `site/config.js`, refresh verified metadata i
 The existing Cloudflare beacon was blocked by the original self-only script policy. Static and Functions CSP now permit its script and connection origins; there is no new beacon or analytics provider. Local previews have no injected production analytics. Keep mutation/layout QA on isolated local D1 and make only a small, identified release check on production. Do not equate requests or IPs with people, or claim a CSP fix proves analytics ingestion before checking the live release.
 
 `site/network.js` replaces three independent public request wrappers. It provides one initial cookie barrier, timeouts and retry messages while existing idempotent mutation IDs preserve drafts across failures. The register's secure session and guest identity remain separate.
+
+
+## Activity and topic proposals
+
+Open `/crew` with the existing developer key. **Activity** shows 7/30-day community counts, daily activity, recent dispatches and unanswered/report/proposal shortcuts. **Suggestions** retains the existing moderation inbox. **Topic proposals** is private: edit the public title/intro, then **Publish topic**, or **Decline privately**. Approval creates a regular discussion page and displays its submitter prominently. Pending/declined proposals have no public page. Guest suggestions remain welcome.
+
+Visitors use `/community#topics` to browse every published topic and `/community#propose-topic` to submit one privately. Your existing official notes are developer replies, highlighted in the public cards. They are not duplicated in the crew reply table.
+
+Dashboard counts describe visible community records. Active votes are not historical page views. Visitor analytics are currently available through the dashboard's Cloudflare link, without embedding private Analytics credentials or adding tracking. Dates use Pacific calendar days; the current day is partial.
+
+Apply additive migration0006 only after a private production export and local review; do not seed production from local QA. Normal publication remains commit/push to main → the existing Pages project.

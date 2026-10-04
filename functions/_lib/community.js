@@ -223,7 +223,7 @@ export async function publicReadLimit(db, session) {
 }
 export async function writeLimit(db, session, kind, hash = '', parent = '') {
   const config = {
-    idea: [5, 20, 600, 60, 200], reply: [20, 100, 600, 200, 1000],
+    idea: [5, 20, 600, 60, 200], reply: [20, 100, 600, 200, 1000], topic: [3, 8, 600, 30, 120],
     vote: [60, null, 60, 600, null], report: [10, null, 3600, 100, null]
   }[kind];
   const [short, daily, seconds, ipShort, ipDaily] = config;

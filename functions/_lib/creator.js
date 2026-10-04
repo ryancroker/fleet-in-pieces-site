@@ -1,4 +1,6 @@
 import {authorizeAdmin,contentFor,digest,fail,getIdea,IDEA_COLUMNS,IDEA_FROM,ideaJson,keysOnly,limits,PAGE_SIZE,pageOffset,paginate,positiveId,publicReadLimit,REPLY_COLUMNS,REPLY_FROM,replyJson,textField} from './community.js';
+import {dashboard} from './dashboard.js';
+import {creatorTopics} from './topics.js';
 
 export const DECISIONS = Object.freeze({
  open:{status:'new',label:'OPEN'},under_review:{status:'reviewing',label:'UNDER REVIEW'},
@@ -158,12 +160,14 @@ export async function routeCreator(request,env,db,session,url,path,data) {
   }
  }
  await authorize(request,env,db,session);
+ if(request.method==='GET'&&path[1]==='dashboard'&&path.length===2)return dashboard(db,url);
+ if(path[1]==='topics')return creatorTopics(db,url,path,request.method,data);
  if(request.method==='GET'&&path.length===1){
   const view=url.searchParams.get('view')||'new',offset=pageOffset(url);
   if(view==='reports'){
    const {results}=await db.prepare(`SELECT p.id,p.target_type,p.target_id,p.idea_id,p.reason,p.detail,p.created_at,CASE WHEN p.target_type='idea' THEN i.body ELSE r.body END AS target_body,CASE WHEN p.target_type='idea' THEN i.handle ELSE r.handle END AS target_handle FROM reports p LEFT JOIN ideas i ON i.id=p.idea_id LEFT JOIN replies r ON p.target_type='reply' AND r.id=p.target_id WHERE p.resolved_at IS NULL ORDER BY p.id DESC LIMIT ? OFFSET ?`).bind(PAGE_SIZE+1,offset).all();const page=paginate(results);return {reports:page.rows,has_more:page.has_more};
   }
-  const where={ideas:'1=1',new:"i.decision_key IS NULL AND i.status='new' OR i.decision_key='open'",popular:'i.hidden=0 AND i.merged_into IS NULL',needs_response:"i.hidden=0 AND trim(i.developer_response)=''",under_review:"i.decision_key='under_review' OR (i.decision_key IS NULL AND i.status='reviewing')",planned:"i.status='planned' OR i.status='building'",implemented:"i.decision_key='implemented'",already_in_game:"i.decision_key='already_in_game'",legacy:"i.status='implemented' AND i.decision_key IS NULL"}[view];
+  const where={ideas:'1=1',new:"i.decision_key IS NULL AND i.status='new' OR i.decision_key='open'",popular:'i.hidden=0 AND i.merged_into IS NULL',needs_response:"i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 AND trim(i.developer_response)=''",under_review:"i.decision_key='under_review' OR (i.decision_key IS NULL AND i.status='reviewing')",planned:"i.status='planned' OR i.status='building'",implemented:"i.decision_key='implemented'",already_in_game:"i.decision_key='already_in_game'",legacy:"i.status='implemented' AND i.decision_key IS NULL"}[view];
   if(!where)fail(400,'invalid_view','Choose an inbox view.');
   const {results}=await db.prepare(`SELECT ${IDEA_COLUMNS},i.hidden ${IDEA_FROM} WHERE (${where}) ORDER BY ${view==='popular'?'votes DESC,':''}i.id DESC LIMIT ? OFFSET ?`).bind(session.actor,session.actor,PAGE_SIZE+1,offset).all();const page=paginate(results);return {ideas:page.rows.map(r=>ideaJson(r,true)),has_more:page.has_more};
  }

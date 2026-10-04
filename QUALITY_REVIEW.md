@@ -1,5 +1,12 @@
 # Website quality review — October 2, 2026
 
+## Developer status and latest replies — October 4, 2026
+
+Bounded local Chrome390/1440 review exercised guest display, real creator unlock, persistent badge after navigation, the public latest-replies button/feed, and Lock returning to guest. Screenshots inspected at both widths; no horizontal overflow or runtime exceptions. Pacific login label matched the server timestamp and exact8-hour session expiry. Reads, navigation, a local pin change and Lock preserved last-login time. Pinning did not reorder the actual note chronology. No public QA logins, submissions or moderation actions are needed for release verification.
+
+Authoring,25 syntax files,20 HTML documents and33 local asset references/fingerprint hashes passed; Pages Functions compiled. Evidence/private backup/deployment receipts are outside this repository at `../../Saved/SourceChanges/FleetDeveloperStatus_20261004`. Migration0007 applied successfully after a private export; all old fields/rows in15 persistent tables remained unchanged. Its initial login timestamp came from the existing session, not this release. Actual phone experience remains Ryan's acceptance.
+
+
 ## Activity dashboard and topic proposals — October 3, 2026
 
 Local Chrome390x950 and1440x1000 passed the actual guest proposal form, private queue, owner publish form, attributed topic page, public idea/reply/vote flow, dashboard counts, attention shortcut and Lock. Screenshots inspected for the directory, owner dashboard, approval form, attribution and strongly highlighted developer reply. No horizontal overflow or runtime exceptions during this journey. The note count increased once for a new developer note and did not increase on editing it; recent activity identified the edit.

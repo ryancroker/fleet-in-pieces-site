@@ -17,6 +17,7 @@ const productURL = new URL(quartermasterURL);
 if(productURL.protocol!=='https:' || productURL.hostname!=='fleet-in-pieces-shop.fourthwall.com' || !productURL.pathname.startsWith('/products/') || productURL.username || productURL.password) throw Error('Quartermaster must link to a direct Fourthwall product');
 const quartermasterLink = '<a href="/quartermaster">Quartermaster / first issue</a>';
 const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/systems">Systems</a><a href="/ships">Ships</a><a href="/community">Community</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
+const statusBar='<aside class="site-status wrap" aria-label="Developer updates and your access"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies ↗</a><p class="site-update" data-developer-update hidden></p><div class="access-status" data-access-status role="status" aria-live="polite"><strong class="access-label">Your Fleet identity</strong><a href="/register">Register / sign in →</a></div></aside>';
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
 const contents = JSON.parse(await read(path.join(root, 'content/systems.json')));
@@ -59,7 +60,8 @@ for(const file of await htmlFiles(site)){
   html=html.replace(/\s*<script src="\/creator(?:\.[a-f0-9]{12})?\.js"[^>]*><\/script>/g,'');
   html=html.replace('<script ', '<script src="/network.js" defer></script>\n  <script src="/creator.js" data-tools-src="/creator-tools.js" defer></script>\n  <script ');
   if(!/href="\/creator(?:\.[a-f0-9]{12})?\.css"/.test(html)) html=html.replace('</head>','<link rel="stylesheet" href="/creator.css"></head>');
-  html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav);
+  html=html.replace(/<aside class="site-status wrap"[\s\S]*?<\/aside>/g,'');
+  html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav+statusBar);
   // Keep existing footer destinations while exposing identity below the game navigation.
   html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,section => {
     section = section.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>[\s\S]*?<\/a>/g,quartermasterLink);
@@ -79,6 +81,6 @@ for(const file of await htmlFiles(site)){
   }
   await writeFile(file,html);
 }
-const routes = ['/', '/game', '/systems', '/ships', '/community', '/dev-log', '/quartermaster', '/fleet', '/register', ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`)];
+const routes = ['/', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`)];
 await writeFile(path.join(site,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(route=>`  <url><loc>https://fleetinpieces.space${route}</loc></url>`).join('\n')+'\n</urlset>\n');
 console.log('Prepared content and fingerprinted assets: '+releases.map(r=>r.filename).join(', '));

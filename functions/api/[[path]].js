@@ -7,6 +7,7 @@ import {
 import { attachIdentity, routeIdentity } from '../_lib/identity.js';
 import { routeCreator, publicHistory } from '../_lib/creator.js';
 import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '../_lib/topics.js';
+import {developerReplies} from '../_lib/developer-replies.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -208,6 +209,7 @@ export async function onRequest(context) {
       return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null})) }, session);
     }
     if (request.method === 'GET' && path.length === 1 && path[0] === 'discovery') return json(await discovery(db, session), session);
+    if(request.method==='GET'&&path.length===1&&path[0]==='developer-replies')return json(await developerReplies(db,session,url),session);
     if (path[0] === 'ideas' && path.length === 1) {
       if (request.method === 'GET') return json(await listIdeas(db, session, url), session);
       if (request.method === 'POST') {

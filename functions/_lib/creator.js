@@ -23,10 +23,9 @@ function setCookie(request,session,token,age) {
 }
 export async function creatorSession(request,env,db,session) {
  const info=cookieInfo(request);
- if(!info.allowed||!/^[a-f0-9]{64}$/.test(info.token)||typeof env.COMMUNITY_ADMIN_KEY!=='string')return false;
+ if(!info.allowed||!/^[a-f0-9]{64}$/.test(info.token)||typeof env.COMMUNITY_ADMIN_KEY!=='string')return null;
  const hash=await digest(session.key,'creator:'+info.token),version=await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY);
- const row=await db.prepare('SELECT token_hash FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?').bind(hash,version,session.now).first();
- return Boolean(row);
+ return db.prepare('SELECT expires_at FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?').bind(hash,version,session.now).first();
 }
 async function authorize(request,env,db,session) {
  if(!cookieInfo(request).allowed)fail(403,'creator_host','Use https://fleetinpieces.space/crew for developer access.');
@@ -145,7 +144,11 @@ async function promote(db,session,id,data) {
 
 export async function routeCreator(request,env,db,session,url,path,data) {
  if(path[1]==='session'&&path.length===2){
-  if(request.method==='GET'){await publicReadLimit(db,session);return {authorized:await creatorSession(request,env,db,session)};}
+  if(request.method==='GET'){
+   await publicReadLimit(db,session);
+   const active=await creatorSession(request,env,db,session),presence=await db.prepare('SELECT last_login_at FROM developer_presence WHERE id=1').first();
+   return {authorized:Boolean(active),expires_at:active?new Date(active.expires_at*1000).toISOString():null,last_developer_login:presence?.last_login_at||null};
+  }
   if(request.method==='POST'){
    keysOnly(data,['logout']);
    if(data.logout===true){
@@ -155,8 +158,10 @@ export async function routeCreator(request,env,db,session,url,path,data) {
    if(!cookieInfo(request).allowed)fail(403,'creator_host','Open https://fleetinpieces.space/crew to unlock.');
    await authorizeAdmin(request,env,db,session);
    const token=[...crypto.getRandomValues(new Uint8Array(32))].map(x=>x.toString(16).padStart(2,'0')).join('');
-   await db.batch([db.prepare('DELETE FROM creator_sessions WHERE expires_at<=?').bind(session.now),db.prepare('INSERT INTO creator_sessions(token_hash,key_version,expires_at) VALUES(?,?,?)').bind(await digest(session.key,'creator:'+token),await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY),session.now+28800)]);
-   setCookie(request,session,token,28800);return {authorized:true};
+   const loginAt=new Date(session.now*1000).toISOString();
+   await db.batch([db.prepare('DELETE FROM creator_sessions WHERE expires_at<=?').bind(session.now),db.prepare('INSERT INTO creator_sessions(token_hash,key_version,expires_at) VALUES(?,?,?)').bind(await digest(session.key,'creator:'+token),await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY),session.now+28800),
+    db.prepare('UPDATE developer_presence SET last_login_at=? WHERE id=1 AND (last_login_at IS NULL OR last_login_at<?)').bind(loginAt,loginAt)]);
+   setCookie(request,session,token,28800);return {authorized:true,last_developer_login:loginAt,expires_at:new Date((session.now+28800)*1000).toISOString()};
   }
  }
  await authorize(request,env,db,session);

@@ -162,3 +162,10 @@ Visitors use `/community#topics` to browse every published topic and `/community
 Dashboard counts describe visible community records. Active votes are not historical page views. Visitor analytics are currently available through the dashboard's Cloudflare link, without embedding private Analytics credentials or adding tracking. Dates use Pacific calendar days; the current day is partial.
 
 Apply additive migration0006 only after a private production export and local review; do not seed production from local QA. Normal publication remains commit/push to main → the existing Pages project.
+
+
+## Knowing your current identity
+
+The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It also labels the separate community callsign or guest identity. The same code still unlocks `/crew` for8hours; no email or username was introduced. Expiry or Lock removes developer access.
+
+**Updated [Pacific date/time] — Last developer login** is a presence timestamp, not a software-release date. It changes only on a successful developer-key login. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.

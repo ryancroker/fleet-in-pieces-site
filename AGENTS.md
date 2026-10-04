@@ -1,5 +1,13 @@
 # Fleet in Pieces website
 
+## Current handoff — developer presence and latest replies, October 4, 2026
+
+The shared bar below navigation now links `/developer-replies`, shows a Pacific-time Updated stamp explicitly labeled Last developer login, and displays the current browser’s verified developer access separately from its optional community identity. Guests never receive a developer badge. The creator session endpoint returns only authorization, own-session expiry and the public last-login timestamp. Lock, expiry, back/forward restoration and returning to a visible tab refresh/remove the active indication. No callsign is granted creator privileges.
+
+Migration0007 is applied in production and adds only singleton `developer_presence`. A private export preceded it; all old fields/rows in15 tables compared unchanged. Do not reapply it. Its initial timestamp is derived from existing fixed8-hour creator sessions when available, never migration/deploy time; null stays unavailable. Only a successful developer-key login writes it, in the same D1 batch as session creation. GET checks, moderation, deployment, analytics reads and Lock do not change it. Preserve it across session deletion.
+
+`GET /api/developer-replies` serves12 visible current nonempty developer replies per page, across topics, newest actual note changes first from existing history. Status/pin-only changes do not reorder the feed; private/hidden content is excluded. Existing notes are still the official replies, not copied into reply rows. Header/template changes and assets must go through prepare-site. Evidence: `../../Saved/SourceChanges/FleetDeveloperStatus_20261004`; see release receipt for live status. Local390/1440 browser review passed actual unlock/navigation/Lock, public reply order and Pacific timestamp persistence. Ryan owns ordinary phone acceptance.
+
 ## Current handoff — activity dashboard and community topics, October 3, 2026
 
 `/crew` now opens a private Activity dashboard with 7/30-day Pacific calendar views, visible ideas/replies, still-active deduplicated votes, first official developer replies, registrations, recent dispatches and attention shortcuts. Notes in `ideas.developer_response` ARE Ryan's official replies: keep their text and history in place, highlight them on cards, and do not copy them into anonymous reply rows. Updating a note appears as an update, not another first reply. Dashboard polling runs once per minute only while its view is visible and authorized. Lock clears private UI; every admin endpoint remains server-authorized.

@@ -42,7 +42,7 @@ async function htmlFiles(folder) {
   }
   return files;
 }
-const assets = ['styles.css','community.css','visitor.css','network.js','community.js','crew.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const assets = ['styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;
@@ -56,7 +56,9 @@ for(const asset of assets){
 for(const file of await htmlFiles(site)){
   let html=await read(file);
   html=html.replace(/\s*<script src="\/network(?:\.[a-f0-9]{12})?\.js" defer><\/script>/g,'');
-  html=html.replace('<script ', '<script src="/network.js" defer></script>\n  <script ');
+  html=html.replace(/\s*<script src="\/creator(?:\.[a-f0-9]{12})?\.js"[^>]*><\/script>/g,'');
+  html=html.replace('<script ', '<script src="/network.js" defer></script>\n  <script src="/creator.js" data-tools-src="/creator-tools.js" defer></script>\n  <script ');
+  if(!/href="\/creator(?:\.[a-f0-9]{12})?\.css"/.test(html)) html=html.replace('</head>','<link rel="stylesheet" href="/creator.css"></head>');
   html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav);
   // Keep existing footer destinations while exposing identity below the game navigation.
   html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,section => {
@@ -64,6 +66,7 @@ for(const file of await htmlFiles(site)){
     if (!section.includes('href="/quartermaster"')) section = section.replace('<small>',quartermasterLink+'<small>');
     if (!section.includes('data-register-link')) section = section.replace('<small>','<a href="/register" data-register-link>Register / sign in</a><small>');
     if (!section.includes('href="/fleet"')) section = section.replace('<small>','<a href="/fleet">Fleet Register & allegiance</a><small>');
+    if (!section.includes('href="/crew"')) section = section.replace('<small>','<a href="/crew">Fleet Command</a><small>');
     return section;
   });
   html=html.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>/g,tag => tag.replace(/\bhref="[^"]*"/,`href="${escape(quartermasterURL)}"`));

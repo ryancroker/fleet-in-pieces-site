@@ -1,5 +1,17 @@
 # Website quality review — October 2, 2026
 
+## Creator controls — October 3, 2026
+
+Chrome local review at390x950 and1440x950 exercised the actual Fleet Command unlock form, inbox filter, required-note validation, saving Already in Game, navigation to a public discussion, inline suggestion/reply controls, saving/reloading, and Lock. The390px editor is350px wide with no horizontal overflow even when advanced drawers are open. Inbox, editor and public-note screenshots were visually inspected. No browser runtime exceptions in the completed journey; guests receive neither inline controls nor the lazily loaded editor script. The password input clears on unlock and the session cookie is inaccessible to document.cookie. This is desktop Chrome viewport evidence; actual phone acceptance remains Ryan's.
+
+Focused local API verification passed guest authorization denial, exact-origin rejection, cookie persistence/revocation, required implementation notes, Already in Game exclusion from feedback feeds, unsafe-link/date rejection, stale-edit conflict, pin/move/hide/restore/lock, disclosed formatting edits, reply promotion/idempotency, duplicate vote deduplication, combined discussion, preserved source links/replies/authors, group flattening, merge-cycle rejection, all inbox filters and report resolution. Original text remained unchanged. All mutation fixtures stayed in isolated local D1; no public test activity was created. These bounded checks are not a claim of exhaustive security or device coverage.
+
+Authoring,20 JavaScript syntax checks,18 HTML documents/32 local asset references and fingerprint hashes passed. The Pages Functions bundle compiled. All five migrations apply from scratch in local SQLite. The initial remote attempt rejected a CASE…END trigger body as incomplete SQL and fully rolled back; before/after comparison confirmed no rows or creator columns changed. The guard now uses equivalent SELECT RAISE…WHERE statements, matching the existing migration style. That form passed the local API merge review and remote migration0005 applied successfully (28 commands). SQL files are pinned to LF for future checkout consistency.
+
+Production was exported to a private path outside the website repository before migration. Comparison across12 persistent tables confirmed all previous fields/rows unchanged:11ideas,5replies,10votes,11history rows,4profiles,8profile actors,4passkeys,4allegiance paths and existing registries. Newly created creator-session/audit tables were empty after migration. No existing status was reclassified; historical IMPLEMENTED entries need creator confirmation before receiving feedback credit. No DNS, subscriptions, hosting/account settings or commerce changes.
+
+Evidence and final deployment receipts are kept outside public output at `../../Saved/SourceChanges/FleetCreatorControls_20261003`. The private SQL export and account-row snapshots must never be committed or served. Publication uses the existing GitHub main → Cloudflare Pages workflow; final production checks should be limited and counted separately from real visitors.
+
 Reviewed the actual locally served page in an isolated headless Chrome session at **390×844**, **820×1180**, and **1440×1000**. Screenshots were visually inspected at all three widths. Two observed problems were fixed: the phone header's Steam item was overriding its hidden rule, and collapsed heading line breaks needed spaces. The revised browser pass confirms:
 
 | Check | Result |

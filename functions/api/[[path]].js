@@ -1,10 +1,11 @@
 import {
-  ApiError, PAGE_SIZE, STATUSES, STATUS_PRESETS, IDEA_COLUMNS, IDEA_FROM, REPLY_COLUMNS, REPLY_FROM,
-  VOTE_COUNT_SQL, VOTED_SQL, authorizeAdmin, checkMutation, contentFor, contentHash, contentJson,
+  ApiError, PAGE_SIZE, GROUP_VOTES_SQL, IDEA_COLUMNS, IDEA_FROM, REPLY_COLUMNS, REPLY_FROM,
+  VOTED_SQL, checkMutation, contentFor, contentHash, contentJson,
   database, fail, getIdea, ideaJson, json, keysOnly, pageOffset, paginate, positiveId,
   postFields, problem, publicReadLimit, readJson, replyJson, sessionFor, textField, writeLimit
 } from '../_lib/community.js';
 import { attachIdentity, routeIdentity } from '../_lib/identity.js';
+import { routeCreator, publicHistory } from '../_lib/creator.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -36,7 +37,7 @@ async function createPost(db, session, data, ideaId = null) {
   if (!reply) fields.contentId = (await contentFor(db, data)).id;
   const prior = await priorPost(db, session, fields, ideaId);
   if (prior) return { value: prior, status: 200 };
-  if (reply) await getIdea(db, ideaId, session.actor);
+  if (reply) { const idea = await getIdea(db, ideaId, session.actor); if (idea.merged_into) fail(409,'merged_discussion','Continue this discussion on idea '+idea.merged_into+'.'); if (idea.locked) fail(409,'discussion_locked','Fleet Command has closed replies on this idea.'); }
   const hash = await contentHash(session, fields.body);
   try { await writeLimit(db, session, reply ? 'reply' : 'idea', hash, reply ? String(ideaId) : fields.contentId); }
   catch (error) {
@@ -52,7 +53,7 @@ async function createPost(db, session, data, ideaId = null) {
   let result;
   if (reply) {
     result = await db.prepare(`INSERT INTO replies(idea_id,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id)
-      SELECT i.id,?,?,?,?,?,?,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1
+      SELECT i.id,?,?,?,?,?,?,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND i.locked=0 AND i.merged_into IS NULL AND c.is_public=1
         AND NOT EXISTS(SELECT 1 FROM replies WHERE ${actorMatch('actor_hash')} AND idea_id=? AND content_hash=? AND created_at>?)
       ON CONFLICT(actor_hash,request_id) DO NOTHING RETURNING id`)
       .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null,
@@ -68,31 +69,33 @@ async function createPost(db, session, data, ideaId = null) {
   }
   const value = await priorPost(db, session, fields, ideaId);
   if (value) return { value, status: result ? 201 : 200 };
-  if (reply) await getIdea(db, ideaId, session.actor);
+  if (reply) { const idea = await getIdea(db, ideaId, session.actor); if (idea.merged_into) fail(409,'merged_discussion','Continue this discussion on idea '+idea.merged_into+'.'); if (idea.locked) fail(409,'discussion_locked','Fleet Command has closed replies on this idea.'); }
   fail(409, 'repeat_post', 'That text was just posted. Continue the existing discussion or wait a moment.');
 }
 
 async function setVote(db, session, id, data) {
   keysOnly(data, ['voted']);
   if (typeof data.voted !== 'boolean') fail(400, 'invalid_vote', 'Choose whether to add or remove your vote.');
-  await getIdea(db, id, session.actor);
+  const idea = await getIdea(db, id, session.actor);
+  if (idea.merged_into) fail(409,'merged_discussion','Vote on the combined discussion at idea '+idea.merged_into+'.');
   await writeLimit(db, session, 'vote');
   const change = data.voted
     ? db.prepare(`INSERT INTO votes(idea_id,actor_hash,created_at)
-        SELECT i.id,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1
+        SELECT i.id,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1
         AND NOT ${VOTED_SQL}
         ON CONFLICT(idea_id,actor_hash) DO NOTHING`).bind(session.actor, new Date().toISOString(), id, session.actor, session.actor)
-    : db.prepare(`DELETE FROM votes WHERE idea_id=? AND ${actorMatch('actor_hash')}
-        AND EXISTS(SELECT 1 FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1)`)
-      .bind(id, session.actor, session.actor, id);
+    : db.prepare(`DELETE FROM votes WHERE idea_id IN (SELECT id FROM ideas WHERE id=? OR merged_into=?) AND ${actorMatch('actor_hash')}
+        AND EXISTS(SELECT 1 FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1)`)
+      .bind(id, id, session.actor, session.actor, id);
   const results = await db.batch([
     change,
-    db.prepare(`UPDATE ideas SET votes=(${VOTE_COUNT_SQL}) WHERE id=? AND hidden=0`).bind(id, id),
-    db.prepare(`SELECT i.votes,${VOTED_SQL} AS voted
+    db.prepare(`UPDATE ideas SET votes=(SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash)) FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=ideas.id) WHERE id=? OR merged_into=?`).bind(id, id),
+    db.prepare(`SELECT (${GROUP_VOTES_SQL}) AS votes,${VOTED_SQL} AS voted,i.merged_into
       FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1`).bind(session.actor, session.actor, id)
   ]);
   const row = results[2].results?.[0];
   if (!row) notFound();
+  if (row.merged_into) fail(409,'merged_discussion','Vote on the combined discussion at idea '+row.merged_into+'.');
   return { votes: row.votes, voted: Boolean(row.voted) };
 }
 
@@ -125,82 +128,6 @@ async function report(db, session, data) {
   return { ok: true };
 }
 
-async function adminList(db, session, url) {
-  const offset = pageOffset(url);
-  const view = url.searchParams.get('view') || 'reports';
-  if (view === 'ideas') {
-    const { results } = await db.prepare(`SELECT ${IDEA_COLUMNS},i.hidden ${IDEA_FROM} ORDER BY i.id DESC LIMIT ? OFFSET ?`)
-      .bind(session.actor, session.actor, PAGE_SIZE + 1, offset).all();
-    const page = paginate(results);
-    return { ideas: page.rows.map(row => ideaJson(row, true)), has_more: page.has_more };
-  }
-  if (view !== 'reports') fail(400, 'invalid_view', 'Choose reports or ideas.');
-  const { results } = await db.prepare(`SELECT p.id,p.target_type,p.target_id,p.idea_id,p.reason,p.detail,p.created_at,p.resolved_at,
-      CASE WHEN p.target_type='idea' THEN i.body ELSE r.body END AS target_body,
-      CASE WHEN p.target_type='idea' THEN i.handle ELSE r.handle END AS target_handle,
-      CASE WHEN i.hidden=1 OR i.id IS NULL OR (p.target_type='reply' AND (r.hidden=1 OR r.id IS NULL)) THEN 1 ELSE 0 END AS target_hidden,
-      CASE WHEN p.target_type='idea' THEN COALESCE(i.hidden,1) ELSE COALESCE(r.hidden,1) END AS target_own_hidden,
-      CASE WHEN p.target_type='reply' THEN COALESCE(i.hidden,1) ELSE 0 END AS parent_hidden
-    FROM reports p LEFT JOIN ideas i ON i.id=p.idea_id
-      LEFT JOIN replies r ON p.target_type='reply' AND r.id=p.target_id
-    WHERE p.resolved_at IS NULL ORDER BY p.id DESC LIMIT ? OFFSET ?`).bind(PAGE_SIZE + 1, offset).all();
-  const page = paginate(results);
-  return {
-    reports: page.rows.map(row => ({ ...row, target_hidden: Boolean(row.target_hidden), target_own_hidden: Boolean(row.target_own_hidden), parent_hidden: Boolean(row.parent_hidden), resolved: Boolean(row.resolved_at) })),
-    has_more: page.has_more
-  };
-}
-
-async function adminDetail(db, session, id, url) {
-  const idea = await getIdea(db, id, session.actor, true);
-  const { results } = await db.prepare(`SELECT ${REPLY_COLUMNS},r.hidden,r.updated_at ${REPLY_FROM} WHERE r.idea_id=? ORDER BY r.id ASC LIMIT ? OFFSET ?`)
-    .bind(id, PAGE_SIZE + 1, pageOffset(url)).all();
-  const page = paginate(results);
-  return { idea, replies: page.rows.map(row => replyJson(row, true)), has_more: page.has_more };
-}
-
-async function moderateIdea(db, id, data) {
-  keysOnly(data, ['status', 'status_label', 'status_key', 'developer_response', 'hidden']);
-  if (!Object.keys(data).length) fail(400, 'invalid_fields', 'Choose a field to update.');
-  if ('status_key' in data) {
-    if (typeof data.status_key !== 'string' || !Object.hasOwn(STATUS_PRESETS, data.status_key)) fail(400, 'invalid_status', 'Choose a supported development status.');
-    if ('status' in data || 'status_label' in data) fail(400, 'invalid_status', 'Choose a preset or a custom status, not both.');
-    const preset = STATUS_PRESETS[data.status_key];
-    data = { ...data, status: preset.status, status_label: preset.label };
-  }
-  const sets = [], values = [], differences = [], comparisons = [], decisionDifferences = [], decisionValues = [];
-  const add = (name, value, decision = false) => {
-    sets.push(`${name}=?`); values.push(value); differences.push(`${name} IS NOT ?`); comparisons.push(value);
-    if (decision) { decisionDifferences.push(`${name} IS NOT ?`); decisionValues.push(value); }
-  };
-  if ('status' in data) {
-    if (!STATUSES.has(data.status)) fail(400, 'invalid_status', 'Choose a supported development status.');
-    add('status', data.status, true);
-  }
-  if ('status_label' in data) add('status_label', textField(data.status_label, 'Status label', 0, 60, false), true);
-  if ('developer_response' in data) add('developer_response', textField(data.developer_response, 'Developer response', 0, 2000), true);
-  if ('hidden' in data) {
-    if (typeof data.hidden !== 'boolean') fail(400, 'invalid_hidden', 'Hidden must be true or false.');
-    add('hidden', data.hidden ? 1 : 0);
-  }
-  const now = new Date().toISOString();
-  if (decisionDifferences.length) {
-    sets.push(`command_at=CASE WHEN ${decisionDifferences.join(' OR ')} THEN ? ELSE command_at END`);
-    values.push(...decisionValues, now);
-  }
-  if ('status' in data) {
-    // Preserve the first implementation date if a later decision changes the status.
-    sets.push("implemented_at=CASE WHEN ?='implemented' AND implemented_at IS NULL THEN ? ELSE implemented_at END");
-    values.push(data.status, now);
-  }
-  sets.push('updated_at=?'); values.push(now);
-  // Only whitelisted column names enter SQL. Identical saves leave timestamps/history intact.
-  const result = await db.prepare(`UPDATE ideas SET ${sets.join(',')} WHERE id=? AND (${differences.join(' OR ')}) RETURNING id`)
-    .bind(...values, id, ...comparisons).first();
-  if (!result && !await db.prepare('SELECT id FROM ideas WHERE id=?').bind(id).first()) notFound();
-  return { ok: true };
-}
-
 async function listIdeas(db, session, url) {
   const content = await contentFor(db, {
     ...(url.searchParams.has('content_id') ? { content_id: url.searchParams.get('content_id') } : {}),
@@ -208,13 +135,13 @@ async function listIdeas(db, session, url) {
   });
   const sort = url.searchParams.get('sort') || 'top';
   const choices = {
-    top: { where: '', order: 'i.votes DESC,i.id DESC' },
-    new: { where: '', order: 'i.id DESC' },
+    top: { where: '', order: 'i.pinned DESC,votes DESC,i.id DESC' },
+    new: { where: '', order: 'i.pinned DESC,i.id DESC' },
     responded: {
       where: " AND (i.command_at IS NOT NULL OR i.status<>'new' OR trim(i.status_label)<>'' OR trim(i.developer_response)<>'')",
       order: 'COALESCE(i.command_at,i.updated_at) DESC,i.id DESC'
     },
-    implemented: { where: " AND i.status='implemented'", order: 'i.implemented_at DESC,i.id DESC' }
+    implemented: { where: " AND i.decision_key='implemented'", order: 'i.implemented_at DESC,i.id DESC' }
   };
   if (!Object.hasOwn(choices, sort)) fail(400, 'invalid_sort', 'Choose top, new, dev responded or implemented.');
   const choice = choices[sort];
@@ -222,7 +149,7 @@ async function listIdeas(db, session, url) {
   if (!['8',String(PAGE_SIZE)].includes(limit)) fail(400,'invalid_limit','Choose a supported page size.');
   const size = Number(limit);
   const { results } = await db.prepare(`SELECT ${IDEA_COLUMNS} ${IDEA_FROM}
-    WHERE i.content_id=? AND i.hidden=0 AND c.is_public=1${choice.where} ORDER BY ${choice.order} LIMIT ? OFFSET ?`)
+    WHERE i.content_id=? AND i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1${choice.where} ORDER BY ${choice.order} LIMIT ? OFFSET ?`)
     .bind(session.actor, session.actor, content.id, size + 1, pageOffset(url)).all();
   const page = paginate(results,size);
   return { ideas: page.rows.map(row => ideaJson(row)), has_more: page.has_more, content };
@@ -233,52 +160,26 @@ async function discovery(db, session) {
   // At most 256 candidates (128 newest + 128 highest-voted). Rank real activity
   // from the last seven days; never create activity, statuses or filler cards.
   const trending = db.prepare(`WITH recent_candidates AS (
-      SELECT id FROM ideas WHERE hidden=0 ORDER BY id DESC LIMIT 128
+      SELECT id FROM ideas WHERE hidden=0 AND merged_into IS NULL ORDER BY id DESC LIMIT 128
     ), popular_candidates AS (
-      SELECT id FROM ideas WHERE hidden=0 ORDER BY votes DESC,id DESC LIMIT 128
+      SELECT i.id FROM ideas i WHERE i.hidden=0 AND i.merged_into IS NULL ORDER BY (${GROUP_VOTES_SQL}) DESC,i.id DESC LIMIT 128
     ), candidates AS (SELECT id FROM recent_candidates UNION SELECT id FROM popular_candidates),
     ranked AS (
-      SELECT i.id,
+      SELECT i.id,(${GROUP_VOTES_SQL}) AS support,
         3*(SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash)) FROM votes v
-          LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=i.id AND v.created_at>=?)
-        +2*(SELECT COUNT(*) FROM replies r WHERE r.idea_id=i.id AND r.hidden=0 AND r.created_at>=?)
+          LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id IN (SELECT g.id FROM ideas g WHERE (g.id=i.id OR g.merged_into=i.id) AND g.hidden=0) AND v.created_at>=?)
+        +2*(SELECT COUNT(*) FROM replies r WHERE r.idea_id IN (SELECT g.id FROM ideas g WHERE (g.id=i.id OR g.merged_into=i.id) AND g.hidden=0) AND r.hidden=0 AND r.created_at>=?)
         +CASE WHEN i.created_at>=? THEN 1 ELSE 0 END AS activity
       FROM candidates candidate JOIN ideas i ON i.id=candidate.id JOIN content_objects c ON c.id=i.content_id
-      WHERE c.is_public=1 ORDER BY activity DESC,i.votes DESC,i.id DESC LIMIT 6
+      WHERE c.is_public=1 ORDER BY activity DESC,support DESC,i.id DESC LIMIT 6
     ) SELECT ${IDEA_COLUMNS} ${IDEA_FROM} JOIN ranked ON ranked.id=i.id
-      WHERE i.hidden=0 AND c.is_public=1 ORDER BY ranked.activity DESC,i.votes DESC,i.id DESC`)
+      WHERE i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 ORDER BY ranked.activity DESC,ranked.support DESC,i.id DESC`)
     .bind(since, since, since, session.actor, session.actor);
   const implemented = db.prepare(`SELECT ${IDEA_COLUMNS} ${IDEA_FROM}
-    WHERE i.hidden=0 AND c.is_public=1 AND i.status='implemented' ORDER BY i.implemented_at DESC,i.id DESC LIMIT 4`)
+    WHERE i.hidden=0 AND i.merged_into IS NULL AND c.is_public=1 AND i.decision_key='implemented' ORDER BY i.implemented_at DESC,i.id DESC LIMIT 4`)
     .bind(session.actor, session.actor);
   const rows = await db.batch([trending, implemented]);
   return { trending: rows[0].results.map(row => ideaJson(row)), implemented: rows[1].results.map(row => ideaJson(row)) };
-}
-
-async function adminRoute(request, db, session, env, url, path, data) {
-  await authorizeAdmin(request, env, db, session);
-  if (request.method === 'GET' && path.length === 1) return adminList(db, session, url);
-  if (request.method === 'GET' && path.length === 3 && path[1] === 'ideas') return adminDetail(db, session, positiveId(path[2]), url);
-  if (request.method !== 'PATCH' || path.length !== 3) notFound();
-  const id = positiveId(path[2]);
-  if (path[1] === 'ideas') return moderateIdea(db, id, data);
-  if (path[1] === 'replies') {
-    keysOnly(data, ['hidden']);
-    if (typeof data.hidden !== 'boolean') fail(400, 'invalid_hidden', 'Hidden must be true or false.');
-    const result = await db.prepare('UPDATE replies SET hidden=?,updated_at=? WHERE id=? AND hidden<>? RETURNING id')
-      .bind(data.hidden ? 1 : 0, new Date().toISOString(), id, data.hidden ? 1 : 0).first();
-    if (!result && !await db.prepare('SELECT id FROM replies WHERE id=?').bind(id).first()) notFound();
-    return { ok: true };
-  }
-  if (path[1] === 'reports') {
-    keysOnly(data, ['resolved']);
-    if (data.resolved !== true) fail(400, 'invalid_resolution', 'Resolve must be true.');
-    const result = await db.prepare('UPDATE reports SET resolved_at=COALESCE(resolved_at,?) WHERE id=? RETURNING id')
-      .bind(new Date().toISOString(), id).first();
-    if (!result) notFound();
-    return { ok: true };
-  }
-  notFound();
 }
 
 export async function onRequest(context) {
@@ -292,7 +193,7 @@ export async function onRequest(context) {
     session = await sessionFor(request, env);
     let data;
     if (request.method !== 'GET') { checkMutation(request); data = await readJson(request); }
-    if (path[0] === 'admin') return json(await adminRoute(request, db, session, env, url, path, data), session);
+    if (path[0] === 'admin') return json(await routeCreator(request, env, db, session, url, path, data), session);
     await attachIdentity(request, env, db, session);
     if (request.method === 'GET') await publicReadLimit(db, session);
     const identityResponse = await routeIdentity({ request, env, db, session, url, path, data });
@@ -312,13 +213,14 @@ export async function onRequest(context) {
     if (path[0] === 'ideas' && path.length >= 2 && path.length <= 3) {
       const id = positiveId(path[1]);
       if (path.length === 2 && request.method === 'GET') return json({ idea: await getIdea(db, id, session.actor) }, session);
+      if (path.length === 3 && path[2] === 'history' && request.method === 'GET') return json(await publicHistory(db,id,session.actor),session);
       if (path.length === 3 && path[2] === 'vote' && request.method === 'POST') return json(await setVote(db, session, id, data), session);
       if (path.length === 3 && path[2] === 'replies') {
         if (request.method === 'GET') {
           const idea = await getIdea(db, id, session.actor);
           const { results } = await db.prepare(`SELECT ${REPLY_COLUMNS} ${REPLY_FROM}
-            WHERE r.idea_id=? AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 ORDER BY r.id ASC LIMIT ? OFFSET ?`)
-            .bind(id, PAGE_SIZE + 1, pageOffset(url)).all();
+            WHERE (r.idea_id=? OR i.merged_into=?) AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 ORDER BY r.id ASC LIMIT ? OFFSET ?`)
+            .bind(id, id, PAGE_SIZE + 1, pageOffset(url)).all();
           const page = paginate(results);
           return json({ replies: page.rows.map(row => replyJson(row)), reply_count: idea.reply_count, has_more: page.has_more }, session);
         }

@@ -272,25 +272,31 @@ export function authorJson(row, prefix = 'author_') {
 }
 // Resolve explicit claimed aliases in SQL; anonymous identities stay valid on their own.
 // The two placeholders are the current actor twice. No actor hashes leave the API.
-export const VOTED_SQL = `EXISTS(SELECT 1 FROM votes v WHERE v.idea_id=i.id AND
+export const GROUP_IDS_SQL = `SELECT g.id FROM ideas g WHERE (g.id=i.id OR g.merged_into=i.id) AND g.hidden=0`;
+export const GROUP_VOTES_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash))
+  FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id IN (${GROUP_IDS_SQL})`;
+export const VOTED_SQL = `EXISTS(SELECT 1 FROM votes v WHERE v.idea_id IN (${GROUP_IDS_SQL}) AND
   (v.actor_hash=? OR v.actor_hash IN (SELECT actor_hash FROM profile_actors
     WHERE profile_id=(SELECT profile_id FROM profile_actors WHERE actor_hash=?))))`;
 export const VOTE_COUNT_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash))
   FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=?`;
 const AUTHOR_COLUMNS = 'p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank';
 export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.status,i.status_label,i.developer_response,
-  i.votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
+  (${GROUP_VOTES_SQL}) AS votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
+  i.decision_key,i.pinned,i.locked,i.related_idea_id,i.merged_into,i.source_reply_id,i.display_title,i.display_body,i.edit_note,i.build_label,i.release_date,i.evidence_json,i.revision,
+  (SELECT idea_id FROM replies WHERE id=i.source_reply_id) AS source_idea_id,
   c.id AS content_id,c.slug AS content_slug,c.title AS content_title,c.kind AS content_kind,c.path AS content_path,
   ${AUTHOR_COLUMNS},lr.id AS latest_reply_id,substr(lr.body,1,240) AS latest_reply_body,
   length(lr.body)>240 AS latest_reply_truncated,lr.handle AS latest_reply_handle,lr.created_at AS latest_reply_created_at,
   lp.id AS latest_author_id,lp.callsign AS latest_author_callsign,lpr.label AS latest_author_rank,
-  (SELECT COUNT(*) FROM replies r WHERE r.idea_id=i.id AND r.hidden=0) AS reply_count,
+  (SELECT COUNT(*) FROM replies r WHERE r.idea_id IN (${GROUP_IDS_SQL}) AND r.hidden=0) AS reply_count,
   ${VOTED_SQL} AS voted`;
 export const IDEA_FROM = `FROM ideas i JOIN content_objects c ON c.id=i.content_id
   LEFT JOIN profiles p ON p.id=i.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id
-  LEFT JOIN replies lr ON lr.id=(SELECT id FROM replies WHERE idea_id=i.id AND hidden=0 ORDER BY id DESC LIMIT 1)
+  LEFT JOIN replies lr ON lr.id=(SELECT id FROM replies WHERE idea_id IN (${GROUP_IDS_SQL}) AND hidden=0 ORDER BY id DESC LIMIT 1)
   LEFT JOIN profiles lp ON lp.id=lr.profile_id LEFT JOIN rank_definitions lpr ON lpr.id=lp.rank_id`;
-export const REPLY_COLUMNS = `r.id,r.idea_id,r.body,r.handle,r.created_at,${AUTHOR_COLUMNS}`;
+export const REPLY_COLUMNS = `r.id,r.idea_id,r.body,r.handle,r.created_at,r.display_body,r.edit_note,r.revision,
+  (SELECT id FROM ideas WHERE source_reply_id=r.id AND hidden=0) AS promoted_idea_id,${AUTHOR_COLUMNS}`;
 export const REPLY_FROM = `FROM replies r JOIN ideas i ON i.id=r.idea_id JOIN content_objects c ON c.id=i.content_id
   LEFT JOIN profiles p ON p.id=r.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id`;
 export function ideaJson(row, admin = false) {
@@ -304,17 +310,22 @@ export function ideaJson(row, admin = false) {
     status_key: statusKey(row.status, row.status_label),
     command_responded: Boolean(row.command_at || row.status !== 'new' || row.status_label || row.developer_response),
     command_at: row.command_at, author: authorJson(row),
+    decision_key: row.decision_key, pinned: Boolean(row.pinned), locked: Boolean(row.locked),
+    related_idea_id: row.related_idea_id, merged_into: row.merged_into,
+    source_reply_id: row.source_reply_id, source_idea_id: row.source_idea_id,
+    display_title: row.display_title, display_body: row.display_body, edit_note: row.edit_note,
+    build_label: row.build_label, release_date: row.release_date, evidence: JSON.parse(row.evidence_json || '[]'),
     latest_reply: row.latest_reply_id ? {
       id: row.latest_reply_id, body: row.latest_reply_body, truncated: Boolean(row.latest_reply_truncated),
       handle: row.latest_reply_handle, created_at: row.latest_reply_created_at, author: authorJson(row, 'latest_author_')
     } : null
   };
-  if (admin) idea.hidden = Boolean(row.hidden);
+  if (admin) { idea.hidden = Boolean(row.hidden); idea.revision = row.revision; }
   return idea;
 }
 export function replyJson(row, admin = false) {
-  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, created_at: row.created_at, author: authorJson(row) };
-  if (admin) { reply.hidden = Boolean(row.hidden); reply.updated_at = row.updated_at; }
+  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, created_at: row.created_at, author: authorJson(row), display_body:row.display_body, edit_note:row.edit_note, promoted_idea_id:row.promoted_idea_id };
+  if (admin) { reply.hidden = Boolean(row.hidden); reply.updated_at = row.updated_at; reply.revision = row.revision; }
   return reply;
 }
 export async function getIdea(db, id, actor, admin = false) {

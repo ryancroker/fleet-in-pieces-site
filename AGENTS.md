@@ -1,5 +1,19 @@
 # Fleet in Pieces website
 
+## Current handoff — creator controls, October 3, 2026
+
+Fleet Command `/crew` now exchanges the existing developer key for an eight-hour, server-verified HttpOnly / Secure / SameSite=Strict session on the canonical host. D1 stores only a token digest and key-version digest. Lock revokes the session; changing the existing admin key invalidates prior sessions. Community passkeys and guest participation remain separate. No creator role is automatically granted to a callsign. `site/creator.js` checks access and attaches small inline controls; the shared `creator-tools.js` editor is loaded only for authorized browsers. All privileged API actions are still server-protected, including direct requests.
+
+Decisions are OPEN, UNDER REVIEW, PLANNED, PROTOTYPING, IMPLEMENTED FROM FEEDBACK, ALREADY IN GAME, NOT PLANNED, DUPLICATE and SUPERSEDED. Both implementation outcomes require a developer note on the server and in the form. Only explicit `decision_key='implemented'` enters feedback implementation lists/profile credit. Existing unclassified IMPLEMENTED records retain their historical badge but receive no assumed community credit; the inbox has a separate classification view. Do not mark public suggestions from examples in a brief without Ryan choosing that actual response.
+
+Migration `0005_creator_controls.sql` is additive: original text/author IDs/vote rows/replies remain. Formatting changes use display fields plus a required visible edit note and expandable original. Moderation revisions and atomic audit triggers record edits; public history exposes summaries, never private before/after snapshots. Inline/inbox controls cover notes, pin, topic move, hide/restore, reply lock, build/date/HTTPS evidence, links, duplicate consolidation and attributed reply promotion. Stale revisions return409.
+
+Consolidation links a source to a visible root, closes new source replies/votes, and keeps all original `/i/{id}` URLs. Root counts, replies and discovery combine visible sources while deduplicating claimed/anonymous voters. Raw rows and original authors stay with their original submission. Source per-author credit is not reassigned to the root author. Atomic triggers flatten a moved group, reject loops and cap a combined discussion at50 originals. Consolidation is intentionally permanent in this first UI; hide remains reversible. Promoting a reply is idempotent and preserves the original reply/author with backlinks. Adding/removing root votes updates the original stored per-idea counters for profile compatibility.
+
+Local Chrome390/1440 inbox and inline save/lock review passed; screenshot evidence and bounded API data-preservation/security checks are at `../../Saved/SourceChanges/FleetCreatorControls_20261003`. No public review submissions. Run normal authoring/syntax/Functions bundle checks, export production privately before0005, and compare every old field of pre-existing records after migration (new additive columns differ intentionally). Never put export/keys/local fixtures into Git or `site/`. See QUALITY_REVIEW.md for the actual release state.
+
+Production0005 applied successfully after a rejected CASE…END trigger variant was confirmed rolled back. Use the current SELECT RAISE…WHERE guard form; it matches the remote-compatible existing migrations. All pre-existing fields in12 production tables compared unchanged after the successful additive migration. Do not reapply0005 or copy local review fixtures to production.
+
 ## Current handoff — game-first rebuild and native Quartermaster, October 3, 2026
 
 This pass replaces the old external Quartermaster navigation and the one-briefing homepage. Main navigation is Game / Systems / Ships / Community / Dev Log / Quartermaster. `/quartermaster` is native; its single purchase CTA opens the exact Fourthwall product URL in `site/config.js`, never the store homepage. `content/merch.json` contains verified product information and provenance. Use the actual `first-deployment-shirt.jpg` mockup, VESSEL: KESTRAL and OPERATIONAL STATUS: DEGRADED. Price starts at US$21, checked October 3; Fourthwall owns final variant pricing and guest checkout. No Storefront API/cart/order integration exists yet.
@@ -44,7 +58,7 @@ Keep browsing, voting, ideas and replies available without an account. Idea subm
 
 Stable `content_objects.id` owns the discussion; `system-missiles` must not change when a title/slug changes. Migration 0002 is additive and retains legacy system values, existing ideas/replies/votes and their IDs. Only the ordinary idea contribution type is enabled. Add new real content through both the authored template data and an additive registry migration, with matching stable IDs and redirects for renamed paths.
 
-Fleet Command's nine personality presets map to existing normalized states. Preserve custom labels and historical decisions; POPULAR is explicitly assigned, never fabricated from a guessed threshold. Discovery returns at most six trending and four implemented ideas; empty data has honest empty states. Votes represent enthusiasm, not command authority.
+Fleet Command's current decisions are described above. Preserve historical labels; do not infer implementation credit from old normalized states. Discovery returns at most six trending and four explicitly implemented-from-feedback ideas; empty data has honest empty states. Votes represent enthusiasm, not command authority.
 
 ## Optional identity and allegiance
 
@@ -62,7 +76,7 @@ See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for commerce sepa
 
 Protect `/api/admin` on the server, not by hiding `/crew`. Secrets COMMUNITY_ADMIN_KEY and COMMUNITY_SIGNING_KEY belong in encrypted Cloudflare settings; `.dev.vars` and `.community-admin-key.txt` stay ignored. Keep the signing secret stable across releases. Public text stays plain text, profanity is allowed, and reports/human moderation handle contextual abuse. Preserve origin checks, request idempotency, rate limits, parameterized SQL and hide/restore behavior.
 
-Before production migration, export D1 privately outside `site/`, record existing IDs/counts, apply only reviewed migrations not already applied (0004 in this pass), and verify preservation before deploying the new Functions. Do not rebuild/drop production tables or replace D1 for a frontend rollback. No public test posts or identities: review against isolated local D1.
+Before production migration, export D1 privately outside `site/`, record existing IDs/counts, apply only reviewed migrations not already applied, and verify preservation before deploying the new Functions. Do not rebuild/drop production tables or replace D1 for a frontend rollback. No public test posts or identities: review against isolated local D1.
 
 Ryan requested small real-browser website checks around 390px and desktop widths; do not replace them with elaborate internal harnesses. Successful syntax/bundle checks do not establish live behavior. Ryan owns real-phone/passkey acceptance; virtual credentials do not prove platform sync or biometric prompts. Keep future release receipts scoped to what was actually checked.
 

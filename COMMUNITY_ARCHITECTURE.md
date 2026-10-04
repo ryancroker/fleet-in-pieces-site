@@ -10,7 +10,7 @@ This is a game-development community attached to specific content, not a general
 
 The reusable static briefing comes from `content/systems.json` and `templates/system.html`. To add a real content page, add its authored content and an additive registry migration using the same stable ID. Publish only systems/ships with verified game information and real media. Renaming requires a redirect from the old page path; the content ID and idea URLs stay fixed.
 
-Fleet Command presets map to existing normalized statuses. Custom labels and existing replies stay intact. POPULAR is an explicit editorial status, not a made-up vote threshold. Only ideas actually marked IMPLEMENTED appear in implementation records. Empty records have honest empty states.
+Fleet Command decisions use a separate `decision_key`, mapped to the existing normalized statuses for compatibility. Existing labels/replies stay intact. Only explicit `decision_key='implemented'` appears in feedback implementation records and profile credit; `already_in_game` never does. Both outcomes require a developer note. Legacy unclassified implemented records retain their badge and are presented for creator classification, without inventing their provenance. Empty records have honest empty states.
 
 Homepage discovery is bounded: six active ideas and four implemented ideas, no infinite scroll or fabricated activity. System discussions keep Top as their default and provide New, Dev responded and Implemented filters. The renderer is shared between discovery and individual content feeds.
 
@@ -45,6 +45,14 @@ After dependency changes, install the lockfile and run `node scripts/prepare-aut
 Before the first production migration, export the live D1 database to a private local path outside the public site, record current row counts and existing IDs, apply the additive migrations, and confirm those historical records are unchanged before deployment. Keep the signing secret stable. Do not drop tables, replace databases or alter DNS/paid plans as part of this work.
 
 Ryan owns real-device passkey prompts and phone acceptance. A successful server bundle or virtual browser credential proves neither platform sync nor every device's biometric UX.
+
+## Creator controls
+
+Migration0005 adds creator metadata, revision counters, audit events and hashed creator sessions. The existing admin key unlocks an eight-hour HttpOnly/Secure/Strict cookie on the canonical host. D1 stores a keyed digest of the random token and a digest of the current admin key version; rotation invalidates prior sessions. Localhost uses its own non-Secure development cookie. No community account is implicitly an administrator, and no external identity/provider infrastructure is added. Exact-origin JSON mutation checks, constant-time key verification, no-store responses and existing rate limits remain active. Creator JavaScript is progressively loaded only after authorization, but the API enforces authorization independently.
+
+Original idea/reply bodies and attribution never change. Display title/body overrides require a public edit note and keep the original accessible. A single revision-guarded UPDATE fires an audit trigger so metadata changes and their history cannot separate. Admin history retains before/after fields; public history returns compact action summaries without private snapshots or previously removed note content. Supporting links allow HTTPS or local absolute paths only, with safe external-link attributes and no remote server fetch.
+
+Duplicate consolidation sets `merged_into` rather than copying/deleting original activity. A root aggregates visible source votes, deduplicated through the existing profile-actor aliases, and source replies. Original source URLs stay readable but closed to new votes/replies and link to the root. An atomic trigger validates the root and flattens any existing source branch; cycles are rejected and groups are capped at50 originals. Source author history remains attributed to the source, not reassigned to the root. Unvoting the root removes that voter's owned votes across the group; stored own-idea counters remain compatible with profile counts. Public listing/discovery excludes merged source cards and uses combined support. Reply promotion copies its original text and author once, records `source_reply_id`, preserves the reply and emits backlinks. Unique indexing makes repeated promotion idempotent.
 
 ## Rebuild additions — October 3, 2026
 

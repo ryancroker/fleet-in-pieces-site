@@ -278,7 +278,7 @@ async function profileDetails(db, id, offset = 0) {
     db.prepare(`SELECT (SELECT COUNT(*) FROM profiles WHERE superior_id=?) AS direct_count,
       (SELECT COUNT(*)-1 FROM allegiance_paths WHERE ancestor_id=?) AS subtree_count,
       COUNT(*) AS ideas_count,COALESCE(SUM(votes),0) AS votes_received,
-      COALESCE(SUM(CASE WHEN status='implemented' THEN 1 ELSE 0 END),0) AS implemented_count
+      COALESCE(SUM(CASE WHEN decision_key='implemented' THEN 1 ELSE 0 END),0) AS implemented_count
       FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1`).bind(id, id, id)
   ]);
   return { profile: { ...summary(profile), ...counts.results[0], superior: superior.results[0] ? summary(superior.results[0]) : null,

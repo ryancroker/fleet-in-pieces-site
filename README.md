@@ -70,9 +70,19 @@ Create ignored `.dev.vars` with separate local `COMMUNITY_ADMIN_KEY` and `COMMUN
 
 System feeds default to Top, with New, Dev responded and Implemented filters. Eight ideas load at a time, with More ideas for the rest. Replies open inline; the full `/i/{id}` thread remains available. `/api/discovery` returns at most six trending and four implemented ideas. Trending uses real recent activity within a bounded candidate set; empty data stays empty. `/api/content` exposes the real published content registry. The five published briefings use existing footage; there is no invented specification catalog, popularity or feedback history. The original legacy `ideas.system` constraint remains intentionally unchanged; `content_id` owns every discussion.
 
-The developer desk offers nine deliberate Fleet Command presets: SUBMITTED, POPULAR, LOOKING AT THIS, PROTOTYPING, PLANNED, IMPLEMENTED, NO, THIS WOULD BREAK EVERYTHING, and TECHNICALLY POSSIBLE, UNFORTUNATELY. They map to the existing normalized states. Custom labels and previous decisions remain intact. POPULAR is an editorial choice, not an automatic vote threshold. Only ideas actually marked implemented enter implementation records.
+Open **https://fleetinpieces.space/crew** with the key from ignored `.community-admin-key.txt`. Unlock once to use the inbox and **Manage suggestion / Manage reply** beside public discussions. Access lasts up to eight hours in that browser; **Lock** revokes it. The key is cleared from the input and exchanged for a server-verified HttpOnly, Secure, SameSite=Strict cookie; it is not saved in browser storage. Every privileged request is checked on the server. Ordinary Fleet accounts do not grant creator access.
 
-Open **https://fleetinpieces.space/crew** with the key from ignored `.community-admin-key.txt`. The page holds the key in memory; Lock or reload clears it, and the API checks it on every privileged request. Reports support inspection, hide/restore and resolution. Hidden ideas and their replies disappear from public views. Moderation preserves original text and author credit, with status/response history in D1.
+For something that already exists: choose **Already in Game**, write a short explanation, and **Save decision**. For an actual community-driven change: choose **Implemented from Feedback** and describe the change. **Both require a note.** Only the latter appears in implementation-from-feedback lists and profile totals. Historical implemented badges stay intact but need explicit classification before receiving this credit.
+
+The inbox starts with Needs response and includes New, Popular, Under review, Planned / prototyping, From feedback, Already in game, Reported, Unclassified implemented and All. Status and note stay immediately visible in the editor; advanced controls expand on demand:
+
+- Pin, move to another published briefing, hide/restore or lock new replies.
+- Attach a build, date and up to three game-page, dev-log, screenshot or clip links.
+- Link a Duplicate or Superseded idea by its `/i/{number}`. Optional permanent duplicate consolidation combines discussion/votes while retaining original URLs, text and authors; shared voters count once.
+- Clarify a title or formatting with a public explanation and expandable original. The original text is never overwritten.
+- Promote a reply into an attributed, linked suggestion, retaining the original reply.
+
+Reports support inspection, hide/restore and resolution. Revision checks prevent overwriting a newer edit. Migration0005 adds metadata, creator sessions and audit records without reclassifying or replacing production content.
 
 Keep `COMMUNITY_SIGNING_KEY` stable: rotating it invalidates anonymous browser identities and can prevent guests from removing old votes. Never place admin keys, session cookies or recovery codes in public posts, URLs, screenshots, logs or commits.
 

@@ -1,5 +1,13 @@
 # Fleet in Pieces website
 
+## Current handoff — prominent check-in and remembered developer access, October 4, 2026
+
+The public presence stamp is now a prominent full-width notice below navigation: From the developer / Fleet Command checked in / large Pacific timestamp / latest replies button. Personal browser identity is a separate row underneath. This is the actual last key-login time, not an online-now signal or a gameplay release date; no pulse/presence fabrication.
+
+Ryan’s October3 9:01PM Pacific session expired after the original8hours. `/crew` now offers Keep me signed in on this device for30days (checked by default); unchecked and older clients retain8hours. Both server expiry and HttpOnly/Secure/SameSiteStrict cookie age use the chosen lifetime. Existing expired sessions require the code once; no automatic privilege revival. Lock and admin-key rotation still revoke access. No schema migration or production data rewrite. The browser caps long expiry timers and ignores stale status checks that started before a newer login/Lock. A clear Developer sign in link targets canonical /crew, distinct from community registration.
+
+Local Chrome390/1440 screenshots inspected; actual checked/unchecked login, persistent cookie attributes/expiry, cross-page access and Lock passed. Navigation review needed one script retry across a destroyed page context; no site runtime exception. No production login or posts used for review. Evidence: `../../Saved/SourceChanges/FleetPresenceBanner_20261004`. Preserve earlier timestamp update semantics: only actual successful key login advances it.
+
 ## Current handoff — developer presence and latest replies, October 4, 2026
 
 The shared bar below navigation now links `/developer-replies`, shows a Pacific-time Updated stamp explicitly labeled Last developer login, and displays the current browser’s verified developer access separately from its optional community identity. Guests never receive a developer badge. The creator session endpoint returns only authorization, own-session expiry and the public last-login timestamp. Lock, expiry, back/forward restoration and returning to a visible tab refresh/remove the active indication. No callsign is granted creator privileges.

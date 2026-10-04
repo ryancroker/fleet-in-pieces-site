@@ -1,5 +1,12 @@
 # Website quality review — October 2, 2026
 
+## Prominent presence and remembered login — October 4, 2026
+
+Local Chrome390/1440 public notice and390px login checkbox screenshots inspected with no horizontal overflow. Checked option produced a30-day server lifetime and persistent HttpOnly/Strict local cookie; unchecked produced8hours. Reload/navigation retained creator access and did not change last login; Lock revoked each session. Production Secure/Host-prefix path is unchanged. No browser restart or physical-phone claim. The first review script crossed navigation before its context settled; the completed retry had zero site runtime exceptions.
+
+Prepared assets,25 syntax files,20 HTML documents and33 referenced assets/hashes passed; local Pages Functions compiled. No migration or production data edits for this pass. Evidence and publication receipts: `../../Saved/SourceChanges/FleetPresenceBanner_20261004`.
+
+
 ## Developer status and latest replies — October 4, 2026
 
 Bounded local Chrome390/1440 review exercised guest display, real creator unlock, persistent badge after navigation, the public latest-replies button/feed, and Lock returning to guest. Screenshots inspected at both widths; no horizontal overflow or runtime exceptions. Pacific login label matched the server timestamp and exact8-hour session expiry. Reads, navigation, a local pin change and Lock preserved last-login time. Pinning did not reorder the actual note chronology. No public QA logins, submissions or moderation actions are needed for release verification.

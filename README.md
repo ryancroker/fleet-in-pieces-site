@@ -166,6 +166,6 @@ Apply additive migration0006 only after a private production export and local re
 
 ## Knowing your current identity
 
-The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It also labels the separate community callsign or guest identity. The same code still unlocks `/crew` for8hours; no email or username was introduced. Expiry or Lock removes developer access.
+The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It also labels the separate community callsign or guest identity. The same code unlocks `/crew`. Keep me signed in on this device (checked by default) keeps access for30days; uncheck it for8hours. Existing expired sessions need the code once again. Expiry or Lock removes developer access. No email or username was introduced.
 
-**Updated [Pacific date/time] — Last developer login** is a presence timestamp, not a software-release date. It changes only on a successful developer-key login. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.
+The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer login**. This is a presence timestamp, not a software-release date. It changes only on a successful developer-key login. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.

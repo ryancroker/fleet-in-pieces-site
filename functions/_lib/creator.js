@@ -150,7 +150,8 @@ export async function routeCreator(request,env,db,session,url,path,data) {
    return {authorized:Boolean(active),expires_at:active?new Date(active.expires_at*1000).toISOString():null,last_developer_login:presence?.last_login_at||null};
   }
   if(request.method==='POST'){
-   keysOnly(data,['logout']);
+   keysOnly(data,['logout','remember']);
+   if(data.remember!==undefined)bool(data.remember,'Keep me signed in');
    if(data.logout===true){
     const {token}=cookieInfo(request);if(token)await db.prepare('DELETE FROM creator_sessions WHERE token_hash=?').bind(await digest(session.key,'creator:'+token)).run();
     setCookie(request,session,'',0);return {authorized:false};
@@ -158,10 +159,10 @@ export async function routeCreator(request,env,db,session,url,path,data) {
    if(!cookieInfo(request).allowed)fail(403,'creator_host','Open https://fleetinpieces.space/crew to unlock.');
    await authorizeAdmin(request,env,db,session);
    const token=[...crypto.getRandomValues(new Uint8Array(32))].map(x=>x.toString(16).padStart(2,'0')).join('');
-   const loginAt=new Date(session.now*1000).toISOString();
-   await db.batch([db.prepare('DELETE FROM creator_sessions WHERE expires_at<=?').bind(session.now),db.prepare('INSERT INTO creator_sessions(token_hash,key_version,expires_at) VALUES(?,?,?)').bind(await digest(session.key,'creator:'+token),await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY),session.now+28800),
+   const loginAt=new Date(session.now*1000).toISOString(),lifetime=data.remember===true?30*86400:28800;
+   await db.batch([db.prepare('DELETE FROM creator_sessions WHERE expires_at<=?').bind(session.now),db.prepare('INSERT INTO creator_sessions(token_hash,key_version,expires_at) VALUES(?,?,?)').bind(await digest(session.key,'creator:'+token),await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY),session.now+lifetime),
     db.prepare('UPDATE developer_presence SET last_login_at=? WHERE id=1 AND (last_login_at IS NULL OR last_login_at<?)').bind(loginAt,loginAt)]);
-   setCookie(request,session,token,28800);return {authorized:true,last_developer_login:loginAt,expires_at:new Date((session.now+28800)*1000).toISOString()};
+   setCookie(request,session,token,lifetime);return {authorized:true,last_developer_login:loginAt,expires_at:new Date((session.now+lifetime)*1000).toISOString()};
   }
  }
  await authorize(request,env,db,session);

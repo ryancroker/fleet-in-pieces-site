@@ -80,3 +80,10 @@ The latest developer replies endpoint reuses public idea serialization and exist
 
 
 Remembered creator access uses the same opaque, digest-only session table. An explicit boolean `remember` selects30days; omitted/false selects the existing8hours. Cookie Max-Age and server expiry match. No sliding renewal or timestamp update on GET. Long browser timers are capped below the signed32-bit millisecond limit and recheck the server rather than firing immediately. Status requests started before a later unlock/Lock cannot overwrite its UI state. Canonical-host restrictions and public/creator identity separation remain unchanged.
+
+
+### Simple remembered access (October 4)
+
+Community sessions use a30-day idle expiry, renewed no more often than daily on /api/session, with a90-day absolute limit after a passkey authentication. A guarded UPDATE preserves created_at and the fresh-auth requirement for credential/recovery changes. Expired, revoked or mismatched auth_version rows cannot renew. HttpOnly/Secure/Host-prefixed production cookies persist across browser restarts where browser storage permits; no credentials or session tokens are kept in localStorage. There is no unsolicited passkey prompt. A valid saved session restores automatically; otherwise Sign in with a passkey starts the device verification. Private browsing, cookie deletion and new devices require sign-in again.
+
+Player sign-in/account access is near the top; developer sign-in is in the footer. The admin key remains independent of passkey profiles. Ryan's authorized key rotation updates only COMMUNITY_ADMIN_KEY and needs a new production deployment to become active. Previous creator sessions fail the existing key_version check. Verify with a protected read rather than advancing the public presence timestamp through a test login. HSTS is sent by static and Function responses, without changing DNS or account settings.

@@ -4,6 +4,7 @@ import { fail, json, keysOnly, limits, textField, digest, pageOffset } from './c
 const encoder = new TextEncoder();
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const SESSION_AGE = 30 * 86400;
+const SESSION_MAX_AGE = 90 * 86400;
 const ALGORITHMS = [-7, -257];
 const PUBLIC_PROFILE = 'p.id,p.callsign,p.created_at,r.label AS rank';
 const clock = () => Math.floor(Date.now() / 1000);
@@ -37,9 +38,9 @@ function cookieToken(request) {
   const value = (request.headers.get('Cookie') || '').slice(0, 8192).split(';').map(p => p.trim()).find(p => p.startsWith(name))?.slice(name.length) || '';
   return /^[A-Za-z0-9_-]{43}$/.test(value) ? value : '';
 }
-function setCookie(request, session, token = '') {
+function setCookie(request, session, token = '', age = SESSION_AGE) {
   session.cookies ||= [];
-  session.cookies.push(`${cookieName(request)}=${token}; Path=/; Max-Age=${token ? SESSION_AGE : 0}; HttpOnly; SameSite=Lax${new URL(request.url).protocol === 'https:' ? '; Secure' : ''}`);
+  session.cookies.push(`${cookieName(request)}=${token}; Path=/; Max-Age=${token ? age : 0}; HttpOnly; SameSite=Lax${new URL(request.url).protocol === 'https:' ? '; Secure' : ''}`);
 }
 function authenticated(session, fresh = false) {
   if (!session.profileId) fail(401, 'signin_required', 'Sign in with your passkey to manage your fleet record.');
@@ -61,13 +62,26 @@ export async function attachIdentity(request, env, db, session) {
   const token = cookieToken(request);
   if (!token) return session;
   const tokenHash = await hash('session:' + token);
-  const row = await db.prepare(`SELECT ${PUBLIC_PROFILE},p.actor_hash,s.created_at AS authenticated_at,s.auth_version
+  const row = await db.prepare(`SELECT ${PUBLIC_PROFILE},p.actor_hash,s.created_at AS authenticated_at,s.auth_version,s.expires_at
     FROM identity_sessions s JOIN profiles p ON p.id=s.profile_id JOIN rank_definitions r ON r.id=p.rank_id
     WHERE s.token_hash=? AND s.expires_at>? AND s.auth_version=p.auth_version`).bind(tokenHash, clock()).first();
   if (!row) { setCookie(request, session); return session; }
   session.profile = summary(row); session.profileId = row.id; session.actor = row.actor_hash;
   session.identityTokenHash = tokenHash; session.identityAuthenticatedAt = row.authenticated_at; session.identityAuthVersion = row.auth_version;
+  session.identityExpiresAt = row.expires_at;
   return session;
+}
+async function rememberIdentity(request, db, session) {
+  if (!session.profileId) return;
+  const now = clock(), expires = Math.min(now + SESSION_AGE, session.identityAuthenticatedAt + SESSION_MAX_AGE);
+  // Refresh on a daily visit, with a firm reauthentication boundary. Never change
+  // created_at: keeping a device remembered must not satisfy fresh-auth checks.
+  if (expires <= session.identityExpiresAt + 86400) return;
+  const renewed = await db.prepare(`UPDATE identity_sessions SET expires_at=?
+    WHERE token_hash=? AND expires_at>? AND expires_at<? AND auth_version=?
+      AND EXISTS(SELECT 1 FROM profiles p WHERE p.id=identity_sessions.profile_id AND p.auth_version=identity_sessions.auth_version)
+    RETURNING expires_at`).bind(expires, session.identityTokenHash, now, expires, session.identityAuthVersion).first();
+  if (renewed) { session.identityExpiresAt = renewed.expires_at; setCookie(request, session, cookieToken(request), expires - now); }
 }
 async function loadProfile(db, id) {
   return db.prepare(`SELECT p.*,r.label AS rank,eligible.label AS eligible_rank_label,
@@ -322,7 +336,10 @@ export async function routeIdentity({ request, env, db, session, url, path, data
   if (!['session', 'auth', 'profiles', 'allegiance'].includes(first)) return null;
   await clean(db);
   let value;
-  if (request.method === 'GET' && first === 'session' && path.length === 1) value = { profile: session.profile, can_claim: await canClaim(db, session) };
+  if (request.method === 'GET' && first === 'session' && path.length === 1) {
+    await rememberIdentity(request, db, session);
+    value = { profile: session.profile, can_claim: await canClaim(db, session) };
+  }
   else if (request.method === 'GET' && first === 'profiles' && path.length === 1) {
     const name = callsign(url.searchParams.get('callsign'));
     const row = await db.prepare(`SELECT ${PUBLIC_PROFILE} FROM profiles p JOIN rank_definitions r ON r.id=p.rank_id WHERE p.callsign_key=?`).bind(name.key).first();

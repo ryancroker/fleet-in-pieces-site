@@ -17,7 +17,7 @@ const productURL = new URL(quartermasterURL);
 if(productURL.protocol!=='https:' || productURL.hostname!=='fleet-in-pieces-shop.fourthwall.com' || !productURL.pathname.startsWith('/products/') || productURL.username || productURL.password) throw Error('Quartermaster must link to a direct Fourthwall product');
 const quartermasterLink = '<a href="/quartermaster">Quartermaster / first issue</a>';
 const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/systems">Systems</a><a href="/ships">Ships</a><a href="/community">Community</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
-const statusBar='<aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-eyebrow">From the developer</p><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies ↗</a></div><div class="access-status" data-access-status role="status" aria-live="polite"><strong class="access-label">Your Fleet identity</strong><a href="/register">Register / sign in →</a></div></aside>';
+const statusBar='<aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-eyebrow">From the developer</p><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies ↗</a></div><div class="access-status" data-access-status role="status" aria-live="polite"><strong class="access-label">Your Fleet identity</strong><span class="access-detail"><a class="button primary" href="/register">Sign in / Join the Fleet</a></span></div></aside>';
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
 const contents = JSON.parse(await read(path.join(root, 'content/systems.json')));
@@ -66,9 +66,15 @@ for(const file of await htmlFiles(site)){
   html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,section => {
     section = section.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>[\s\S]*?<\/a>/g,quartermasterLink);
     if (!section.includes('href="/quartermaster"')) section = section.replace('<small>',quartermasterLink+'<small>');
-    if (!section.includes('data-register-link')) section = section.replace('<small>','<a href="/register" data-register-link>Register / sign in</a><small>');
+    if (!section.includes('data-register-link')) section = section.replace('<small>','<a href="/register" data-register-link>Sign in / Join the Fleet</a><small>');
     if (!section.includes('href="/fleet"')) section = section.replace('<small>','<a href="/fleet">Fleet Register & allegiance</a><small>');
-    if (!section.includes('href="/crew"')) section = section.replace('<small>','<a href="/crew">Fleet Command</a><small>');
+    if (!section.includes('href="/crew"')) section = section.replace('<small>','<a href="/crew" data-developer-link>Developer sign in</a><small>');
+    return section;
+  });
+  html=html.replace(/<footer\b[\s\S]*?<\/footer>/g,section => {
+    section=section.replace(/(<a\b[^>]*data-register-link[^>]*>)[\s\S]*?<\/a>/g,'$1Sign in / Join the Fleet</a>');
+    section=section.replace(/<a\b[^>]*href="(?:https:\/\/fleetinpieces\.space)?\/crew"[^>]*>[\s\S]*?<\/a>/g,'<a href="/crew" data-developer-link>Developer sign in</a>');
+    if(!section.includes('data-developer-link')) section=section.replace('</footer>','<a href="/crew" data-developer-link>Developer sign in</a></footer>');
     return section;
   });
   html=html.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>/g,tag => tag.replace(/\bhref="[^"]*"/,`href="${escape(quartermasterURL)}"`));

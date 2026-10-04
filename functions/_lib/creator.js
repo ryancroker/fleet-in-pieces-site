@@ -14,7 +14,7 @@ function cookieInfo(request) {
  const url=new URL(request.url),secure=url.protocol==='https:';
  const allowed=url.hostname==='fleetinpieces.space'||['localhost','127.0.0.1','[::1]'].includes(url.hostname);
  const name=secure?'__Host-fip_creator':'fip_creator_local';
- const token=(request.headers.get('Cookie')||'').split(';').map(x=>x.trim()).find(x=>x.startsWith(name+'='))?.slice(name.length+1)||'';
+ const token=(request.headers.get('Cookie')||'').slice(0,8192).split(';').map(x=>x.trim()).find(x=>x.startsWith(name+'='))?.slice(name.length+1)||'';
  return {allowed,name,token,secure};
 }
 function setCookie(request,session,token,age) {

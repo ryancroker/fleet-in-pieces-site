@@ -25,7 +25,12 @@ export async function creatorSession(request,env,db,session) {
  const info=cookieInfo(request);
  if(!info.allowed||!/^[a-f0-9]{64}$/.test(info.token)||typeof env.COMMUNITY_ADMIN_KEY!=='string')return null;
  const hash=await digest(session.key,'creator:'+info.token),version=await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY);
- return db.prepare('SELECT expires_at FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?').bind(hash,version,session.now).first();
+ return db.prepare('SELECT token_hash,key_version,expires_at FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?').bind(hash,version,session.now).first();
+}
+function presenceState(active,timestamp) {
+ // Keep the legacy response field for cached clients. The stored timestamp now
+ // means last authenticated activity, not only the last code-entry event.
+ return {authorized:Boolean(active),expires_at:active?new Date(active.expires_at*1000).toISOString():null,last_developer_activity:timestamp||null,last_developer_login:timestamp||null};
 }
 async function authorize(request,env,db,session) {
  if(!cookieInfo(request).allowed)fail(403,'creator_host','Use https://fleetinpieces.space/crew for developer access.');
@@ -143,11 +148,26 @@ async function promote(db,session,id,data) {
 }
 
 export async function routeCreator(request,env,db,session,url,path,data) {
+ if(path[1]==='presence'&&path.length===2&&request.method==='POST'){
+  keysOnly(data,[]);
+  const active=await creatorSession(request,env,db,session);
+  if(!active)fail(401,'creator_session_required','Sign in as the developer to check in.');
+  await limits(db,session,[['creator-presence',session.actor,10,60],['creator-presence-ip',session.ip,30,60]]);
+  const now=new Date(session.now*1000).toISOString(),cutoff=new Date((session.now-60)*1000).toISOString();
+  // Guard the write as well as the request: a revoked session cannot check in.
+  // At most one update per minute across tabs; clients never supply the time.
+  await db.prepare(`UPDATE developer_presence SET last_login_at=? WHERE id=1
+   AND (last_login_at IS NULL OR last_login_at<=?)
+   AND EXISTS(SELECT 1 FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?)`)
+   .bind(now,cutoff,active.token_hash,active.key_version,session.now).run();
+  const presence=await db.prepare('SELECT last_login_at FROM developer_presence WHERE id=1').first();
+  return presenceState(active,presence?.last_login_at);
+ }
  if(path[1]==='session'&&path.length===2){
   if(request.method==='GET'){
    await publicReadLimit(db,session);
    const active=await creatorSession(request,env,db,session),presence=await db.prepare('SELECT last_login_at FROM developer_presence WHERE id=1').first();
-   return {authorized:Boolean(active),expires_at:active?new Date(active.expires_at*1000).toISOString():null,last_developer_login:presence?.last_login_at||null};
+   return presenceState(active,presence?.last_login_at);
   }
   if(request.method==='POST'){
    keysOnly(data,['logout','remember']);
@@ -162,7 +182,7 @@ export async function routeCreator(request,env,db,session,url,path,data) {
    const loginAt=new Date(session.now*1000).toISOString(),lifetime=data.remember===true?30*86400:28800;
    await db.batch([db.prepare('DELETE FROM creator_sessions WHERE expires_at<=?').bind(session.now),db.prepare('INSERT INTO creator_sessions(token_hash,key_version,expires_at) VALUES(?,?,?)').bind(await digest(session.key,'creator:'+token),await digest(session.key,'creator-key:'+env.COMMUNITY_ADMIN_KEY),session.now+lifetime),
     db.prepare('UPDATE developer_presence SET last_login_at=? WHERE id=1 AND (last_login_at IS NULL OR last_login_at<?)').bind(loginAt,loginAt)]);
-   setCookie(request,session,token,lifetime);return {authorized:true,last_developer_login:loginAt,expires_at:new Date((session.now+lifetime)*1000).toISOString()};
+   setCookie(request,session,token,lifetime);return presenceState({expires_at:session.now+lifetime},loginAt);
   }
  }
  await authorize(request,env,db,session);

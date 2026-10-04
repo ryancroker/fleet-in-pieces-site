@@ -28,7 +28,7 @@ Allegiance is a single parent with an indexed transitive closure. Moving or leav
 
 ## Commerce stays separate
 
-**Quartermaster** now links directly to the Fourthwall first-shirt product from navigation, grouped footers and a compact homepage notice. There is no embedded shop or community-to-order integration. Merchandise must allow guest checkout without a Fleet identity or allegiance.
+**Quartermaster** navigation, grouped footers and the secondary homepage notice lead to native `/quartermaster`. Only its purchase CTA opens the exact Fourthwall first-shirt product URL; the generic store homepage is not part of the intended flow. `content/merch.json` holds the actual mockup and verified product data independently from the outbound URL. There is no native cart or community-to-order integration. Merchandise must allow guest checkout without a Fleet identity or allegiance.
 
 A dedicated checkout/print-on-demand provider will own payment, tax, receipts, customer email, shipping address and fulfillment. Do not add those fields to Fleet profiles or collect card information in this application.
 
@@ -45,3 +45,13 @@ After dependency changes, install the lockfile and run `node scripts/prepare-aut
 Before the first production migration, export the live D1 database to a private local path outside the public site, record current row counts and existing IDs, apply the additive migrations, and confirm those historical records are unchanged before deployment. Keep the signing secret stable. Do not drop tables, replace databases or alter DNS/paid plans as part of this work.
 
 Ryan owns real-device passkey prompts and phone acceptance. A successful server bundle or virtual browser credential proves neither platform sync nor every device's biometric UX.
+
+## Rebuild additions — October 3, 2026
+
+Migration 0004 inserts four content records only: damage, siege, carriers and rescue. It leaves every existing row and schema intact. `content_id` remains authoritative; the legacy `ideas.system` value is intentionally unchanged. Public feed clients request a bounded page of eight ideas. Inline replies reuse the permanent thread renderer and server reply counts; votes synchronize across multiple cards for the same idea.
+
+`GET /api/profiles/{uuid}/activity` returns up to25 public suggestions/replies, with plain-text snippets, original thread links and pagination. Hidden replies, hidden parent ideas and private content objects are excluded, including from public profile totals. This is a read model over existing ownership; no second contribution or reputation system is introduced.
+
+Optional allegiance remains a single superior plus closure-table descendants, never generic following. Rank configuration is unchanged; there is no50-person automatic progression. A future real-game vessel registry should reference the stable profile UUID and game definition/version identifiers, with assignment/history separate from authentication. No fake avatar vessel, browser fitting or combat is implemented. Existing contribution type IDs can later distinguish lore/name submissions without treating votes as canon authority.
+
+For a future Fourthwall Storefront API, replace the product data source and purchase adapter while leaving native presentation routes intact. Provider checkout/fulfillment remains separate; do not collect commerce PII in community tables or expose provider secrets to browser code. Current direct guest checkout requires no integration or Fleet login.

@@ -1,25 +1,27 @@
 # Fleet in Pieces
 
-Game and development-community website for **https://fleetinpieces.space**. Public pages use HTML, CSS and vanilla JavaScript. Cloudflare Pages Functions provide the D1-backed community and optional Fleet Register. There is no frontend framework, external font service, analytics or commerce implementation.
+Game and development-community website for **https://fleetinpieces.space**. Public pages use HTML, CSS and vanilla JavaScript. Cloudflare Pages Functions provide the D1-backed community and optional Fleet Register. There is no frontend framework or external font service. Cloudflare supplies the existing analytics beacon; Fourthwall handles external merchandise checkout.
 
-**Community expansion is live — October 3, 2026.** Published through GitHub main commit `3293639b39af460f181135fb735f694af08873dd`, Cloudflare deployment `1a0b0abb-3c18-4284-899b-1c9dc6dc62c4` (October 3, 2026). Apex and www HTTPS, Register API/RP, Pages noindex/canonical-host auth guard, original /i/1, canonical/OG resources, release asset hashes and 390/1440px layouts verified in Chrome. All original 10 ideas, 2 replies, 10 votes and 10 history rows compared unchanged after migrations 0002/0003. Local anonymous posting/reply/vote/report, developer implementation filter/discovery, native WebAuthn with virtual credentials (signup/signin/add key/recovery/claim), profile and whole-branch move/leave/cycle checks passed. No public QA identities/posts. Ryan owns real-phone/Windows Hello prompts and passkey sync acceptance. Evidence: `../../Saved/SourceChanges/FleetCommunityExpansion_20261003`.
+**Prior community expansion release — October 3, 2026.** Published through GitHub main commit `3293639b39af460f181135fb735f694af08873dd`, Cloudflare deployment `1a0b0abb-3c18-4284-899b-1c9dc6dc62c4` (October 3, 2026). Apex and www HTTPS, Register API/RP, Pages noindex/canonical-host auth guard, original /i/1, canonical/OG resources, release asset hashes and 390/1440px layouts verified in Chrome. All original 10 ideas, 2 replies, 10 votes and 10 history rows compared unchanged after migrations 0002/0003. Local anonymous posting/reply/vote/report, developer implementation filter/discovery, native WebAuthn with virtual credentials (signup/signin/add key/recovery/claim), profile and whole-branch move/leave/cycle checks passed. No public QA identities/posts. Ryan owns real-phone/Windows Hello prompts and passkey sync acceptance. Evidence: `../../Saved/SourceChanges/FleetCommunityExpansion_20261003`.
 
-## Pages and participation
+## Current visitor flow
+
+The homepage introduces the game and footage first, then feature briefings, real community ideas, recent development, a secondary merchandise notice and optional identity. Native navigation is **Game / Systems / Ships / Community / Dev Log / Quartermaster**. Fleet Register and allegiance are discovered through community content and footer links; guest participation never requires joining.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Real homepage: game introduction, bounded trending ideas and recently implemented ideas |
-| `/game` | Preserved game overview, approved branding/gameplay, dev diary and Steam status |
-| `/systems` | Available game-system briefings; missiles are the only seeded content object |
-| `/systems/missiles` | Current missile behavior, authentic development clip, idea composer and discussion |
-| `/community` | Bounded cross-content discovery, without an infinite generic social feed |
-| `/fleet` | Fleet Register introduction and callsign lookup |
-| `/register` | Optional passkey registration, sign-in, recovery and account security |
-| `/u/{uuid}` | Public profile, contribution totals, allegiance and empty vessel assignment |
-| `/i/{id}` | Permanent idea detail and reply thread; existing links and IDs remain valid |
+| `/` | Game-first homepage with footage, briefings, bounded discussion, development and merch |
+| `/game` | Preserved full game overview, approved masthead, authentic clips and Steam status |
+| `/systems`, `/ships` | Small directories of actual available briefings |
+| `/systems/missiles`, `/systems/damage`, `/systems/siege` | Current behavior, footage, discussion and real implementation record |
+| `/ships/carriers`, `/ships/rescue` | Authentic ship-role briefings with the same guest participation flow |
+| `/community` | Bounded trending and implemented ideas; optional Fleet Register introduction |
+| `/dev-log` | Authored development updates plus actual implemented-from-feedback records |
+| `/quartermaster` | Native shirt presentation; one direct Fourthwall product purchase CTA |
+| `/fleet`, `/register` | Callsign lookup and optional passkey identity/recovery |
+| `/u/{uuid}` | Public contribution history, rank, actual allegiance tree and empty vessel assignment |
+| `/i/{id}` | Permanent idea and reply thread; existing shared URLs remain valid |
 | `/crew` | Private developer moderation desk |
-
-The homepage no longer redirects to missiles. Explicit `/index` and `/index.html` aliases return to `/`. Primary navigation is Game, Fleet, Systems, Community, Register and the external Quartermaster.
 
 Browsing, voting, submitting ideas and replying never require registration. The idea form keeps its 8–2,000 character body and optional handle; it adds no title, tags, email or category requirement. Guest handles and drafts are remembered locally. Public ideas, replies and votes live in D1, never simulated browser storage. Authored game information and media remain readable without JavaScript; live discussions, discovery and register actions need JavaScript.
 
@@ -35,7 +37,7 @@ node scripts/prepare-site.mjs
 
 `@simplewebauthn/server` is pinned to **14.0.3** in `package.json` and the lockfile. It is a server-only WebAuthn verification dependency; browser code uses native WebAuthn. The authoring script itself uses only Node built-ins. With the required blank build command, Pages skips npm installation. `prepare-auth.mjs` uses pinned esbuild 0.28.2 to package the four verification/option exports and dependency license notices into `functions/_lib/vendor/`. Commit this server-only output whenever the dependency lock changes. Pages bundles the committed module without installing npm packages; the deployed frontend has no framework or build command.
 
-Edit `content/systems.json` and `templates/system.html` for system briefings. `prepare-site.mjs` writes the generated page, currently `site/systems/missiles.html`, and applies the shared navigation. New real content also needs an additive registry migration using the same stable content ID. Do not edit generated briefing HTML as the lasting source of a content change.
+Edit `content/systems.json` and `templates/system.html` for system/ship briefings. Entry pages come from `scripts/render-pages.mjs`, development updates from `content/development.json`, and merchandise metadata from `content/merch.json`. `prepare-site.mjs` generates these pages, shared navigation and sitemap. New real content also needs an additive registry migration using the same stable content ID. Do not edit generated briefing HTML as the lasting source of a content change.
 
 Run the script after changing authored content, HTML, CSS or browser JavaScript. It normalizes release bytes to UTF-8/LF, creates content-fingerprinted CSS/JS files and updates HTML references together. Keep stable source filenames editable, never change an existing fingerprinted file, and retain old release copies for cached HTML. This replaces the old manual community-CSS fingerprint procedure. Review and commit the generated output with its source; Cloudflare publishes the prepared `site/` directory.
 
@@ -66,7 +68,7 @@ Create ignored `.dev.vars` with separate local `COMMUNITY_ADMIN_KEY` and `COMMUN
 
 `content_objects.id` permanently owns a discussion. The existing missile object is `system-missiles`, with slug `missiles` and path `/systems/missiles`. Migration 0002 adds the registry, backfills existing ideas and retains the legacy `system` column for old clients. It does not rebuild idea, reply or vote tables. `contribution_types` is a foundation for later submissions; only ordinary ideas are enabled now.
 
-System feeds default to Top, with New, Dev responded and Implemented filters. `/api/discovery` returns at most six trending and four implemented ideas. Trending uses real recent activity within a bounded candidate set; empty data stays empty. `/api/content` exposes the real published content registry. There is no fabricated ship catalog, popularity or feedback history.
+System feeds default to Top, with New, Dev responded and Implemented filters. Eight ideas load at a time, with More ideas for the rest. Replies open inline; the full `/i/{id}` thread remains available. `/api/discovery` returns at most six trending and four implemented ideas. Trending uses real recent activity within a bounded candidate set; empty data stays empty. `/api/content` exposes the real published content registry. The five published briefings use existing footage; there is no invented specification catalog, popularity or feedback history. The original legacy `ideas.system` constraint remains intentionally unchanged; `content_id` owns every discussion.
 
 The developer desk offers nine deliberate Fleet Command presets: SUBMITTED, POPULAR, LOOKING AT THIS, PROTOTYPING, PLANNED, IMPLEMENTED, NO, THIS WOULD BREAK EVERYTHING, and TECHNICALLY POSSIBLE, UNFORTUNATELY. They map to the existing normalized states. Custom labels and previous decisions remain intact. POPULAR is an editorial choice, not an automatic vote threshold. Only ideas actually marked implemented enter implementation records.
 
@@ -84,7 +86,7 @@ Claiming existing browser activity is explicit. Original idea/reply IDs and raw 
 
 Swear Allegiance assigns one superior and moves the entire subordinate branch. Leaving takes that branch along. Atomic database guards prevent cycles; the current limits are 12 command levels and 2,000 members per connected command tree. Advanced politics, vessel outfitting and browser combat are not implemented.
 
-See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for the data model and future commerce separation. No shop, checkout provider, order table, webhook or purchase badge is built. Future commerce must allow guest checkout, leave payment/shipping/customer data with its provider, and keep any optional profile association separate from community authentication.
+See **[COMMUNITY_ARCHITECTURE.md](COMMUNITY_ARCHITECTURE.md)** for the data model and future commerce separation. The native Quartermaster page directs purchase to Fourthwall; no native cart, order table, webhook or purchase badge is built. Future commerce must allow guest checkout, leave payment/shipping/customer data with its provider, and keep any optional profile association separate from community authentication.
 
 ## Hosting and publication
 
@@ -105,7 +107,7 @@ Reuse the existing Git-integrated Cloudflare Pages project and repository; do no
 
 `wrangler.toml` pins compatibility to May 22, 2026 and defines production D1. Preview deliberately has no production D1 binding. `_routes.json` invokes Functions for `/api/*`, `/i/*` and `/u/*`; the other pages and media are static. Only `site/` is public static output. `node_modules`, local secrets, database exports and QA profiles must stay outside it.
 
-Before the first expansion deployment, export the live database to a private path outside `site/`, record existing IDs/counts, apply reviewed additive migrations **0002 and 0003**, and verify the historical records remain intact. Both migrations must precede Functions that read the new columns. Then publish the reviewed source through the existing GitHub `main` integration. Do not drop tables or replace D1 as a frontend rollback.
+Before each database migration, export the live database privately outside `site/`, record existing IDs/counts, apply only reviewed pending migrations, and verify historical records. This pass adds only **0004**, four content registry inserts; 0002/0003 are already live. Then publish the reviewed source through the existing GitHub `main` integration. Do not drop tables or replace D1 as a frontend rollback.
 
 For future releases, confirm the Git-backed deployment, actual apex/www pages, fingerprinted assets, API and preserved `/i/{id}` links. Ryan owns real-device passkey prompts and phone acceptance; a successful bundle or virtual credential does not prove device sync or biometric UX. Earlier browser receipts in `QUALITY_REVIEW.md` and `../../Saved/SourceChanges/FleetWebsiteDeployment_20261002` cover earlier releases only.
 
@@ -117,7 +119,7 @@ External destinations are configured in `site/config.js`. Keep `SITE_URL` as `ht
 
 **[ASSET_CHECKLIST.md](ASSET_CHECKLIST.md)** lists media inputs; **[MEDIA_SOURCES.md](MEDIA_SOURCES.md)** records provenance. Use authentic silent gameplay, native aspect ratios and the approved logo. The missile clip is archived development footage, not proof of the current game build. No new game/editor launch, filming, watermarked social download, third-party music or invented gameplay is authorized by website work. Keep full source recordings and game files outside `site/`.
 
-The `/game` hero may autoplay only under its existing desktop/motion/data rules; phones and feature clips wait for explicit play. Preserve accessible native controls as the fallback. There is no service worker or offline application.
+The homepage and `/game` heroes may autoplay only under its existing desktop/motion/data rules; phones and feature clips wait for explicit play. Preserve accessible native controls as the fallback. There is no service worker or offline application.
 
 ## Abuse and privacy boundaries
 
@@ -125,8 +127,17 @@ Preserve plain-text rendering, same-origin JSON mutations, signed browser identi
 
 Profanity is allowed. Pattern checks and the hidden spam field catch some obvious links/private information, but contextual abuse still needs human moderation. Failed requests show honest retry states and preserve drafts. Votes represent enthusiasm, not command authority.
 
-## Quartermaster first issue
+## Native Quartermaster
 
-Quartermaster links to `https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt` from the shared desktop/mobile navigation, existing grouped footers, and the compact FIRST DEPLOYMENT notice near the bottom of the homepage. All links open a new tab with `noopener noreferrer`; no Fleet identity is sent. No embedded checkout or purchase integration is added.
+Shared desktop/mobile navigation and grouped footers point to `/quartermaster`. The homepage merchandise notice follows game, community and development content and links to that native page. Only **Buy the first issue** opens the direct product URL:
+`https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt`
 
-Change the destination in `site/config.js` (`QUARTERMASTER_URL`) and run `node scripts/prepare-site.mjs` to update every static link and release reference. The text-first treatment deliberately uses no placeholder product image. Community APIs, authentication, database and hosting settings are unaffected.
+The purchase link uses a new tab with `noopener noreferrer`; no Fleet identity is sent. No link routes through Fourthwall's generic store homepage. The actual product mockup and verified metadata are in `content/merch.json`; current starting price is US$21 (October 3, 2026), with variant pricing, shipping and tax settled on Fourthwall. Keep product data and the outbound purchase destination separate so a future Storefront API/cart adapter can replace this boundary without changing community authentication. That integration is not built in this pass.
+
+Change the purchase destination in `site/config.js`, refresh verified metadata in `content/merch.json`, and run `node scripts/prepare-site.mjs`. Keep this as an extension of the game site, not an ecommerce homepage.
+
+## Analytics and local review
+
+The existing Cloudflare beacon was blocked by the original self-only script policy. Static and Functions CSP now permit its script and connection origins; there is no new beacon or analytics provider. Local previews have no injected production analytics. Keep mutation/layout QA on isolated local D1 and make only a small, identified release check on production. Do not equate requests or IPs with people, or claim a CSP fix proves analytics ingestion before checking the live release.
+
+`site/network.js` replaces three independent public request wrappers. It provides one initial cookie barrier, timeouts and retry messages while existing idempotent mutation IDs preserve drafts across failures. The register's secure session and guest identity remain separate.

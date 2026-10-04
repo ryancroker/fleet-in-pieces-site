@@ -1,5 +1,5 @@
 import { generateRegistrationOptions, verifyRegistrationResponse, generateAuthenticationOptions, verifyAuthenticationResponse } from './vendor/webauthn.js';
-import { fail, json, keysOnly, limits, textField, digest } from './community.js';
+import { fail, json, keysOnly, limits, textField, digest, pageOffset } from './community.js';
 
 const encoder = new TextEncoder();
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -279,12 +279,27 @@ async function profileDetails(db, id, offset = 0) {
       (SELECT COUNT(*)-1 FROM allegiance_paths WHERE ancestor_id=?) AS subtree_count,
       COUNT(*) AS ideas_count,COALESCE(SUM(votes),0) AS votes_received,
       COALESCE(SUM(CASE WHEN status='implemented' THEN 1 ELSE 0 END),0) AS implemented_count
-      FROM ideas WHERE profile_id=? AND hidden=0`).bind(id, id, id)
+      FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1`).bind(id, id, id)
   ]);
   return { profile: { ...summary(profile), ...counts.results[0], superior: superior.results[0] ? summary(superior.results[0]) : null,
     direct_vassals: children.results.slice(0, 25).map(summary),
     promotion_eligibility: profile.eligible_rank_id ? { rank_id: profile.eligible_rank_id, label: profile.eligible_rank_label, requires_superior_approval: Boolean(profile.eligible_requires_approval) } : null,
     vessel: null }, has_more: children.results.length > 25 };
+}
+async function profileActivity(db, id, offset) {
+  if (!await db.prepare('SELECT id FROM profiles WHERE id=?').bind(id).first()) fail(404,'not_found','That fleet record was not found.');
+  const {results} = await db.prepare(`SELECT * FROM (
+    SELECT 'idea' AS type,i.id,i.id AS idea_id,substr(i.body,1,500) AS body,i.created_at,
+      c.title AS content_title,c.path AS content_path,i.status,i.status_label,i.votes
+      FROM ideas i JOIN content_objects c ON c.id=i.content_id
+      WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1
+    UNION ALL
+    SELECT 'reply' AS type,r.id,r.idea_id,substr(r.body,1,500) AS body,r.created_at,
+      c.title AS content_title,c.path AS content_path,NULL AS status,NULL AS status_label,NULL AS votes
+      FROM replies r JOIN ideas i ON i.id=r.idea_id JOIN content_objects c ON c.id=i.content_id
+      WHERE r.profile_id=? AND r.hidden=0 AND i.hidden=0 AND c.is_public=1
+    ) ORDER BY created_at DESC,id DESC,type ASC LIMIT 26 OFFSET ?`).bind(id,id,offset).all();
+  return {activity:results.slice(0,25),has_more:results.length>25};
 }
 async function allegiance(db, session, data) {
   authenticated(session); keysOnly(data, ['superior_id']);
@@ -316,6 +331,8 @@ export async function routeIdentity({ request, env, db, session, url, path, data
     const raw = url.searchParams.get('offset') || '0';
     if (!/^(?:0|[1-9]\d{0,3})$/.test(raw) || Number(raw) > 2000) fail(400, 'invalid_offset', 'That command page is unavailable.');
     value = await profileDetails(db, profileId(path[1]), Number(raw));
+  } else if (request.method === 'GET' && first === 'profiles' && path.length === 3 && path[2] === 'activity') {
+    value = await profileActivity(db,profileId(path[1]),pageOffset(url));
   } else if (request.method === 'POST' && first === 'allegiance' && path.length === 1) value = await allegiance(db, session, data);
   else if (first === 'auth' && path.length === 3 && ['register', 'recover', 'passkeys'].includes(path[1]) && request.method === 'POST') {
     if (path[2] === 'options') value = await registrationOptions(request, db, session, path[1], data);

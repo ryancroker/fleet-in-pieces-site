@@ -6,15 +6,16 @@
   <meta name="description" content="An optional callsign, a passkey, and a place in the fleet. No email or password.">
   <meta name="robots" content="noindex,follow"><link rel="canonical" href="https://fleetinpieces.space/register">
   <meta name="theme-color" content="#06090c"><link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/styles.129f13820f3f.css"><link rel="stylesheet" href="/community.cffda931610f.css"><link rel="stylesheet" href="/register.f130862292b7.css">
-  <script src="/register.429b81d053c8.js" defer></script>
+  <link rel="stylesheet" href="/styles.129f13820f3f.css"><link rel="stylesheet" href="/community.cffda931610f.css"><link rel="stylesheet" href="/register.99116a3f5845.css">
+  <script src="/network.528cc4f52b07.js" defer></script>
+  <script src="/register.96a49e3f3cde.js" defer></script>
   <script src="/config.1713a3d345c2.js" defer></script>
   <script src="/script.1c0445cf0261.js" defer></script>
-  <script src="/hub.012fc2a8a304.js" defer></script>
+  <script src="/hub.031f16e2ba6d.js" defer></script>
 </head>
 <body class="community-page register-page" data-register-page>
   <a class="skip-link" href="#main">Skip to Fleet Register</a>
-  <header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/fleet">Fleet</a><a href="/systems">Systems</a><a href="/community">Community</a><a href="/register" data-register-link>Register</a><a href="https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt" data-quartermaster target="_blank" rel="noopener noreferrer" aria-label="Quartermaster (opens in a new tab)">Quartermaster ↗</a></nav></header>
+  <header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/game">Game</a><a href="/systems">Systems</a><a href="/ships">Ships</a><a href="/community">Community</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>
   <main id="main" class="wrap register-main">
     <div class="page-intro"><p class="eyebrow">Fleet administration / voluntary paperwork</p><h1>Put a name<br>on the record.</h1><p>A callsign. A passkey. A place in the fleet. Registration is optional: you can still read, vote, suggest and reply without it.</p></div>
     <p id="register-feedback" class="register-feedback" role="status" aria-live="polite">Checking your fleet record…</p>
@@ -29,7 +30,7 @@
       <section class="register-panel" aria-labelledby="create-heading"><p class="eyebrow">01 / enlist</p><h2 id="create-heading">Choose your callsign.</h2><p>Your device will save a passkey and ask you to verify with its screen lock, fingerprint or face. No password to remember.</p>
         <form id="register-form"><label for="callsign">Public callsign</label><input id="callsign" name="callsign" required minlength="3" maxlength="24" pattern="[A-Za-z0-9][A-Za-z0-9_\-]{2,23}" autocomplete="username webauthn" autocapitalize="none" spellcheck="false" placeholder="Your callsign"><p class="register-note">3–24 letters, numbers, underscores or hyphens. Everyone starts as a Recruit.</p><label class="register-check"><input id="claim-on-register" type="checkbox"><span>Attach this browser’s existing ideas, replies and votes to my record.</span></label><p class="register-note">This is optional and permanent. Original contributions and votes are preserved.</p><div class="form-trap" aria-hidden="true"><label for="register-website">Website</label><input id="register-website" tabindex="-1" autocomplete="off"></div><button class="button primary" type="submit">Create a passkey</button></form>
       </section>
-      <section class="register-panel" aria-labelledby="signin-heading"><p class="eyebrow">02 / return to duty</p><h2 id="signin-heading">Already on the roster?</h2><p>Use a saved passkey. Your browser can offer a nearby device if your key lives elsewhere.</p><button id="signin" class="button secondary" type="button">Sign in with a passkey</button>
+      <section id="return" class="register-panel" aria-labelledby="signin-heading"><p class="eyebrow">02 / return to duty</p><h2 id="signin-heading">Already on the roster?</h2><p>Use a saved passkey. Your browser can offer a nearby device if your key lives elsewhere.</p><button id="signin" class="button secondary" type="button">Sign in with a passkey</button>
         <details class="register-details"><summary>Lost access to your passkeys?</summary><p>Use your private recovery code to create a new passkey. Completing recovery removes all old passkeys, signs out every session and replaces the recovery code.</p><form id="recover-form"><label for="recover-callsign">Callsign</label><input id="recover-callsign" required maxlength="24" autocomplete="username" autocapitalize="none" spellcheck="false"><label for="recover-code">Private recovery code</label><input id="recover-code" type="password" required maxlength="100" autocomplete="off" autocapitalize="none" spellcheck="false"><label class="register-check"><input id="recover-confirm" type="checkbox" required><span>Replace all existing passkeys with a new one.</span></label><button class="button secondary" type="submit">Recover with a new passkey</button></form></details>
       </section>
     </div>
@@ -45,5 +46,5 @@
     <p class="register-footnote">No email, password, billing details or shipping address. Your public record contains your callsign, rank, allegiance and community contributions. <a href="/systems/missiles">Back to the discussion →</a></p>
     <noscript><p>Passkeys and the Fleet Register need JavaScript. You can still browse the game and system briefings.</p></noscript>
   </main>
-  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public.</p></div><div class="footer-end"><a href="/fleet">Find a fleet record</a><a href="https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt" data-quartermaster target="_blank" rel="noopener noreferrer" aria-label="Quartermaster (opens in a new tab)">Quartermaster ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>
+  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public.</p></div><div class="footer-end"><a href="/fleet">Find a fleet record</a><a href="/quartermaster">Quartermaster / first issue</a><a href="/register" data-register-link>Register / sign in</a><small>© 2026 Fleet in Pieces</small></div></footer>
 </body></html>

@@ -23,7 +23,7 @@ const SECURITY = {
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cache-Control': 'no-store',
-  'Content-Security-Policy': "default-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self'"
+  'Content-Security-Policy': "default-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; manifest-src 'self'; connect-src 'self' https://cloudflareinsights.com"
 };
 
 export class ApiError extends Error {
@@ -246,7 +246,7 @@ export async function authorizeAdmin(request, env, db, session) {
   }
   await limits(db, session, [['admin', session.actor, 120, 60], ['admin-ip', session.ip, 300, 60]]);
 }
-export function paginate(rows) { return { rows: rows.slice(0, PAGE_SIZE), has_more: rows.length > PAGE_SIZE }; }
+export function paginate(rows, size = PAGE_SIZE) { return { rows: rows.slice(0, size), has_more: rows.length > size }; }
 export function statusKey(status, label) {
   if (label) return Object.keys(STATUS_PRESETS).find(key => STATUS_PRESETS[key].status === status && STATUS_PRESETS[key].label === label.toUpperCase()) || null;
   return { new: 'submitted', reviewing: 'looking', planned: 'planned', building: 'prototyping', implemented: 'implemented', declined: 'no' }[status] || null;

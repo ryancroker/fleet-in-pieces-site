@@ -218,10 +218,13 @@ async function listIdeas(db, session, url) {
   };
   if (!Object.hasOwn(choices, sort)) fail(400, 'invalid_sort', 'Choose top, new, dev responded or implemented.');
   const choice = choices[sort];
+  const limit = url.searchParams.get('limit') || String(PAGE_SIZE);
+  if (!['8',String(PAGE_SIZE)].includes(limit)) fail(400,'invalid_limit','Choose a supported page size.');
+  const size = Number(limit);
   const { results } = await db.prepare(`SELECT ${IDEA_COLUMNS} ${IDEA_FROM}
     WHERE i.content_id=? AND i.hidden=0 AND c.is_public=1${choice.where} ORDER BY ${choice.order} LIMIT ? OFFSET ?`)
-    .bind(session.actor, session.actor, content.id, PAGE_SIZE + 1, pageOffset(url)).all();
-  const page = paginate(results);
+    .bind(session.actor, session.actor, content.id, size + 1, pageOffset(url)).all();
+  const page = paginate(results,size);
   return { ideas: page.rows.map(row => ideaJson(row)), has_more: page.has_more, content };
 }
 
@@ -312,16 +315,17 @@ export async function onRequest(context) {
       if (path.length === 3 && path[2] === 'vote' && request.method === 'POST') return json(await setVote(db, session, id, data), session);
       if (path.length === 3 && path[2] === 'replies') {
         if (request.method === 'GET') {
-          await getIdea(db, id, session.actor);
+          const idea = await getIdea(db, id, session.actor);
           const { results } = await db.prepare(`SELECT ${REPLY_COLUMNS} ${REPLY_FROM}
             WHERE r.idea_id=? AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 ORDER BY r.id ASC LIMIT ? OFFSET ?`)
             .bind(id, PAGE_SIZE + 1, pageOffset(url)).all();
           const page = paginate(results);
-          return json({ replies: page.rows.map(row => replyJson(row)), has_more: page.has_more }, session);
+          return json({ replies: page.rows.map(row => replyJson(row)), reply_count: idea.reply_count, has_more: page.has_more }, session);
         }
         if (request.method === 'POST') {
           const result = await createPost(db, session, data, id);
-          return json(result.value, session, result.status);
+          const idea = await getIdea(db, id, session.actor);
+          return json({...result.value, reply_count:idea.reply_count}, session, result.status);
         }
       }
     }

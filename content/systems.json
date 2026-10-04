@@ -23,6 +23,47 @@
       "description": "Archived development footage. Work in progress."
     },
     "question": "What should missiles do?",
-    "placeholder": "What if missiles could…"
+    "placeholder": "What if missiles could…",
+    "related": ["ship-carriers", "system-damage"]
+  },
+  {
+    "id": "system-damage", "slug": "damage", "kind": "system", "title": "Damage",
+    "tagline": "Fight the ship. Not the health bar.",
+    "description": "Localized hull and component damage in Fleet in Pieces. See actual development footage and discuss what a damaged ship should still be able to do.",
+    "status": "Current / in development",
+    "facts": ["Weapons, engines and shields can fail independently", "Hull damage changes what survives the fight", "Lost thrust changes maneuvering and escape", "A ship can be disabled before it is destroyed"],
+    "media": {"src":"/assets/video/damage-demo.mp4","poster":"/assets/images/damage-demo-poster.webp","width":576,"height":1024,"title":"Localized damage","description":"Archived development footage. Work in progress."},
+    "question":"What should still work after that?", "placeholder":"A damaged ship should…",
+    "related":["ship-rescue","system-missiles"]
+  },
+  {
+    "id": "system-siege", "slug": "siege", "kind": "system", "title": "Siege weapons",
+    "tagline": "Sometimes the planet is part of the argument.",
+    "description": "Siege weapons and planetary destruction in Fleet in Pieces. Watch the archived development footage and discuss the consequences.",
+    "status": "Current / in development",
+    "facts": ["Siege weapons extend the fight beyond individual ships", "Planetary rupture produces drifting debris", "Fleet positioning still matters when the target is enormous"],
+    "media": {"src":"/assets/video/planet-killer.mp4","poster":"/assets/images/planet-killer-poster.webp","width":576,"height":1024,"title":"Planet breakup · 2× speed","description":"Archived footage shown at twice recorded speed. Work in progress."},
+    "question":"How bad should the consequences be?", "placeholder":"A siege weapon should…",
+    "related":["system-damage","ship-rescue"]
+  },
+  {
+    "id": "ship-carriers", "slug": "carriers", "kind": "ship", "title": "Carriers",
+    "tagline": "A fleet inside your fleet. Please bring it home.",
+    "description": "Carriers and fighter wings in Fleet in Pieces. Finite fuel, strike orders and recovery. Watch the development footage and contribute an idea.",
+    "status": "Current / in development",
+    "facts": ["Carriers launch fighter wings", "Fighter fuel is finite", "Strike planning includes recovery", "A surviving carrier is a home worth defending"],
+    "media": {"src":"/assets/video/carrier-wing.mp4","poster":"/assets/images/carrier-wing-poster.webp","width":576,"height":1024,"title":"Fighter launch","description":"Archived development footage with the in-game interface. Work in progress."},
+    "question":"What should a carrier commander worry about?", "placeholder":"Carriers could…",
+    "related":["system-missiles","ship-rescue"]
+  },
+  {
+    "id": "ship-rescue", "slug": "rescue", "kind": "ship", "title": "Rescue ships",
+    "tagline": "Getting home in one piece is negotiable.",
+    "description": "Rescue ships and jump extraction in Fleet in Pieces. Watch an actual development clip and discuss how to bring the fleet home.",
+    "status": "Current / in development",
+    "facts": ["Rescue ships attach to damaged ships under fire", "A prepared jump drive provides a way out", "Momentum, fuel and positioning shape the approach", "Extraction is a job for a real ship in the fight"],
+    "media": {"src":"/assets/video/jump-rescue.mp4","poster":"/assets/images/jump-rescue-poster.webp","width":576,"height":1024,"title":"Jump extraction","description":"Archived charge and departure footage; arrival is not shown. Work in progress."},
+    "question":"How would you bring them home?", "placeholder":"A rescue ship should…",
+    "related":["system-damage","ship-carriers"]
   }
 ]

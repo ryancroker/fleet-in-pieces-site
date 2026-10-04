@@ -1,0 +1,14 @@
+{
+  "id": "first-it-was-a-ship-now-its-a-shirt",
+  "name": "First it was a ship. Now it is a shirt.",
+  "vessel": "KESTRAL",
+  "status": "DEGRADED",
+  "image": "/assets/images/first-deployment-shirt.jpg",
+  "image_width": 1536,
+  "image_height": 2048,
+  "price_from": 21.0,
+  "currency": "USD",
+  "price_checked": "2026-10-03",
+  "source_url": "https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt",
+  "image_source": "https://imgproxy.fourthwall.dev/h0VS3G0aQ8vRSp_Hv-OjnHmENqBwFGBZhDrYPX15Dxc/w:1920/sm:1/enc/mE2g5BN7mdTJoJqt/m8n7jhQzMKZqOsVY/zXceUi6hs0BFf6EW/zS7zApNwdR8nxMmS/8HZ6ccgwKqjQESAK/oQITqSZI4GktKsgS/ed7Ya-Em5PuU-Pgl/oKFpnb2ya1cw9QGs/b8kGJvUlRCjYL69s/9dgtDrtvDN1N9plh/MBk9csokV7ndvsbp/13TiZtqxKMkYVh7p/l4eU4CQzHKPYsH4W/1bxKzSHVspzx8ycx/Vbb-c749xuM.jpg"
+}

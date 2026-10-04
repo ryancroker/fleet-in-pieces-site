@@ -1,0 +1,29 @@
+[
+  {
+    "id": "boarding",
+    "date": "2026-10-03",
+    "title": "Getting aboard is only half the problem.",
+    "status": "In testing",
+    "body": "Boarding craft and a dedicated ram-and-board hull are in development. The approach, the marines and getting them home all belong to the same fight. This pass is built and awaiting playtesting.",
+    "path": "/systems/missiles",
+    "link": "Discuss the weapons they have to get past"
+  },
+  {
+    "id": "repair",
+    "date": "2026-10-03",
+    "title": "Somebody has to pick up the pieces.",
+    "status": "In testing",
+    "body": "Repair work is expanding around finite supplies, replacement parts and a large support tender with service drones. Keeping a damaged ship alive and rebuilding what is missing are different jobs. The new pass still needs playtesting.",
+    "path": "/systems/damage",
+    "link": "Explore damage and suggest what comes next"
+  },
+  {
+    "id": "community",
+    "date": "2026-10-03",
+    "title": "The fleet has a suggestion box.",
+    "status": "Open now",
+    "body": "Ideas, votes and replies are open without an account. Optional passkey identities keep a callsign and service record. Fleet Command responses stay attached to the original discussion.",
+    "path": "/community",
+    "link": "Join the discussion"
+  }
+]

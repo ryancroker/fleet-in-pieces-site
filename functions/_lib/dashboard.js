@@ -77,10 +77,21 @@ export async function dashboard(db,url){
    UNION ALL SELECT 'vote',idea_id,idea_id,content_title,content_path,MAX(created_at),'','',COUNT(*) FROM events WHERE kind='vote' AND ${range} GROUP BY idea_id
    UNION ALL SELECT CASE WHEN n.last_at=n.first_at THEN 'developer' ELSE 'developer_edit' END,i.id,i.id,i.content_title,i.content_path,n.last_at,substr(i.developer_response,1,240),'Fleet Command',1
    FROM notes n JOIN visible i ON i.id=n.id WHERE n.last_at>=? AND n.last_at<=?
-  ) SELECT * FROM recent ORDER BY created_at DESC,kind,event_id DESC LIMIT 20`).bind(start,end,start,end,start,end)
+  ) SELECT * FROM recent ORDER BY created_at DESC,kind,event_id DESC LIMIT 20`).bind(start,end,start,end,start,end),
+  // Keep private proposals outside the repeatedly expanded events CTE. Another
+  // UNION branch there exceeds D1's compound-select limit in the existing views.
+  db.prepare(`SELECT COUNT(*) AS total,SUM(CASE WHEN ${range} THEN 1 ELSE 0 END) AS recent FROM topic_proposals`).bind(start,end),
+  db.prepare(`WITH periods(day,start,finish) AS (VALUES ${periods.map(()=>'(?,?,?)').join(',')})
+   SELECT p.day,COUNT(t.id) AS count FROM periods p LEFT JOIN topic_proposals t ON t.created_at>=p.start AND t.created_at<p.finish AND t.created_at<=? GROUP BY p.day`)
+   .bind(...periods.flatMap(p=>[p.date,p.start,p.end]),end),
+  db.prepare(`SELECT 'proposal' AS kind,t.id AS event_id,NULL AS idea_id,t.title AS content_title,'/crew' AS content_path,
+   t.created_at,substr(t.body,1,240) AS body,COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew') AS author,1 AS amount
+   FROM topic_proposals t LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.created_at>=? AND t.created_at<=? ORDER BY t.created_at DESC,t.id DESC LIMIT 20`).bind(start,end)
  ]);
  const totals={},counts={};for(const kind of ['idea','reply','vote','developer','register']){const row=rows[0].results.find(r=>r.kind===kind);totals[kind]=Number(row?.total||0);counts[kind]=Number(row?.recent||0);}
- const daily=periods.map(p=>{const result={date:p.date,idea:0,reply:0,vote:0,developer:0,register:0};for(const r of rows[2].results)if(r.day===p.date&&r.kind)result[r.kind]=r.count;return result;});
- return {as_of:end,days,time_zone:ZONE,period_start:start,counts,totals,attention:rows[1].results[0],daily,topics:rows[3].results,recent:rows[4].results,
+ totals.proposal=Number(rows[5].results[0]?.total||0);counts.proposal=Number(rows[5].results[0]?.recent||0);
+ const daily=periods.map(p=>{const result={date:p.date,idea:0,reply:0,vote:0,developer:0,register:0,proposal:Number(rows[6].results.find(r=>r.day===p.date)?.count||0)};for(const r of rows[2].results)if(r.day===p.date&&r.kind)result[r.kind]=r.count;return result;});
+ const recent=[...rows[4].results,...rows[7].results].sort((a,b)=>b.created_at.localeCompare(a.created_at)||a.kind.localeCompare(b.kind)||(b.event_id||0)-(a.event_id||0)).slice(0,20);
+ return {as_of:end,days,time_zone:ZONE,period_start:start,counts,totals,attention:rows[1].results[0],daily,topics:rows[3].results,recent,
   traffic:{available:false,url:'https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fweb-analytics'}};
 }

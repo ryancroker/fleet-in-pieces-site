@@ -26,7 +26,7 @@
   {{NAV}}
   <main id="main" class="wrap community-main">
     <p class="system-breadcrumb"><a href="/">Fleet in Pieces</a><span aria-hidden="true"> / </span><a href="/{{KIND_PATH}}">{{KIND_LABEL}}</a><span aria-hidden="true"> / </span>{{TITLE}}</p>
-    <nav class="briefing-jumps" aria-label="This briefing"><a href="/community#topics">All topics ↗</a><a href="#current">Current</a><a href="#discussion">Community</a><a href="#feedback-record">Implemented from feedback</a></nav>
+    <nav class="briefing-jumps" aria-label="This briefing"><a href="/community#topics">All topics ↗</a><a href="#current">Current</a><a href="#suggest">Suggest an idea</a><a href="#discussion">Discussion</a><a href="#feedback-record">Implemented from feedback</a></nav>
     <section class="system-hero" id="current" aria-labelledby="system-title">
       <div class="system-summary">
         <p class="eyebrow">A space combat game / in active development</p>
@@ -37,7 +37,7 @@
           <h2>What’s in the game.</h2>
           <ul class="current-facts">{{FACTS}}</ul>
         </div>
-        <div class="actions"><a class="button primary" href="#discussion">Read the discussion <span aria-hidden="true">↓</span></a><a class="text-button" href="#suggest">Suggest an idea →</a></div>
+        <div class="actions"><a class="button primary" href="#suggest">Suggest an idea <span aria-hidden="true">↓</span></a><a class="text-button" href="#discussion">Read the discussion →</a></div>
       </div>
       <figure class="briefing-media">
         <div class="media-heading"><span>Development footage</span><span class="recording-dot" aria-hidden="true"></span></div>
@@ -46,11 +46,7 @@
       </figure>
     </section>
     <p class="connection-notice" data-offline hidden>You’re offline. Your draft stays here. Posting, voting and replies need a connection.</p>
-    <section class="community-feed discussion-feed" id="discussion" aria-labelledby="community-title">
-      <div class="feed-heading"><div><p class="eyebrow">Community</p><h2 id="community-title">Make your case.</h2></div><div class="sort-controls" role="group" aria-label="Filter ideas"><button type="button" data-sort="top" aria-pressed="true">Top</button><button type="button" data-sort="new" aria-pressed="false">New</button><button type="button" data-sort="responded" aria-pressed="false">Dev responded</button><button type="button" data-sort="implemented" aria-pressed="false">Implemented</button></div></div>
-      <p class="voting-note">Vote or open a reply here. No account required. <a href="#suggest" class="back-link">Suggest your own idea ↓</a></p>
-      <p class="feed-feedback" id="feed-feedback" role="status" aria-live="polite">Loading the fleet’s ideas…</p><div id="idea-list" class="idea-list"></div><button class="button secondary load-more" id="more-ideas" type="button" hidden>More ideas</button>
-    </section>
+    <div class="participation-layout">
     <section class="contribution-block" id="suggest" tabindex="-1" aria-labelledby="suggest-title">
       <div class="contribution-intro"><p class="eyebrow">Contribute / {{TITLE}}</p><h2 id="suggest-title">{{QUESTION}}</h2><p>Your orders are suggestions.</p><p class="privacy-note">No account required. A callsign is optional. The idea is the important part.</p></div>
       <div class="contribution-form">
@@ -65,6 +61,12 @@
         <details class="community-rules"><summary>Community rules</summary><p>Argue. Swear. Call an idea terrible. Don’t spam, impersonate people, post private information, threaten people or post illegal material. Use Report when something crosses that line.</p><p>Submissions are public. Guest handles are unverified. Your handle and unfinished drafts stay in this browser.</p></details>
       </div>
     </section>
+    <section class="community-feed discussion-feed" id="discussion" aria-labelledby="community-title">
+      <div class="feed-heading"><div><p class="eyebrow">Community</p><h2 id="community-title">Make your case.</h2></div><div class="sort-controls" role="group" aria-label="Filter ideas"><button type="button" data-sort="top" aria-pressed="true">Top</button><button type="button" data-sort="new" aria-pressed="false">New</button><button type="button" data-sort="responded" aria-pressed="false">Dev responded</button><button type="button" data-sort="implemented" aria-pressed="false">Implemented</button></div></div>
+      <p class="voting-note">Vote or open a reply here. No account required. <a href="#suggest" class="back-link">Suggest your own idea ↓</a></p>
+      <p class="feed-feedback" id="feed-feedback" role="status" aria-live="polite">Loading the fleet’s ideas…</p><div id="idea-list" class="idea-list"></div><button class="button secondary load-more" id="more-ideas" type="button" hidden>More ideas</button>
+    </section>
+    </div>
     <aside class="system-identity">Want a callsign and a place in the chain of command? <a href="/register">Enter the Fleet Register →</a> <a href="/fleet">Meet the commands →</a></aside>
     <section class="hub-section feedback-record" id="feedback-record" aria-labelledby="feedback-title"><div class="section-heading-row"><div><p class="eyebrow">Development record</p><h2 id="feedback-title">Implemented from feedback.</h2></div></div><p class="section-note">Original suggestions. Real decisions. Credit stays with the crew.</p><div data-implemented-content="{{SLUG}}" class="discovery-grid"></div><p class="feed-feedback" data-implemented-feedback role="status">Loading the record…</p></section>
     <nav class="related-briefings" aria-label="Explore another part of the fleet"><p class="eyebrow">Keep exploring</p>{{RELATED}}</nav>

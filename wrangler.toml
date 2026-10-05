@@ -4,6 +4,8 @@ compatibility_date = "2026-05-22"
 
 # Bound each invocation; these are not an account-wide spending cap.
 # The site previously operated within the Free plan's 50-subrequest limit.
+# Pages confirms cpu_ms; its API does not confirm subrequests. The application
+# also enforces 50 D1 statements/request independently in database(env).
 [limits]
 cpu_ms = 100
 subrequests = 50

@@ -54,7 +54,30 @@ export function problem(error, session) {
 }
 export function database(env) {
   if (!env.COMMUNITY_DB?.prepare) fail(503, 'unavailable', 'The community board is temporarily unavailable.');
-  return env.COMMUNITY_DB;
+  // A request-local ceiling also protects D1 if the hosting platform does not
+  // apply its configured subrequest limit. Count every statement in a batch;
+  // never split a transaction to fit. This bounds calls, not rows or dollars.
+  const binding = env.COMMUNITY_DB, originals = new WeakMap();
+  let remaining = 50;
+  function spend(count) {
+    if (count > remaining) fail(503, 'request_budget', 'That request reached the fleet desk limit. Please try again. Your draft stays here.');
+    remaining -= count;
+  }
+  function statement(raw) {
+    const wrapped = { bind: (...values) => statement(raw.bind(...values)) };
+    for (const method of ['first', 'all', 'run', 'raw']) wrapped[method] = (...args) => { spend(1); return raw[method](...args); };
+    originals.set(wrapped, raw);
+    return wrapped;
+  }
+  return {
+    prepare: sql => statement(binding.prepare(sql)),
+    batch(statements) {
+      spend(statements.length);
+      const raw = statements.map(item => originals.get(item));
+      if (raw.some(item => !item)) fail(503, 'request_budget', 'That request could not be completed. Please try again.');
+      return binding.batch(raw);
+    }
+  };
 }
 function localHost(url) { return ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname); }
 function base64(bytes) { return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }

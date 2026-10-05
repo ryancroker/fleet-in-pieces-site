@@ -210,17 +210,74 @@ const LIMIT_SQL = `INSERT INTO rate_limits(key,count,expires_at,purge_at) VALUES
     expires_at=CASE WHEN rate_limits.expires_at<=? THEN excluded.expires_at ELSE rate_limits.expires_at END,
     purge_at=excluded.purge_at
   WHERE rate_limits.expires_at<=? OR rate_limits.count<? RETURNING count`;
+let nextRateCleanup = 0;
+async function cleanRateLimits(db, now) {
+  if (now < nextRateCleanup) return;
+  nextRateCleanup = now + 300;
+  try {
+    await db.prepare('DELETE FROM rate_limits WHERE key IN (SELECT key FROM rate_limits WHERE purge_at<=? ORDER BY purge_at LIMIT 200)').bind(now).run();
+  } catch (error) { nextRateCleanup = 0; throw error; }
+}
 export async function limits(db, session, rules) {
   const now = session.now;
-  const statements = [db.prepare('DELETE FROM rate_limits WHERE key IN (SELECT key FROM rate_limits WHERE purge_at<=? ORDER BY purge_at LIMIT 200)').bind(now)];
+  await cleanRateLimits(db, now);
+  const statements = [];
   for (const [scope, subject, count, seconds] of rules) {
     statements.push(db.prepare(LIMIT_SQL).bind(`${scope}:${subject}`, now + seconds, now + 172800, now, now, now, count));
   }
   const results = await db.batch(statements);
-  if (results.slice(1).some(result => !result.results?.length)) fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
+  if (results.some(result => !result.results?.length)) fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
+}
+// Prepay five ordinary reads in D1, then spend that allowance in this isolate.
+// These are NOT cached authorization decisions or per-isolate rate limits:
+// every allowance is charged atomically to the same global actor/IP counters.
+// Cold starts/eviction discard unused credit, never refund it or grant more.
+// Old deployments incrementing those same counters remain compatible.
+const READ_RESERVE_SQL = `INSERT INTO rate_limits(key,count,expires_at,purge_at) VALUES(?,?,?,?)
+  ON CONFLICT(key) DO UPDATE SET
+    count=CASE WHEN rate_limits.expires_at<=? THEN ? ELSE rate_limits.count+? END,
+    expires_at=CASE WHEN rate_limits.expires_at<=? THEN excluded.expires_at ELSE rate_limits.expires_at END,
+    purge_at=excluded.purge_at
+  WHERE rate_limits.expires_at<=? OR rate_limits.count<=? RETURNING expires_at`;
+const readAllowances = new Map();
+async function readPermit(db, key, ceiling) {
+  let entry = readAllowances.get(key);
+  if (!entry) {
+    // One deployment uses one COMMUNITY_DB. Only signed, hashed subjects are
+    // retained; never cookies, credentials or raw IPs. Credit expires in 60s.
+    if (readAllowances.size >= 4096) readAllowances.delete(readAllowances.keys().next().value);
+    entry = { remaining: 0, expires: 0, deniedUntil: 0, pending: null };
+    readAllowances.set(key, entry);
+  }
+  for (;;) {
+    const now = Math.floor(Date.now() / 1000);
+    if (entry.deniedUntil > now) fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
+    // No await between checking and spending: concurrent requests cannot use
+    // the same credit. A shared pending reservation prevents duplicate refills.
+    if (entry.expires > now && entry.remaining > 0) { entry.remaining--; return; }
+    if (!entry.pending) {
+      entry.pending = (async () => {
+        entry.remaining = 0;
+        for (const amount of [5, 1]) {
+          const reserved = await db.prepare(READ_RESERVE_SQL).bind(key, amount, now + 60, now + 172800,
+            now, amount, amount, now, now, ceiling - amount).first();
+          if (reserved) { entry.remaining = amount; entry.expires = reserved.expires_at; return; }
+        }
+        // Briefly coalesce rejected bursts too; no fail-open on a D1 error.
+        entry.deniedUntil = now + 1;
+        fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
+      })().finally(() => { entry.pending = null; });
+    }
+    await entry.pending;
+    // Recheck the real clock after I/O. Credit never survives its D1 expiry.
+  }
 }
 export async function publicReadLimit(db, session) {
-  return limits(db, session, [['read', session.actor, 120, 60], ['read-ip', session.ip, 600, 60]]);
+  await cleanRateLimits(db, session.now);
+  // Check the shared IP budget first so rotating guest cookies cannot force
+  // a fresh actor-counter write once this network is already over its limit.
+  await readPermit(db, `read-ip:${session.ip}`, 600);
+  await readPermit(db, `read:${session.actor}`, 120);
 }
 export async function writeLimit(db, session, kind, hash = '', parent = '') {
   const config = {

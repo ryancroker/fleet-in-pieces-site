@@ -10,6 +10,7 @@ import { routeCreator, publicHistory, creatorSession } from '../_lib/creator.js'
 import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '../_lib/topics.js';
 import {developerReplies} from '../_lib/developer-replies.js';
 import {publicActivity,topicActivity} from '../_lib/activity.js';
+import {checkCommunityWrites} from '../_lib/site-mode.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -211,10 +212,11 @@ export async function onRequest(context) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/^\/api\/?/, '').split('/').filter(Boolean);
     if (!['GET', 'POST', 'PATCH'].includes(request.method)) fail(405, 'method_not_allowed', 'That method is not supported.');
-    const db = database(env);
-    session = await sessionFor(request, env);
     let data;
     if (request.method !== 'GET') { checkMutation(request); data = await readJson(request); }
+    checkCommunityWrites(request, path);
+    const db = database(env);
+    session = await sessionFor(request, env);
     if (path[0] === 'admin') return json(await routeCreator(request, env, db, session, url, path, data), session);
     await attachIdentity(request, env, db, session);
     if (request.method === 'GET') await publicReadLimit(db, session);

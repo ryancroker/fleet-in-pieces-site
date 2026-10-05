@@ -74,6 +74,10 @@ export async function routeSocial({request,db,session,url,path,data,createPost})
   if(!result[0].results.length)fail(409,'listing_changed','Your listing changed. Reload it before saving.');value={ok:true,idea_id:current.idea_id,revision:result[0].results[0].revision};
  }else if(request.method==='GET'&&path.length===2&&area==='notifications'){
   requireMember(session);
+  if(url.searchParams.get('summary')==='1'){
+   const count=await db.prepare(`SELECT COUNT(*) AS unread ${visibleNotice} AND n.read_at IS NULL`).bind(session.profileId).first();
+   return json({unread:count.unread},session);
+  }
   const [rows,count]=await db.batch([
    db.prepare(`SELECT n.id,n.kind,n.created_at,n.read_at,
     CASE WHEN n.kind IN ('update','topic') OR reply.is_developer=1 OR (n.reply_id IS NULL AND i.is_developer=1)

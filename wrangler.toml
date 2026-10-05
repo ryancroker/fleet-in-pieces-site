@@ -2,6 +2,12 @@ name = "fleet-in-pieces-site"
 pages_build_output_dir = "./site"
 compatibility_date = "2026-05-22"
 
+# Bound each invocation; these are not an account-wide spending cap.
+# The site previously operated within the Free plan's 50-subrequest limit.
+[limits]
+cpu_ms = 100
+subrequests = 50
+
 [[d1_databases]]
 binding = "COMMUNITY_DB"
 database_name = "fleet-in-pieces-community"

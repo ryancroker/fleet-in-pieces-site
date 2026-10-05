@@ -137,6 +137,14 @@ Preserve plain-text rendering, same-origin JSON mutations, signed browser identi
 
 Profanity is allowed. Pattern checks and the hidden spam field catch some obvious links/private information, but contextual abuse still needs human moderation. Failed requests show honest retry states and preserve drafts. Votes represent enthusiasm, not command authority.
 
+### Database usage and emergency read-only mode
+
+Public reads reserve five requests at a time against the same durable actor/IP limits, reducing counter writes without increasing the global allowance. An isolate restart may discard unused credit, making admission more conservative. Writes and authentication keep their per-request server limits. Expired-row cleanup is periodic; expiry/revocation checks are still immediate. Active visible tabs refresh presence, unread badges and the developer dashboard every two minutes. After five idle minutes, or while hidden, background polling stops; returning resumes it. This supersedes older one-minute polling notes.
+
+To pause community submissions, change `COMMUNITY_READ_ONLY` to `true` in `functions/_lib/site-mode.js`, then commit/push normally and confirm the deployment. Set it back to `false` to reopen. Visitors can still browse; existing members can sign in/out and Fleet Command can moderate. Posts, replies, votes, reports, registrations and other community changes are rejected before database access, with a draft-preserving retry message. This manual deployment switch is normally **off**. It does not stop database use by allowed reads, authentication or moderation, and it is not a billing cap.
+
+`wrangler.toml` sets per-invocation CPU to100ms and subrequests to50. These [Pages runtime limits](https://developers.cloudflare.com/pages/functions/wrangler-configuration/#limits) apply at Cloudflare, not in local preview. The [Workers Paid plan](https://developers.cloudflare.com/workers/platform/pricing/) has a minimum monthly charge plus usage overages; these safeguards do not impose an account-wide dollar ceiling. No billing alerts or account settings are configured by this repository.
+
 ## Native Quartermaster
 
 Shared desktop/mobile navigation and grouped footers point to `/quartermaster`. The homepage merchandise notice follows game, community and development content and links to that native page. Only **Buy the first issue** opens the direct product URL:
@@ -168,4 +176,4 @@ Apply additive migration0006 only after a private production export and local re
 
 The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It also labels the separate community callsign or guest identity. The same code unlocks `/crew`. Keep me signed in on this device (checked by default) keeps access for30days; uncheck it for8hours. Existing expired sessions need the code once again. Expiry or Lock removes developer access. No email or username was introduced.
 
-The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer login**. This is a presence timestamp, not a software-release date. It changes only on a successful developer-key login. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.
+The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer activity**. This is a presence timestamp, not a software-release date. It changes on developer-key login and authenticated remembered visits/recent interaction, at most once per minute. Public reads do not advance it. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.

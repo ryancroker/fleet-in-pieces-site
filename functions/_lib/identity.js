@@ -49,12 +49,15 @@ function authenticated(session, fresh = false) {
 async function identityLimit(db, session, scope, count = 12, seconds = 600, ipCount = 60) {
   return limits(db, session, [[scope, session.actor, count, seconds], [scope + '-ip', session.ip, ipCount, seconds]]);
 }
+let nextCleanup = 0;
 async function clean(db) {
   const now = clock();
-  await db.batch([
+  if (now < nextCleanup) return;
+  nextCleanup = now + 300;
+  try { await db.batch([
     db.prepare('DELETE FROM identity_challenges WHERE id IN(SELECT id FROM identity_challenges WHERE expires_at<=? ORDER BY expires_at LIMIT 100)').bind(now),
     db.prepare('DELETE FROM identity_sessions WHERE token_hash IN(SELECT token_hash FROM identity_sessions WHERE expires_at<=? ORDER BY expires_at LIMIT 100)').bind(now)
-  ]);
+  ]); } catch (error) { nextCleanup = 0; throw error; }
 }
 export async function attachIdentity(request, env, db, session) {
   session.anonymousActor = session.actor;
@@ -334,11 +337,15 @@ async function allegiance(db, session, data) {
 export async function routeIdentity({ request, env, db, session, url, path, data }) {
   const first = path[0];
   if (!['session', 'auth', 'profiles', 'allegiance'].includes(first)) return null;
-  await clean(db);
+  // Expiry is enforced by every credential/session lookup. Housekeeping is
+  // needed when auth state changes, not on every profile or sign-in read.
+  if (request.method !== 'GET') await clean(db);
   let value;
   if (request.method === 'GET' && first === 'session' && path.length === 1) {
     await rememberIdentity(request, db, session);
-    value = { profile: session.profile, can_claim: await canClaim(db, session) };
+    value = { profile: session.profile };
+    // Preserve the full response for older clients and the registration page.
+    if (url.searchParams.get('summary') !== '1') value.can_claim = await canClaim(db, session);
   }
   else if (request.method === 'GET' && first === 'profiles' && path.length === 1) {
     const name = callsign(url.searchParams.get('callsign'));
@@ -359,6 +366,7 @@ export async function routeIdentity({ request, env, db, session, url, path, data
     else if (path[2] === 'verify') value = await verifySignin(request, db, session, data);
   } else if (first === 'auth' && path[1] === 'logout' && path.length === 2 && request.method === 'POST') {
     keysOnly(data, []);
+    await identityLimit(db, session, 'logout', 30, 60, 120);
     if (session.identityTokenHash) await db.prepare('DELETE FROM identity_sessions WHERE token_hash=?').bind(session.identityTokenHash).run();
     setCookie(request, session); value = { ok: true };
   } else if (first === 'auth' && path[1] === 'claim' && path.length === 2 && request.method === 'POST') {

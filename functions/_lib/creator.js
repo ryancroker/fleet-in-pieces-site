@@ -173,6 +173,7 @@ export async function routeCreator(request,env,db,session,url,path,data) {
    keysOnly(data,['logout','remember']);
    if(data.remember!==undefined)bool(data.remember,'Keep me signed in');
    if(data.logout===true){
+    await limits(db,session,[['creator-logout',session.actor,30,60],['creator-logout-ip',session.ip,120,60]]);
     const {token}=cookieInfo(request);if(token)await db.prepare('DELETE FROM creator_sessions WHERE token_hash=?').bind(await digest(session.key,'creator:'+token)).run();
     setCookie(request,session,'',0);return {authorized:false};
    }

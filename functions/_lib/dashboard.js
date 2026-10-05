@@ -29,12 +29,12 @@ const DATA=`WITH visible AS (
  AND h.developer_response IS NOT (SELECT prior.developer_response FROM idea_history prior WHERE prior.idea_id=h.idea_id AND prior.id<h.id ORDER BY prior.id DESC LIMIT 1)
  GROUP BY i.id
 ), events AS (
- SELECT 'idea' AS kind,i.id AS event_id,i.id AS idea_id,i.content_id,i.content_title,i.content_path,
+ SELECT CASE WHEN i.is_developer=1 THEN 'developer_post' ELSE 'idea' END AS kind,i.id AS event_id,i.id AS idea_id,i.content_id,i.content_title,i.content_path,
  i.created_at,substr(COALESCE(NULLIF(i.display_body,''),i.body),1,240) AS body,
  COALESCE(p.callsign,NULLIF(i.handle,''),'Anonymous crew') AS author,1 AS amount
  FROM visible i LEFT JOIN profiles p ON p.id=i.profile_id WHERE i.source_reply_id IS NULL
  UNION ALL
- SELECT 'reply',r.id,i.id,i.content_id,i.content_title,i.content_path,r.created_at,
+ SELECT CASE WHEN r.is_developer=1 THEN 'developer_reply' ELSE 'reply' END,r.id,i.id,i.content_id,i.content_title,i.content_path,r.created_at,
  substr(COALESCE(NULLIF(r.display_body,''),r.body),1,240),COALESCE(p.callsign,NULLIF(r.handle,''),'Anonymous crew'),1
  FROM replies r JOIN visible i ON i.id=r.idea_id LEFT JOIN profiles p ON p.id=r.profile_id WHERE r.hidden=0
  UNION ALL
@@ -59,7 +59,7 @@ export async function dashboard(db,url){
  const rows=await db.batch([
   db.prepare(DATA+`SELECT kind,COUNT(*) AS total,SUM(CASE WHEN ${range} THEN 1 ELSE 0 END) AS recent FROM events GROUP BY kind`).bind(start,end),
   db.prepare(DATA+`SELECT
-   (SELECT COUNT(*) FROM visible WHERE merged_into IS NULL AND trim(developer_response)='') AS needs_response,
+   (SELECT COUNT(*) FROM visible WHERE merged_into IS NULL AND is_developer=0 AND trim(developer_response)='' AND NOT EXISTS(SELECT 1 FROM replies r JOIN ideas source ON source.id=r.idea_id WHERE (source.id=visible.id OR source.merged_into=visible.id) AND source.hidden=0 AND r.hidden=0 AND r.is_developer=1)) AS needs_response,
    (SELECT COUNT(*) FROM reports WHERE resolved_at IS NULL) AS reports,
    (SELECT COUNT(*) FROM topic_proposals WHERE status='pending') AS topics,
    (SELECT COUNT(*) FROM visible WHERE merged_into IS NULL AND status IN('planned','building')) AS planned,
@@ -69,11 +69,11 @@ export async function dashboard(db,url){
    SELECT p.day,e.kind,COUNT(e.kind) AS count FROM periods p LEFT JOIN events e ON e.created_at>=p.start AND e.created_at<p.finish AND e.created_at<=? GROUP BY p.day,e.kind ORDER BY p.day`)
    .bind(...periods.flatMap(p=>[p.date,p.start,p.end]),end),
   db.prepare(DATA+`SELECT content_id,content_title,content_path,
-   SUM(kind='idea') AS ideas,SUM(kind='reply') AS replies,SUM(kind='vote') AS votes,SUM(kind='developer') AS developer_replies,
+   SUM(kind='idea') AS ideas,SUM(kind='reply') AS replies,SUM(kind='vote') AS votes,SUM(kind IN('developer','developer_post','developer_reply')) AS developer_replies,
    COUNT(*) AS activity FROM events WHERE content_id IS NOT NULL AND ${range}
    GROUP BY content_id ORDER BY activity DESC,content_title LIMIT 8`).bind(start,end),
   db.prepare(DATA+`, recent AS (
-   SELECT kind,event_id,idea_id,content_title,content_path,created_at,body,author,amount FROM events WHERE kind IN('idea','reply','register') AND ${range}
+   SELECT kind,event_id,idea_id,content_title,content_path,created_at,body,author,amount FROM events WHERE kind IN('idea','reply','register','developer_post','developer_reply') AND ${range}
    UNION ALL SELECT 'vote',idea_id,idea_id,content_title,content_path,MAX(created_at),'','',COUNT(*) FROM events WHERE kind='vote' AND ${range} GROUP BY idea_id
    UNION ALL SELECT CASE WHEN n.last_at=n.first_at THEN 'developer' ELSE 'developer_edit' END,i.id,i.id,i.content_title,i.content_path,n.last_at,substr(i.developer_response,1,240),'Fleet Command',1
    FROM notes n JOIN visible i ON i.id=n.id WHERE n.last_at>=? AND n.last_at<=?
@@ -88,9 +88,11 @@ export async function dashboard(db,url){
    t.created_at,substr(t.body,1,240) AS body,COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew') AS author,1 AS amount
    FROM topic_proposals t LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.created_at>=? AND t.created_at<=? ORDER BY t.created_at DESC,t.id DESC LIMIT 20`).bind(start,end)
  ]);
+ const metric=kind=>kind.startsWith('developer')?'developer':kind;
+ for(const row of rows[0].results){if(metric(row.kind)===row.kind)continue;let base=rows[0].results.find(r=>r.kind==='developer');if(!base){base={kind:'developer',total:0,recent:0};rows[0].results.push(base);}base.total+=row.total;base.recent+=row.recent||0;}
  const totals={},counts={};for(const kind of ['idea','reply','vote','developer','register']){const row=rows[0].results.find(r=>r.kind===kind);totals[kind]=Number(row?.total||0);counts[kind]=Number(row?.recent||0);}
  totals.proposal=Number(rows[5].results[0]?.total||0);counts.proposal=Number(rows[5].results[0]?.recent||0);
- const daily=periods.map(p=>{const result={date:p.date,idea:0,reply:0,vote:0,developer:0,register:0,proposal:Number(rows[6].results.find(r=>r.day===p.date)?.count||0)};for(const r of rows[2].results)if(r.day===p.date&&r.kind)result[r.kind]=r.count;return result;});
+ const daily=periods.map(p=>{const result={date:p.date,idea:0,reply:0,vote:0,developer:0,register:0,proposal:Number(rows[6].results.find(r=>r.day===p.date)?.count||0)};for(const r of rows[2].results)if(r.day===p.date&&r.kind)result[metric(r.kind)]+=r.count;return result;});
  const recent=[...rows[4].results,...rows[7].results].sort((a,b)=>b.created_at.localeCompare(a.created_at)||a.kind.localeCompare(b.kind)||(b.event_id||0)-(a.event_id||0)).slice(0,20);
  return {as_of:end,days,time_zone:ZONE,period_start:start,counts,totals,attention:rows[1].results[0],daily,topics:rows[3].results,recent,
   traffic:{available:false,url:'https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fweb-analytics'}};

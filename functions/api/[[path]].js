@@ -1,13 +1,14 @@
 import {
   ApiError, PAGE_SIZE, GROUP_VOTES_SQL, IDEA_COLUMNS, IDEA_FROM, REPLY_COLUMNS, REPLY_FROM,
   VOTED_SQL, checkMutation, contentFor, contentHash, contentJson,
-  database, fail, getIdea, ideaJson, json, keysOnly, pageOffset, paginate, positiveId,
+  database, digest, fail, getIdea, ideaJson, json, keysOnly, pageOffset, paginate, positiveId,
   postFields, problem, publicReadLimit, readJson, replyJson, sessionFor, textField, writeLimit
 } from '../_lib/community.js';
 import { attachIdentity, routeIdentity } from '../_lib/identity.js';
-import { routeCreator, publicHistory } from '../_lib/creator.js';
+import { routeCreator, publicHistory, creatorSession } from '../_lib/creator.js';
 import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '../_lib/topics.js';
 import {developerReplies} from '../_lib/developer-replies.js';
+import {publicActivity,topicActivity} from '../_lib/activity.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -17,12 +18,12 @@ const actorMatch = column => `(${column}=? OR ${column} IN (SELECT actor_hash FR
 async function priorPost(db, session, fields, ideaId = null) {
   // These two table names are application constants, never request input.
   const table = ideaId === null ? 'ideas' : 'replies';
-  const prior = await db.prepare(`SELECT id,body,handle,hidden${ideaId === null ? ',content_id,contribution_type' : ',idea_id'}
+  const prior = await db.prepare(`SELECT id,body,handle,hidden,is_developer${ideaId === null ? ',content_id,contribution_type' : ',idea_id'}
     FROM ${table} WHERE ${actorMatch('actor_hash')} AND request_id=? ORDER BY id ASC LIMIT 1`)
     .bind(session.actor, session.actor, fields.requestId).first();
   if (!prior) return null;
   if (prior.hidden) notFound();
-  if (prior.body !== fields.body || prior.handle !== fields.handle || (ideaId !== null && prior.idea_id !== ideaId) ||
+  if (Boolean(prior.is_developer) !== Boolean(session.developer) || prior.body !== fields.body || prior.handle !== fields.handle || (ideaId !== null && prior.idea_id !== ideaId) ||
       (ideaId === null && (prior.content_id !== fields.contentId || prior.contribution_type !== 'idea'))) {
     fail(409, 'request_conflict', 'This submission was already used. Refresh before posting different text.');
   }
@@ -35,7 +36,8 @@ async function priorPost(db, session, fields, ideaId = null) {
 
 async function createPost(db, session, data, ideaId = null) {
   const reply = ideaId !== null;
-  const fields = postFields(data, reply);
+  const fields = postFields(session.developer ? {...data,handle:''} : data, reply);
+  if(session.developer)fields.handle='Fleet Command';
   if (!reply) fields.contentId = (await contentFor(db, data)).id;
   const prior = await priorPost(db, session, fields, ideaId);
   if (prior) return { value: prior, status: 200 };
@@ -54,25 +56,36 @@ async function createPost(db, session, data, ideaId = null) {
   const since = new Date(Date.now() - 120000).toISOString();
   let result;
   if (reply) {
-    result = await db.prepare(`INSERT INTO replies(idea_id,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id)
-      SELECT i.id,?,?,?,?,?,?,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND i.locked=0 AND i.merged_into IS NULL AND c.is_public=1
+    result = await db.prepare(`INSERT INTO replies(idea_id,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id,is_developer)
+      SELECT i.id,?,?,?,?,?,?,?,?,? FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND i.locked=0 AND i.merged_into IS NULL AND c.is_public=1
         AND NOT EXISTS(SELECT 1 FROM replies WHERE ${actorMatch('actor_hash')} AND idea_id=? AND content_hash=? AND created_at>?)
       ON CONFLICT(actor_hash,request_id) DO NOTHING RETURNING id`)
-      .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null,
+      .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null, session.developer ? 1 : 0,
         ideaId, session.actor, session.actor, ideaId, hash, since).first();
   } else {
     // system remains a compatibility column; stable content_id now owns the discussion.
-    result = await db.prepare(`INSERT INTO ideas(system,content_id,contribution_type,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id)
-      SELECT 'missiles',c.id,'idea',?,?,?,?,?,?,?,? FROM content_objects c WHERE c.id=? AND c.is_public=1
+    result = await db.prepare(`INSERT INTO ideas(system,content_id,contribution_type,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id,is_developer)
+      SELECT 'missiles',c.id,'idea',?,?,?,?,?,?,?,?,? FROM content_objects c WHERE c.id=? AND c.is_public=1
         AND NOT EXISTS(SELECT 1 FROM ideas WHERE ${actorMatch('actor_hash')} AND content_id=? AND content_hash=? AND created_at>?)
       ON CONFLICT(actor_hash,request_id) DO NOTHING RETURNING id`)
-      .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null,
+      .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null, session.developer ? 1 : 0,
         fields.contentId, session.actor, session.actor, fields.contentId, hash, since).first();
   }
   const value = await priorPost(db, session, fields, ideaId);
   if (value) return { value, status: result ? 201 : 200 };
   if (reply) { const idea = await getIdea(db, ideaId, session.actor); if (idea.merged_into) fail(409,'merged_discussion','Continue this discussion on idea '+idea.merged_into+'.'); if (idea.locked) fail(409,'discussion_locked','Fleet Command has closed replies on this idea.'); }
   fail(409, 'repeat_post', 'That text was just posted. Continue the existing discussion or wait a moment.');
+}
+
+async function postingSession(request,env,db,session,data){
+  const {as_developer,...post}=data;
+  if(as_developer!==undefined&&typeof as_developer!=='boolean')fail(400,'invalid_identity','Choose a valid posting identity.');
+  if(!as_developer)return {session,data:post};
+  if(!await creatorSession(request,env,db,session))fail(401,'developer_required','Developer access expired. Sign in to Fleet Command again; your draft is saved.');
+  // Official posts cannot be claimed later by this browser's optional player profile.
+  // This actor is server-derived and never issued as a public ownership cookie.
+  const actor=await digest(session.key,'official-post-author:v1');
+  return {session:{...session,actor,profileId:null,developer:true},data:post};
 }
 
 async function setVote(db, session, id, data) {
@@ -138,9 +151,9 @@ async function listIdeas(db, session, url) {
   const sort = url.searchParams.get('sort') || 'top';
   const choices = {
     top: { where: '', order: 'i.pinned DESC,votes DESC,i.id DESC' },
-    new: { where: '', order: 'i.pinned DESC,i.id DESC' },
+    new: { where: '', order: 'i.id DESC' },
     responded: {
-      where: " AND (i.command_at IS NOT NULL OR i.status<>'new' OR trim(i.status_label)<>'' OR trim(i.developer_response)<>'')",
+      where: " AND (i.command_at IS NOT NULL OR i.status<>'new' OR trim(i.status_label)<>'' OR trim(i.developer_response)<>'' OR i.is_developer=1 OR EXISTS(SELECT 1 FROM replies r JOIN ideas source ON source.id=r.idea_id WHERE (source.id=i.id OR source.merged_into=i.id) AND source.hidden=0 AND r.hidden=0 AND r.is_developer=1))",
       order: 'COALESCE(i.command_at,i.updated_at) DESC,i.id DESC'
     },
     implemented: { where: " AND i.decision_key='implemented'", order: 'i.implemented_at DESC,i.id DESC' }
@@ -206,15 +219,18 @@ export async function onRequest(context) {
       const { results } = await db.prepare(`SELECT c.id,c.slug,c.title,c.kind,c.path,c.summary,c.current_json,c.media_json,${TOPIC_CREDIT_COLUMNS},
         (SELECT COUNT(*) FROM ideas i WHERE i.content_id=c.id AND i.hidden=0 AND i.merged_into IS NULL) AS idea_count
         FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.is_public=1 ORDER BY c.title,c.id LIMIT 100`).all();
-      return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null})) }, session);
+      const activity=await topicActivity(db);
+      return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null,...activity.get(row.id)})) }, session);
     }
+    if(request.method==='GET'&&path.length===1&&path[0]==='activity')return json(await publicActivity(db,url),session);
     if (request.method === 'GET' && path.length === 1 && path[0] === 'discovery') return json(await discovery(db, session), session);
     if(request.method==='GET'&&path.length===1&&path[0]==='developer-replies')return json(await developerReplies(db,session,url),session);
     if (path[0] === 'ideas' && path.length === 1) {
       if (request.method === 'GET') return json(await listIdeas(db, session, url), session);
       if (request.method === 'POST') {
-        const result = await createPost(db, session, data);
-        return json(result.value, session, result.status);
+        const posting=await postingSession(request,env,db,session,data);
+        const result = await createPost(db, posting.session, posting.data);
+        return json({...result.value,idea:await getIdea(db,result.value.idea.id,session.actor)}, session, result.status);
       }
     }
     if (path[0] === 'ideas' && path.length >= 2 && path.length <= 3) {
@@ -226,13 +242,14 @@ export async function onRequest(context) {
         if (request.method === 'GET') {
           const idea = await getIdea(db, id, session.actor);
           const { results } = await db.prepare(`SELECT ${REPLY_COLUMNS} ${REPLY_FROM}
-            WHERE (r.idea_id=? OR i.merged_into=?) AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 ORDER BY r.id ASC LIMIT ? OFFSET ?`)
+            WHERE (r.idea_id=? OR i.merged_into=?) AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 ORDER BY r.id DESC LIMIT ? OFFSET ?`)
             .bind(id, id, PAGE_SIZE + 1, pageOffset(url)).all();
           const page = paginate(results);
           return json({ replies: page.rows.map(row => replyJson(row)), reply_count: idea.reply_count, has_more: page.has_more }, session);
         }
         if (request.method === 'POST') {
-          const result = await createPost(db, session, data, id);
+          const posting=await postingSession(request,env,db,session,data);
+          const result = await createPost(db, posting.session, posting.data, id);
           const idea = await getIdea(db, id, session.actor);
           return json({...result.value, reply_count:idea.reply_count}, session, result.status);
         }

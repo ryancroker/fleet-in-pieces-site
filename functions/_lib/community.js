@@ -282,29 +282,30 @@ export const VOTED_SQL = `EXISTS(SELECT 1 FROM votes v WHERE v.idea_id IN (${GRO
 export const VOTE_COUNT_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash))
   FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=?`;
 const AUTHOR_COLUMNS = 'p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank';
-export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.status,i.status_label,i.developer_response,
+export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.is_developer,i.status,i.status_label,i.developer_response,
   (${GROUP_VOTES_SQL}) AS votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
   i.decision_key,i.pinned,i.locked,i.related_idea_id,i.merged_into,i.source_reply_id,i.display_title,i.display_body,i.edit_note,i.build_label,i.release_date,i.evidence_json,i.revision,
   (SELECT idea_id FROM replies WHERE id=i.source_reply_id) AS source_idea_id,
   c.id AS content_id,c.slug AS content_slug,c.title AS content_title,c.kind AS content_kind,c.path AS content_path,
   ${AUTHOR_COLUMNS},lr.id AS latest_reply_id,substr(lr.body,1,240) AS latest_reply_body,
-  length(lr.body)>240 AS latest_reply_truncated,lr.handle AS latest_reply_handle,lr.created_at AS latest_reply_created_at,
+  length(lr.body)>240 AS latest_reply_truncated,lr.handle AS latest_reply_handle,lr.created_at AS latest_reply_created_at,lr.is_developer AS latest_reply_is_developer,
   lp.id AS latest_author_id,lp.callsign AS latest_author_callsign,lpr.label AS latest_author_rank,
   (SELECT COUNT(*) FROM replies r WHERE r.idea_id IN (${GROUP_IDS_SQL}) AND r.hidden=0) AS reply_count,
+  EXISTS(SELECT 1 FROM replies r JOIN ideas source ON source.id=r.idea_id WHERE r.idea_id IN (${GROUP_IDS_SQL}) AND source.hidden=0 AND r.hidden=0 AND r.is_developer=1) AS has_developer_reply,
   ${VOTED_SQL} AS voted`;
 export const IDEA_FROM = `FROM ideas i JOIN content_objects c ON c.id=i.content_id
   LEFT JOIN profiles p ON p.id=i.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id
   LEFT JOIN replies lr ON lr.id=(SELECT id FROM replies WHERE idea_id IN (${GROUP_IDS_SQL}) AND hidden=0 ORDER BY id DESC LIMIT 1)
   LEFT JOIN profiles lp ON lp.id=lr.profile_id LEFT JOIN rank_definitions lpr ON lpr.id=lp.rank_id`;
-export const REPLY_COLUMNS = `r.id,r.idea_id,r.body,r.handle,r.created_at,r.display_body,r.edit_note,r.revision,
+export const REPLY_COLUMNS = `r.id,r.idea_id,r.body,r.handle,r.is_developer,r.created_at,r.display_body,r.edit_note,r.revision,
   (SELECT id FROM ideas WHERE source_reply_id=r.id AND hidden=0) AS promoted_idea_id,${AUTHOR_COLUMNS}`;
 export const REPLY_FROM = `FROM replies r JOIN ideas i ON i.id=r.idea_id JOIN content_objects c ON c.id=i.content_id
   LEFT JOIN profiles p ON p.id=r.profile_id LEFT JOIN rank_definitions pr ON pr.id=p.rank_id`;
 export function ideaJson(row, admin = false) {
   const idea = {
-    id: row.id, system: row.content_slug || row.system, body: row.body, handle: row.handle,
+    id: row.id, system: row.content_slug || row.system, body: row.body, handle: row.handle, is_developer: Boolean(row.is_developer),
     status: row.status, status_label: row.status_label, developer_response: row.developer_response,
-    votes: row.votes, reply_count: row.reply_count, voted: Boolean(row.voted),
+    votes: row.votes, reply_count: row.reply_count, voted: Boolean(row.voted), has_developer_reply: Boolean(row.has_developer_reply),
     created_at: row.created_at, updated_at: row.updated_at, implemented_at: row.implemented_at,
     contribution_type: row.contribution_type,
     content: { id: row.content_id, slug: row.content_slug, title: row.content_title, kind: row.content_kind, path: row.content_path },
@@ -318,14 +319,14 @@ export function ideaJson(row, admin = false) {
     build_label: row.build_label, release_date: row.release_date, evidence: JSON.parse(row.evidence_json || '[]'),
     latest_reply: row.latest_reply_id ? {
       id: row.latest_reply_id, body: row.latest_reply_body, truncated: Boolean(row.latest_reply_truncated),
-      handle: row.latest_reply_handle, created_at: row.latest_reply_created_at, author: authorJson(row, 'latest_author_')
+      handle: row.latest_reply_handle, created_at: row.latest_reply_created_at, author: authorJson(row, 'latest_author_'), is_developer: Boolean(row.latest_reply_is_developer)
     } : null
   };
   if (admin) { idea.hidden = Boolean(row.hidden); idea.revision = row.revision; }
   return idea;
 }
 export function replyJson(row, admin = false) {
-  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, created_at: row.created_at, author: authorJson(row), display_body:row.display_body, edit_note:row.edit_note, promoted_idea_id:row.promoted_idea_id };
+  const reply = { id: row.id, idea_id: row.idea_id, body: row.body, handle: row.handle, is_developer: Boolean(row.is_developer), created_at: row.created_at, author: authorJson(row), display_body:row.display_body, edit_note:row.edit_note, promoted_idea_id:row.promoted_idea_id };
   if (admin) { reply.hidden = Boolean(row.hidden); reply.updated_at = row.updated_at; reply.revision = row.revision; }
   return reply;
 }

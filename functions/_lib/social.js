@@ -75,10 +75,13 @@ export async function routeSocial({request,db,session,url,path,data,createPost})
  }else if(request.method==='GET'&&path.length===2&&area==='notifications'){
   requireMember(session);
   const [rows,count]=await db.batch([
-   db.prepare(`SELECT n.id,n.kind,n.created_at,n.read_at,p.callsign,n.actor_id,n.idea_id,n.reply_id,n.topic_id,c.title,COALESCE(i.merged_into,i.id) AS destination ${visibleNotice} ORDER BY n.id DESC LIMIT 25 OFFSET ?`).bind(session.profileId,pageOffset(url)),
+   db.prepare(`SELECT n.id,n.kind,n.created_at,n.read_at,
+    CASE WHEN n.kind IN ('update','topic') OR reply.is_developer=1 OR (n.reply_id IS NULL AND i.is_developer=1)
+     THEN 'Fleet Command' ELSE COALESCE(p.callsign,'A crew member') END AS actor_label,
+    n.actor_id,n.idea_id,n.reply_id,n.topic_id,c.title,COALESCE(i.merged_into,i.id) AS destination ${visibleNotice} ORDER BY n.id DESC LIMIT 25 OFFSET ?`).bind(session.profileId,pageOffset(url)),
    db.prepare(`SELECT COUNT(*) AS unread ${visibleNotice} AND n.read_at IS NULL`).bind(session.profileId)
   ]);
-  value={notifications:rows.results.slice(0,24).map(row=>({id:row.id,kind:row.kind,created_at:row.created_at,read:!!row.read_at,actor:row.callsign||'Fleet Command / crew',title:row.title||'',path:row.kind==='allegiance'?'/u/'+row.actor_id:row.topic_id?'/topics/'+row.topic_id:'/i/'+row.destination+(row.reply_id?'#replies-'+row.destination:'')})),has_more:rows.results.length>24,unread:count.results[0].unread};
+  value={notifications:rows.results.slice(0,24).map(row=>({id:row.id,kind:row.kind,created_at:row.created_at,read:!!row.read_at,actor:row.actor_label,title:row.title||'',path:row.kind==='allegiance'?'/u/'+row.actor_id:row.topic_id?'/topics/'+row.topic_id:'/i/'+row.destination+(row.reply_id?'#replies-'+row.destination:'')})),has_more:rows.results.length>24,unread:count.results[0].unread};
  }else if(request.method==='POST'&&path.length===3&&area==='notifications'&&path[2]==='read'){
   requireMember(session);keysOnly(data,['through_id']);if(!Number.isSafeInteger(data.through_id)||data.through_id<1)fail(400,'invalid_notice','Choose a notification.');
   await limits(db,session,[['notice-read',session.actor,30,60]]);

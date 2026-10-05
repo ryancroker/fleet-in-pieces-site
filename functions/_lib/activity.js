@@ -13,26 +13,26 @@ const EVENTS=`WITH visible AS (
  '/i/'||COALESCE(i.merged_into,i.id)||'#replies-'||COALESCE(i.merged_into,i.id) AS path,
  i.created_at,substr(COALESCE(NULLIF(i.display_body,''),i.body),1,240) AS body,
  CASE WHEN i.is_developer=1 THEN 'Fleet Command' ELSE COALESCE(p.callsign,NULLIF(i.handle,''),'Anonymous crew') END AS author,
- i.is_developer FROM visible i LEFT JOIN profiles p ON p.id=i.profile_id WHERE i.source_reply_id IS NULL
+ i.is_developer,p.id AS author_id FROM visible i LEFT JOIN profiles p ON p.id=i.profile_id WHERE i.source_reply_id IS NULL
  UNION ALL
  SELECT 'reply:'||r.id,'reply',i.content_id,i.topic_title,i.topic_path,
  '/i/'||COALESCE(i.merged_into,i.id)||'#replies-'||COALESCE(i.merged_into,i.id),r.created_at,
  substr(COALESCE(NULLIF(r.display_body,''),r.body),1,240),
- CASE WHEN r.is_developer=1 THEN 'Fleet Command' ELSE COALESCE(p.callsign,NULLIF(r.handle,''),'Anonymous crew') END,r.is_developer
+ CASE WHEN r.is_developer=1 THEN 'Fleet Command' ELSE COALESCE(p.callsign,NULLIF(r.handle,''),'Anonymous crew') END,r.is_developer,p.id
  FROM replies r JOIN visible i ON i.id=r.idea_id LEFT JOIN profiles p ON p.id=r.profile_id WHERE r.hidden=0
  UNION ALL
  SELECT 'note:'||i.id,'note',i.content_id,i.topic_title,i.topic_path,'/i/'||i.id,
  (SELECT MAX(h.created_at) FROM idea_history h WHERE h.idea_id=i.id AND trim(h.developer_response)<>''
  AND h.developer_response IS NOT (SELECT previous.developer_response FROM idea_history previous WHERE previous.idea_id=h.idea_id AND previous.id<h.id ORDER BY previous.id DESC LIMIT 1)),
- substr(i.developer_response,1,240),'Fleet Command',1 FROM visible i WHERE trim(i.developer_response)<>''
+ substr(i.developer_response,1,240),'Fleet Command',1,NULL FROM visible i WHERE trim(i.developer_response)<>''
  UNION ALL
  SELECT 'topic:'||t.id,'topic',c.id,c.title,c.path,c.path||'#suggest',t.reviewed_at,
- substr(c.summary,1,240),COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew'),0
+ substr(c.summary,1,240),COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew'),0,p.id
  FROM topic_proposals t JOIN content_objects c ON c.id='community-topic-'||t.id AND c.is_public=1
  LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.status='approved'
  UNION ALL
  SELECT 'topic-response:'||t.id,'topic_response',c.id,c.title,c.path,c.path||'#fleet-response',t.responded_at,
- substr(t.developer_response,1,240),'Fleet Command',1
+ substr(t.developer_response,1,240),'Fleet Command',1,NULL
  FROM topic_proposals t JOIN content_objects c ON c.id='community-topic-'||t.id AND c.is_public=1
  WHERE t.status='approved' AND trim(t.developer_response)<>''
 )

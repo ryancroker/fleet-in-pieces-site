@@ -4,6 +4,7 @@ import {
   database, digest, fail, getIdea, ideaJson, json, keysOnly, pageOffset, paginate, positiveId,
   postFields, problem, publicReadLimit, readJson, replyJson, sessionFor, textField, writeLimit
 } from '../_lib/community.js';
+import {routeSocial} from '../_lib/social.js';
 import { attachIdentity, routeIdentity } from '../_lib/identity.js';
 import { routeCreator, publicHistory, creatorSession } from '../_lib/creator.js';
 import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '../_lib/topics.js';
@@ -24,7 +25,7 @@ async function priorPost(db, session, fields, ideaId = null) {
   if (!prior) return null;
   if (prior.hidden) notFound();
   if (Boolean(prior.is_developer) !== Boolean(session.developer) || prior.body !== fields.body || prior.handle !== fields.handle || (ideaId !== null && prior.idea_id !== ideaId) ||
-      (ideaId === null && (prior.content_id !== fields.contentId || prior.contribution_type !== 'idea'))) {
+      (ideaId === null && (prior.content_id !== fields.contentId || prior.contribution_type !== fields.type))) {
     fail(409, 'request_conflict', 'This submission was already used. Refresh before posting different text.');
   }
   if (ideaId === null) return { idea: await getIdea(db, prior.id, session.actor) };
@@ -34,11 +35,16 @@ async function priorPost(db, session, fields, ideaId = null) {
   return { reply: replyJson(row) };
 }
 
-async function createPost(db, session, data, ideaId = null) {
+async function createPost(db, session, data, ideaId = null, options = {}) {
   const reply = ideaId !== null;
   const fields = postFields(session.developer ? {...data,handle:''} : data, reply);
   if(session.developer)fields.handle='Fleet Command';
-  if (!reply) fields.contentId = (await contentFor(db, data)).id;
+  if (!reply) {
+    fields.contentId = (await contentFor(db, data)).id;
+    fields.type = fields.contentId==='social-mess'?'conversation':fields.contentId==='social-recruitment'?'recruitment':'idea';
+    if(fields.type!=='idea'&&!session.profileId&&!session.developer)fail(401,'signin_required','Sign in to start a community conversation. Everyone can still reply and suggest game ideas.');
+    if(fields.type==='recruitment'&&!options.recruitment)fail(400,'listing_required','Use your single editable recruitment listing.');
+  }
   const prior = await priorPost(db, session, fields, ideaId);
   if (prior) return { value: prior, status: 200 };
   if (reply) { const idea = await getIdea(db, ideaId, session.actor); if (idea.merged_into) fail(409,'merged_discussion','Continue this discussion on idea '+idea.merged_into+'.'); if (idea.locked) fail(409,'discussion_locked','Fleet Command has closed replies on this idea.'); }
@@ -65,10 +71,10 @@ async function createPost(db, session, data, ideaId = null) {
   } else {
     // system remains a compatibility column; stable content_id now owns the discussion.
     result = await db.prepare(`INSERT INTO ideas(system,content_id,contribution_type,body,handle,created_at,updated_at,actor_hash,request_id,content_hash,profile_id,is_developer)
-      SELECT 'missiles',c.id,'idea',?,?,?,?,?,?,?,?,? FROM content_objects c WHERE c.id=? AND c.is_public=1
+      SELECT 'missiles',c.id,?,?,?,?,?,?,?,?,?,? FROM content_objects c WHERE c.id=? AND c.is_public=1
         AND NOT EXISTS(SELECT 1 FROM ideas WHERE ${actorMatch('actor_hash')} AND content_id=? AND content_hash=? AND created_at>?)
       ON CONFLICT(actor_hash,request_id) DO NOTHING RETURNING id`)
-      .bind(fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null, session.developer ? 1 : 0,
+      .bind(fields.type, fields.body, fields.handle, now, now, session.actor, fields.requestId, hash, session.profileId || null, session.developer ? 1 : 0,
         fields.contentId, session.actor, session.actor, fields.contentId, hash, since).first();
   }
   const value = await priorPost(db, session, fields, ideaId);
@@ -175,9 +181,9 @@ async function discovery(db, session) {
   // At most 256 candidates (128 newest + 128 highest-voted). Rank real activity
   // from the last seven days; never create activity, statuses or filler cards.
   const trending = db.prepare(`WITH recent_candidates AS (
-      SELECT id FROM ideas WHERE hidden=0 AND merged_into IS NULL ORDER BY id DESC LIMIT 128
+      SELECT id FROM ideas WHERE hidden=0 AND merged_into IS NULL AND contribution_type='idea' ORDER BY id DESC LIMIT 128
     ), popular_candidates AS (
-      SELECT i.id FROM ideas i WHERE i.hidden=0 AND i.merged_into IS NULL ORDER BY (${GROUP_VOTES_SQL}) DESC,i.id DESC LIMIT 128
+      SELECT i.id FROM ideas i WHERE i.hidden=0 AND i.merged_into IS NULL AND i.contribution_type='idea' ORDER BY (${GROUP_VOTES_SQL}) DESC,i.id DESC LIMIT 128
     ), candidates AS (SELECT id FROM recent_candidates UNION SELECT id FROM popular_candidates),
     ranked AS (
       SELECT i.id,i.content_id,(${GROUP_VOTES_SQL}) AS support,
@@ -214,11 +220,12 @@ export async function onRequest(context) {
     if (request.method === 'GET') await publicReadLimit(db, session);
     const identityResponse = await routeIdentity({ request, env, db, session, url, path, data });
     if (identityResponse) return identityResponse;
+    const socialResponse=await routeSocial({request,db,session,url,path,data,createPost});if(socialResponse)return socialResponse;
     if(request.method==='POST'&&path.length===1&&path[0]==='topic-proposals')return json(await proposeTopic(db,session,data),session);
     if (request.method === 'GET' && path.length === 1 && path[0] === 'content') {
       const { results } = await db.prepare(`SELECT c.id,c.slug,c.title,c.kind,c.path,c.summary,c.current_json,c.media_json,${TOPIC_CREDIT_COLUMNS},
         (SELECT COUNT(*) FROM ideas i WHERE i.content_id=c.id AND i.hidden=0 AND i.merged_into IS NULL) AS idea_count
-        FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.is_public=1 ORDER BY c.title,c.id LIMIT 100`).all();
+        FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.is_public=1 AND c.id NOT LIKE 'social-%' ORDER BY c.title,c.id LIMIT 100`).all();
       const activity=await topicActivity(db);
       return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null,acknowledgement:row.acknowledgement||'',...activity.get(row.id)})) }, session);
     }

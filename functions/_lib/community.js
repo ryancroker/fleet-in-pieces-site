@@ -269,7 +269,7 @@ export function contentJson(row) {
 export function authorJson(row, prefix = 'author_') {
   if (row[prefix + 'id'] === null || row[prefix + 'id'] === undefined) return null;
   const id = row[prefix + 'id'];
-  return { id, callsign: row[prefix + 'callsign'], rank: row[prefix + 'rank'] || null, path: '/u/' + id };
+  return { id, callsign: row[prefix + 'callsign'], rank: row[prefix + 'rank'] || null, direct_count: row[prefix+'direct_count'] ?? null, patron: row[prefix+'patron_id'] ? {id:row[prefix+'patron_id'],callsign:row[prefix+'patron_callsign'],path:'/u/'+row[prefix+'patron_id']} : null, path: '/u/' + id };
 }
 // Resolve explicit claimed aliases in SQL; anonymous identities stay valid on their own.
 // The two placeholders are the current actor twice. No actor hashes leave the API.
@@ -281,7 +281,9 @@ export const VOTED_SQL = `EXISTS(SELECT 1 FROM votes v WHERE v.idea_id IN (${GRO
     WHERE profile_id=(SELECT profile_id FROM profile_actors WHERE actor_hash=?))))`;
 export const VOTE_COUNT_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_id,'a:'||v.actor_hash))
   FROM votes v LEFT JOIN profile_actors pa ON pa.actor_hash=v.actor_hash WHERE v.idea_id=?`;
-const AUTHOR_COLUMNS = 'p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank';
+const AUTHOR_COLUMNS = `p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank,
+ (SELECT COUNT(*) FROM profiles child WHERE child.superior_id=p.id) AS author_direct_count,
+ p.superior_id AS author_patron_id,(SELECT callsign FROM profiles patron WHERE patron.id=p.superior_id) AS author_patron_callsign`;
 export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.is_developer,i.status,i.status_label,i.developer_response,
   (${GROUP_VOTES_SQL}) AS votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
   i.decision_key,i.pinned,i.locked,i.related_idea_id,i.merged_into,i.source_reply_id,i.display_title,i.display_body,i.edit_note,i.build_label,i.release_date,i.evidence_json,i.revision,

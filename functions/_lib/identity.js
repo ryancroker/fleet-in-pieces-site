@@ -6,7 +6,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{1
 const SESSION_AGE = 30 * 86400;
 const SESSION_MAX_AGE = 90 * 86400;
 const ALGORITHMS = [-7, -257];
-const PUBLIC_PROFILE = 'p.id,p.callsign,p.created_at,r.label AS rank';
+const PUBLIC_PROFILE = 'p.id,p.callsign,p.created_at,p.introduction,r.label AS rank';
 const clock = () => Math.floor(Date.now() / 1000);
 const iso = () => new Date().toISOString();
 function b64(bytes) { return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
@@ -16,7 +16,7 @@ function bytes(value) {
 }
 function random() { return b64(crypto.getRandomValues(new Uint8Array(32))); }
 async function hash(value) { return b64(new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(value)))); }
-function summary(row) { return { id: row.id, callsign: row.callsign, path: '/u/' + row.id, rank: row.rank, joined_at: row.created_at }; }
+function summary(row) { return { id: row.id, callsign: row.callsign, path: '/u/' + row.id, rank: row.rank, introduction: row.introduction || '', joined_at: row.created_at }; }
 function profileId(value) { if (typeof value !== 'string' || !UUID.test(value)) fail(404, 'not_found', 'That fleet record was not found.'); return value.toLowerCase(); }
 function callsign(value) {
   if (typeof value !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9_-]{2,23}$/.test(value.trim())) fail(400, 'invalid_callsign', 'Use 3–24 letters, numbers, underscores or hyphens for your callsign.');
@@ -293,7 +293,7 @@ async function profileDetails(db, id, offset = 0) {
       (SELECT COUNT(*)-1 FROM allegiance_paths WHERE ancestor_id=?) AS subtree_count,
       COUNT(*) AS ideas_count,COALESCE(SUM(votes),0) AS votes_received,
       COALESCE(SUM(CASE WHEN decision_key='implemented' THEN 1 ELSE 0 END),0) AS implemented_count
-      FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1`).bind(id, id, id)
+      FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1 AND i.contribution_type='idea'`).bind(id, id, id)
   ]);
   return { profile: { ...summary(profile), ...counts.results[0], superior: superior.results[0] ? summary(superior.results[0]) : null,
     direct_vassals: children.results.slice(0, 25).map(summary),
@@ -303,15 +303,15 @@ async function profileDetails(db, id, offset = 0) {
 async function profileActivity(db, id, offset) {
   if (!await db.prepare('SELECT id FROM profiles WHERE id=?').bind(id).first()) fail(404,'not_found','That fleet record was not found.');
   const {results} = await db.prepare(`SELECT * FROM (
-    SELECT 'idea' AS type,i.id,i.id AS idea_id,substr(i.body,1,500) AS body,i.created_at,
+    SELECT CASE WHEN i.contribution_type='idea' THEN 'idea' ELSE 'post' END AS type,i.id,i.id AS idea_id,substr(i.body,1,500) AS body,i.created_at,
       c.title AS content_title,c.path AS content_path,i.status,i.status_label,i.votes
       FROM ideas i JOIN content_objects c ON c.id=i.content_id
-      WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1
+      WHERE i.profile_id=? AND i.hidden=0 AND c.is_public=1 AND (i.merged_into IS NULL OR EXISTS(SELECT 1 FROM ideas root JOIN content_objects rc ON rc.id=root.content_id WHERE root.id=i.merged_into AND root.hidden=0 AND rc.is_public=1))
     UNION ALL
     SELECT 'reply' AS type,r.id,r.idea_id,substr(r.body,1,500) AS body,r.created_at,
       c.title AS content_title,c.path AS content_path,NULL AS status,NULL AS status_label,NULL AS votes
       FROM replies r JOIN ideas i ON i.id=r.idea_id JOIN content_objects c ON c.id=i.content_id
-      WHERE r.profile_id=? AND r.hidden=0 AND i.hidden=0 AND c.is_public=1
+      WHERE r.profile_id=? AND r.hidden=0 AND i.hidden=0 AND c.is_public=1 AND (i.merged_into IS NULL OR EXISTS(SELECT 1 FROM ideas root JOIN content_objects rc ON rc.id=root.content_id WHERE root.id=i.merged_into AND root.hidden=0 AND rc.is_public=1))
     ) ORDER BY created_at DESC,id DESC,type ASC LIMIT 26 OFFSET ?`).bind(id,id,offset).all();
   return {activity:results.slice(0,25),has_more:results.length>25};
 }

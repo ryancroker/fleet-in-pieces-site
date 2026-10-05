@@ -47,6 +47,13 @@ const DATA=`WITH visible AS (
 )
 `;
 
+const TOPIC_RESPONSES=`WITH responses AS (
+ SELECT t.id,c.id AS content_id,c.title AS content_title,c.path AS content_path,t.acknowledgement,
+ t.first_responded_at AS created_at,t.responded_at AS updated_at,substr(t.developer_response,1,240) AS body
+ FROM topic_proposals t JOIN content_objects c ON c.id='community-topic-'||t.id AND c.is_public=1
+ WHERE t.status='approved' AND trim(t.developer_response)<>''
+) `;
+
 export async function dashboard(db,url){
  const days=Number(url.searchParams.get('days')||7);if(![7,30].includes(days))fail(400,'invalid_range','Choose 7 or 30 days.');
  const now=new Date(),end=now.toISOString(),today=dateKey(now),base=Date.parse(today+'T12:00:00Z');
@@ -71,7 +78,7 @@ export async function dashboard(db,url){
   db.prepare(DATA+`SELECT content_id,content_title,content_path,
    SUM(kind='idea') AS ideas,SUM(kind='reply') AS replies,SUM(kind='vote') AS votes,SUM(kind IN('developer','developer_post','developer_reply')) AS developer_replies,
    COUNT(*) AS activity FROM events WHERE content_id IS NOT NULL AND ${range}
-   GROUP BY content_id ORDER BY activity DESC,content_title LIMIT 8`).bind(start,end),
+   GROUP BY content_id ORDER BY activity DESC,content_title`).bind(start,end),
   db.prepare(DATA+`, recent AS (
    SELECT kind,event_id,idea_id,content_title,content_path,created_at,body,author,amount FROM events WHERE kind IN('idea','reply','register','developer_post','developer_reply') AND ${range}
    UNION ALL SELECT 'vote',idea_id,idea_id,content_title,content_path,MAX(created_at),'','',COUNT(*) FROM events WHERE kind='vote' AND ${range} GROUP BY idea_id
@@ -86,14 +93,27 @@ export async function dashboard(db,url){
    .bind(...periods.flatMap(p=>[p.date,p.start,p.end]),end),
   db.prepare(`SELECT 'proposal' AS kind,t.id AS event_id,NULL AS idea_id,t.title AS content_title,'/crew' AS content_path,
    t.created_at,substr(t.body,1,240) AS body,COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew') AS author,1 AS amount
-   FROM topic_proposals t LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.created_at>=? AND t.created_at<=? ORDER BY t.created_at DESC,t.id DESC LIMIT 20`).bind(start,end)
+   FROM topic_proposals t LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.created_at>=? AND t.created_at<=? ORDER BY t.created_at DESC,t.id DESC LIMIT 20`).bind(start,end),
+  // Separate read models avoid expanding another branch in the events CTE.
+  db.prepare(TOPIC_RESPONSES+`SELECT COUNT(*) AS total,SUM(CASE WHEN ${range} THEN 1 ELSE 0 END) AS recent,SUM(acknowledgement='already_in_game') AS already_in_game FROM responses`).bind(start,end),
+  db.prepare(TOPIC_RESPONSES+`, periods(day,start,finish) AS (VALUES ${periods.map(()=>'(?,?,?)').join(',')})
+   SELECT p.day,COUNT(r.id) AS count FROM periods p LEFT JOIN responses r ON r.created_at>=p.start AND r.created_at<p.finish AND r.created_at<=? GROUP BY p.day`)
+   .bind(...periods.flatMap(p=>[p.date,p.start,p.end]),end),
+  db.prepare(TOPIC_RESPONSES+`SELECT 'developer_topic' AS kind,id AS event_id,NULL AS idea_id,content_title,content_path,updated_at AS created_at,body,'Fleet Command' AS author,1 AS amount FROM responses WHERE updated_at>=? AND updated_at<=? ORDER BY updated_at DESC,id DESC LIMIT 20`).bind(start,end),
+  db.prepare(TOPIC_RESPONSES+`SELECT content_id,content_title,content_path,COUNT(*) AS developer_replies FROM responses WHERE ${range} GROUP BY content_id`).bind(start,end)
  ]);
  const metric=kind=>kind.startsWith('developer')?'developer':kind;
  for(const row of rows[0].results){if(metric(row.kind)===row.kind)continue;let base=rows[0].results.find(r=>r.kind==='developer');if(!base){base={kind:'developer',total:0,recent:0};rows[0].results.push(base);}base.total+=row.total;base.recent+=row.recent||0;}
  const totals={},counts={};for(const kind of ['idea','reply','vote','developer','register']){const row=rows[0].results.find(r=>r.kind===kind);totals[kind]=Number(row?.total||0);counts[kind]=Number(row?.recent||0);}
  totals.proposal=Number(rows[5].results[0]?.total||0);counts.proposal=Number(rows[5].results[0]?.recent||0);
+ totals.developer+=Number(rows[8].results[0]?.total||0);counts.developer+=Number(rows[8].results[0]?.recent||0);
+ rows[1].results[0].already_in_game+=Number(rows[8].results[0]?.already_in_game||0);
  const daily=periods.map(p=>{const result={date:p.date,idea:0,reply:0,vote:0,developer:0,register:0,proposal:Number(rows[6].results.find(r=>r.day===p.date)?.count||0)};for(const r of rows[2].results)if(r.day===p.date&&r.kind)result[metric(r.kind)]+=r.count;return result;});
- const recent=[...rows[4].results,...rows[7].results].sort((a,b)=>b.created_at.localeCompare(a.created_at)||a.kind.localeCompare(b.kind)||(b.event_id||0)-(a.event_id||0)).slice(0,20);
- return {as_of:end,days,time_zone:ZONE,period_start:start,counts,totals,attention:rows[1].results[0],daily,topics:rows[3].results,recent,
+ for(const day of daily)day.developer+=Number(rows[9].results.find(r=>r.day===day.date)?.count||0);
+ const topicMap=new Map(rows[3].results.map(row=>[row.content_id,row]));
+ for(const row of rows[11].results){const topic=topicMap.get(row.content_id)||{...row,ideas:0,replies:0,votes:0,developer_replies:0,activity:0};topic.developer_replies+=row.developer_replies;topic.activity+=row.developer_replies;topicMap.set(row.content_id,topic);}
+ const topics=[...topicMap.values()].sort((a,b)=>b.activity-a.activity||a.content_title.localeCompare(b.content_title)).slice(0,8);
+ const recent=[...rows[4].results,...rows[7].results,...rows[10].results].sort((a,b)=>b.created_at.localeCompare(a.created_at)||a.kind.localeCompare(b.kind)||(b.event_id||0)-(a.event_id||0)).slice(0,20);
+ return {as_of:end,days,time_zone:ZONE,period_start:start,counts,totals,attention:rows[1].results[0],daily,topics,recent,
   traffic:{available:false,url:'https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fweb-analytics'}};
 }

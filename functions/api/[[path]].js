@@ -220,7 +220,7 @@ export async function onRequest(context) {
         (SELECT COUNT(*) FROM ideas i WHERE i.content_id=c.id AND i.hidden=0 AND i.merged_into IS NULL) AS idea_count
         FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.is_public=1 ORDER BY c.title,c.id LIMIT 100`).all();
       const activity=await topicActivity(db);
-      return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null,...activity.get(row.id)})) }, session);
+      return json({ content: results.map(row=>({...contentJson(row),idea_count:row.idea_count,credit:row.proposal_id?topicCredit(row):null,acknowledgement:row.acknowledgement||'',...activity.get(row.id)})) }, session);
     }
     if(request.method==='GET'&&path.length===1&&path[0]==='activity')return json(await publicActivity(db,url),session);
     if (request.method === 'GET' && path.length === 1 && path[0] === 'discovery') return json(await discovery(db, session), session);

@@ -30,6 +30,11 @@ const EVENTS=`WITH visible AS (
  substr(c.summary,1,240),COALESCE(p.callsign,NULLIF(t.handle,''),'Anonymous crew'),0
  FROM topic_proposals t JOIN content_objects c ON c.id='community-topic-'||t.id AND c.is_public=1
  LEFT JOIN profiles p ON p.id=t.profile_id WHERE t.status='approved'
+ UNION ALL
+ SELECT 'topic-response:'||t.id,'topic_response',c.id,c.title,c.path,c.path||'#fleet-response',t.responded_at,
+ substr(t.developer_response,1,240),'Fleet Command',1
+ FROM topic_proposals t JOIN content_objects c ON c.id='community-topic-'||t.id AND c.is_public=1
+ WHERE t.status='approved' AND trim(t.developer_response)<>''
 )
 `;
 

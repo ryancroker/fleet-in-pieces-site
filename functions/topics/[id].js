@@ -11,9 +11,12 @@ export async function onRequest({request,env,params}){
   if([301,302,307,308].includes(shell.status))shell=await env.ASSETS.fetch(new Request(new URL('/topic',request.url)));
   if(!shell.ok)throw Error('Missing topic shell');let html=await shell.text();
   const credit=topicCredit(row),canonical='https://fleetinpieces.space/topics/'+id;
-  const values={__TOPIC_TITLE__:row.title,__TOPIC_DESCRIPTION__:row.summary,__TOPIC_ID__:row.id,__TOPIC_SLUG__:row.slug,__TOPIC_URL__:canonical};
+  const values={__TOPIC_TITLE__:row.title,__TOPIC_DESCRIPTION__:row.summary,__TOPIC_ID__:row.id,__TOPIC_SLUG__:row.slug,__TOPIC_URL__:canonical,__TOPIC_NOTE__:row.acknowledgement==='already_in_game'?'Already part of the game. Questions and ideas for making it better are welcome.':'A place to discuss an idea, not a promise that it will be added to the game.'};
   const markup=credit.path?`<a href="${htmlEscape(credit.path)}">${htmlEscape(credit.name)}</a>`:htmlEscape(credit.name);
-  html=html.replace(/__TOPIC_(?:TITLE|DESCRIPTION|ID|SLUG|URL|CREDIT)__/g,token=>token==='__TOPIC_CREDIT__'?markup:htmlEscape(values[token]));
+  const stamp=row.responded_at?new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(row.responded_at)):'';
+  const response=row.topic_response?`<aside class="topic-command-response" id="fleet-response" aria-label="Developer reply"><p class="eyebrow">Fleet Command · Developer reply</p>${row.acknowledgement==='already_in_game'?'<span class="topic-acknowledgement">Already in the game</span><h2>Good instincts. Already aboard.</h2>':'<h2>From Fleet Command.</h2>'}<p class="topic-response-body">${htmlEscape(row.topic_response)}</p><time datetime="${htmlEscape(row.responded_at||'')}">${htmlEscape(stamp)}</time></aside>`:'';
+  // Substitution in one pass keeps user-authored token-like text inert.
+  html=html.replace(/__TOPIC_(?:TITLE|DESCRIPTION|ID|SLUG|URL|CREDIT|RESPONSE|NOTE)__/g,token=>token==='__TOPIC_CREDIT__'?markup:token==='__TOPIC_RESPONSE__'?response:htmlEscape(values[token]));
   if(new URL(request.url).hostname!=='fleetinpieces.space')headers.set('X-Robots-Tag','noindex');
   return new Response(request.method==='HEAD'?null:html,{headers});
  }catch(error){headers.set('X-Robots-Tag','noindex');return new Response('This topic is unavailable. Please return to /community.',{status:[400,404].includes(error.status)?404:503,headers});}

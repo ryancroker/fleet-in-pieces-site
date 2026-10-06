@@ -137,13 +137,50 @@ Preserve plain-text rendering, same-origin JSON mutations, signed browser identi
 
 Profanity is allowed. Pattern checks and the hidden spam field catch some obvious links/private information, but contextual abuse still needs human moderation. Failed requests show honest retry states and preserve drafts. Votes represent enthusiasm, not command authority.
 
-### Database usage and emergency read-only mode
+### Cost safety and emergency read-only mode
 
-Public reads reserve five requests at a time against the same durable actor/IP limits, reducing counter writes without increasing the global allowance. An isolate restart may discard unused credit, making admission more conservative. Writes and authentication keep their per-request server limits. Expired-row cleanup is periodic; expiry/revocation checks are still immediate. Active visible tabs refresh presence, unread badges and the developer dashboard every two minutes. After five idle minutes, or while hidden, background polling stops; returning resumes it. This supersedes older one-minute polling notes.
+`functions/_lib/cost-fuse.js` implements a shared D1 circuit breaker across all Worker instances. Migration **0011_write_fuse.sql** is additive: one aggregate counter row and up to12 pending accounting receipts; no member/content/analytics records. Atomic admission happens before all recognized non-admin mutations, including authentication, profile/session changes and notification read markers. Invalid/failed mutations admitted by the fuse also count. Verified developer cookies and authenticated `/api/admin/*` operations bypass this fuse so Fleet Command can still moderate and repair; their existing per-endpoint limits remain.
 
-To pause community submissions, change `COMMUNITY_READ_ONLY` to `true` in `functions/_lib/site-mode.js`, then commit/push normally and confirm the deployment. Set it back to `false` to reopen. Visitors can still browse; existing members can sign in/out and Fleet Command can moderate. Posts, replies, votes, reports, registrations and other community changes are rejected before database access, with a draft-preserving retry message. This manual deployment switch is normally **off**. It does not stop database use by allowed reads, authentication or moderation, and it is not a billing cap.
+| Fixed UTC window | Admitted mutation attempts | Accounted D1 rows written |
+| --- | ---: | ---: |
+| Minute | 30 | 5,000 |
+| Hour | 300 | 20,000 |
+| Day | 1,500 | 50,000 |
+| Calendar month | 15,000 | 500,000 |
 
-`wrangler.toml` requests per-invocation CPU of100ms and subrequests of50. Production confirms the CPU cap, but the Pages API does not confirm the native subrequest cap. The application independently enforces50 D1 statements per request (including individual statements within batches), rejecting an oversized batch before it executes. That bounds database calls, not rows affected or total spend. The [Pages CPU limit](https://developers.cloudflare.com/pages/functions/wrangler-configuration/#limits) applies at Cloudflare, not in local preview. The [Workers Paid plan](https://developers.cloudflare.com/workers/platform/pricing/) has a minimum monthly charge plus usage overages; these safeguards do not impose an account-wide dollar ceiling. No billing alerts or account settings are configured by this repository.
+Reaching **either** ceiling latches the fuse closed. It never reopens automatically at a window boundary. Attempts are atomically bounded; row counters use actual D1 `meta.rows_written` plus a conservative three-row accounting allowance. Already admitted operations may finish after a trip/pause; up to12 may be outstanding. Therefore row thresholds are trip points, not exact row or billing caps. The panel counts protected non-admin traffic, including its limiter/cleanup/accounting work; it does not claim to include developer operations, migrations or all Cloudflare account usage. The daily projection is today's accounted rate extrapolated to24hours (minimum one hour of observation), not an invoice.
+
+An accounting error or missing metadata latches closed and retains the receipt. A thirteenth simultaneous pending write also trips; an unfinished receipt older than5minutes blocks subsequent admission. Reset will not discard receipts or clear budget counters. If a receipt stays stuck, keep read-only mode enabled and investigate/reconcile its writes with D1 before a reviewed repair. Missing safety tables/binding or invalid switch values fail closed. Rejected requests may still incur reads and Worker request charges; the five-second rejection cache only avoids repeat admission queries in a warm isolate.
+
+**Manual pause without deployment:** open `/crew` → **Activity** → **Community cost safety** → **Pause community writes**, then confirm. Existing content and the static/game site stay readable. Visitors see a read-only notice and retain drafts. Member sign-in/registration/session renewal are also paused; valid remembered sessions can still browse. Developer login and controls remain available.
+
+**Emergency deployment override:** set `[vars] COMMUNITY_WRITES_ENABLED = "false"` in `wrangler.toml`, prepare/commit/push `main`, and verify the new Pages deployment. No dashboard reset can override this variable. Set it to `"true"` and redeploy to remove the override; the stored fuse still needs resetting if it had tripped or been paused.
+
+**Reset:** first fix the cause, then `/crew` → Activity → Community cost safety → **Reset fuse / resume**. Refresh status if it changed. All applicable UTC budgets must have room and every receipt must be settled. Exhausted minute/hour/day/month budgets must age out naturally; reset never wipes them. For a calendar-month cap that means the next UTC month unless a reviewed code change deliberately changes the limits. Every control requires verified developer authorization, same-origin JSON and the displayed revision.
+
+Per-actor and daily-hashed-network limits remain durable and shared in D1:
+
+| Public action | Actor limit | Network limit |
+| --- | --- | --- |
+| Game idea / social post | 5 /10min and20 /day | 60 /10min and200 /day |
+| Reply / comment | 20 /10min and100 /day | 200 /10min and1,000 /day |
+| Topic suggestion | 3 /10min and8 /day | 30 /10min and120 /day |
+| Vote | 60 /minute | 600 /minute |
+| Completed registration | 3 /day | 20 /day |
+| Registration/passkey options | 12 /10min | 60 /10min |
+| Registration/passkey verification | 20 /10min | 80 /10min |
+| Sign-in options or verification | 20 /10min each | 100 /10min each |
+| Recovery attempts | 5 /10min | 20 /10min |
+| Profile / recruitment edits (shared bucket) | 12 /hour | 60 /hour |
+| Allegiance | 6 /hour | 30 /hour |
+| Reports | 10 /hour | 100 /hour |
+| Inbox read markers | 30 /minute | 120 /minute |
+
+Additional limits cover claim, logout, session renewal, passkey removal and recovery-code rotation. New recruitment listings also use post limits. Limits combine with the stricter global fuse; rotating accounts or network addresses cannot evade its global budget. GETs never write D1: an enforced SQL read-only wrapper rejects writes, read burst shielding is isolate-local120actor/600network perminute, and private responses remain no-store. Unlike the former prepaid read quotas, this burst shield is best-effort across cold starts; it is not the authority for write limits. There are no D1 pageviews or analytics events. Cleanup occurs on mutations only, bounded and throttled; remembered member renewal is a separate rate-limited mutation only when due. Auth expiry/revocation still checks every use. Developer presence, explicitly requested by Ryan, writes at most once per5minutes of actual use; public polls never advance it. Active visible polling remains2minutes, with idle/hidden tabs stopped after5minutes.
+
+`wrangler.toml` requests100ms CPU and50subrequests per invocation. Cloudflare confirms CPU; Pages' API does not confirm the native subrequest setting. Independently, application code hard-limits API operations to50D1 statements including each batch member:44handler slots plus6accounting slots on mutations. Dynamic HTML has one read-only D1 statement and at most two fixed asset fetches. Do not describe an unconfirmed native subrequest cap as verified. These caps are per invocation, not an account-wide dollar ceiling, and deliberately permitted reads/admin traffic still cost usage. No billing, subscription or DNS changes.
+
+All mutation/browser QA must target localhost/isolated D1. `wrangler pages dev` and `d1 execute --local` use local storage; `[env.preview]` has no production D1 binding. Focused review scripts for this change are outside public output at `../../Saved/SourceChanges/FleetWriteFuse_20261005`, with hardcoded localhost or in-memory SQLite, no production fallback. Production verification is a small explicitly identified read-only release check, never a public test post/account/check-in.
 
 ## Native Quartermaster
 
@@ -174,6 +211,6 @@ Apply additive migration0006 only after a private production export and local re
 
 ## Knowing your current identity
 
-The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It also labels the separate community callsign or guest identity. The same code unlocks `/crew`. Keep me signed in on this device (checked by default) keeps access for30days; uncheck it for8hours. Existing expired sessions need the code once again. Expiry or Lock removes developer access. No email or username was introduced.
+The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It takes priority over any optional player identity: /register shows Fleet Command controls and posts/replies use the verified Fleet Command author automatically. It never asks the developer to create a callsign. The same code unlocks `/crew`. Keep me signed in on this device (checked by default) keeps access for30days; uncheck it for8hours. Existing expired sessions need the code once again. Expiry or Lock removes developer access. No email or username was introduced.
 
-The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer activity**. This is a presence timestamp, not a software-release date. It changes on developer-key login and authenticated remembered visits/recent interaction, at most once per minute. Public reads do not advance it. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.
+The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer activity**. This is a presence timestamp, not a software-release date. It changes on developer-key login and authenticated remembered visits/recent interaction, at most once per five minutes. Public reads do not advance it. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.

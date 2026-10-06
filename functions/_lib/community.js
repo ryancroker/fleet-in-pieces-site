@@ -52,30 +52,51 @@ export function problem(error, session) {
   // SQL, secrets, IPs, hashes and submitted text must never reach error responses or logs.
   return json({ error: 'unavailable', message: 'The community board is temporarily unavailable. Please try again.' }, session, 503);
 }
-export function database(env) {
+// API reads cannot silently become writes. SQL is repository-authored; bound
+// values are never inspected. Strip literals/comments before classifying CTEs.
+function readStatement(sql) {
+  const code=sql.replace(/'(?:''|[^'])*'|"(?:""|[^"])*"|--[^\n]*|\/\*[\s\S]*?\*\//g,' ');
+  return /^\s*(?:SELECT|WITH|EXPLAIN)\b/i.test(code)&&!(/\b(?:INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|ALTER|PRAGMA)\b/i.test(code));
+}
+export function database(env, {readOnly=false,maxStatements=50,stats={rowsWritten:0,rowsRead:0}}={}) {
   if (!env.COMMUNITY_DB?.prepare) fail(503, 'unavailable', 'The community board is temporarily unavailable.');
-  // A request-local ceiling also protects D1 if the hosting platform does not
-  // apply its configured subrequest limit. Count every statement in a batch;
-  // never split a transaction to fit. This bounds calls, not rows or dollars.
-  const binding = env.COMMUNITY_DB, originals = new WeakMap();
-  let remaining = 50;
+  const binding=env.COMMUNITY_DB,originals=new WeakMap();let remaining=maxStatements;
   function spend(count) {
-    if (count > remaining) fail(503, 'request_budget', 'That request reached the fleet desk limit. Please try again. Your draft stays here.');
-    remaining -= count;
+    if(count>remaining)fail(503,'request_budget','That request reached the fleet desk limit. Please try again. Your draft stays here.');
+    remaining-=count;
+  }
+  function measure(result) {
+    for(const item of Array.isArray(result)?result:[result]){
+      if(!Number.isSafeInteger(item?.meta?.rows_written)||item.meta.rows_written<0)stats.accountingInvalid=true;
+      stats.rowsWritten+=Number(item?.meta?.rows_written)||0;
+      stats.rowsRead+=Number(item?.meta?.rows_read)||0;
+    }
+    return result;
   }
   function statement(raw) {
-    const wrapped = { bind: (...values) => statement(raw.bind(...values)) };
-    for (const method of ['first', 'all', 'run', 'raw']) wrapped[method] = (...args) => { spend(1); return raw[method](...args); };
-    originals.set(wrapped, raw);
-    return wrapped;
+    const wrapped={bind:(...values)=>statement(raw.bind(...values))};
+    for(const method of ['all','run'])wrapped[method]=async(...args)=>{
+      spend(1);try{return measure(await raw[method](...args));}
+      catch(error){stats.accountingInvalid=true;throw error;}
+    };
+    wrapped.first=async column=>{
+      const result=await wrapped.all(),row=result.results?.[0]??null;
+      if(column===undefined||row===null)return row;
+      if(!(column in row))fail(503,'unavailable','The fleet desk is temporarily unavailable.');
+      return row[column];
+    };
+    originals.set(wrapped,raw);return wrapped;
   }
   return {
-    prepare: sql => statement(binding.prepare(sql)),
-    batch(statements) {
-      spend(statements.length);
-      const raw = statements.map(item => originals.get(item));
-      if (raw.some(item => !item)) fail(503, 'request_budget', 'That request could not be completed. Please try again.');
-      return binding.batch(raw);
+    prepare(sql){
+      if(readOnly&&!readStatement(sql))fail(503,'read_only_request','This read request cannot modify community data.');
+      return statement(binding.prepare(sql));
+    },
+    async batch(statements){
+      spend(statements.length);const raw=statements.map(item=>originals.get(item));
+      if(raw.some(item=>!item))fail(503,'request_budget','That request could not be completed. Please try again.');
+      try{return measure(await binding.batch(raw));}
+      catch(error){stats.accountingInvalid=true;throw error;}
     }
   };
 }
@@ -251,56 +272,21 @@ export async function limits(db, session, rules) {
   const results = await db.batch(statements);
   if (results.some(result => !result.results?.length)) fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
 }
-// Prepay five ordinary reads in D1, then spend that allowance in this isolate.
-// These are NOT cached authorization decisions or per-isolate rate limits:
-// every allowance is charged atomically to the same global actor/IP counters.
-// Cold starts/eviction discard unused credit, never refund it or grant more.
-// Old deployments incrementing those same counters remain compatible.
-const READ_RESERVE_SQL = `INSERT INTO rate_limits(key,count,expires_at,purge_at) VALUES(?,?,?,?)
-  ON CONFLICT(key) DO UPDATE SET
-    count=CASE WHEN rate_limits.expires_at<=? THEN ? ELSE rate_limits.count+? END,
-    expires_at=CASE WHEN rate_limits.expires_at<=? THEN excluded.expires_at ELSE rate_limits.expires_at END,
-    purge_at=excluded.purge_at
-  WHERE rate_limits.expires_at<=? OR rate_limits.count<=? RETURNING expires_at`;
-const readAllowances = new Map();
-async function readPermit(db, key, ceiling) {
-  let entry = readAllowances.get(key);
-  if (!entry) {
-    // One deployment uses one COMMUNITY_DB. Only signed, hashed subjects are
-    // retained; never cookies, credentials or raw IPs. Credit expires in 60s.
-    if (readAllowances.size >= 4096) readAllowances.delete(readAllowances.keys().next().value);
-    entry = { remaining: 0, expires: 0, deniedUntil: 0, pending: null };
-    readAllowances.set(key, entry);
+// Read-only burst shielding must not turn pageviews/polling into D1 writes.
+// This is intentionally best-effort per isolate. Public mutations additionally
+// have durable actor/IP limits AND the global D1 write fuse, never this alone.
+const readBuckets=new Map();
+function burst(scope,subject,ceiling,seconds){
+  const now=Math.floor(Date.now()/1000),key=scope+':'+subject;
+  let bucket=readBuckets.get(key);
+  if(!bucket||bucket.until<=now){
+    if(readBuckets.size>=4096)readBuckets.delete(readBuckets.keys().next().value);
+    bucket={count:0,until:now+seconds};readBuckets.set(key,bucket);
   }
-  for (;;) {
-    const now = Math.floor(Date.now() / 1000);
-    if (entry.deniedUntil > now) fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
-    // No await between checking and spending: concurrent requests cannot use
-    // the same credit. A shared pending reservation prevents duplicate refills.
-    if (entry.expires > now && entry.remaining > 0) { entry.remaining--; return; }
-    if (!entry.pending) {
-      entry.pending = (async () => {
-        entry.remaining = 0;
-        for (const amount of [5, 1]) {
-          const reserved = await db.prepare(READ_RESERVE_SQL).bind(key, amount, now + 60, now + 172800,
-            now, amount, amount, now, now, ceiling - amount).first();
-          if (reserved) { entry.remaining = amount; entry.expires = reserved.expires_at; return; }
-        }
-        // Briefly coalesce rejected bursts too; no fail-open on a D1 error.
-        entry.deniedUntil = now + 1;
-        fail(429, 'rate_limited', 'A little too fast. Please wait before trying again.');
-      })().finally(() => { entry.pending = null; });
-    }
-    await entry.pending;
-    // Recheck the real clock after I/O. Credit never survives its D1 expiry.
-  }
+  if(++bucket.count>ceiling)fail(429,'rate_limited','A little too fast. Please wait before trying again.');
 }
-export async function publicReadLimit(db, session) {
-  await cleanRateLimits(db, session.now);
-  // Check the shared IP budget first so rotating guest cookies cannot force
-  // a fresh actor-counter write once this network is already over its limit.
-  await readPermit(db, `read-ip:${session.ip}`, 600);
-  await readPermit(db, `read:${session.actor}`, 120);
+export async function publicReadLimit(db,session){
+  burst('read-ip',session.ip,600,60);burst('read',session.actor,120,60);
 }
 export async function writeLimit(db, session, kind, hash = '', parent = '') {
   const config = {
@@ -322,10 +308,10 @@ export async function authorizeAdmin(request, env, db, session) {
   let mismatch = supplied.length > 1024 ? 1 : 0;
   for (let i = 0; i < a.length; i++) mismatch |= a[i] ^ b[i];
   if (mismatch) {
-    await limits(db, session, [['admin-auth', session.actor, 10, 600], ['admin-auth-ip', session.ip, 30, 600]]);
+    burst('admin-auth-ip',session.ip,30,600);burst('admin-auth',session.actor,10,600);
     fail(401, 'unauthorized', 'A valid developer key is required.');
   }
-  await limits(db, session, [['admin', session.actor, 120, 60], ['admin-ip', session.ip, 300, 60]]);
+  if(request.method!=='GET')await limits(db, session, [['admin', session.actor, 120, 60], ['admin-ip', session.ip, 300, 60]]);
 }
 export function paginate(rows, size = PAGE_SIZE) { return { rows: rows.slice(0, size), has_more: rows.length > size }; }
 export function statusKey(status, label) {

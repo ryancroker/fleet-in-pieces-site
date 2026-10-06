@@ -1,6 +1,7 @@
-import {authorizeAdmin,contentFor,digest,fail,getIdea,IDEA_COLUMNS,IDEA_FROM,ideaJson,keysOnly,limits,PAGE_SIZE,pageOffset,paginate,positiveId,publicReadLimit,REPLY_COLUMNS,REPLY_FROM,replyJson,textField} from './community.js';
+import {authorizeAdmin,contentFor,digest,fail,getIdea,IDEA_COLUMNS,IDEA_FROM,ideaJson,keysOnly,limits,PAGE_SIZE,pageOffset,paginate,positiveId,REPLY_COLUMNS,REPLY_FROM,replyJson,textField} from './community.js';
 import {dashboard} from './dashboard.js';
 import {creatorTopics} from './topics.js';
+import {fuseStatus,publicFuseStatus,controlFuse} from './cost-fuse.js';
 
 export const DECISIONS = Object.freeze({
  open:{status:'new',label:'OPEN'},under_review:{status:'reviewing',label:'UNDER REVIEW'},
@@ -35,7 +36,7 @@ function presenceState(active,timestamp) {
 async function authorize(request,env,db,session) {
  if(!cookieInfo(request).allowed)fail(403,'creator_host','Use https://fleetinpieces.space/crew for developer access.');
  if(await creatorSession(request,env,db,session)) {
-  await limits(db,session,[['admin',session.actor,120,60],['admin-ip',session.ip,300,60]]);return;
+  if(request.method!=='GET')await limits(db,session,[['admin',session.actor,120,60],['admin-ip',session.ip,300,60]]);return;
  }
  await authorizeAdmin(request,env,db,session);
 }
@@ -152,10 +153,12 @@ export async function routeCreator(request,env,db,session,url,path,data) {
   keysOnly(data,[]);
   const active=await creatorSession(request,env,db,session);
   if(!active)fail(401,'creator_session_required','Sign in as the developer to check in.');
+  const previous=await db.prepare('SELECT last_login_at FROM developer_presence WHERE id=1').first();
+  const now=new Date(session.now*1000).toISOString(),cutoff=new Date((session.now-300)*1000).toISOString();
+  if(previous?.last_login_at>cutoff)return presenceState(active,previous.last_login_at);
   await limits(db,session,[['creator-presence',session.actor,10,60],['creator-presence-ip',session.ip,30,60]]);
-  const now=new Date(session.now*1000).toISOString(),cutoff=new Date((session.now-60)*1000).toISOString();
   // Guard the write as well as the request: a revoked session cannot check in.
-  // At most one update per minute across tabs; clients never supply the time.
+  // At most one update per five minutes across tabs; no visitor last-seen log.
   await db.prepare(`UPDATE developer_presence SET last_login_at=? WHERE id=1
    AND (last_login_at IS NULL OR last_login_at<=?)
    AND EXISTS(SELECT 1 FROM creator_sessions WHERE token_hash=? AND key_version=? AND expires_at>?)`)
@@ -165,14 +168,14 @@ export async function routeCreator(request,env,db,session,url,path,data) {
  }
  if(path[1]==='session'&&path.length===2){
   if(request.method==='GET'){
-   await publicReadLimit(db,session);
    const active=await creatorSession(request,env,db,session),presence=await db.prepare('SELECT last_login_at FROM developer_presence WHERE id=1').first();
-   return presenceState(active,presence?.last_login_at);
+   return {...presenceState(active,presence?.last_login_at),community_writes:await publicFuseStatus(db,env)};
   }
   if(request.method==='POST'){
    keysOnly(data,['logout','remember']);
    if(data.remember!==undefined)bool(data.remember,'Keep me signed in');
    if(data.logout===true){
+    if(!await creatorSession(request,env,db,session)){setCookie(request,session,'',0);return {authorized:false};}
     await limits(db,session,[['creator-logout',session.actor,30,60],['creator-logout-ip',session.ip,120,60]]);
     const {token}=cookieInfo(request);if(token)await db.prepare('DELETE FROM creator_sessions WHERE token_hash=?').bind(await digest(session.key,'creator:'+token)).run();
     setCookie(request,session,'',0);return {authorized:false};
@@ -187,7 +190,11 @@ export async function routeCreator(request,env,db,session,url,path,data) {
   }
  }
  await authorize(request,env,db,session);
- if(request.method==='GET'&&path[1]==='dashboard'&&path.length===2)return dashboard(db,url);
+ if(path[1]==='safety'&&path.length===2){
+  if(request.method==='GET')return fuseStatus(db,env);
+  if(request.method==='POST')return controlFuse(db,env,data);
+ }
+ if(request.method==='GET'&&path[1]==='dashboard'&&path.length===2)return {...await dashboard(db,url),write_fuse:await fuseStatus(db,env)};
  if(path[1]==='topics')return creatorTopics(db,url,path,request.method,data);
  if(request.method==='GET'&&path.length===1){
   const view=url.searchParams.get('view')||'new',offset=pageOffset(url);

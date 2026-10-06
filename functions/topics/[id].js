@@ -5,7 +5,7 @@ export async function onRequest({request,env,params}){
  const headers=securityHeaders(true);
  if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405,headers});
  try{
-  const id=positiveId(params.id),row=await database(env).prepare(`SELECT c.id,c.slug,c.title,c.summary,${TOPIC_CREDIT_COLUMNS} FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.id=? AND c.is_public=1 AND t.status='approved'`).bind('community-topic-'+id).first();
+  const id=positiveId(params.id),row=await database(env,{readOnly:true,maxStatements:1}).prepare(`SELECT c.id,c.slug,c.title,c.summary,${TOPIC_CREDIT_COLUMNS} FROM content_objects c ${TOPIC_CREDIT_JOIN} WHERE c.id=? AND c.is_public=1 AND t.status='approved'`).bind('community-topic-'+id).first();
   if(!row){headers.set('X-Robots-Tag','noindex');return new Response('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Topic unavailable — Fleet in Pieces</title><h1>This topic is not available.</h1><a href="/community#topics">Browse the community topics</a></html>',{status:404,headers});}
   let shell=await env.ASSETS.fetch(new Request(new URL('/topic.html',request.url)));
   if([301,302,307,308].includes(shell.status))shell=await env.ASSETS.fetch(new Request(new URL('/topic',request.url)));

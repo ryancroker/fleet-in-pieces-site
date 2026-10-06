@@ -11,6 +11,7 @@ import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '.
 import {developerReplies} from '../_lib/developer-replies.js';
 import {publicActivity,topicActivity} from '../_lib/activity.js';
 import {checkCommunityWrites} from '../_lib/site-mode.js';
+import {admitWrite,finishWrite,accountingFailed} from '../_lib/cost-fuse.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -87,8 +88,11 @@ async function createPost(db, session, data, ideaId = null, options = {}) {
 async function postingSession(request,env,db,session,data){
   const {as_developer,...post}=data;
   if(as_developer!==undefined&&typeof as_developer!=='boolean')fail(400,'invalid_identity','Choose a valid posting identity.');
-  if(!as_developer)return {session,data:post};
-  if(!await creatorSession(request,env,db,session))fail(401,'developer_required','Developer access expired. Sign in to Fleet Command again; your draft is saved.');
+  const verified=await creatorSession(request,env,db,session);
+  if(!verified){
+    if(as_developer)fail(401,'developer_required','Developer access expired. Sign in to Fleet Command again; your draft is saved.');
+    return {session,data:post};
+  }
   // Official posts cannot be claimed later by this browser's optional player profile.
   // This actor is server-derived and never issued as a public ownership cookie.
   const actor=await digest(session.key,'official-post-author:v1');
@@ -206,7 +210,8 @@ async function discovery(db, session) {
 }
 
 export async function onRequest(context) {
-  let session;
+  let session,permit;
+  const stats={rowsWritten:0,rowsRead:0};
   try {
     const { request, env } = context;
     const url = new URL(request.url);
@@ -214,16 +219,37 @@ export async function onRequest(context) {
     if (!['GET', 'POST', 'PATCH'].includes(request.method)) fail(405, 'method_not_allowed', 'That method is not supported.');
     let data;
     if (request.method !== 'GET') { checkMutation(request); data = await readJson(request); }
-    checkCommunityWrites(request, path);
-    const db = database(env);
+    const reading=request.method==='GET';
+    const db = database(env,{readOnly:reading,maxStatements:reading?50:44,stats});
     session = await sessionFor(request, env);
+    await publicReadLimit(db,session);
     if (path[0] === 'admin') return json(await routeCreator(request, env, db, session, url, path, data), session);
+    if(!reading){
+      // Explicit public mutation inventory. Unknown routes never spend fuse
+      // budget, and every new write route must opt into this same admission.
+      const known=request.method==='POST'&&(
+        path.length===1&&['ideas','reports','topic-proposals','allegiance'].includes(path[0])||
+        path[0]==='ideas'&&path.length===3&&/^\d+$/.test(path[1])&&['vote','replies'].includes(path[2])||
+        path[0]==='social'&&(path.length===2&&['profile','recruitment'].includes(path[1])||path.length===3&&path[1]==='notifications'&&path[2]==='read')||
+        path[0]==='auth'&&(path.length===2&&['logout','claim','remember'].includes(path[1])||
+          path.length===3&&['register','recover','passkeys','signin'].includes(path[1])&&['options','verify'].includes(path[2])||
+          path.length===3&&path[1]==='recovery'&&path[2]==='rotate'||path.length===4&&path[1]==='passkeys'&&path[3]==='remove'));
+      if(!known)notFound();
+      // Only a verified developer cookie bypasses the community fuse. A
+      // callsign, community identity or request field never confers authority.
+      if(!await creatorSession(request,env,db,session)){
+        checkCommunityWrites(request,path,env);
+        permit=await admitWrite(db,env);
+      }
+    }
     await attachIdentity(request, env, db, session);
-    if (request.method === 'GET') await publicReadLimit(db, session);
     const identityResponse = await routeIdentity({ request, env, db, session, url, path, data });
     if (identityResponse) return identityResponse;
     const socialResponse=await routeSocial({request,db,session,url,path,data,createPost});if(socialResponse)return socialResponse;
-    if(request.method==='POST'&&path.length===1&&path[0]==='topic-proposals')return json(await proposeTopic(db,session,data),session);
+    if(request.method==='POST'&&path.length===1&&path[0]==='topic-proposals'){
+      const posting=await postingSession(request,env,db,session,data);
+      return json(await proposeTopic(db,posting.session,posting.data),session);
+    }
     if (request.method === 'GET' && path.length === 1 && path[0] === 'content') {
       const { results } = await db.prepare(`SELECT c.id,c.slug,c.title,c.kind,c.path,c.summary,c.current_json,c.media_json,${TOPIC_CREDIT_COLUMNS},
         (SELECT COUNT(*) FROM ideas i WHERE i.content_id=c.id AND i.hidden=0 AND i.merged_into IS NULL) AS idea_count
@@ -267,4 +293,14 @@ export async function onRequest(context) {
     if (path[0] === 'reports' && path.length === 1 && request.method === 'POST') return json(await report(db, session, data), session);
     notFound();
   } catch (error) { return problem(error, session); }
+  finally {
+    if(permit){
+      // Reserve six of the 50 statement slots for accounting, even if the
+      // handler fails or the visitor disconnects. Receipts settle only once.
+      const accounting=database(context.env,{maxStatements:6});
+      context.waitUntil((stats.accountingInvalid?accountingFailed(accounting):finishWrite(accounting,permit,stats.rowsWritten)).catch(async()=>{
+        try{await accountingFailed(accounting);}catch{/* A retained receipt blocks admission if accounting stays unavailable. */}
+      }));
+    }
+  }
 }

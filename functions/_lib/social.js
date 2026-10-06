@@ -88,7 +88,7 @@ export async function routeSocial({request,db,session,url,path,data,createPost})
   value={notifications:rows.results.slice(0,24).map(row=>({id:row.id,kind:row.kind,created_at:row.created_at,read:!!row.read_at,actor:row.actor_label,title:row.title||'',path:row.kind==='allegiance'?'/u/'+row.actor_id:row.topic_id?'/topics/'+row.topic_id:'/i/'+row.destination+(row.reply_id?'#replies-'+row.destination:'')})),has_more:rows.results.length>24,unread:count.results[0].unread};
  }else if(request.method==='POST'&&path.length===3&&area==='notifications'&&path[2]==='read'){
   requireMember(session);keysOnly(data,['through_id']);if(!Number.isSafeInteger(data.through_id)||data.through_id<1)fail(400,'invalid_notice','Choose a notification.');
-  await limits(db,session,[['notice-read',session.actor,30,60]]);
+  await limits(db,session,[['notice-read',session.actor,30,60],['notice-read-ip',session.ip,120,60]]);
   await db.prepare('UPDATE notifications SET read_at=? WHERE recipient_id=? AND id<=? AND read_at IS NULL').bind(new Date().toISOString(),session.profileId,data.through_id).run();value={ok:true};
  }else fail(404,'not_found','That community destination was not found.');
  return json(value,session);

@@ -11,7 +11,7 @@ export async function onRequest({ request, env, params }) {
   if (!id) status = 404;
   else {
     try {
-      profile = await database(env).prepare('SELECT p.callsign,r.label AS rank FROM profiles p JOIN rank_definitions r ON r.id=p.rank_id WHERE p.id=?').bind(id).first();
+      profile = await database(env,{readOnly:true,maxStatements:1}).prepare('SELECT p.callsign,r.label AS rank FROM profiles p JOIN rank_definitions r ON r.id=p.rank_id WHERE p.id=?').bind(id).first();
       if (!profile) status = 404;
     } catch { status = 503; }
   }

@@ -7,7 +7,8 @@ export const TOPIC_CREDIT_JOIN="LEFT JOIN topic_proposals t ON c.id='community-t
 export async function proposeTopic(db,session,data){
  keysOnly(data,['title','body','handle','request_id','website']);
  const title=textField(data.title,'Topic title',3,100,false);screenPublic(title);
- const fields=postFields({body:data.body,handle:data.handle??'',request_id:data.request_id,website:data.website});
+ const fields=postFields({body:data.body,handle:session.developer?'':data.handle??'',request_id:data.request_id,website:data.website});
+ if(session.developer)fields.handle='Fleet Command';
  const prior=await db.prepare('SELECT id,title,body,handle FROM topic_proposals WHERE actor_hash=? AND request_id=?').bind(session.actor,fields.requestId).first();
  if(prior){if(prior.title!==title||prior.body!==fields.body||prior.handle!==fields.handle)fail(409,'request_reused','That submission was already sent. Start another proposal.');return {ok:true,proposal_id:prior.id};}
  const hash=await contentHash(session,title+'\n'+fields.body);await writeLimit(db,session,'topic',hash);

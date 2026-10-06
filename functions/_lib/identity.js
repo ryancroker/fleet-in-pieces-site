@@ -342,8 +342,8 @@ export async function routeIdentity({ request, env, db, session, url, path, data
   if (request.method !== 'GET') await clean(db);
   let value;
   if (request.method === 'GET' && first === 'session' && path.length === 1) {
-    await rememberIdentity(request, db, session);
     value = { profile: session.profile };
+    if(session.profileId&&Math.min(clock()+SESSION_AGE,session.identityAuthenticatedAt+SESSION_MAX_AGE)>session.identityExpiresAt+86400)value.renew_session=true;
     // Preserve the full response for older clients and the registration page.
     if (url.searchParams.get('summary') !== '1') value.can_claim = await canClaim(db, session);
   }
@@ -364,6 +364,9 @@ export async function routeIdentity({ request, env, db, session, url, path, data
   } else if (first === 'auth' && path[1] === 'signin' && path.length === 3 && request.method === 'POST') {
     if (path[2] === 'options') value = await signinOptions(request, db, session, data);
     else if (path[2] === 'verify') value = await verifySignin(request, db, session, data);
+  } else if (first === 'auth' && path[1] === 'remember' && path.length === 2 && request.method === 'POST') {
+    keysOnly(data,[]);authenticated(session);await identityLimit(db,session,'remember',30,86400,200);
+    await rememberIdentity(request,db,session);value={ok:true};
   } else if (first === 'auth' && path[1] === 'logout' && path.length === 2 && request.method === 'POST') {
     keysOnly(data, []);
     await identityLimit(db, session, 'logout', 30, 60, 120);

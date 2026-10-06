@@ -11,7 +11,7 @@ export async function onRequest(context) {
   let status = 200, idea = null, id = null;
   try {
     id = positiveId(context.params.id);
-    idea = await database(env).prepare(`SELECT i.id,i.body,c.title AS content_title,c.path AS content_path
+    idea = await database(env,{readOnly:true,maxStatements:1}).prepare(`SELECT i.id,i.body,c.title AS content_title,c.path AS content_path
       FROM ideas i JOIN content_objects c ON c.id=i.content_id WHERE i.id=? AND i.hidden=0 AND c.is_public=1`).bind(id).first();
     if (!idea) status = 404;
   } catch (error) { status = error instanceof ApiError && error.status === 404 ? 404 : 503; }

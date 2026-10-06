@@ -10,6 +10,9 @@ compatibility_date = "2026-05-22"
 cpu_ms = 100
 subrequests = 50
 
+[vars]
+COMMUNITY_WRITES_ENABLED = "true"
+
 [[d1_databases]]
 binding = "COMMUNITY_DB"
 database_name = "fleet-in-pieces-community"

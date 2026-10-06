@@ -17,14 +17,15 @@ const quartermasterURL = configContext.window.FLEET_CONFIG.QUARTERMASTER_URL;
 const productURL = new URL(quartermasterURL);
 if(productURL.protocol!=='https:' || productURL.hostname!=='fleet-in-pieces-shop.fourthwall.com' || !productURL.pathname.startsWith('/products/') || productURL.username || productURL.password) throw Error('Quartermaster must link to a direct Fourthwall product');
 const quartermasterLink = '<a href="/quartermaster">Quartermaster / first issue</a>';
-const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/ships">Ships</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
+const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/ships" class="nav-ships">Ships</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
 const statusBar = target => `<aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><div class="presence-links"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies →</a></div></div><div class="participation-access"><div class="participation-action"><a class="text-button" href="/notifications" data-notification-link hidden>Inbox</a></div><div class="access-status" data-access-status role="status" aria-live="polite"></div></div></aside>`;
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
 const contents = JSON.parse(await read(path.join(root, 'content/systems.json')));
 const updates = JSON.parse(await read(path.join(root, 'content/development.json')));
 const merch = JSON.parse(await read(path.join(root, 'content/merch.json')));
-for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch))) {
+const fleetRegister = JSON.parse(await read(path.join(root, 'content/fleet-register.json')));
+for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch, fleetRegister))) {
   await writeFile(path.join(site, name + '.html'), html);
 }
 for (const content of contents) {

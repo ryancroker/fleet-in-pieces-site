@@ -4,7 +4,7 @@ Status: Ryan authorized deployment on October 6, 2026. Private production backup
 
 ## Player routes
 
-- `/ships`: searchable/filterable library with native three-quarter art, 12 cards initially, optional size plates.
+- `/ships`: searchable/filterable library with native three-quarter art, Warships selected by default, 12 cards initially, optional size plates. All designs clears the search/category; other categories remain selectable. Home and Community feature an Explore warships invitation using pinned native art.
 - `/ships/designs/{ship_key}`: permanent ship page with art, dated export facts, boarding/side schematics, collapsible specifications, true-position component markers, comments and design record.
 - `/ships/designs/{ship_key}/revisions/{revision_id}`: permanent edition, retained when the default changes.
 - `/ship-design`: newest activity across ship discussions, ship filter, optional following filter. Also linked from Community and its existing social navigation.

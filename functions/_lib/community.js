@@ -230,7 +230,7 @@ export function screenPublic(text) {
   }
 }
 export function postFields(data, reply = false) {
-  keysOnly(data, reply ? ['body', 'handle', 'request_id', 'website'] : ['system', 'content_id', 'contribution_type', 'body', 'handle', 'request_id', 'website']);
+  keysOnly(data, reply ? ['body', 'handle', 'request_id', 'website'] : ['system', 'content_id', 'contribution_type', 'body', 'handle', 'request_id', 'website', 'ship_revision_id', 'ship_section_key']);
   if (data.website !== undefined && (typeof data.website !== 'string' || data.website.trim())) fail(422, 'submission_rejected', 'That submission could not be accepted.');
   if (!reply && data.contribution_type !== undefined && data.contribution_type !== 'idea') fail(400, 'invalid_contribution', 'This form accepts ideas.');
   if (typeof data.request_id !== 'string' || !UUID.test(data.request_id)) fail(400, 'invalid_request_id', 'Please refresh the page and try again.');
@@ -350,7 +350,7 @@ export const VOTE_COUNT_SQL = `SELECT COUNT(DISTINCT COALESCE('p:'||pa.profile_i
 const AUTHOR_COLUMNS = `p.id AS author_id,p.callsign AS author_callsign,pr.label AS author_rank,
  (SELECT COUNT(*) FROM profiles child WHERE child.superior_id=p.id) AS author_direct_count,
  p.superior_id AS author_patron_id,(SELECT callsign FROM profiles patron WHERE patron.id=p.superior_id) AS author_patron_callsign`;
-export const IDEA_COLUMNS = `i.id,i.system,i.body,i.handle,i.is_developer,i.status,i.status_label,i.developer_response,
+export const IDEA_COLUMNS = `i.ship_revision_id,i.ship_section_key,i.id,i.system,i.body,i.handle,i.is_developer,i.status,i.status_label,i.developer_response,
   (${GROUP_VOTES_SQL}) AS votes,i.created_at,i.updated_at,i.implemented_at,i.command_at,i.contribution_type,
   i.decision_key,i.pinned,i.locked,i.related_idea_id,i.merged_into,i.source_reply_id,i.display_title,i.display_body,i.edit_note,i.build_label,i.release_date,i.evidence_json,i.revision,
   (SELECT idea_id FROM replies WHERE id=i.source_reply_id) AS source_idea_id,
@@ -376,6 +376,7 @@ export function ideaJson(row, admin = false) {
     votes: row.votes, reply_count: row.reply_count, voted: Boolean(row.voted), has_developer_reply: Boolean(row.has_developer_reply),
     created_at: row.created_at, updated_at: row.updated_at, implemented_at: row.implemented_at,
     contribution_type: row.contribution_type,
+    ship_context: row.ship_revision_id ? {revision_id:row.ship_revision_id,section_key:row.ship_section_key,path:row.content_path+'/revisions/'+row.ship_revision_id} : null,
     content: { id: row.content_id, slug: row.content_slug, title: row.content_title, kind: row.content_kind, path: row.content_path },
     status_key: statusKey(row.status, row.status_label),
     command_responded: Boolean(row.command_at || row.status !== 'new' || row.status_label || row.developer_response),

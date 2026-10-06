@@ -1,3 +1,4 @@
+import {creatorShips} from './ships.js';
 import {authorizeAdmin,contentFor,digest,fail,getIdea,IDEA_COLUMNS,IDEA_FROM,ideaJson,keysOnly,limits,PAGE_SIZE,pageOffset,paginate,positiveId,REPLY_COLUMNS,REPLY_FROM,replyJson,textField} from './community.js';
 import {dashboard} from './dashboard.js';
 import {creatorTopics} from './topics.js';
@@ -93,6 +94,7 @@ async function updateIdea(db,session,id,data) {
  if(next.release_date&&(!/^\d{4}-\d{2}-\d{2}$/.test(next.release_date)||Number.isNaN(date.getTime())||date.toISOString().slice(0,10)!==next.release_date))fail(400,'invalid_date','Use a valid date in YYYY-MM-DD format.');
  if('evidence' in data)next.evidence_json=JSON.stringify(evidence(data.evidence));
  if('content_id' in data)next.content_id=(await contentFor(db,{content_id:data.content_id})).id;
+ if(next.content_id!==old.content_id&&(old.ship_revision_id||next.content_id.startsWith('ship-design-')))fail(422,'ship_context_fixed','Keep the original ship and edition. Link a related discussion instead.');
  if('related_idea_id' in data)next.related_idea_id=data.related_idea_id===null?null:positiveId(data.related_idea_id);
  if(next.related_idea_id){if(next.related_idea_id===id)fail(400,'invalid_link','Choose another idea.');await getIdea(db,next.related_idea_id,session.actor);}
  if(['duplicate','superseded'].includes(next.decision_key)&&!next.related_idea_id)fail(400,'related_required','Link the duplicate or newer idea.');
@@ -133,13 +135,14 @@ async function updateReply(db,id,data) {
 async function promote(db,session,id,data) {
  keysOnly(data,['content_id']);
  const old=await db.prepare('SELECT id FROM ideas WHERE source_reply_id=?').bind(id).first();if(old)return {ok:true,idea:await getIdea(db,old.id,session.actor,true)};
- const reply=await db.prepare('SELECT r.*,i.content_id FROM replies r JOIN ideas i ON i.id=r.idea_id WHERE r.id=? AND r.hidden=0 AND i.hidden=0').bind(id).first();
+ const reply=await db.prepare('SELECT r.*,i.content_id,i.ship_revision_id,i.ship_section_key FROM replies r JOIN ideas i ON i.id=r.idea_id WHERE r.id=? AND r.hidden=0 AND i.hidden=0').bind(id).first();
  if(!reply)fail(404,'not_found','That public reply is unavailable.');
  if([...reply.body].length<8)fail(400,'too_short','A suggestion needs at least 8 characters. This reply remains in its discussion.');
  const content=(await contentFor(db,{content_id:data.content_id||reply.content_id})).id,now=new Date().toISOString();
+ if(content!==reply.content_id&&(reply.ship_revision_id||content.startsWith('ship-design-')))fail(422,'ship_context_fixed','Promote this reply within its original ship discussion.');
  await db.batch([
-  db.prepare(`INSERT INTO ideas(system,content_id,body,handle,actor_hash,profile_id,request_id,content_hash,created_at,updated_at,source_reply_id,decision_key,status_label,is_developer)
-   SELECT 'missiles',?,r.body,r.handle,r.actor_hash,r.profile_id,?,r.content_hash,?,?,r.id,'open','OPEN',r.is_developer FROM replies r JOIN ideas i ON i.id=r.idea_id WHERE r.id=? AND r.hidden=0 AND i.hidden=0 ON CONFLICT(source_reply_id) WHERE source_reply_id IS NOT NULL DO NOTHING`)
+  db.prepare(`INSERT INTO ideas(system,content_id,body,handle,actor_hash,profile_id,request_id,content_hash,created_at,updated_at,source_reply_id,decision_key,status_label,is_developer,ship_revision_id,ship_section_key)
+   SELECT 'missiles',?,r.body,r.handle,r.actor_hash,r.profile_id,?,r.content_hash,?,?,r.id,'open','OPEN',r.is_developer,i.ship_revision_id,i.ship_section_key FROM replies r JOIN ideas i ON i.id=r.idea_id WHERE r.id=? AND r.hidden=0 AND i.hidden=0 ON CONFLICT(source_reply_id) WHERE source_reply_id IS NOT NULL DO NOTHING`)
    .bind(content,'promoted-reply:'+id,now,now,id),
   db.prepare(`INSERT INTO moderation_events(idea_id,reply_id,action,before_json,after_json,created_at)
    SELECT id,?,'promoted','{}',json_object('source_reply_id',?),? FROM ideas WHERE source_reply_id=? AND NOT EXISTS(SELECT 1 FROM moderation_events WHERE idea_id=ideas.id AND action='promoted')`).bind(id,id,now,id)
@@ -190,6 +193,7 @@ export async function routeCreator(request,env,db,session,url,path,data) {
   }
  }
  await authorize(request,env,db,session);
+ if(path[1]==='ship-designs')return creatorShips({request,env,db,url,path,data});
  if(path[1]==='safety'&&path.length===2){
   if(request.method==='GET')return fuseStatus(db,env);
   if(request.method==='POST')return controlFuse(db,env,data);

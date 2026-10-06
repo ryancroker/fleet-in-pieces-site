@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {runInNewContext} from 'node:vm';
 import {renderPages} from './render-pages.mjs';
+import {renderShips} from './render-ships.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
@@ -43,7 +44,8 @@ async function htmlFiles(folder) {
   }
   return files;
 }
-const assets = ['social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const shipRoutes = await renderShips(root);
+const assets = ['ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;
@@ -78,9 +80,10 @@ for(const file of await htmlFiles(site)){
     return section;
   });
   html=html.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>/g,tag => tag.replace(/\bhref="[^"]*"/,`href="${escape(quartermasterURL)}"`));
-  for(const script of ['config','script','hub','social']){
+  for(const script of ['config','script','hub','social','ships']){
     if(!new RegExp(`src="/${script}(?:\\.[a-f0-9]{12})?\\.js"`).test(html)) html=html.replace('</head>',`  <script src="/${script}.js" defer></script>\n</head>`);
   }
+  if(!/href="\/ships(?:\.[a-f0-9]{12})?\.css"/.test(html))html=html.replace('</head>','<link rel="stylesheet" href="/ships.css"></head>');
   if(!/href="\/social(?:\.[a-f0-9]{12})?\.css"/.test(html))html=html.replace('</head>','<link rel="stylesheet" href="/social.css"></head>');
   html=html.replaceAll('/community#topics','/feedback#topics').replaceAll('/community#propose-topic','/feedback#propose-topic').replaceAll('/community#latest','/activity#latest');
   for(const {stem,ext,filename} of releases){
@@ -89,6 +92,6 @@ for(const file of await htmlFiles(site)){
   }
   await writeFile(file,html);
 }
-const routes = ['/', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`)];
+const routes = [...new Set(['/', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`),...shipRoutes])];
 await writeFile(path.join(site,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(route=>`  <url><loc>https://fleetinpieces.space${route}</loc></url>`).join('\n')+'\n</urlset>\n');
 console.log('Prepared content and fingerprinted assets: '+releases.map(r=>r.filename).join(', '));

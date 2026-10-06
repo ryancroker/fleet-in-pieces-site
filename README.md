@@ -214,3 +214,8 @@ Apply additive migration0006 only after a private production export and local re
 The bar below navigation says **Developer access active · Fleet Command** only for a verified developer session. It takes priority over any optional player identity: /register shows Fleet Command controls and posts/replies use the verified Fleet Command author automatically. It never asks the developer to create a callsign. The same code unlocks `/crew`. Keep me signed in on this device (checked by default) keeps access for30days; uncheck it for8hours. Existing expired sessions need the code once again. Expiry or Lock removes developer access. No email or username was introduced.
 
 The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/time] — Last developer activity**. This is a presence timestamp, not a software-release date. It changes on developer-key login and authenticated remembered visits/recent interaction, at most once per five minutes. Public reads do not advance it. **Latest developer replies** opens `/developer-replies`, showing current official notes across all topics in actual reply/edit order. Mere status and pin changes do not count as new replies.
+
+
+## Ship dossiers
+
+See [SHIP_DESIGN.md](SHIP_DESIGN.md) for the library, edition-preserving discussions, explicit contribution/lead records, verified Registrar import, local evidence and required additive-migration/publication order. Ryan authorized the release; production0012 is applied with all original data preserved. Exact deployment/publication status is recorded in ../../Saved/SourceChanges/FleetShipDossiers_20261006/RELEASE.txt.

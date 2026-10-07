@@ -17,7 +17,10 @@ const quartermasterURL = configContext.window.FLEET_CONFIG.QUARTERMASTER_URL;
 const productURL = new URL(quartermasterURL);
 if(productURL.protocol!=='https:' || productURL.hostname!=='fleet-in-pieces-shop.fourthwall.com' || !productURL.pathname.startsWith('/products/') || productURL.username || productURL.password) throw Error('Quartermaster must link to a direct Fourthwall product');
 const quartermasterLink = '<a href="/quartermaster">Quartermaster / first issue</a>';
-const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/ships" class="nav-ships">Ships</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
+const discordURL = configContext.window.FLEET_CONFIG.DISCORD_URL;
+if (!/^https:\/\/discord\.gg\/[A-Za-z0-9-]+$/.test(discordURL)) throw Error('Discord must use a public HTTPS invite');
+const discordLink = `<a href="${escape(discordURL)}" data-discord target="_blank" rel="noopener noreferrer">Join the Discord ↗</a>`;
+const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/ships" class="nav-ships">Ships</a><a href="${escape(discordURL)}" class="nav-discord" data-discord target="_blank" rel="noopener noreferrer">Discord ↗</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
 const statusBar = target => `<aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><div class="presence-links"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies →</a></div></div><div class="participation-access"><div class="participation-action"><a class="text-button" href="/notifications" data-notification-link hidden>Inbox</a></div><div class="access-status" data-access-status role="status" aria-live="polite"></div></div></aside>`;
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
@@ -25,7 +28,7 @@ const contents = JSON.parse(await read(path.join(root, 'content/systems.json')))
 const updates = JSON.parse(await read(path.join(root, 'content/development.json')));
 const merch = JSON.parse(await read(path.join(root, 'content/merch.json')));
 const fleetRegister = JSON.parse(await read(path.join(root, 'content/fleet-register.json')));
-for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch, fleetRegister))) {
+for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch, fleetRegister, discordURL))) {
   await writeFile(path.join(site, name + '.html'), html);
 }
 for (const content of contents) {
@@ -67,6 +70,8 @@ for(const file of await htmlFiles(site)){
   html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav+statusBar(html.includes('id="idea-form"') ? '#suggest' : html.includes('id="topics"') ? '#topics' : '/community#topics'));
   // Keep existing footer destinations while exposing identity below the game navigation.
   html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,section => {
+    section = section.replace(/<a\b[^>]*\bdata-discord\b[^>]*>[\s\S]*?<\/a>/g,'');
+    section = section.replace('<small>',discordLink+'<small>');
     section = section.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>[\s\S]*?<\/a>/g,quartermasterLink);
     if (!section.includes('href="/quartermaster"')) section = section.replace('<small>',quartermasterLink+'<small>');
     if (!section.includes('data-register-link')) section = section.replace('<small>','<a href="/register" data-register-link>Sign in / Join the Fleet</a><small>');

@@ -3,7 +3,7 @@
  * See docs/ship-workshop.md for the deliberately narrower simulation contract. */
 (() => {
  'use strict';
- const order=['control','feed','fuel_tank','magazine','drive','jet','shield','gun'];
+ const order=['control','feed','fuel_tank','magazine','life_support','drive','jet','shield','gun','jump'];
  const clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
  const fresh=model=>model.machines.map(m=>({condition:100,enabled:true,priority:0,quantity:m.InitialQuantity}));
  function validate(model,values){
@@ -23,7 +23,7 @@
    const m=machines[i],s=state[i],r=rows[i];if(seen.has(i))return r.ready;
    if(active.has(i)){r.reason='Dependency cycle';return false;}active.add(i);
    const finish=()=>{active.delete(i);seen.add(i);return r.ready;};
-   r.reason=physical(i)||'';if(r.reason)return finish();
+   r.reason=physical(i)||m.missing_supply||'';if(r.reason)return finish();
    for(const d of m.dependencies)if(!allocate(d)){r.reason='Requires '+machines[d].name;return finish();}
    for(const key of ['fuel_store','ammo_store'])if(m[key]>=0&&state[m[key]].quantity<=0){r.reason=key==='fuel_store'?'Propellant store empty':'Magazine empty';return finish();}
    if(!m.power_sources.length){r.ready=m.DemandWatts===0;r.reason=r.ready?'':'No power source';return finish();}

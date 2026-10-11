@@ -1,5 +1,10 @@
 # Fleet in Pieces website
 
+## Custom interior workshop — October 11, 2026
+
+The homepage now defaults to Design an interior; Inspect native ships preserves the previous three native views and old #setup links. Read docs/ship-workshop.md. The custom catalog in content/workshop-outfit.json explicitly proposes footprints, a 102-space envelope, design-credit prices and high-demand jump charging. These are design tuning, not exported native cavities or campaign prices. outfit-model.js validates placements and adapts to the shared FleetLabModel; outfit.js owns UI/local recipes. Fixed bridge/bus, corridor clearance, aft drives, non-overlap and finite power remain enforced. Damage/disable/empty stores do not refund space or cost. #fit recipes and JSON export are versioned prototypes, never engine saves. No backend, D1, production QA, game-source, schema, infrastructure or account changes. Continue normal website GitHub releases from this isolated checkout; Ryan owns UI/balance acceptance.
+
+
 ## Ship workshop and game field guide — October 11, 2026
 
 The homepage now leads with the interactive native-data ship workshop; /ship-lab is its sharing route. Do not revert to a generic marketing/forum home. /game explains command and campaign; content/field-guide.json authors 12 system explanations. Existing community records, forms and /ship-design discussions remain intact; Discord is the main social invitation.

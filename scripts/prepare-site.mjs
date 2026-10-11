@@ -60,7 +60,7 @@ async function htmlFiles(folder) {
 }
 const shipRoutes = await renderShips(root);
 await renderLab(root,fleetRegister,discordURL);
-const assets = ['ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const assets = ['outfit-data.js','outfit-model.js','outfit.js','ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;

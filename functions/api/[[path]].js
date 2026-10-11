@@ -12,7 +12,7 @@ import {proposeTopic,topicCredit,TOPIC_CREDIT_COLUMNS,TOPIC_CREDIT_JOIN} from '.
 import {developerReplies} from '../_lib/developer-replies.js';
 import {publicActivity,topicActivity} from '../_lib/activity.js';
 import {checkCommunityWrites} from '../_lib/site-mode.js';
-import {admitWrite,finishWrite,accountingFailed} from '../_lib/cost-fuse.js';
+import {admitWrite,settleWrite} from '../_lib/cost-fuse.js';
 
 const notFound = () => fail(404, 'not_found', 'That discussion was not found.');
 // Column names are local constants. Claimed browser aliases preserve idempotent retries.
@@ -302,9 +302,12 @@ export async function onRequest(context) {
       // Reserve six of the 50 statement slots for accounting, even if the
       // handler fails or the visitor disconnects. Receipts settle only once.
       const accounting=database(context.env,{maxStatements:6});
-      context.waitUntil((stats.accountingInvalid?accountingFailed(accounting):finishWrite(accounting,permit,stats.rowsWritten)).catch(async()=>{
-        try{await accountingFailed(accounting);}catch{/* A retained receipt blocks admission if accounting stays unavailable. */}
-      }));
+      const settlement=settleWrite(accounting,permit,stats);
+      // Normal responses wait for accounting, instead of leaving it solely to
+      // post-response work. waitUntil also protects this same bounded operation
+      // if the client disconnects; it does not start a second settlement.
+      context.waitUntil(settlement);
+      await settlement;
     }
   }
 }

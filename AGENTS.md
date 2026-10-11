@@ -1,5 +1,11 @@
 # Fleet in Pieces website
 
+## Stuck community write accounting — October 11, 2026
+
+An orphan receipt from October10 13:13:38 Pacific caused the accounting_incomplete latch at14:27:24. The original invocation failure is unknown; do not claim a traffic spike or proven CPU timeout. API responses now await the same settlement promise registered with waitUntil. A transient settlement failure gets one idempotent retry within the existing six accounting SQL slots; retain44handler/50total and100msCPU. Accounting allowance is now6rows; all attempt/row thresholds remain unchanged. Persistent unknown accounting still retains its receipt and fails closed. Private evidence/backup/reconciliation: Saved/SourceChanges/FleetWriteRecovery_20261011 at the PixelSimShips root. No migration or schema change, no production QA accounts/posts. Normal user acceptance belongs to Ryan.
+
+This release is based on live8d56add in the isolated FleetDiscordLink worktree. Original Website/fleet-in-pieces-site main still contains pending Commander Notes5f573674/0013 and must not be pushed as part of this repair. Resume never erases counters or unmeasured receipts. Read README's orphan procedure before future recovery; do not replay this incident's guarded script against new incidents. Check the evidence release receipt for actual deployed/reopened status.
+
 ## Discord invitation and decision location — October 7, 2026
 
 Ryan authorized a prominent public Discord link. The permanent invite is https://discord.gg/PRSTCxCeH (Start Here, never expires, unlimited uses, no invite role grants). site/config.js DISCORD_URL owns the address; prepare-site emits safe new-tab links in global navigation/footer and a compact Home/Community invitation. Preserve the existing ship invitation and game/community flows. Plain links work without JavaScript; no Discord embeds, tracking or API integration.

@@ -47,7 +47,8 @@ export async function fuseStatus(db,env) {
   return {enabled,configured:writesConfigured(env),manually_paused:!state.enabled,
     tripped_at:state.tripped_at?new Date(state.tripped_at*1000).toISOString():null,
     reason:!writesConfigured(env)?'environment_switch':!state.enabled?'manual_pause':state.reason||(stale?'accounting_incomplete':atLimit?'budget_reached':''),
-    revision:state.revision,pending:state.pending,stale_pending:stale,counters,
+    revision:state.revision,pending:state.pending,stale_pending:stale,
+    oldest_pending_at:state.oldest_pending?new Date(state.oldest_pending*1000).toISOString():null,counters,
     estimated_daily_rows:Math.ceil(counters.day.rows/observedSeconds*86400),
     rate_limiting:{public_writes:'shared D1 actor and network limits',public_reads:'bounded per-isolate burst shield; no database writes'},
     reset_allowed:!atLimit&&state.pending===0,as_of:new Date(now*1000).toISOString(),
@@ -78,10 +79,11 @@ export async function admitWrite(db,env) {
   return token;
 }
 export async function finishWrite(db,token,rowsWritten) {
+  if(!Number.isSafeInteger(rowsWritten)||rowsWritten<0)throw Error('Invalid write accounting');
   const now=clock();
-  // Reserve the two accounting changes and a possible latch update. WITHOUT
-  // ROWID avoids a second permit index. This slightly overcounts normal writes.
-  const rows=Math.max(0,Math.ceil(rowsWritten))+3;
+  // Conservatively reserve all six accounting statement slots, including a
+  // retry/failure latch. WITHOUT ROWID avoids a second permit index.
+  const rows=rowsWritten+6;
   const result=await db.batch([
     db.prepare('DELETE FROM community_write_permits WHERE token=? RETURNING token').bind(token),
     db.prepare(`UPDATE community_write_fuse SET ${rolled(now,0,String(rows))},revision=revision+1
@@ -93,6 +95,21 @@ export async function finishWrite(db,token,rowsWritten) {
 export async function accountingFailed(db) {
   closedUntil=clock()+5;
   await db.prepare("UPDATE community_write_fuse SET tripped_at=COALESCE(tripped_at,?),reason='accounting_incomplete',revision=revision+1 WHERE id=1").bind(clock()).run();
+}
+export async function settleWrite(db,token,stats) {
+  // A failed response may still have committed its atomic settlement. Retrying
+  // the same receipt is safe: DELETE + charge share a transaction, and the
+  // charge happens only when that exact receipt existed. At most six statements
+  // including the failure latch; never allocate a fresh budget for the retry.
+  if(!stats.accountingInvalid&&Number.isSafeInteger(stats.rowsWritten)&&stats.rowsWritten>=0){
+    for(let attempt=0;attempt<2;attempt++){
+      try{await finishWrite(db,token,stats.rowsWritten);return;}
+      catch{/* One immediate retry only; no background polling or new permit. */}
+    }
+  }
+  console.error('community_write_accounting_incomplete',stats.accountingInvalid?'request_metadata':'settlement');
+  try{await accountingFailed(db);}
+  catch{/* Retain the receipt; stale receipt admission still fails closed. */}
 }
 export async function controlFuse(db,env,data) {
   keysOnly(data,['action','revision','confirm']);

@@ -4,8 +4,10 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {runInNewContext} from 'node:vm';
-import {renderPages} from './render-pages.mjs';
+import {renderPages, page} from './render-pages.mjs';
+import {guideDetail,guidePageBody} from './render-guide.mjs';
 import {renderShips} from './render-ships.mjs';
+import {renderLab} from './render-lab.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
@@ -20,15 +22,16 @@ const quartermasterLink = '<a href="/quartermaster">Quartermaster / first issue<
 const discordURL = configContext.window.FLEET_CONFIG.DISCORD_URL;
 if (!/^https:\/\/discord\.gg\/[A-Za-z0-9-]+$/.test(discordURL)) throw Error('Discord must use a public HTTPS invite');
 const discordLink = `<a href="${escape(discordURL)}" data-discord target="_blank" rel="noopener noreferrer">Join the Discord ↗</a>`;
-const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/ships" class="nav-ships">Ships</a><a href="${escape(discordURL)}" class="nav-discord" data-discord target="_blank" rel="noopener noreferrer">Discord ↗</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
+const nav = `<header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/" class="nav-workshop">Ship workshop</a><a href="/game">Game</a><a href="/ships" class="nav-ships">Ships</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/community">Community</a><a href="${escape(discordURL)}" class="nav-discord" data-discord target="_blank" rel="noopener noreferrer">Discord ↗</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header>`;
 const statusBar = target => `<aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><div class="presence-links"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies →</a></div></div><div class="participation-access"><div class="participation-action"><a class="text-button" href="/notifications" data-notification-link hidden>Inbox</a></div><div class="access-status" data-access-status role="status" aria-live="polite"></div></div></aside>`;
 const footer = '<footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><small>© 2026 Fleet in Pieces</small></div></footer>';
 const template = await read(path.join(root, 'templates/system.html'));
 const contents = JSON.parse(await read(path.join(root, 'content/systems.json')));
+const guides = JSON.parse(await read(path.join(root, 'content/field-guide.json')));
 const updates = JSON.parse(await read(path.join(root, 'content/development.json')));
 const merch = JSON.parse(await read(path.join(root, 'content/merch.json')));
 const fleetRegister = JSON.parse(await read(path.join(root, 'content/fleet-register.json')));
-for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch, fleetRegister, discordURL))) {
+for (const [name, html] of Object.entries(renderPages(contents, updates, quartermasterURL, merch, fleetRegister, discordURL, guides))) {
   await writeFile(path.join(site, name + '.html'), html);
 }
 for (const content of contents) {
@@ -36,9 +39,16 @@ for (const content of contents) {
   const kindPath = content.kind === 'ship' ? 'ships' : 'systems';
   const fields = {ID:content.id,SLUG:content.slug,KIND_PATH:kindPath,KIND_LABEL:content.kind === 'ship' ? 'Ships' : 'Systems',TITLE:content.title,DESCRIPTION:content.description,TAGLINE:content.tagline,STATUS:content.status,QUESTION:content.question,PLACEHOLDER:content.placeholder,MEDIA_WIDTH:content.media.width,MEDIA_HEIGHT:content.media.height,MEDIA_TITLE:content.media.title,MEDIA_DESCRIPTION:content.media.description,VIDEO:content.media.src,POSTER:content.media.poster};
   const related = (content.related || []).map(id => contents.find(item => item.id === id)).filter(Boolean).map(item => `<a href="/${item.kind === 'ship' ? 'ships' : 'systems'}/${escape(item.slug)}"><span>${escape(item.kind === 'ship' ? 'Ships' : 'Systems')}</span><strong>${escape(item.title)} →</strong></a>`).join('');
-  let html = template.replace(/\{\{([A-Z_]+)\}\}/g, (token,key) => key === 'NAV' ? nav : key === 'FOOTER' ? footer : key === 'RELATED' ? related : key === 'FACTS' ? content.facts.map(fact=>`<li>${escape(fact)}</li>`).join('') : key in fields ? escape(fields[key]) : (()=>{throw Error(`Unknown template token ${token}`);})());
+  let html = template.replace(/\{\{([A-Z_]+)\}\}/g, (token,key) => key === 'NAV' ? nav : key === 'FOOTER' ? footer : key === 'RELATED' ? related : key === 'GUIDE' ? guideDetail(guides.find(g=>g.path===`/${kindPath}/${content.slug}`),guides) : key === 'FACTS' ? content.facts.map(fact=>`<li>${escape(fact)}</li>`).join('') : key in fields ? escape(fields[key]) : (()=>{throw Error(`Unknown template token ${token}`);})());
   await mkdir(path.join(site,kindPath),{recursive:true});
   await writeFile(path.join(site,kindPath,content.slug+'.html'),html);
+}
+for(const guide of guides){
+  if(!/^\/(systems|ships)\/[a-z0-9-]+$/.test(guide.path))throw Error('Invalid guide route');
+  if(contents.some(c=>guide.path===`/${c.kind==='ship'?'ships':'systems'}/${c.slug}`))continue;
+  const output=path.join(site,guide.path.slice(1)+'.html');
+  await mkdir(path.dirname(output),{recursive:true});
+  await writeFile(output,page(guide.title,guide.summary,guide.path,guidePageBody(guide,guides,discordURL)));
 }
 async function htmlFiles(folder) {
   const files=[];
@@ -49,7 +59,8 @@ async function htmlFiles(folder) {
   return files;
 }
 const shipRoutes = await renderShips(root);
-const assets = ['ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+await renderLab(root,fleetRegister,discordURL);
+const assets = ['ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;
@@ -67,7 +78,9 @@ for(const file of await htmlFiles(site)){
   html=html.replace('<script ', '<script src="/network.js" defer></script>\n  <script src="/creator.js" data-tools-src="/creator-tools.js" defer></script>\n  <script ');
   if(!/href="\/creator(?:\.[a-f0-9]{12})?\.css"/.test(html)) html=html.replace('</head>','<link rel="stylesheet" href="/creator.css"></head>');
   html=html.replace(/<aside class="site-status wrap"[\s\S]*?<\/aside>/g,'');
-  html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav+statusBar(html.includes('id="idea-form"') ? '#suggest' : html.includes('id="topics"') ? '#topics' : '/community#topics'));
+  const gameStatus=html.includes('<!-- fleet-status -->');
+  html=html.replace(/<header class="site-header wrap">[\s\S]*?<\/header>/,nav+(gameStatus?'':statusBar()));
+  if(gameStatus)html=html.replace('<!-- fleet-status -->',statusBar());
   // Keep existing footer destinations while exposing identity below the game navigation.
   html=html.replace(/<div class="footer-end">[\s\S]*?<\/div>/g,section => {
     section = section.replace(/<a\b[^>]*\bdata-discord\b[^>]*>[\s\S]*?<\/a>/g,'');
@@ -85,6 +98,8 @@ for(const file of await htmlFiles(site)){
     if(!section.includes('data-developer-link')) section=section.replace('</footer>','<a href="/crew" data-developer-link>Developer sign in</a></footer>');
     return section;
   });
+  if(!/href="\/field-guide(?:\.[a-f0-9]{12})?\.css"/.test(html))html=html.replace('</head>','<link rel="stylesheet" href="/field-guide.css"></head>');
+  html=html.replaceAll('People & allegiance','Fleet records');
   html=html.replace(/<a\b[^>]*\bdata-quartermaster\b[^>]*>/g,tag => tag.replace(/\bhref="[^"]*"/,`href="${escape(quartermasterURL)}"`));
   for(const script of ['config','script','hub','social','ships']){
     if(!new RegExp(`src="/${script}(?:\\.[a-f0-9]{12})?\\.js"`).test(html)) html=html.replace('</head>',`  <script src="/${script}.js" defer></script>\n</head>`);
@@ -98,6 +113,6 @@ for(const file of await htmlFiles(site)){
   }
   await writeFile(file,html);
 }
-const routes = [...new Set(['/', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`),...shipRoutes])];
+const routes = [...new Set(['/', '/ship-lab', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...guides.map(g=>g.path), ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`),...shipRoutes])];
 await writeFile(path.join(site,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(route=>`  <url><loc>https://fleetinpieces.space${route}</loc></url>`).join('\n')+'\n</urlset>\n');
 console.log('Prepared content and fingerprinted assets: '+releases.map(r=>r.filename).join(', '));

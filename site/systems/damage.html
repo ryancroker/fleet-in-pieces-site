@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Damage — Help Build Fleet in Pieces</title>
+  <title>Damage — Fleet in Pieces field guide</title>
   <meta name="description" content="Localized hull and component damage in Fleet in Pieces. See actual development footage and discuss what a damaged ship should still be able to do.">
   <link rel="canonical" href="https://fleetinpieces.space/systems/damage">
   <meta name="theme-color" content="#06090c">
@@ -22,17 +22,17 @@
   <script src="/creator.d4c56cdb1b6e.js" data-tools-src="/creator-tools.1e87de373d94.js" defer></script>
   <script src="/community.dcc9a205c9ed.js" defer></script>
   <script src="/hub.8ad0347ba4ec.js" defer></script>
-<link rel="stylesheet" href="/creator.06441adbab7b.css">  <script src="/config.7813d0394263.js" defer></script>
+<link rel="stylesheet" href="/creator.06441adbab7b.css"><link rel="stylesheet" href="/field-guide.2d1d169669b6.css">  <script src="/config.7813d0394263.js" defer></script>
   <script src="/script.1c0445cf0261.js" defer></script>
   <script src="/social.d5ab4c30d851.js" defer></script>
   <script src="/ships.5eb420409f89.js" defer></script>
 <link rel="stylesheet" href="/ships.d76e36c7a495.css"><link rel="stylesheet" href="/social.9fe8d19d2b60.css"></head>
-<body class="community-page system-page" data-community-system="damage" data-content-id="system-damage">
+<body class="community-page system-page guide-briefing" data-community-system="damage" data-content-id="system-damage">
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/community">Community</a><a href="/ships" class="nav-ships">Ships</a><a href="https://discord.gg/PRSTCxCeH" class="nav-discord" data-discord target="_blank" rel="noopener noreferrer">Discord ↗</a><a href="/game">Game</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header><aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><div class="presence-links"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies →</a></div></div><div class="participation-access"><div class="participation-action"><a class="text-button" href="/notifications" data-notification-link hidden>Inbox</a></div><div class="access-status" data-access-status role="status" aria-live="polite"></div></div></aside>
+  <header class="site-header wrap"><a class="brand" href="/" aria-label="Fleet in Pieces home">FLEET <span>IN</span> PIECES</a><nav aria-label="Main navigation"><a href="/" class="nav-workshop">Ship workshop</a><a href="/game">Game</a><a href="/ships" class="nav-ships">Ships</a><a href="/systems">Systems</a><a href="/dev-log">Dev Log</a><a href="/community">Community</a><a href="https://discord.gg/PRSTCxCeH" class="nav-discord" data-discord target="_blank" rel="noopener noreferrer">Discord ↗</a><a href="/quartermaster" class="nav-quartermaster">Quartermaster</a></nav></header><aside class="site-status wrap" aria-label="Developer updates and your access"><div class="public-presence"><div class="presence-copy"><p class="presence-title" data-presence-title>Fleet Command.</p><p class="site-update" data-developer-update hidden></p></div><div class="presence-links"><a class="button secondary latest-replies-link" href="/developer-replies">Latest developer replies →</a></div></div><div class="participation-access"><div class="participation-action"><a class="text-button" href="/notifications" data-notification-link hidden>Inbox</a></div><div class="access-status" data-access-status role="status" aria-live="polite"></div></div></aside>
   <main id="main" class="wrap community-main">
     <p class="system-breadcrumb"><a href="/">Fleet in Pieces</a><span aria-hidden="true"> / </span><a href="/systems">Systems</a><span aria-hidden="true"> / </span>Damage</p>
-    <nav class="briefing-jumps" aria-label="This briefing"><a href="/feedback#topics">All topics ↗</a><a href="#current">Current</a><a href="#suggest">Suggest an idea</a><a href="#discussion">Discussion</a><a href="#feedback-record">Implemented from feedback</a></nav>
+    <nav class="briefing-jumps" aria-label="This briefing"><a href="/systems">All systems ↗</a><a href="#current">Overview</a><a href="#how-it-works">How it works</a><a href="#suggest">Suggest an idea</a><a href="#discussion">Discussion</a><a href="#feedback-record">Implemented from feedback</a></nav>
     <section class="system-hero" id="current" aria-labelledby="system-title">
       <div class="system-summary">
         <p class="eyebrow">A space combat game / in active development</p>
@@ -43,7 +43,7 @@
           <h2>What’s in the game.</h2>
           <ul class="current-facts"><li>Weapons, engines and shields can fail independently</li><li>Hull damage changes what survives the fight</li><li>Lost thrust changes maneuvering and escape</li><li>A ship can be disabled before it is destroyed</li></ul>
         </div>
-        <div class="actions"><a class="button primary" href="#suggest">Suggest an idea <span aria-hidden="true">↓</span></a><a class="text-button" href="#discussion">Read the discussion →</a></div>
+        <div class="actions"><a class="button primary" href="#how-it-works">Understand the system <span aria-hidden="true">↓</span></a><a class="text-button" href="#discussion">Read the discussion →</a></div>
       </div>
       <figure class="briefing-media">
         <div class="media-heading"><span>Development footage</span><span class="recording-dot" aria-hidden="true"></span></div>
@@ -51,6 +51,7 @@
         <figcaption><strong>Localized damage</strong><span>Archived development footage. Work in progress.</span><button type="button" class="media-toggle" aria-controls="briefing-video" hidden>Play footage</button></figcaption>
       </figure>
     </section>
+    <section class="field-explanation" id="how-it-works" aria-labelledby="guide-question"><div class="guide-question"><p class="eyebrow">How it works</p><h2 id="guide-question">What does a hit actually change?</h2><p>Where the damage lands determines what the ship can still do.</p></div><div class="guide-reading"><section><h3>The equipment is part of the target</h3><p>Ships contain working weapons, propulsion, power, sensors and crew spaces. Damage to that hardware removes capability. A disabled ship can still have useful machinery—and people—aboard.</p></section><section><h3>Keeping it alive is a different job from rebuilding it</h3><p>Engineers need access, power, time and supplies. A support tender can help with surviving equipment and compatible stores. Missing structure and major reconstruction need the appropriate repair or yard capability. None of it provides an unlimited refill.</p></section><aside class="command-decision"><p class="eyebrow">Your decision</p><p>Keep a damaged ship firing, pull it back for repairs, or send a specialist to extract it?</p></aside></div></section><ol class="consequence-chain" aria-label="How the system connects"><li><span>01</span><strong>A hit reaches machinery</strong></li><li><span>02</span><strong>Thrust or firepower is lost</strong></li><li><span>03</span><strong>Support becomes urgent</strong></li><li><span>04</span><strong>Survivors need a way home</strong></li></ol><nav class="guide-related" aria-label="Connected systems"><span>Connect the pieces</span><a class="back-link" href="/ships/rescue">Rescue &amp; recovery →</a><a class="back-link" href="/systems/logistics">Logistics &amp; the campaign →</a></nav>
     <p class="connection-notice" data-offline hidden>You’re offline. Your draft stays here. Posting, voting and replies need a connection.</p>
     <div class="participation-layout">
     <section class="contribution-block" id="suggest" tabindex="-1" aria-labelledby="suggest-title">
@@ -77,6 +78,6 @@
     <section class="hub-section feedback-record" id="feedback-record" aria-labelledby="feedback-title"><div class="section-heading-row"><div><p class="eyebrow">Development record</p><h2 id="feedback-title">Implemented from feedback.</h2></div></div><p class="section-note">Original suggestions. Real decisions. Credit stays with the crew.</p><div data-implemented-content="damage" class="discovery-grid"></div><p class="feed-feedback" data-implemented-feedback role="status">Loading the record…</p></section>
     <nav class="related-briefings" aria-label="Explore another part of the fleet"><p class="eyebrow">Keep exploring</p><a href="/ships/rescue"><span>Ships</span><strong>Rescue ships →</strong></a><a href="/systems/missiles"><span>Systems</span><strong>Missiles →</strong></a></nav>
   </main>
-  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><a href="https://discord.gg/PRSTCxCeH" data-discord target="_blank" rel="noopener noreferrer">Join the Discord ↗</a><a href="/quartermaster">Quartermaster / first issue</a><a href="/register" data-register-link>Sign in / Join the Fleet</a><a href="/fleet">People & allegiance</a><a href="/crew" data-developer-link>Developer sign in</a><small>© 2026 Fleet in Pieces</small></div></footer>
+  <footer class="site-footer wrap"><div><a class="brand" href="/">FLEET <span>IN</span> PIECES</a><p>Development, in public. Ship what survives.</p></div><div class="footer-end"><a href="/game#steam-status" data-steam>Steam page coming soon</a><a href="https://www.tiktok.com/@fleet_in_pieces">Follow development on TikTok ↗</a><a href="https://discord.gg/PRSTCxCeH" data-discord target="_blank" rel="noopener noreferrer">Join the Discord ↗</a><a href="/quartermaster">Quartermaster / first issue</a><a href="/register" data-register-link>Sign in / Join the Fleet</a><a href="/fleet">Fleet records</a><a href="/crew" data-developer-link>Developer sign in</a><small>© 2026 Fleet in Pieces</small></div></footer>
 </body>
 </html>

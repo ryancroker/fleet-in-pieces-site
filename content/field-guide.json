@@ -1,0 +1,110 @@
+[
+  {
+    "path":"/systems/movement", "title":"Movement & momentum", "group":"Fight", "question":"Why can’t a ship just stop?",
+    "summary":"Mass, thrust and fuel decide which maneuvers your ship can actually make.",
+    "sections":[["An order still needs engines","You choose where a ship should go. Its engines and maneuvering thrusters have to accelerate, turn and brake the actual hull. A heavy ship brings its momentum into the next decision."],["Damage changes the maneuver","Losing propulsion changes the thrust available. A ship may still have working guns but struggle to turn, stop or leave. Position and escape routes matter before the first shot lands."]],
+    "decision":"Commit a heavy gunship to a firing line, or keep enough room to brake and withdraw?",
+    "chain":["Build up speed","Spend thrust to brake","Lose an engine","Reconsider the escape"],
+    "related":["/systems/damage","/systems/jump-drives"],
+    "sources":["Docs/CampaignQuickStart_20261004.md","Docs/CarrierInterdictionPlaytest_20261007.md"]
+  },
+  {
+    "path":"/systems/damage", "title":"Damage & repair", "group":"Fight", "question":"What does a hit actually change?",
+    "summary":"Where the damage lands determines what the ship can still do.",
+    "sections":[["The equipment is part of the target","Ships contain working weapons, propulsion, power, sensors and crew spaces. Damage to that hardware removes capability. A disabled ship can still have useful machinery—and people—aboard."],["Keeping it alive is a different job from rebuilding it","Engineers need access, power, time and supplies. A support tender can help with surviving equipment and compatible stores. Missing structure and major reconstruction need the appropriate repair or yard capability. None of it provides an unlimited refill."]],
+    "decision":"Keep a damaged ship firing, pull it back for repairs, or send a specialist to extract it?",
+    "chain":["A hit reaches machinery","Thrust or firepower is lost","Support becomes urgent","Survivors need a way home"],
+    "related":["/ships/rescue","/systems/logistics"],
+    "sources":["Docs/CampaignQuickStart_20261004.md","Docs/CarrierStrikeTender_20261007.md","Docs/RepairDay_20261011.md"]
+  },
+  {
+    "path":"/systems/power-shields", "title":"Power & shields", "group":"Fight", "question":"Can everything run at once?",
+    "summary":"Weapons, protection and specialist equipment compete for finite power.",
+    "sections":[["Protection has hardware behind it","Shield coverage depends on the ship’s fitted emitters and their supplied power. Surviving hull and working protection are different things; an emitter or a power shortage can leave part of a ship exposed."],["A useful ship can have an awkward tradeoff","WATCHMAN’s active search can compete with its shields and defensive guns for power. That is a reason to bring escorts and choose when to search. Carrier operations also need clear routes through their own protection for departing and returning craft."]],
+    "decision":"Run the search you need now, or preserve more power for protection while an escort moves into place?",
+    "chain":["Activate equipment","Commit available power","Other systems compete","Adjust the formation"],
+    "related":["/systems/sensors","/ships/carriers"],
+    "sources":["Docs/SurvivorHunt_20261009.md","Docs/CarrierShieldTraffic_20260911.md"]
+  },
+  {
+    "path":"/systems/sensors", "title":"Sensors & information", "group":"Find", "question":"What do you actually know?",
+    "summary":"A contact is a report from a sensor. It can be incomplete, old or lost.",
+    "sections":[["Detection is not full identification","Range, signature, obstruction and the receiver’s condition shape a contact. A distant return can be little more than an estimated size and location. Closer, better observations reveal more of the ship."],["Searching costs something","Distress broadcasts are easier to find than faint ships or mines. Long-range work takes time and a stable platform; an active search needs power. Lost contact leaves an aging last fix, not a live view of an unseen enemy."]],
+    "decision":"Hold a sensor ship still long enough to build a useful picture, or move it out of danger and lose that search opportunity?",
+    "chain":["Receive a signal","Build a track","Identify what you can","Act before the report goes stale"],
+    "related":["/systems/power-shields","/ships/rescue"],
+    "sources":["Docs/SurvivorHunt_20261009.md","Docs/MinesAndSensors_20261006.md"]
+  },
+  {
+    "path":"/systems/jump-drives", "title":"Jump drives & interdiction", "group":"Find", "question":"What makes an escape possible?",
+    "summary":"A jump is something your ship prepares and performs under real constraints.",
+    "sections":[["The drive needs a ship that can use it","Charge, available power, crew, loaded mass, range and working jump hardware all matter. A group order still asks each ship to meet its own requirements. Incapable ships can be left behind."],["The enemy can contest the way out","Interdiction can deny a jump. A field ship such as LOCKKEEPER gives a formation a reason to hold ground—and an opponent a valuable target. Gate travel is separate: ships approach and pass through the gate using ordinary propulsion."]],
+    "decision":"Stay together and defend a charging ship, break out beyond the interference, or attack the interdictor?",
+    "chain":["Choose the destination","Meet the drive requirements","Charge under threat","Depart if the route is viable"],
+    "related":["/systems/movement","/ships/rescue"],
+    "sources":["Docs/SurvivorHunt_20261009.md","Docs/CarrierStrikeTender_20261007.md","Docs/JumpDrives_20261002.md"]
+  },
+  {
+    "path":"/ships/carriers", "title":"Carriers & aircraft", "group":"Fight", "question":"What happens after the strike?",
+    "summary":"A carrier is a home, a workshop and a finite supply of sorties.",
+    "sections":[["Launch a force you can recover","Fighters and bombers use actual fuel, weapons and pilots. Launch, assembly, attack, egress and recovery all belong to the same operation. Empty weapons or low fuel change what a wing can do next."],["The support group is part of the weapon","A screen protects the carrier; sensors help find threats; a tanker and tender sustain operations. Berths, turnaround and approach clearance matter. Aircraft must reach a viable service home before they can be ready for another sortie."]],
+    "decision":"Commit another strike, hold fighters to defend the carrier, or recover the wing while you still have a safe approach?",
+    "chain":["Prepare the wing","Launch and assemble","Attack and disengage","Recover, service, repeat"],
+    "related":["/systems/crew","/systems/logistics"],
+    "sources":["Docs/CarrierStrikeTender_20261007.md","Docs/CarrierInterdictionPlaytest_20261007.md"]
+  },
+  {
+    "path":"/ships/rescue", "title":"Rescue & recovery", "group":"Sustain", "question":"Who goes back for the survivors?",
+    "summary":"A rescue takes ships, seats, time and a route through the same battlefield.",
+    "sections":[["Find people, then physically collect them","Escape capsules carry the people who got out. A received distress beacon gives the fleet somewhere to search. A transport needs free passenger places and working recovery hardware; the approach, collar alignment and transfer take time."],["Recovering a hull is another operation","Specialist extraction can bring a damaged ship out of the fight. It still needs a capable rescue ship, a workable approach and a prepared way out. Escort, sensor and rescue roles give the rest of the fleet a reason to work together."]],
+    "decision":"Send an escort to draw the patrol away while a transport recovers the capsules, or wait for a safer opening?",
+    "chain":["Receive the distress call","Secure the approach","Collect actual survivors","Get the rescue group out"],
+    "related":["/systems/sensors","/systems/crew"],
+    "sources":["Docs/SurvivorHunt_20261009.md","Website/fleet-in-pieces-site/content/systems.json"]
+  },
+  {
+    "path":"/systems/crew", "title":"Crew & experience", "group":"Sustain", "question":"What survives when a ship doesn’t?",
+    "summary":"Qualified people operate the fleet. Recovering them can save experience as well as lives.",
+    "sections":[["People have jobs","Command staff, sailors, engineers, pilots and marines fill different roles. Staffing, equipment and available work positions constrain what can run. Replacements require training and physical transport."],["Experience belongs to the people","Pilot experience affects recognition and reaction to incoming fire; the aircraft still needs enough thrust to move. Callsigns are earned with experience. A recovered pilot can retain that experience through rescue and transfer. Many sailors remain represented as groups rather than individual characters."]],
+    "decision":"Risk a veteran wing on another pass, or preserve the experienced crews you will need for the next operation?",
+    "chain":["Train and assign","Learn through service","Survive the loss","Carry experience forward"],
+    "related":["/ships/carriers","/ships/rescue"],
+    "sources":["Docs/FlightCrews_20261009.md","Docs/CrewService_20261011.md"]
+  },
+  {
+    "path":"/systems/boarding", "title":"Boarding & capture", "group":"Fight", "question":"Can you take the ship intact?",
+    "summary":"Getting marines aboard is a physical operation, with an exit plan to consider.",
+    "sections":[["Reach a hull that is still dangerous","Boarding craft have to approach, make a viable connection and deliver their actual troops. The defender’s weapons, motion and surviving crew still matter. Capturing a useful ship begins with choosing how to disable it."],["The people you commit are finite","Marines come from the fleet’s own personnel. Their equipment, casualties and recovery matter beyond the immediate assault. A successful approach does not guarantee a successful boarding action."]],
+    "decision":"Destroy a threatening ship quickly, or accept a riskier fight to preserve something worth capturing?",
+    "chain":["Choose a useful target","Create an approach","Commit the boarding party","Secure and recover"],
+    "related":["/systems/damage","/systems/crew"],
+    "sources":["Docs/BoardingOperations_20261005.md","Docs/BoardingClarity_20261005.md"]
+  },
+  {
+    "path":"/systems/logistics", "title":"Logistics & the campaign", "group":"Sustain", "question":"What keeps the fleet in the war?",
+    "summary":"Your navy depends on stock, service ships, civilian trade and the ability to protect them.",
+    "sections":[["Supplies have to get there","Naval depots and service craft move real stock. A moving fleet can outrun its supply; safe transfers need an actual rendezvous. Fuel service, ammunition supply and rebuilding damaged machinery are different jobs."],["You command the navy in a wider economy","Survey ships discover opportunities. Civilian government, businesses and merchants have their own activity; a naval endorsement is a promise of protection, not an instant colony. Freight moves between suppliers and customers. Disruption and losses affect the economy that supports later naval funding."],["Replacement has a cost","Ships compete with research and supplies for money, materials, trained crew, yard capacity and time. The goal is a war in which keeping a route open—or bringing a damaged hull home—changes what your fleet can field next."]],
+    "decision":"Send your best escort to the battle, or keep it on a supply route that the rest of the fleet depends on?",
+    "chain":["Survey and secure","Move real cargo","Fund and build","Maintain the fleet"],
+    "related":["/systems/damage","/ships/rescue"],
+    "sources":["Docs/CampaignQuickStart_20261004.md","Docs/RegularFreight_20261011.md"]
+  },
+  {
+    "path":"/systems/missiles", "title":"Missiles & interception", "group":"Fight", "question":"What can stop a missile?",
+    "summary":"A launch creates something moving through the battle, with time to react before impact.",
+    "sections":[["There is a journey between launch and impact","Missiles occupy space and travel toward their target. Approach, spacing and the time available to defend all shape an engagement."],["Give defensive ships a job","Point defense and protection matter along that approach. Screens are useful because they change the fight around more vulnerable ships. The footage below shows a development snapshot; weapon tuning is still changing."]],
+    "decision":"Commit a salvo now, or improve the approach while the defending screen is occupied?",
+    "chain":["Launch","Close the distance","Meet the defenses","Impact or interception"],
+    "related":["/systems/power-shields","/ships/carriers"],
+    "sources":["Website/fleet-in-pieces-site/content/systems.json"]
+  },
+  {
+    "path":"/systems/siege", "title":"Siege weapons", "group":"Fight", "question":"What if the target is a world?",
+    "summary":"Large-scale destruction extends the consequences beyond a single ship.",
+    "sections":[["The battlefield can change shape","The archived development clip shows planetary rupture and drifting debris. Positioning still matters around an enormous target."],["A demonstration is not a finished campaign rule","The destruction system is in development. This footage does not establish final weapon balance, availability or political consequences. Those need to earn their place in the wider campaign."]],
+    "decision":"What objective could justify changing the whole battlefield—and what would your fleet have to survive afterward?",
+    "chain":["Position the fleet","Commit the weapon","Break the target","Deal with the aftermath"],
+    "related":["/systems/damage","/systems/logistics"],
+    "sources":["Website/fleet-in-pieces-site/content/systems.json"]
+  }
+]

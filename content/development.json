@@ -1,5 +1,32 @@
 [
   {
+    "id": "freight-corridors",
+    "date": "2026-10-11",
+    "title": "The supply line is part of the war.",
+    "status": "In testing",
+    "body": "Civilian freight is getting regular routes and demand-driven fleet growth. Merchants carry reserved cargo between real suppliers and customers; new hulls need paid yard work. The latest pass is built and awaiting normal campaign testing.",
+    "path": "/systems/logistics",
+    "link": "How the fleet is supplied"
+  },
+  {
+    "id": "crew-service",
+    "date": "2026-10-11",
+    "title": "The experience is aboard the ship.",
+    "status": "In testing",
+    "body": "Crew work now connects more experience to command review and working roles. Pilot callsigns and experience already travel with their people through rescue and transfer. The latest crew and succession changes still need playtesting.",
+    "path": "/systems/crew",
+    "link": "Meet the people behind the machinery"
+  },
+  {
+    "id": "survivor-recovery",
+    "date": "2026-10-10",
+    "title": "Winning leaves people to bring home.",
+    "status": "In testing",
+    "body": "Rescue work now brings group orders, received distress signals and physical capsule recovery into the same operation. The current pass focuses on approach, collar traffic and getting the rescue formation out.",
+    "path": "/ships/rescue",
+    "link": "Understand rescue and recovery"
+  },
+  {
     "id": "boarding",
     "date": "2026-10-03",
     "title": "Getting aboard is only half the problem.",

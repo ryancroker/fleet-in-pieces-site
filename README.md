@@ -223,3 +223,7 @@ The prominent **Fleet Command checked in** notice shows **Updated [Pacific date/
 ## Ship dossiers
 
 See [SHIP_DESIGN.md](SHIP_DESIGN.md) for the library, edition-preserving discussions, explicit contribution/lead records, verified Registrar import, local evidence and required additive-migration/publication order. Ryan authorized the release; production0012 is applied with all original data preserved. Exact deployment/publication status is recorded in ../../Saved/SourceChanges/FleetShipDossiers_20261006/RELEASE.txt.
+
+## Ship workshop and game guide
+
+The homepage is now the interactive ship workshop, also available at `/ship-lab` for shared setups. Read [the workshop contract](docs/ship-workshop.md) before changing its model or persistence. Game explanations live at `/game` and `/systems`; Discord is the social home, with existing ship discussions and contributor records retained. `node scripts/prepare-site.mjs` is still the static authoring build.

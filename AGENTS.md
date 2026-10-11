@@ -1,5 +1,14 @@
 # Fleet in Pieces website
 
+## Ship workshop and game field guide — October 11, 2026
+
+The homepage now leads with the interactive native-data ship workshop; /ship-lab is its sharing route. Do not revert to a generic marketing/forum home. /game explains command and campaign; content/field-guide.json authors 12 system explanations. Existing community records, forms and /ship-design discussions remain intact; Discord is the main social invitation.
+
+Read docs/ship-workshop.md before extending the model. Pinned KESTREL/PD/SIGNAL exports own geometry, art and equipment relationships. ship-lab-model.js is a pure reduced evaluator, separate from the UI and native engine. Default dependency/power order and reactor condition curve were checked against current game source; priority overrides, scalar damage and thrust readouts are a browser UI experiment, not engine parity. No heat/voxel/crew/structural simulation or game-save export. Local revision-scoped persistence, validated fragment sharing and JSON receipts contain no identity data. Workshop actions never write D1. Keep the existing auth and cost-safety backend untouched.
+
+Author through scripts/render-lab.mjs, render-guide.mjs, render-pages.mjs, templates/system.html and content files; run prepare-site.mjs. Original Website/fleet-in-pieces-site still has pending Commander Notes/0013: continue deployment from this isolated live worktree only. Ryan owns UI acceptance; use bounded local checks, no production QA posts/accounts or game/editor control.
+
+
 ## Stuck community write accounting â€” October 11, 2026
 
 An orphan receipt from October10 13:13:38 Pacific caused the accounting_incomplete latch at14:27:24. The original invocation failure is unknown; do not claim a traffic spike or proven CPU timeout. API responses now await the same settlement promise registered with waitUntil. A transient settlement failure gets one idempotent retry within the existing six accounting SQL slots; retain44handler/50total and100msCPU. Accounting allowance is now6rows; all attempt/row thresholds remain unchanged. Persistent unknown accounting still retains its receipt and fails closed. Private evidence/backup/reconciliation: Saved/SourceChanges/FleetWriteRecovery_20261011 at the PixelSimShips root. No migration or schema change, no production QA accounts/posts. Normal user acceptance belongs to Ryan.

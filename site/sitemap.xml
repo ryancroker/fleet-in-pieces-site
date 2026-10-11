@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://fleetinpieces.space/</loc></url>
+  <url><loc>https://fleetinpieces.space/ship-lab</loc></url>
   <url><loc>https://fleetinpieces.space/game</loc></url>
   <url><loc>https://fleetinpieces.space/systems</loc></url>
   <url><loc>https://fleetinpieces.space/ships</loc></url>
@@ -15,11 +16,18 @@
   <url><loc>https://fleetinpieces.space/mess-deck</loc></url>
   <url><loc>https://fleetinpieces.space/feedback</loc></url>
   <url><loc>https://fleetinpieces.space/activity</loc></url>
-  <url><loc>https://fleetinpieces.space/systems/missiles</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/movement</loc></url>
   <url><loc>https://fleetinpieces.space/systems/damage</loc></url>
-  <url><loc>https://fleetinpieces.space/systems/siege</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/power-shields</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/sensors</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/jump-drives</loc></url>
   <url><loc>https://fleetinpieces.space/ships/carriers</loc></url>
   <url><loc>https://fleetinpieces.space/ships/rescue</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/crew</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/boarding</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/logistics</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/missiles</loc></url>
+  <url><loc>https://fleetinpieces.space/systems/siege</loc></url>
   <url><loc>https://fleetinpieces.space/ship-design</loc></url>
   <url><loc>https://fleetinpieces.space/ships/designs/anchorage/revisions/fr1-946f87e29773239b3b1f88f6225751b4ea7f0bfcfcd17d35d5fbf7908e36a97d</loc></url>
   <url><loc>https://fleetinpieces.space/ships/designs/anchorage</loc></url>

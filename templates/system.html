@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{TITLE}} — Help Build Fleet in Pieces</title>
+  <title>{{TITLE}} — Fleet in Pieces field guide</title>
   <meta name="description" content="{{DESCRIPTION}}">
   <link rel="canonical" href="https://fleetinpieces.space/{{KIND_PATH}}/{{SLUG}}">
   <meta name="theme-color" content="#06090c">
@@ -21,12 +21,12 @@
   <script src="/community.js" defer></script>
   <script src="/hub.js" defer></script>
 </head>
-<body class="community-page system-page" data-community-system="{{SLUG}}" data-content-id="{{ID}}">
+<body class="community-page system-page guide-briefing" data-community-system="{{SLUG}}" data-content-id="{{ID}}">
   <a class="skip-link" href="#main">Skip to content</a>
   {{NAV}}
   <main id="main" class="wrap community-main">
     <p class="system-breadcrumb"><a href="/">Fleet in Pieces</a><span aria-hidden="true"> / </span><a href="/{{KIND_PATH}}">{{KIND_LABEL}}</a><span aria-hidden="true"> / </span>{{TITLE}}</p>
-    <nav class="briefing-jumps" aria-label="This briefing"><a href="/community#topics">All topics ↗</a><a href="#current">Current</a><a href="#suggest">Suggest an idea</a><a href="#discussion">Discussion</a><a href="#feedback-record">Implemented from feedback</a></nav>
+    <nav class="briefing-jumps" aria-label="This briefing"><a href="/systems">All systems ↗</a><a href="#current">Overview</a><a href="#how-it-works">How it works</a><a href="#suggest">Suggest an idea</a><a href="#discussion">Discussion</a><a href="#feedback-record">Implemented from feedback</a></nav>
     <section class="system-hero" id="current" aria-labelledby="system-title">
       <div class="system-summary">
         <p class="eyebrow">A space combat game / in active development</p>
@@ -37,7 +37,7 @@
           <h2>What’s in the game.</h2>
           <ul class="current-facts">{{FACTS}}</ul>
         </div>
-        <div class="actions"><a class="button primary" href="#suggest">Suggest an idea <span aria-hidden="true">↓</span></a><a class="text-button" href="#discussion">Read the discussion →</a></div>
+        <div class="actions"><a class="button primary" href="#how-it-works">Understand the system <span aria-hidden="true">↓</span></a><a class="text-button" href="#discussion">Read the discussion →</a></div>
       </div>
       <figure class="briefing-media">
         <div class="media-heading"><span>Development footage</span><span class="recording-dot" aria-hidden="true"></span></div>
@@ -45,6 +45,7 @@
         <figcaption><strong>{{MEDIA_TITLE}}</strong><span>{{MEDIA_DESCRIPTION}}</span><button type="button" class="media-toggle" aria-controls="briefing-video" hidden>Play footage</button></figcaption>
       </figure>
     </section>
+    {{GUIDE}}
     <p class="connection-notice" data-offline hidden>You’re offline. Your draft stays here. Posting, voting and replies need a connection.</p>
     <div class="participation-layout">
     <section class="contribution-block" id="suggest" tabindex="-1" aria-labelledby="suggest-title">

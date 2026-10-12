@@ -1,3 +1,9 @@
+## All-hull fitting — RELEASE READY — October 12, 2026
+
+FleetAllHullFitting_20261012 adds the registered-module planning route /ship-lab/refit across exact published geometry.74hulls/463draft module positions;25fixed editions. KESTREL/KITE article editors remain separate. Feed/Control-bearing, structural and integrated assemblies stay fixed; draft removal is not native admission. No fabricated alternative articles, capacities or prices. Read docs/ship-workshop.md. Shipyard owns staged native OSPREY/GOSHAWK revision8; no new packets yet. All work stays in this website checkout; no native source/launch, backend/D1/infra or production QA. Root receipt records actual deployment status; Ryan owns usability.
+
+Generation, syntax, 55 affected-page local references and all 99 geometry contracts passed. Bounded 1440/390 review covered visible removal/reinstall, preserved damage, shared/local drafts and fixed architecture. Geometry is lazy per hull; stored-energy discharge remains explicitly unverified. Deployment status and screenshots: root Saved/SourceChanges/FleetAllHullFitting_20261012/WEBSITE-RELEASE.txt. Do not infer publication from this release-ready entry.
+
 ## Website shared hull selector and crew panels - RELEASE READY - October 12, 2026
 
 FleetCrewDesigner_20261012 extends native system inspection to99already-published hull editions with lazy immutable models, category/search selection and explicit recipe/export dates. KESTREL/KITE fitting remain separate. Historical packets keep unknown crew capacities and disabled planning controls; no fabricated ratings or new packet imports. Shipyard reviewed native-crew-1 and cleared this static-only release after exact identity/Feed/room validation and condition-based life-support correction. New rev7 quarters still need six matching native fit/art packets before activation. See isolated docs/ship-workshop.md and root evidence folder for contract and gaps.

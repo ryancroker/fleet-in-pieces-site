@@ -1,7 +1,7 @@
 {
   "schema": "designer-hulls-1",
   "source": "frb1-6b4407e775cc563d8762f0c085f972b4d16402d0960c82361281f80b07875c74",
-  "policy": "Published editions are inspectable references, not a promise of current engine or fitting support.",
+  "policy": "Exact published editions support registered-module planning; native admission and alternate articles require separate contracts.",
   "hulls": [
     {
       "key": "anchorage",
@@ -13,7 +13,9 @@
       "revision": "fr1-946f87e29773239b3b1f88f6225751b4ea7f0bfcfcd17d35d5fbf7908e36a97d",
       "exported": "2026-10-06T20:51:39.287Z",
       "inspectRoute": "/ship-lab?ship=anchorage#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=anchorage",
+      "registeredFitRoute": "/ship-lab/refit?ship=anchorage",
+      "modules": 0
     },
     {
       "key": "anchorage-expanded-yard",
@@ -25,7 +27,9 @@
       "revision": "fr1-80d631567141bbf7118a60aadbca9f5e079a49facdd505764f0b8b0a51b1ae4f",
       "exported": "2026-10-06T20:57:08.808Z",
       "inspectRoute": "/ship-lab?ship=anchorage-expanded-yard#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=anchorage-expanded-yard",
+      "registeredFitRoute": "/ship-lab/refit?ship=anchorage-expanded-yard",
+      "modules": 0
     },
     {
       "key": "anchorage-shipyard",
@@ -37,7 +41,9 @@
       "revision": "fr1-a0c8e874a4320b2e9c0c95d9775f87cdb5d5300857c1f21a9894cce26cb6fe85",
       "exported": "2026-10-06T20:57:03.720Z",
       "inspectRoute": "/ship-lab?ship=anchorage-shipyard#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=anchorage-shipyard",
+      "registeredFitRoute": "/ship-lab/refit?ship=anchorage-shipyard",
+      "modules": 0
     },
     {
       "key": "bastion-fleet-oiler",
@@ -49,7 +55,9 @@
       "revision": "fr1-835fe213b7ccb0999cf2f20b71c00dfd89ae110a6537cf9f38bfb47585355a3b",
       "exported": "2026-10-06T20:51:55.789Z",
       "inspectRoute": "/ship-lab?ship=bastion-fleet-oiler#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=bastion-fleet-oiler",
+      "registeredFitRoute": "/ship-lab/refit?ship=bastion-fleet-oiler",
+      "modules": 1
     },
     {
       "key": "bollard",
@@ -61,7 +69,9 @@
       "revision": "fr1-39ab8720e72f17d7c5c3baba98fd5c3b851278b14faaf7050fda35625f7d336a",
       "exported": "2026-10-06T20:49:16.511Z",
       "inspectRoute": "/ship-lab?ship=bollard#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=bollard",
+      "registeredFitRoute": "/ship-lab/refit?ship=bollard",
+      "modules": 7
     },
     {
       "key": "bramble",
@@ -73,7 +83,9 @@
       "revision": "fr1-6e0acb4ae31700d9494902d0da42e47f4c143596cde55732d08a649de93d8d41",
       "exported": "2026-10-06T20:56:34.859Z",
       "inspectRoute": "/ship-lab?ship=bramble#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=bramble",
+      "registeredFitRoute": "/ship-lab/refit?ship=bramble",
+      "modules": 8
     },
     {
       "key": "breach",
@@ -85,7 +97,9 @@
       "revision": "fr1-87d574a71faf650f167e299fea07fbef988f9399614cbde3e547910c6f793041",
       "exported": "2026-10-06T20:52:20.093Z",
       "inspectRoute": "/ship-lab?ship=breach#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=breach",
+      "registeredFitRoute": "/ship-lab/refit?ship=breach",
+      "modules": 7
     },
     {
       "key": "breach-bastion",
@@ -97,7 +111,9 @@
       "revision": "fr1-8de155acb9387d1374f0400a471074e68ba4057392801c161e33c9543ffbe32b",
       "exported": "2026-10-06T20:57:24.512Z",
       "inspectRoute": "/ship-lab?ship=breach-bastion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=breach-bastion",
+      "registeredFitRoute": "/ship-lab/refit?ship=breach-bastion",
+      "modules": 7
     },
     {
       "key": "breach-bulwark",
@@ -109,7 +125,9 @@
       "revision": "fr1-a8ae4788eb35850da2e5993b9347d6181222e1ab5773f8943e1d70a2debea375",
       "exported": "2026-10-06T20:57:26.170Z",
       "inspectRoute": "/ship-lab?ship=breach-bulwark#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=breach-bulwark",
+      "registeredFitRoute": "/ship-lab/refit?ship=breach-bulwark",
+      "modules": 7
     },
     {
       "key": "bulwark",
@@ -121,7 +139,9 @@
       "revision": "fr1-c0cfa40553edcf5ea508887fe43454fa296d276de4807816ffe65b177ea4dbaf",
       "exported": "2026-10-06T20:49:19.619Z",
       "inspectRoute": "/ship-lab?ship=bulwark#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=bulwark",
+      "registeredFitRoute": "/ship-lab/refit?ship=bulwark",
+      "modules": 5
     },
     {
       "key": "caliper",
@@ -133,7 +153,9 @@
       "revision": "fr1-c8160248689657205ad703f13cf1a5d626edd011efcdc1a5ed7adc8205148d15",
       "exported": "2026-10-06T20:49:01.912Z",
       "inspectRoute": "/ship-lab?ship=caliper#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=caliper",
+      "registeredFitRoute": "/ship-lab/refit?ship=caliper",
+      "modules": 7
     },
     {
       "key": "cartographer",
@@ -145,7 +167,9 @@
       "revision": "fr1-97aea433abdecb32eb29ef1eed695a44bd182872d532c026627bcc22506f4b38",
       "exported": "2026-10-06T20:57:27.896Z",
       "inspectRoute": "/ship-lab?ship=cartographer#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=cartographer",
+      "registeredFitRoute": "/ship-lab/refit?ship=cartographer",
+      "modules": 2
     },
     {
       "key": "cistern",
@@ -157,7 +181,9 @@
       "revision": "fr1-02fd6645a98dc4c5f4057573c6743ce9be6769d930e8163d56087fa4e3fc2387",
       "exported": "2026-10-06T20:48:59.680Z",
       "inspectRoute": "/ship-lab?ship=cistern#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=cistern",
+      "registeredFitRoute": "/ship-lab/refit?ship=cistern",
+      "modules": 13
     },
     {
       "key": "cistern-bulk-tanker",
@@ -169,7 +195,9 @@
       "revision": "fr1-edeac16b39b8b0a4530c972fcd1b1c50c8a8a5a10317a16f28169913ca2bf737",
       "exported": "2026-10-06T20:51:53.084Z",
       "inspectRoute": "/ship-lab?ship=cistern-bulk-tanker#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=cistern-bulk-tanker",
+      "registeredFitRoute": "/ship-lab/refit?ship=cistern-bulk-tanker",
+      "modules": 7
     },
     {
       "key": "citadel-military-fuel-depot",
@@ -181,7 +209,9 @@
       "revision": "fr1-8f9aad8b54e94cfc440e8c3c629c313ad5b3022a0560f6559cc55ea78e1ba08f",
       "exported": "2026-10-06T20:51:58.361Z",
       "inspectRoute": "/ship-lab?ship=citadel-military-fuel-depot#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=citadel-military-fuel-depot",
+      "registeredFitRoute": "/ship-lab/refit?ship=citadel-military-fuel-depot",
+      "modules": 0
     },
     {
       "key": "citadel-storage-expansion",
@@ -193,7 +223,9 @@
       "revision": "fr1-3d9886d4ad780cf15a5e854f20c73079885e76bd1c95b11b00766ea38b27f176",
       "exported": "2026-10-06T20:52:00.658Z",
       "inspectRoute": "/ship-lab?ship=citadel-storage-expansion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=citadel-storage-expansion",
+      "registeredFitRoute": "/ship-lab/refit?ship=citadel-storage-expansion",
+      "modules": 0
     },
     {
       "key": "commerce-private-yard",
@@ -205,7 +237,9 @@
       "revision": "fr1-6fe706546bc199de338c2eebdf48abb746d8f7153cec73429e17fae9f3c3ca9b",
       "exported": "2026-10-06T20:57:14.037Z",
       "inspectRoute": "/ship-lab?ship=commerce-private-yard#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=commerce-private-yard",
+      "registeredFitRoute": "/ship-lab/refit?ship=commerce-private-yard",
+      "modules": 0
     },
     {
       "key": "common-port",
@@ -217,7 +251,9 @@
       "revision": "fr1-5f44df70e83b12b00bd2dd365dc505a94da498376b0cd1936da4b84fddc08c12",
       "exported": "2026-10-06T20:57:29.272Z",
       "inspectRoute": "/ship-lab?ship=common-port#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=common-port",
+      "registeredFitRoute": "/ship-lab/refit?ship=common-port",
+      "modules": 0
     },
     {
       "key": "courier-fast-replenisher",
@@ -229,7 +265,9 @@
       "revision": "fr1-49b712e00f0dc165442649cf56d12078a0e4a1e78a4f2e57e3c766212c8cbead",
       "exported": "2026-10-06T20:51:54.554Z",
       "inspectRoute": "/ship-lab?ship=courier-fast-replenisher#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=courier-fast-replenisher",
+      "registeredFitRoute": "/ship-lab/refit?ship=courier-fast-replenisher",
+      "modules": 1
     },
     {
       "key": "crown",
@@ -241,7 +279,9 @@
       "revision": "fr1-e97b83b5787a20112103d5051fc7c684339dbfb4143d050ed3c70eab60faa424",
       "exported": "2026-10-06T20:51:40.737Z",
       "inspectRoute": "/ship-lab?ship=crown#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=crown",
+      "registeredFitRoute": "/ship-lab/refit?ship=crown",
+      "modules": 0
     },
     {
       "key": "crownbreaker",
@@ -253,7 +293,9 @@
       "revision": "fr1-677ebeb39960fd22a418f7e7cf9bb50b04c480e35644e70e60cedc6df50eea94",
       "exported": "2026-10-06T20:51:48.415Z",
       "inspectRoute": "/ship-lab?ship=crownbreaker#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=crownbreaker",
+      "registeredFitRoute": "/ship-lab/refit?ship=crownbreaker",
+      "modules": 4
     },
     {
       "key": "crucible-smelter",
@@ -265,7 +307,9 @@
       "revision": "fr1-036237c238cd48d3816e28b7a3246d105bd933740795db616acf768bef876b39",
       "exported": "2026-10-06T20:57:44.750Z",
       "inspectRoute": "/ship-lab?ship=crucible-smelter#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=crucible-smelter",
+      "registeredFitRoute": "/ship-lab/refit?ship=crucible-smelter",
+      "modules": 0
     },
     {
       "key": "distillery-fuel-works",
@@ -277,7 +321,9 @@
       "revision": "fr1-77a32c35e7f6d07187f1d7bd3ccb5c2fae77157d4e769891d7c6440fe001b874",
       "exported": "2026-10-06T20:57:46.413Z",
       "inspectRoute": "/ship-lab?ship=distillery-fuel-works#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=distillery-fuel-works",
+      "registeredFitRoute": "/ship-lab/refit?ship=distillery-fuel-works",
+      "modules": 0
     },
     {
       "key": "gannet",
@@ -289,7 +335,9 @@
       "revision": "fr1-b7c1e1c010f5b57ab9364b5b434620702535c53d2e7437079f2a5f61ecce024a",
       "exported": "2026-10-06T20:48:52.112Z",
       "inspectRoute": "/ship-lab?ship=gannet#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=gannet",
+      "registeredFitRoute": "/ship-lab/refit?ship=gannet",
+      "modules": 3
     },
     {
       "key": "goshawk",
@@ -301,7 +349,9 @@
       "revision": "fr1-47ddfd578fbb9aa6fff4b82e8497acc98f818c6d9fb8ec07f0c8fc2eb2e10795",
       "exported": "2026-10-06T20:51:05.834Z",
       "inspectRoute": "/ship-lab?ship=goshawk#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=goshawk",
+      "registeredFitRoute": "/ship-lab/refit?ship=goshawk",
+      "modules": 8
     },
     {
       "key": "goshawk-longreach",
@@ -313,7 +363,9 @@
       "revision": "fr1-d2a94e6bede983b34716825c890f5e5768f6f373916e236fc079360c015e06da",
       "exported": "2026-10-06T20:54:43.294Z",
       "inspectRoute": "/ship-lab?ship=goshawk-longreach#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=goshawk-longreach",
+      "registeredFitRoute": "/ship-lab/refit?ship=goshawk-longreach",
+      "modules": 10
     },
     {
       "key": "goshawk-longreach-rapid",
@@ -325,7 +377,9 @@
       "revision": "fr1-027680095acacf4f4d97da8a9a8084d1ff813b3af989f318ba066fc3e0d81f0c",
       "exported": "2026-10-06T20:56:28.506Z",
       "inspectRoute": "/ship-lab?ship=goshawk-longreach-rapid#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=goshawk-longreach-rapid",
+      "registeredFitRoute": "/ship-lab/refit?ship=goshawk-longreach-rapid",
+      "modules": 10
     },
     {
       "key": "harrier",
@@ -337,7 +391,9 @@
       "revision": "fr1-9e978457ba2485ce206a15286ef641d5ebff8f5bfba9dcf033834d563a7ff7ed",
       "exported": "2026-10-06T20:49:06.133Z",
       "inspectRoute": "/ship-lab?ship=harrier#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=harrier",
+      "registeredFitRoute": "/ship-lab/refit?ship=harrier",
+      "modules": 10
     },
     {
       "key": "helios-refinery-expansion",
@@ -349,7 +405,9 @@
       "revision": "fr1-bfa86f449a259f9a6b8fe3efe7a724043d913a0f32c04a4d5b1b207b62b8c0cc",
       "exported": "2026-10-06T20:52:01.812Z",
       "inspectRoute": "/ship-lab?ship=helios-refinery-expansion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=helios-refinery-expansion",
+      "registeredFitRoute": "/ship-lab/refit?ship=helios-refinery-expansion",
+      "modules": 0
     },
     {
       "key": "helios-stellar-collector",
@@ -361,7 +419,9 @@
       "revision": "fr1-e63717255ea44a6a5dd5c535d6042b4f31d507082618da14bad7d8e62b9f38d8",
       "exported": "2026-10-06T20:51:59.570Z",
       "inspectRoute": "/ship-lab?ship=helios-stellar-collector#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=helios-stellar-collector",
+      "registeredFitRoute": "/ship-lab/refit?ship=helios-stellar-collector",
+      "modules": 0
     },
     {
       "key": "kestrel",
@@ -373,7 +433,9 @@
       "revision": "fr1-1c99b74e2838c2b8363358c1b49806393d104e03c16a58e0d89b686c3d438cf4",
       "exported": "2026-10-06T20:56:38.930Z",
       "inspectRoute": "/ship-lab?ship=kestrel#ship-workshop",
-      "fitRoute": "/ship-lab"
+      "fitRoute": "/ship-lab",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel",
+      "modules": 8
     },
     {
       "key": "kestrel-pd",
@@ -385,7 +447,9 @@
       "revision": "fr1-47dfa3e56f093add24d4ea6806867917f0f6acf5869ea29cd89bb05cf791681a",
       "exported": "2026-10-06T20:56:46.493Z",
       "inspectRoute": "/ship-lab?ship=kestrel-pd#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=kestrel-pd",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel-pd",
+      "modules": 10
     },
     {
       "key": "kestrel-signal",
@@ -397,7 +461,9 @@
       "revision": "fr1-c883840e83f058f287d4f8225257bcb8489b85425df1c308f8fd50070b2b917c",
       "exported": "2026-10-06T20:56:30.922Z",
       "inspectRoute": "/ship-lab?ship=kestrel-signal#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=kestrel-signal",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel-signal",
+      "modules": 8
     },
     {
       "key": "keystone",
@@ -409,7 +475,9 @@
       "revision": "fr1-3be500af3c7e88960c2361252beb5985ffc7b91db0928e22b8a5a4df97e3780c",
       "exported": "2026-10-06T20:56:55.805Z",
       "inspectRoute": "/ship-lab?ship=keystone#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=keystone",
+      "registeredFitRoute": "/ship-lab/refit?ship=keystone",
+      "modules": 0
     },
     {
       "key": "kite",
@@ -422,6 +490,8 @@
       "exported": "2026-10-06T20:51:35.578Z",
       "inspectRoute": "/ship-lab?ship=kite#ship-workshop",
       "fitRoute": "/ship-lab/kite",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite",
+      "modules": 8,
       "fitting": {
         "recipe": "vf.carrier.kite.4",
         "definitionHash": "AF3443366E92A72C7B2051811084BCE45ACCCE6A",
@@ -438,7 +508,9 @@
       "revision": "fr1-dbf5e7dca42ee3199394d3460120ffc4550fd578db5db06dc9c3829cae281e0a",
       "exported": "2026-10-06T20:53:28.447Z",
       "inspectRoute": "/ship-lab?ship=kite-rack#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=kite-rack",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite-rack",
+      "modules": 8
     },
     {
       "key": "kite-rack-rapid",
@@ -450,7 +522,9 @@
       "revision": "fr1-86ee3ad6bde8651c35f59875f1af20d16ff906898a76d704189337266558084f",
       "exported": "2026-10-06T20:55:16.164Z",
       "inspectRoute": "/ship-lab?ship=kite-rack-rapid#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=kite-rack-rapid",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite-rack-rapid",
+      "modules": 8
     },
     {
       "key": "lance",
@@ -462,7 +536,9 @@
       "revision": "fr1-a6800f97f08e22a0aece2d1c481f0d850a93de2e3907ee862bfa692dfb7fd8a5",
       "exported": "2026-10-06T20:48:10.446Z",
       "inspectRoute": "/ship-lab?ship=lance#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=lance",
+      "registeredFitRoute": "/ship-lab/refit?ship=lance",
+      "modules": 9
     },
     {
       "key": "lancet",
@@ -474,7 +550,9 @@
       "revision": "fr1-a08d1aa6b7a3f0945e3b06834d02683f5a9908bd46a5a35b4635409561abdefc",
       "exported": "2026-10-06T20:56:43.149Z",
       "inspectRoute": "/ship-lab?ship=lancet#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=lancet",
+      "registeredFitRoute": "/ship-lab/refit?ship=lancet",
+      "modules": 6
     },
     {
       "key": "longshot",
@@ -486,7 +564,9 @@
       "revision": "fr1-91352ad33cce0658b23b36b3c16528934483eca296cd555742b74122621bad8a",
       "exported": "2026-10-06T20:49:22.756Z",
       "inspectRoute": "/ship-lab?ship=longshot#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=longshot",
+      "registeredFitRoute": "/ship-lab/refit?ship=longshot",
+      "modules": 7
     },
     {
       "key": "manticore",
@@ -498,7 +578,9 @@
       "revision": "fr1-f28d87d4dea490d665acd55e1dbe633065eb1fae2c43e22018839beff05695ed",
       "exported": "2026-10-06T20:56:32.559Z",
       "inspectRoute": "/ship-lab?ship=manticore#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=manticore",
+      "registeredFitRoute": "/ship-lab/refit?ship=manticore",
+      "modules": 7
     },
     {
       "key": "maul",
@@ -510,7 +592,9 @@
       "revision": "fr1-db5157272664ce06e18e3770b21e8f36fffddb7c2a16a2f44ca4f1549b5db91e",
       "exported": "2026-10-06T20:52:18.888Z",
       "inspectRoute": "/ship-lab?ship=maul#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=maul",
+      "registeredFitRoute": "/ship-lab/refit?ship=maul",
+      "modules": 7
     },
     {
       "key": "maul-anvil",
@@ -522,7 +606,9 @@
       "revision": "fr1-035434ec03dfdbf78f61d3797095a19639acbb03e49090f89c997f9744ccb2ef",
       "exported": "2026-10-06T20:57:26.995Z",
       "inspectRoute": "/ship-lab?ship=maul-anvil#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=maul-anvil",
+      "registeredFitRoute": "/ship-lab/refit?ship=maul-anvil",
+      "modules": 7
     },
     {
       "key": "maul-lancer",
@@ -534,7 +620,9 @@
       "revision": "fr1-e383a35b8f3cd8310c9c083a7746f5a341ec05d4b7604e47af2b333b40df08ed",
       "exported": "2026-10-06T20:57:25.401Z",
       "inspectRoute": "/ship-lab?ship=maul-lancer#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=maul-lancer",
+      "registeredFitRoute": "/ship-lab/refit?ship=maul-lancer",
+      "modules": 7
     },
     {
       "key": "mender",
@@ -546,7 +634,9 @@
       "revision": "fr1-c7f1187c158f101a89c2b72630d49ebb467f127ae67332a8d53218f35c0055b3",
       "exported": "2026-10-06T20:56:49.584Z",
       "inspectRoute": "/ship-lab?ship=mender#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=mender",
+      "registeredFitRoute": "/ship-lab/refit?ship=mender",
+      "modules": 4
     },
     {
       "key": "merlin",
@@ -558,7 +648,9 @@
       "revision": "fr1-21318808087310e9de2e9324593121410da459230b3c4c73e312046921dc3e7d",
       "exported": "2026-10-06T20:56:42.064Z",
       "inspectRoute": "/ship-lab?ship=merlin#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=merlin",
+      "registeredFitRoute": "/ship-lab/refit?ship=merlin",
+      "modules": 3
     },
     {
       "key": "osprey",
@@ -570,7 +662,9 @@
       "revision": "fr1-8cff4446b402d476b3c565d80fec8025f284666bc0d06338898a3613fa107026",
       "exported": "2026-10-06T20:48:50.052Z",
       "inspectRoute": "/ship-lab?ship=osprey#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=osprey",
+      "registeredFitRoute": "/ship-lab/refit?ship=osprey",
+      "modules": 8
     },
     {
       "key": "osprey-bastion",
@@ -582,7 +676,9 @@
       "revision": "fr1-b517eae90dd0cd7a88874953fb01bfdccad40445938e4283ab09837247b747aa",
       "exported": "2026-10-06T20:54:08.239Z",
       "inspectRoute": "/ship-lab?ship=osprey-bastion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=osprey-bastion",
+      "registeredFitRoute": "/ship-lab/refit?ship=osprey-bastion",
+      "modules": 8
     },
     {
       "key": "osprey-bastion-rapid",
@@ -594,7 +690,9 @@
       "revision": "fr1-468030fead49682fbcf9897821cbbffb2850a7bdcb41c36b7845888bb4016a17",
       "exported": "2026-10-06T20:55:55.219Z",
       "inspectRoute": "/ship-lab?ship=osprey-bastion-rapid#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=osprey-bastion-rapid",
+      "registeredFitRoute": "/ship-lab/refit?ship=osprey-bastion-rapid",
+      "modules": 8
     },
     {
       "key": "osprey-flight-deck",
@@ -606,7 +704,9 @@
       "revision": "fr1-547ffba49ad26323eb14edf1f16ff66d0668876a7cc33e8f5d407491529630e5",
       "exported": "2026-10-06T20:50:19.040Z",
       "inspectRoute": "/ship-lab?ship=osprey-flight-deck#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=osprey-flight-deck",
+      "registeredFitRoute": "/ship-lab/refit?ship=osprey-flight-deck",
+      "modules": 8
     },
     {
       "key": "patchwork",
@@ -618,7 +718,9 @@
       "revision": "fr1-c739eb3bac415301469e4666cbdab2df5e305cd7a4f21fb67410c91cb317888a",
       "exported": "2026-10-06T20:56:53.916Z",
       "inspectRoute": "/ship-lab?ship=patchwork#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=patchwork",
+      "registeredFitRoute": "/ship-lab/refit?ship=patchwork",
+      "modules": 4
     },
     {
       "key": "pearl",
@@ -630,7 +732,9 @@
       "revision": "fr1-e40250e267998b601b36c3f15707367741dc4d16df2230e99a8f70940d1babd8",
       "exported": "2026-10-06T20:51:45.134Z",
       "inspectRoute": "/ship-lab?ship=pearl#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=pearl",
+      "registeredFitRoute": "/ship-lab/refit?ship=pearl",
+      "modules": 0
     },
     {
       "key": "peregrine",
@@ -642,7 +746,9 @@
       "revision": "fr1-c796f8e4bb72d56e7f87a74252494093fde5838e050b488565e974424c4ae506",
       "exported": "2026-10-06T20:56:40.233Z",
       "inspectRoute": "/ship-lab?ship=peregrine#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=peregrine",
+      "registeredFitRoute": "/ship-lab/refit?ship=peregrine",
+      "modules": 7
     },
     {
       "key": "pike",
@@ -654,7 +760,9 @@
       "revision": "fr1-f7016b157cc8f101abd93c3fe25881d78e371d67bc9422d38d9169d971feafbb",
       "exported": "2026-10-06T20:50:23.711Z",
       "inspectRoute": "/ship-lab?ship=pike#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=pike",
+      "registeredFitRoute": "/ship-lab/refit?ship=pike",
+      "modules": 6
     },
     {
       "key": "pike-hammer",
@@ -666,7 +774,9 @@
       "revision": "fr1-dd4f177e14d49b0094825f8dacca15d7625a19c6f1d9083f87304aca68c20e89",
       "exported": "2026-10-06T20:52:55.882Z",
       "inspectRoute": "/ship-lab?ship=pike-hammer#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=pike-hammer",
+      "registeredFitRoute": "/ship-lab/refit?ship=pike-hammer",
+      "modules": 6
     },
     {
       "key": "porter",
@@ -678,7 +788,9 @@
       "revision": "fr1-6e2cf0354345efeb63a67ca985801954f7de65b711217e58e0c905f2de7d9f00",
       "exported": "2026-10-06T20:51:37.219Z",
       "inspectRoute": "/ship-lab?ship=porter#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=porter",
+      "registeredFitRoute": "/ship-lab/refit?ship=porter",
+      "modules": 6
     },
     {
       "key": "porter-field-service",
@@ -690,7 +802,9 @@
       "revision": "fr1-a43a82adcd40be03555c9d0c7411600ced531ead03444027fa84e7c9d3041ab3",
       "exported": "2026-10-06T20:56:56.885Z",
       "inspectRoute": "/ship-lab?ship=porter-field-service#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=porter-field-service",
+      "registeredFitRoute": "/ship-lab/refit?ship=porter-field-service",
+      "modules": 6
     },
     {
       "key": "porter-field-service-ii",
@@ -702,7 +816,9 @@
       "revision": "fr1-6650e48db1b9f561dd3795619b670e48720341aae5fd24c53596c618e629f3d3",
       "exported": "2026-10-06T20:56:58.635Z",
       "inspectRoute": "/ship-lab?ship=porter-field-service-ii#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=porter-field-service-ii",
+      "registeredFitRoute": "/ship-lab/refit?ship=porter-field-service-ii",
+      "modules": 6
     },
     {
       "key": "private-armed-merchant",
@@ -714,7 +830,9 @@
       "revision": "fr1-29450ec0479f0faa958075f8f8b33e789d2629fbd8263899ca13340ba12acbbf",
       "exported": "2026-10-06T20:57:18.740Z",
       "inspectRoute": "/ship-lab?ship=private-armed-merchant#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=private-armed-merchant",
+      "registeredFitRoute": "/ship-lab/refit?ship=private-armed-merchant",
+      "modules": 10
     },
     {
       "key": "quarry-ore-mine-deposit-0",
@@ -726,7 +844,9 @@
       "revision": "fr1-01bc166b06d437e96bbc8298cc804d98e6f6a1a7c836fd4c1e4e0e4e451ea356",
       "exported": "2026-10-06T20:57:30.699Z",
       "inspectRoute": "/ship-lab?ship=quarry-ore-mine-deposit-0#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-0",
+      "registeredFitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-0",
+      "modules": 0
     },
     {
       "key": "quarry-ore-mine-deposit-1",
@@ -738,7 +858,9 @@
       "revision": "fr1-8e802dbaa2b0ef55eef4e82ecabe862d654d1e5ade79ba558dcc6527ed36b2fa",
       "exported": "2026-10-06T20:57:32.059Z",
       "inspectRoute": "/ship-lab?ship=quarry-ore-mine-deposit-1#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-1",
+      "registeredFitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-1",
+      "modules": 0
     },
     {
       "key": "quarry-ore-mine-deposit-2",
@@ -750,7 +872,9 @@
       "revision": "fr1-2d96a70abcab33f25fc328c0bb22d9344ab570c1732d4b433fafd0b085224b7d",
       "exported": "2026-10-06T20:57:33.542Z",
       "inspectRoute": "/ship-lab?ship=quarry-ore-mine-deposit-2#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-2",
+      "registeredFitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-2",
+      "modules": 0
     },
     {
       "key": "quarry-ore-mine-deposit-3",
@@ -762,7 +886,9 @@
       "revision": "fr1-9ab65640641954adc33fd57730745e1d7f9f9234d2bb56b586df308e30ec776b",
       "exported": "2026-10-06T20:57:34.979Z",
       "inspectRoute": "/ship-lab?ship=quarry-ore-mine-deposit-3#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-3",
+      "registeredFitRoute": "/ship-lab/refit?ship=quarry-ore-mine-deposit-3",
+      "modules": 0
     },
     {
       "key": "quiver",
@@ -774,7 +900,9 @@
       "revision": "fr1-f366850254e65d70a43b7ce43bacf9aae19c5670e8f876281de04650308a8dfd",
       "exported": "2026-10-06T20:49:10.123Z",
       "inspectRoute": "/ship-lab?ship=quiver#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quiver",
+      "registeredFitRoute": "/ship-lab/refit?ship=quiver",
+      "modules": 8
     },
     {
       "key": "quiver-armed",
@@ -786,7 +914,9 @@
       "revision": "fr1-c9262053dc2a1aba91da7d9b4a1040d2205e65833c2e95c2d43498fa4f2596e5",
       "exported": "2026-10-06T20:56:45.420Z",
       "inspectRoute": "/ship-lab?ship=quiver-armed#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=quiver-armed",
+      "registeredFitRoute": "/ship-lab/refit?ship=quiver-armed",
+      "modules": 8
     },
     {
       "key": "ravelin",
@@ -798,7 +928,9 @@
       "revision": "fr1-dc5bde46761d9c5839d300a4942fd43947e0e7eebc7db9ed7146f52d524ce93e",
       "exported": "2026-10-06T20:48:15.499Z",
       "inspectRoute": "/ship-lab?ship=ravelin#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=ravelin",
+      "registeredFitRoute": "/ship-lab/refit?ship=ravelin",
+      "modules": 26
     },
     {
       "key": "redoubt",
@@ -810,7 +942,9 @@
       "revision": "fr1-54c0aa5bb5aca98a17cb8a32417e5ca2c7368cd6347ddfc1142c0aea9b194dab",
       "exported": "2026-10-06T20:51:42.137Z",
       "inspectRoute": "/ship-lab?ship=redoubt#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=redoubt",
+      "registeredFitRoute": "/ship-lab/refit?ship=redoubt",
+      "modules": 1
     },
     {
       "key": "rill-feeder-tanker",
@@ -822,7 +956,9 @@
       "revision": "fr1-ab1ea34591fadc2c67ed44000737e2a68bb534ef5a809856427ec59ff851e6a7",
       "exported": "2026-10-06T20:51:50.838Z",
       "inspectRoute": "/ship-lab?ship=rill-feeder-tanker#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=rill-feeder-tanker",
+      "registeredFitRoute": "/ship-lab/refit?ship=rill-feeder-tanker",
+      "modules": 1
     },
     {
       "key": "rime-ice-mine-deposit-0",
@@ -834,7 +970,9 @@
       "revision": "fr1-eb5b970632a087ebb96d9d5eeb8be85aed20ccb6691bd755f133cb148f77c82b",
       "exported": "2026-10-06T20:57:36.587Z",
       "inspectRoute": "/ship-lab?ship=rime-ice-mine-deposit-0#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-0",
+      "registeredFitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-0",
+      "modules": 0
     },
     {
       "key": "rime-ice-mine-deposit-1",
@@ -846,7 +984,9 @@
       "revision": "fr1-35d00906f1f4849d85ec71dc7a8a9e7a0888ed872c898db3b1afa12f49ae9f7c",
       "exported": "2026-10-06T20:57:38.199Z",
       "inspectRoute": "/ship-lab?ship=rime-ice-mine-deposit-1#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-1",
+      "registeredFitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-1",
+      "modules": 0
     },
     {
       "key": "rime-ice-mine-deposit-2",
@@ -858,7 +998,9 @@
       "revision": "fr1-cff5c9be3fa83c73b4cbdf09cb0df40119a58a5c7393a30a6f9666d00ac9d570",
       "exported": "2026-10-06T20:57:40.001Z",
       "inspectRoute": "/ship-lab?ship=rime-ice-mine-deposit-2#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-2",
+      "registeredFitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-2",
+      "modules": 0
     },
     {
       "key": "rime-ice-mine-deposit-3",
@@ -870,7 +1012,9 @@
       "revision": "fr1-16c343345dd38aeb659e0fcf9c036fe8c276e2dde985bf64917fb3e586c67bfc",
       "exported": "2026-10-06T20:57:41.853Z",
       "inspectRoute": "/ship-lab?ship=rime-ice-mine-deposit-3#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-3",
+      "registeredFitRoute": "/ship-lab/refit?ship=rime-ice-mine-deposit-3",
+      "modules": 0
     },
     {
       "key": "sentry",
@@ -882,7 +1026,9 @@
       "revision": "fr1-c07bc612d77cb5911e7b4371e1b0654b99172a3ca86e11323c0b98c78eb68f2d",
       "exported": "2026-10-06T20:48:55.223Z",
       "inspectRoute": "/ship-lab?ship=sentry#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=sentry",
+      "registeredFitRoute": "/ship-lab/refit?ship=sentry",
+      "modules": 10
     },
     {
       "key": "shrike",
@@ -894,7 +1040,9 @@
       "revision": "fr1-22e1907912afcf0273fd64695a38b1b274837b08d1ad200f471aa84a9f115583",
       "exported": "2026-10-06T20:49:12.593Z",
       "inspectRoute": "/ship-lab?ship=shrike#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=shrike",
+      "registeredFitRoute": "/ship-lab/refit?ship=shrike",
+      "modules": 8
     },
     {
       "key": "sparrow-service-launch",
@@ -906,7 +1054,9 @@
       "revision": "fr1-c602e44a993e5e3c8ffeddeae004b06f91b2593b290536163f0af4638cc59f42",
       "exported": "2026-10-06T20:51:49.666Z",
       "inspectRoute": "/ship-lab?ship=sparrow-service-launch#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=sparrow-service-launch",
+      "registeredFitRoute": "/ship-lab/refit?ship=sparrow-service-launch",
+      "modules": 1
     },
     {
       "key": "stitch",
@@ -918,7 +1068,9 @@
       "revision": "fr1-df8200a2bde47119cfc19477b9e18b01b437eca167779e3cb4e4ecd2ad2c1934",
       "exported": "2026-10-06T20:56:47.508Z",
       "inspectRoute": "/ship-lab?ship=stitch#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=stitch",
+      "registeredFitRoute": "/ship-lab/refit?ship=stitch",
+      "modules": 4
     },
     {
       "key": "t-01-command",
@@ -930,7 +1082,9 @@
       "revision": "fr1-fa19773a8e2d8725b2c7faefc69aaa68a0de246767c03b0a4723ad079be462fe",
       "exported": "2026-10-06T20:52:22.942Z",
       "inspectRoute": "/ship-lab?ship=t-01-command#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-01-command",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-01-command",
+      "modules": 2
     },
     {
       "key": "t-01-team-transport",
@@ -942,7 +1096,9 @@
       "revision": "fr1-04b2b4864d957a08492db628f4e4297aef8c1d8bfaadd8b79eacf721fb4c8856",
       "exported": "2026-10-06T20:52:02.772Z",
       "inspectRoute": "/ship-lab?ship=t-01-team-transport#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-01-team-transport",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-01-team-transport",
+      "modules": 2
     },
     {
       "key": "t-01-workshop",
@@ -954,7 +1110,9 @@
       "revision": "fr1-e06f2a3ec22957c8bae3f7b7d93e6994764b68aa8e1d94bc5368c0997aa41cfa",
       "exported": "2026-10-06T20:52:21.014Z",
       "inspectRoute": "/ship-lab?ship=t-01-workshop#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-01-workshop",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-01-workshop",
+      "modules": 2
     },
     {
       "key": "t-02-courier",
@@ -966,7 +1124,9 @@
       "revision": "fr1-0728c03d4585a06135c5147c42444c0ae06c235d2a9632723bb77e8b40d67b5d",
       "exported": "2026-10-06T20:52:26.181Z",
       "inspectRoute": "/ship-lab?ship=t-02-courier#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-02-courier",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-02-courier",
+      "modules": 2
     },
     {
       "key": "t-02-crew-shuttle",
@@ -978,7 +1138,9 @@
       "revision": "fr1-dcd328986e9c46ccca655b14e81b2f039c64b24753ff6fc6d02f9940a6309b83",
       "exported": "2026-10-06T20:52:05.199Z",
       "inspectRoute": "/ship-lab?ship=t-02-crew-shuttle#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-02-crew-shuttle",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-02-crew-shuttle",
+      "modules": 2
     },
     {
       "key": "t-02-personnel-lift",
@@ -990,7 +1152,9 @@
       "revision": "fr1-5c7ea3da1146e1cb489a006b6ffecff5becdc18955a1d7fbbea0adb22e888560",
       "exported": "2026-10-06T20:52:29.020Z",
       "inspectRoute": "/ship-lab?ship=t-02-personnel-lift#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-02-personnel-lift",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-02-personnel-lift",
+      "modules": 2
     },
     {
       "key": "t-03-insertion",
@@ -1002,7 +1166,9 @@
       "revision": "fr1-4921a69e4fac3ce1c2065bc6070c6c3604b4b0cff6e92a5ad47650f73a76f966",
       "exported": "2026-10-06T20:52:32.924Z",
       "inspectRoute": "/ship-lab?ship=t-03-insertion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-03-insertion",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-03-insertion",
+      "modules": 2
     },
     {
       "key": "t-03-marine-boarder",
@@ -1014,7 +1180,9 @@
       "revision": "fr1-443fec52088cfa6e968c2514161f4a08fb9be8cfe9668cadf9b4229f815c4a8f",
       "exported": "2026-10-06T20:52:08.614Z",
       "inspectRoute": "/ship-lab?ship=t-03-marine-boarder#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-03-marine-boarder",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-03-marine-boarder",
+      "modules": 2
     },
     {
       "key": "t-03-prize-crew",
@@ -1026,7 +1194,9 @@
       "revision": "fr1-9b46b135121a036c8f3e92b20cd16398a31c14251ee9351b34cf2ea7a1faba86",
       "exported": "2026-10-06T20:52:36.603Z",
       "inspectRoute": "/ship-lab?ship=t-03-prize-crew#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-03-prize-crew",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-03-prize-crew",
+      "modules": 2
     },
     {
       "key": "t-04-assault-lift",
@@ -1038,7 +1208,9 @@
       "revision": "fr1-64d8a20f3628f96497e9e5f3a0a0895bed5e9808c50ed87d183b01d9c285e08e",
       "exported": "2026-10-06T20:52:50.460Z",
       "inspectRoute": "/ship-lab?ship=t-04-assault-lift#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-04-assault-lift",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-04-assault-lift",
+      "modules": 10
     },
     {
       "key": "t-04-bastion",
@@ -1050,7 +1222,9 @@
       "revision": "fr1-2b62446a4aca43082b3f7342bbbd3f838947391c9fa554ee86cf6e1d19f130ed",
       "exported": "2026-10-06T20:52:43.453Z",
       "inspectRoute": "/ship-lab?ship=t-04-bastion#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-04-bastion",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-04-bastion",
+      "modules": 10
     },
     {
       "key": "t-04-heavy-assault",
@@ -1062,7 +1236,9 @@
       "revision": "fr1-6a2d03888c2ee86e483484b654fe0f9932fb4187a6b2f4d3f1f0151a035d2f2e",
       "exported": "2026-10-06T20:52:15.292Z",
       "inspectRoute": "/ship-lab?ship=t-04-heavy-assault#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=t-04-heavy-assault",
+      "registeredFitRoute": "/ship-lab/refit?ship=t-04-heavy-assault",
+      "modules": 10
     },
     {
       "key": "talon",
@@ -1074,7 +1250,9 @@
       "revision": "fr1-765a03d3ba3ab06c1c74fb40cb05413748e6dfe30623c6de4e98e246d1c67953",
       "exported": "2026-10-06T20:49:23.935Z",
       "inspectRoute": "/ship-lab?ship=talon#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=talon",
+      "registeredFitRoute": "/ship-lab/refit?ship=talon",
+      "modules": 5
     },
     {
       "key": "talon-razor",
@@ -1086,7 +1264,9 @@
       "revision": "fr1-fc9ba5aae623343489dd1323b0b9fcb099b9ddf90cee1157ca9335f70dee02db",
       "exported": "2026-10-06T20:52:53.909Z",
       "inspectRoute": "/ship-lab?ship=talon-razor#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=talon-razor",
+      "registeredFitRoute": "/ship-lab/refit?ship=talon-razor",
+      "modules": 5
     },
     {
       "key": "tern",
@@ -1098,7 +1278,9 @@
       "revision": "fr1-4d5411785c602b1f081086ad454748bf78efb449efc7369e745e20ea7c70e307",
       "exported": "2026-10-06T20:56:41.055Z",
       "inspectRoute": "/ship-lab?ship=tern#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=tern",
+      "registeredFitRoute": "/ship-lab/refit?ship=tern",
+      "modules": 7
     },
     {
       "key": "uc-a1",
@@ -1110,7 +1292,9 @@
       "revision": "fr1-b3f42d5edc6a056f8b3285bae024be871e5c39e599c0606ae3fe6849c61cd018",
       "exported": "2026-10-06T20:57:01.898Z",
       "inspectRoute": "/ship-lab?ship=uc-a1#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=uc-a1",
+      "registeredFitRoute": "/ship-lab/refit?ship=uc-a1",
+      "modules": 0
     },
     {
       "key": "verdant-agriculture",
@@ -1122,7 +1306,9 @@
       "revision": "fr1-00e556a95769d3399f12a4a282deb86e384c85f282291522c60b0c2a31233ce0",
       "exported": "2026-10-06T20:57:43.094Z",
       "inspectRoute": "/ship-lab?ship=verdant-agriculture#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=verdant-agriculture",
+      "registeredFitRoute": "/ship-lab/refit?ship=verdant-agriculture",
+      "modules": 0
     },
     {
       "key": "vireo",
@@ -1134,7 +1320,9 @@
       "revision": "fr1-5035955c7783a896e5965e22310408c238410c9908db56e88533b3236679d687",
       "exported": "2026-10-06T20:48:56.996Z",
       "inspectRoute": "/ship-lab?ship=vireo#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=vireo",
+      "registeredFitRoute": "/ship-lab/refit?ship=vireo",
+      "modules": 7
     },
     {
       "key": "watchman",
@@ -1146,7 +1334,9 @@
       "revision": "fr1-5a70f0c9c59723e2793d2de134dd1a7a53398e0a1d456e0a5fe93a500e636981",
       "exported": "2026-10-06T20:56:37.155Z",
       "inspectRoute": "/ship-lab?ship=watchman#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=watchman",
+      "registeredFitRoute": "/ship-lab/refit?ship=watchman",
+      "modules": 8
     },
     {
       "key": "waystation-expeditionary-tender",
@@ -1158,7 +1348,9 @@
       "revision": "fr1-a43762e9a13d7916027d0b28edff27fa68325965bd756eac6416a7648d6106bd",
       "exported": "2026-10-06T20:51:56.995Z",
       "inspectRoute": "/ship-lab?ship=waystation-expeditionary-tender#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=waystation-expeditionary-tender",
+      "registeredFitRoute": "/ship-lab/refit?ship=waystation-expeditionary-tender",
+      "modules": 1
     },
     {
       "key": "wisp",
@@ -1170,7 +1362,9 @@
       "revision": "fr1-095159bfce5ccead521d3c951f0fcdc169b10dac416954d793c6c999fb954b1a",
       "exported": "2026-10-06T20:50:22.211Z",
       "inspectRoute": "/ship-lab?ship=wisp#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=wisp",
+      "registeredFitRoute": "/ship-lab/refit?ship=wisp",
+      "modules": 4
     },
     {
       "key": "wisp-ghost",
@@ -1182,7 +1376,9 @@
       "revision": "fr1-edfdf72234c35a7073efe0c924a11d415628398f54112d1ba5c56a9be79a5ff4",
       "exported": "2026-10-06T20:52:54.887Z",
       "inspectRoute": "/ship-lab?ship=wisp-ghost#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=wisp-ghost",
+      "registeredFitRoute": "/ship-lab/refit?ship=wisp-ghost",
+      "modules": 4
     },
     {
       "key": "workyard-manufacturing",
@@ -1194,7 +1390,9 @@
       "revision": "fr1-7d54f75ad4aaf47db81e9e5c6748b5c64b9ecbd8361cff1f2d97208c1eb2b961",
       "exported": "2026-10-06T20:57:47.861Z",
       "inspectRoute": "/ship-lab?ship=workyard-manufacturing#ship-workshop",
-      "fitRoute": null
+      "fitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
+      "registeredFitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
+      "modules": 0
     }
   ]
 }

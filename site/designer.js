@@ -8,15 +8,16 @@
  category.value=current.category;
  function show(){
   if(!current)return;
-  const edition=current.fitting||current;
+  const registeredView=location.pathname==='/ship-lab/refit',articleEditor=!registeredView&&['kestrel','kite'].includes(current.key);
+  const edition=articleEditor&&current.fitting||current;
   $('designer-art').src=current.hero;$('designer-art').alt=current.name+' native hull reference';
-  $('designer-art').hidden=!!current.fitting;document.querySelector('.designer-selection').classList.toggle('designer-no-thumbnail',!!current.fitting);
+  $('designer-art').hidden=articleEditor&&!!current.fitting;document.querySelector('.designer-selection').classList.toggle('designer-no-thumbnail',articleEditor&&!!current.fitting);
   $('designer-name').textContent=current.name+' · '+current.role;
   $('designer-edition').textContent=edition.recipe+' · exported '+edition.exported.slice(0,10);
-  $('designer-capability').textContent=current.fitRoute?'Editable fittings · hull-specific mounts and limits.':'Inspect systems · native reference geometry; fitting changes are not enabled for this hull yet.';
-  $('designer-open').href=current.fitRoute||current.inspectRoute;$('designer-open').textContent=current.fitRoute?'Fit this ship →':'Inspect this ship →';
-  $('designer-inspect').hidden=!current.fitRoute;$('designer-inspect').href=current.inspectRoute;
-  $('designer-inspect').textContent=current.fitting?'Inspect earlier published edition →':'Inspect published systems →';
+  $('designer-capability').textContent=articleEditor?'Article fitting · hull-specific alternatives and limits.':current.modules?current.modules+' draft modules · original mounts; native build validation pending.':'Fixed architecture · inspect its systems; article fitting is not available yet.';
+  $('designer-open').href=registeredView?current.registeredFitRoute:current.fitRoute;$('designer-open').textContent='Fit this ship →';
+  $('designer-inspect').hidden=false;$('designer-inspect').href=current.inspectRoute;
+  $('designer-inspect').textContent=articleEditor&&current.fitting?'Inspect earlier published edition →':'Inspect all systems →';
  }
  function filter(){
   const query=search.value.trim().toLowerCase(),items=data.entries.filter(e=>(!category.value||e.category===category.value)&&(!query||(e.name+' '+e.role).toLowerCase().includes(query)));

@@ -2,10 +2,12 @@ import {readFile,writeFile,mkdir,access} from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {validateCrew} from './crew-contract.mjs';
+import {refitContract} from './refit-contract.mjs';
 
 const fields=['index','name','kind','kind_name','part','core_position_m','power_sources','dependencies','fuel_store','ammo_store','DemandWatts','GenerationWatts','InitialQuantity','MaxForce'];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export async function buildDesigner(root,register){
+ const geometry=JSON.parse(await readFile(path.join(root,'content/fleet-geometry.json'),'utf8'));
  const folder=path.join(root,'site/assets/designer');await mkdir(folder,{recursive:true});
  const entries=[],models=[];
  for(const [key,ship] of Object.entries(register.ships)){
@@ -20,24 +22,26 @@ export async function buildDesigner(root,register){
    const art=d.art[view];if(!art||!/^assets\/[a-f0-9]+\.png$/.test(art.path)||!art.projection||art.width<=0||art.height<=0)throw Error('Missing projected art: '+key);
    await access(path.join(root,'site/assets/fleet-register',art.path));
   }
-  const model={key,name:d.display_name,role:ship.role,revision:d.revision_id,recipe:d.configuration.recipe_id,definitionHash:d.configuration.definition_hash,exported:d.configuration.exported_utc,machines,parts:d.parts.map(p=>({index:p.index,name:p.name,parent:p.parent})),art:d.art,dimensions:edition.assembled_dimensions_m,dossier:'/ships/designs/'+key};
+  const model={key,name:d.display_name,role:ship.role,revision:d.revision_id,recipe:d.configuration.recipe_id,definitionHash:d.configuration.definition_hash,exported:d.configuration.exported_utc,machines,parts:d.parts.map(p=>({index:p.index,name:p.name,parent:p.parent,material_kg:p.material_kg})),art:d.art,dimensions:edition.assembled_dimensions_m,dossier:'/ships/designs/'+key};
+  if(model.parts.some(p=>!Number.isFinite(p.material_kg)||p.material_kg<0))throw Error('Missing native material mass: '+key);
+  model.refit=refitContract(model,geometry[key]);
   model.crew_accommodation=validateCrew(d.crew_accommodation,model);
   // New hull packets retain exact finite store quantities, including fractional kg/J.
   if(!['kestrel','kestrel-pd','kestrel-signal'].includes(key))model.fractionalStores=true;
   const bytes=JSON.stringify(model),sha=createHash('sha256').update(bytes).digest('hex');
   const file=key+'.'+sha.slice(0,12)+'.json';await writeFile(path.join(folder,file),bytes+'\n');
-  entries.push({key,name:d.display_name,role:ship.role,category:ship.category,recipe:model.recipe,definitionHash:model.definitionHash,revision:model.revision,exported:model.exported,model:'/assets/designer/'+file,hero:'/assets/fleet-register/'+d.art.hero.path,inspectRoute:'/ship-lab?ship='+key+'#ship-workshop',fitRoute:key==='kestrel'?'/ship-lab':key==='kite'?'/ship-lab/kite':null});
+  entries.push({key,name:d.display_name,role:ship.role,category:ship.category,recipe:model.recipe,definitionHash:model.definitionHash,revision:model.revision,exported:model.exported,model:'/assets/designer/'+file,hero:'/assets/fleet-register/'+d.art.hero.path,inspectRoute:'/ship-lab?ship='+key+'#ship-workshop',fitRoute:key==='kestrel'?'/ship-lab':key==='kite'?'/ship-lab/kite':'/ship-lab/refit?ship='+key,registeredFitRoute:'/ship-lab/refit?ship='+key,modules:model.refit.modules.length});
   models.push(model);
  }
  const carrier=JSON.parse(await readFile(path.join(root,'content/carrier-workshop.json'),'utf8'));
  const kite=entries.find(e=>e.key==='kite');if(kite)kite.fitting={recipe:carrier.recipe,definitionHash:carrier.hash,exported:carrier.exported};
  const data={version:'designer-1',entries};
  await writeFile(path.join(root,'site/designer-data.js'),'// Exact, already-published native editions. Lazy-loaded; no production writes.\nwindow.FleetDesignerData = '+JSON.stringify(data)+';\n');
- await writeFile(path.join(root,'content/designer-hulls.json'),JSON.stringify({schema:'designer-hulls-1',source:register.bundle_id,policy:'Published editions are inspectable references, not a promise of current engine or fitting support.',hulls:entries.map(({model,hero,...e})=>e)},null,2)+'\n');
+ await writeFile(path.join(root,'content/designer-hulls.json'),JSON.stringify({schema:'designer-hulls-1',source:register.bundle_id,policy:'Exact published editions support registered-module planning; native admission and alternate articles require separate contracts.',hulls:entries.map(({model,hero,...e})=>e)},null,2)+'\n');
  return {entries,models};
 }
 export function hullSelector(entries,current='kestrel'){
  const categories=[...new Set(entries.map(e=>e.category))];
- return `<section class="designer-selector" aria-labelledby="designer-title"><div class="designer-heading"><div><p class="eyebrow">Choose a hull</p><h2 id="designer-title">Build around its purpose.</h2></div><p>Fit an escort or carrier. Explore the systems inside the rest of the fleet.</p></div><div class="designer-controls"><label for="designer-category">Ship group<select id="designer-category"><option value="">All hulls</option>${categories.map(c=>`<option${c==='Warships'?' selected':''}>${esc(c)}</option>`).join('')}</select></label><label for="designer-search">Find a ship<input id="designer-search" type="search" placeholder="Name or role" autocomplete="off"></label><label for="designer-hull">Hull<select id="designer-hull">${entries.map(e=>`<option value="${e.key}"${e.key===current?' selected':''}>${esc(e.name)} · ${esc(e.role)}</option>`).join('')}</select></label></div><div class="designer-selection"><img id="designer-art" alt="" width="2048" height="1536" loading="lazy"><div><h3 id="designer-name"></h3><p id="designer-edition"></p><p id="designer-capability"></p></div><div class="designer-destinations"><a id="designer-open" class="button" href="/ship-lab">Open workshop →</a><a id="designer-inspect" class="back-link" href="/ship-lab?ship=kestrel#ship-workshop">Inspect published systems →</a></div></div><p id="designer-result" class="field-hint" role="status"></p><noscript><p><a href="/ship-lab">Fit KESTREL</a> · <a href="/ship-lab/kite">Fit KITE</a> · <a href="/ships">Browse every ship dossier</a></p></noscript></section>`;
+ return `<section class="designer-selector" aria-labelledby="designer-title"><div class="designer-heading"><div><p class="eyebrow">Choose a hull</p><h2 id="designer-title">Build around its purpose.</h2></div><p>Choose a hull. Fit its hardware. Follow the power through its systems.</p></div><div class="designer-controls"><label for="designer-category">Ship group<select id="designer-category"><option value="">All hulls</option>${categories.map(c=>`<option${c==='Warships'?' selected':''}>${esc(c)}</option>`).join('')}</select></label><label for="designer-search">Find a ship<input id="designer-search" type="search" placeholder="Name or role" autocomplete="off"></label><label for="designer-hull">Hull<select id="designer-hull">${entries.map(e=>`<option value="${e.key}"${e.key===current?' selected':''}>${esc(e.name)} · ${esc(e.role)}</option>`).join('')}</select></label></div><div class="designer-selection"><img id="designer-art" alt="" width="2048" height="1536" loading="lazy"><div><h3 id="designer-name"></h3><p id="designer-edition"></p><p id="designer-capability"></p></div><div class="designer-destinations"><a id="designer-open" class="button" href="/ship-lab">Open workshop →</a><a id="designer-inspect" class="back-link" href="/ship-lab?ship=kestrel#ship-workshop">Inspect published systems →</a></div></div><p id="designer-result" class="field-hint" role="status"></p><noscript><p><a href="/ship-lab">Fit KESTREL</a> · <a href="/ship-lab/kite">Fit KITE</a> · <a href="/ships">Browse every ship dossier</a></p></noscript></section>`;
 }
 export const inspectionOptions=entries=>entries.map(e=>`<option value="${e.key}">${esc(e.name)} · ${esc(e.recipe)}</option>`).join('');

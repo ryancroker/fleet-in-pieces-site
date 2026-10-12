@@ -1,3 +1,46 @@
+## All-hull registered-module planning / October 12, 2026
+
+`FleetAllHullFitting_20261012` adds `/ship-lab/refit?ship=<key>`. This is a browser
+hardware draft, not universal native fitting admission. The selector opens this
+route for hulls beyond the retained KESTREL/KITE article editors. All 99 pinned
+published editions have exact part meshes; 74 have 463 draft module positions.
+The remaining 25 editions retain fixed architecture in this pass.
+
+`build-fleet-geometry.py --exports <Saved/FleetRegister/Exports>` reads existing
+exact recipe/hash packets only, checks native/published counts, and converts PLY
+surfaces without starting the engine. `content/fleet-geometry.json` records source
+hashes and binary bounds/groups. Immutable gzip meshes total49,433,556bytes, at
+most3,434,601per hull. The page fetches only its selected mesh, decompresses it
+with the browser API and redraws WebGL only for changes/resizes. No ticking loop.
+
+`refit-contract.mjs` permits draft omission of direct root-child equipment parts
+and a gun's <=3-part yaw/elevation/recoil package. Any package containing Feed or
+Control stays fixed: old exports cannot distinguish cooling, flight, repair and
+life-support services reliably. Structural, nested and integrated equipment stays
+fixed. This classification describes a UI draft only: native support witnesses,
+removal/refit access and construction admission are not proven. No new bays,
+reactors, article substitutions, prices or interchangeable space budgets are
+invented. Empty sockets only accept their own registered module. Exact native
+`native-fitting-1` contracts and matching new geometry are required for future
+OSPREY/GOSHAWK revision8 alternatives; those native edits remain separately staged.
+
+`hull-fit-model.js` masks omitted machines/parts for the existing finite allocator.
+Stored condition, enabled state, priorities and quantities remain separate, so
+removing/reinstalling never repairs or refills anything. Turret dependencies and
+stores stay attached to their original IDs. Restore stock explicitly resets the
+scenario; Undo preserves the previous fit. Material totals exclude stores, crew
+and aircraft. Exports with zero-generation stored-energy reactors show unverified
+power readiness, not fabricated wattage or a claim of no reactor. Discharge and
+endurance remain outside this model.
+
+`hull-fit-1` local drafts use the exact definition hash and validate ship/revision,
+module IDs, unique omissions and every component state. `#loadout` links contain
+bounded sparse state and never reuse/overwrite old #setup/#fit/#carrier storage.
+No identity, backend writes, D1 calls, polling or native saves. Crew counts remain
+Unknown until matching reviewed crew packets arrive. Ryan owns usability and
+normal-game acceptance. Root evidence/release receipt: Saved/SourceChanges/
+FleetAllHullFitting_20261012. Do not claim all99hulls have native editable articles.
+
 ## Crew and shared hull selection / local October 12 work
 
 `FleetCrewDesigner_20261012` received joint schema review; see the root release receipt for actual commit/deployment status. Ryan authorized coordination in Shipyard. Shipyard owns native quarters, staffing and exact exports; Website owns this adapter and UI. Shipyard cleared this static selector/unknown-crew release after review. New quarters still require matching native packets before activation. The old Commander Notes checkout remains separate.

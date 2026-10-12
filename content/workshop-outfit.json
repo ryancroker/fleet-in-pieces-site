@@ -1,9 +1,9 @@
 {
-  "version": "sections-2",
+  "version": "sections-3",
   "name": "KESTREL / equipment study",
   "hullCost": 400,
   "budget": 2500,
-  "source": "Native KESTREL artwork and equipment rating references. Section capacities, size classes and prices are prototype tuning. Jump charging is a proposed high-demand fit, not current engine tuning.",
+  "source": "Pinned native KESTREL geometry and source-derived outfitter articles. Section space, design-credit prices and mixed-fit allocation remain browser prototype tuning, not native construction admission.",
   "catalog": [
     {
       "id": "bridge",
@@ -81,14 +81,16 @@
     },
     {
       "id": "gun",
-      "name": "Kinetic weapon package",
+      "name": "Standard kinetic battery",
       "short": "GUN",
       "kind": "gun",
       "cost": 160,
       "demand": 7000,
-      "note": "7 kW native battery rating. Needs ammunition; section choice is not exterior turret-mount validation.",
+      "note": "Native weapon assembly. Front battery or middle defensive mount; needs ammunition. Each mount changes independently.",
       "space": 6,
-      "size": "Medium"
+      "size": "Medium",
+      "article": "stock",
+      "family": "gun"
     },
     {
       "id": "ammo",
@@ -104,14 +106,18 @@
     },
     {
       "id": "shield",
-      "name": "Shield-emitter package",
+      "name": "Stock shield emitter",
       "short": "SHIELD",
       "kind": "shield",
       "cost": 110,
       "demand": 6025,
-      "note": "6.025 kW native emitter rating. Sector geometry and external mount clearance remain outside this study.",
+      "note": "One native projector per installation. Two front and two rear mounts. Removing one removes its visible article.",
       "space": 4,
-      "size": "Compact"
+      "size": "Compact",
+      "article": "stock",
+      "family": "shield",
+      "reserve": 1,
+      "recharge": 1
     },
     {
       "id": "crew",
@@ -123,6 +129,77 @@
       "note": "Proposed accommodation and life-support allocation. Required for a complete design; crew movement and endurance are not simulated.",
       "space": 4,
       "size": "Compact"
+    },
+    {
+      "id": "gun-rapid",
+      "name": "Rapid kinetic battery",
+      "short": "GUN",
+      "kind": "gun",
+      "cost": 180,
+      "demand": 7700,
+      "note": "Short barrel and faster native cycle. Draw is 1.10\u00d7 the standard weapon. One finite round per test shot.",
+      "space": 6,
+      "size": "Medium",
+      "article": "rapid",
+      "family": "gun"
+    },
+    {
+      "id": "gun-lance",
+      "name": "Lance kinetic battery",
+      "short": "GUN",
+      "kind": "gun",
+      "cost": 240,
+      "demand": 8400,
+      "note": "Long barrel and higher native shot work with a slower cycle. Draw is 1.20\u00d7 standard. Prototype space and price.",
+      "space": 8,
+      "size": "Medium",
+      "article": "lance",
+      "family": "gun"
+    },
+    {
+      "id": "shield-reservoir",
+      "name": "Reservoir shield emitter",
+      "short": "SHIELD",
+      "kind": "shield",
+      "cost": 160,
+      "demand": 6627.5,
+      "note": "Tall fork. More reserve, slower recovery. Native family multipliers; prototype space and price.",
+      "space": 6,
+      "size": "Compact",
+      "article": "reservoir",
+      "family": "shield",
+      "reserve": 1.6,
+      "recharge": 0.65
+    },
+    {
+      "id": "shield-cascade",
+      "name": "Cascade shield emitter",
+      "short": "SHIELD",
+      "kind": "shield",
+      "cost": 150,
+      "demand": 9640,
+      "note": "Low cooling ribs. Less reserve, faster recovery, higher power draw. Native family multipliers.",
+      "space": 4,
+      "size": "Compact",
+      "article": "cascade",
+      "family": "shield",
+      "reserve": 0.7,
+      "recharge": 1.6
+    },
+    {
+      "id": "shield-facet",
+      "name": "Facet shield emitter",
+      "short": "SHIELD",
+      "kind": "shield",
+      "cost": 140,
+      "demand": 6025,
+      "note": "Sloped field face. Modestly more reserve with slower recovery at stock draw. Does not grant a new shield arc.",
+      "space": 4,
+      "size": "Compact",
+      "article": "facet",
+      "family": "shield",
+      "reserve": 1.1,
+      "recharge": 0.85
     }
   ],
   "fixed": [
@@ -384,5 +461,32 @@
         1
       ]
     }
-  ]
+  ],
+  "previous": {
+    "version": "sections-2",
+    "types": [
+      "bridge",
+      "bus",
+      "reactor",
+      "jump",
+      "drive",
+      "fuel",
+      "gun",
+      "ammo",
+      "shield",
+      "crew"
+    ]
+  },
+  "mounts": {
+    "gun": {
+      "front": 1,
+      "middle": 1,
+      "rear": 0
+    },
+    "shield": {
+      "front": 2,
+      "middle": 0,
+      "rear": 2
+    }
+  }
 }

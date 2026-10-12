@@ -12,7 +12,7 @@
  for(const b of document.querySelectorAll('[data-workshop]'))b.addEventListener('click',()=>setWorkshop(b.dataset.workshop));
  function decode(hash){if(!hash.startsWith('#fit=')||hash.length>24000)return null;try{return F.validate(JSON.parse(atob(hash.slice(5))));}catch{return null;}}
  const shared=decode(location.hash),badLink=location.hash.startsWith('#fit=')&&!shared;
- if(shared){fit=shared;message='Shared fit opened as your own editable copy.';}else if(!badLink){try{const current=localStorage.getItem(saveKey),s=F.validate(JSON.parse(current||localStorage.getItem('fleet-interior:interior-1')));if(s){fit=s;message='Restored your equipment from this browser.';}}catch{storage=false;}}
+ if(shared){fit=shared;message='Shared fit opened as your own editable copy.';}else if(!badLink){try{const current=localStorage.getItem(saveKey),s=F.validate(JSON.parse(current||localStorage.getItem('fleet-outfit:sections-2')||localStorage.getItem('fleet-interior:interior-1')));if(s){fit=s;message='Restored your equipment from this browser.';}}catch{storage=false;}}
  if(badLink)message='That fit link is invalid or from an unsupported catalog. An intact starter design is open.';
  setWorkshop(location.hash.startsWith('#setup=')?'native':'design');
  function persist(){try{localStorage.setItem(saveKey,JSON.stringify(fit));$('fit-save').textContent='Fit saved in this browser · no account needed';}catch{storage=false;$('fit-save').textContent='Browser storage unavailable · keep a Share fit link';}}
@@ -29,23 +29,12 @@
   if(problem||uid>10000){message=problem||'Installation limit reached. Start from a preset.';render();return;}
   mutate(()=>{fit.items.push(p);fit.states.push(F.freshState(p));fit.selected=uid;},C.get(type).name+' added to '+S.get(p.section).name.toLowerCase()+'.');
  }
- // Fade the intact native art, then reveal the selected section through a soft
- // screen-space mask along its projected fore/aft axis. These are UI regions,
- // not geometry cuts or changes to equipment placement/capacity.
+ // Labels sit above the native part renderer. Empty mounts are also controls.
  function draw(){
-  const map=$('fit-map'),focused=map.contains(document.activeElement)?document.activeElement.dataset.section:null;
+  const map=$('fit-map'),focused=map.contains(document.activeElement)?document.activeElement.dataset.section:null,mountFocus=map.contains(document.activeElement)?document.activeElement.dataset.mount:null;
   const P=art.projection,dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0),labels={rear:[240,290],middle:[1270,330],front:[1530,1230]};
   const project=p=>[art.width/2+(dot(p,P.right)-P.centre_x_m)*P.pixels_per_metre,art.height/2-(dot(p,P.up)-P.centre_y_m)*P.pixels_per_metre];
-  const [x1,y1]=project([-50,0,0]),[x2,y2]=project([50,0,0]);
-  const a=(S.get('rear').point[0]+S.get('middle').point[0])/2/100+.5,b=(S.get('middle').point[0]+S.get('front').point[0])/2/100+.5,feather=.018;
-  const stops=fit.section==='rear'?[[0,1],[a-feather,1],[a+feather,0],[1,0]]:fit.section==='front'?[[0,0],[b-feather,0],[b+feather,1],[1,1]]:[[0,0],[a-feather,0],[a+feather,1],[b-feather,1],[b+feather,0],[1,0]];
-  const defs=svg('defs',{}),gradient=svg('linearGradient',{id:'fit-section-fade',gradientUnits:'userSpaceOnUse',x1,y1,x2,y2});
-  for(const [offset,opacity]of stops)gradient.append(svg('stop',{offset,'stop-color':'white','stop-opacity':opacity}));
-  const mask=svg('mask',{id:'fit-section-focus',maskUnits:'userSpaceOnUse',x:0,y:0,width:art.width,height:art.height});
-  mask.append(svg('rect',{width:art.width,height:art.height,fill:'url(#fit-section-fade)'}));defs.append(gradient,mask);
-  const image={href:'/assets/fleet-register/'+art.path,width:art.width,height:art.height,'pointer-events':'none','aria-hidden':'true'};
-  const focus=svg('g',{class:'fit-art-focus','pointer-events':'none'});focus.append(svg('image',{...image,mask:'url(#fit-section-focus)'}));
-  map.replaceChildren(defs,svg('image',{...image,class:'fit-art-muted'}),focus);
+  map.replaceChildren();window.FleetOutfitRenderer?.update(fit,result);
   map.setAttribute('aria-label','KESTREL artwork. '+S.get(fit.section).name+' highlighted; other sections faded. Select front, middle or rear.');
   $('fit-focus-label').textContent='Editing: '+S.get(fit.section).name;
   for(const s of result.sections){
@@ -59,6 +48,15 @@
    g.addEventListener('click',()=>chooseSection(s.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseSection(s.id);}});map.append(g);
    if(focused===s.id)g.focus({preventScroll:true});
   }
+  const positions={gun:{front:[[27.5,0,7]],middle:[[-3.5,0,9]],rear:[]},shield:{front:[[17,-4.5,7],[17,4.5,7]],middle:[],rear:[[-15.5,-3.5,8],[-15.5,3.5,8]]}};
+  for(const kind of ['gun','shield'])for(const [section,points]of Object.entries(positions[kind])){
+   const members=fit.items.filter(p=>C.get(p.type).kind===kind&&p.section===section).sort((a,b)=>a.uid-b.uid);
+   points.forEach((p,n)=>{const installed=members[n],[x,y]=project(p),g=svg('g',{class:'fit-mount'+(installed?' fitted':' empty')+(installed?.uid===fit.selected?' selected':''),tabindex:0,role:'button','aria-label':installed?'Select '+C.get(installed.type).name+' in '+section:'Add '+(kind==='gun'?'weapon':'emitter')+' in '+section,'data-mount':kind+'-'+section+'-'+n});
+    g.append(svg('circle',{cx:x,cy:y,r:25}),svg('text',{x,y:y+10,'text-anchor':'middle'},installed?'•':'+'));
+    const activate=()=>{if(installed)select(installed.uid);else{chooseSection(section);$('fit-add-type').value=kind==='gun'?'gun':'shield';updateAdd();$('fit-add-type').focus({preventScroll:true});}};
+    g.addEventListener('click',activate);g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}});map.append(g);if(mountFocus===kind+'-'+section+'-'+n)g.focus({preventScroll:true});
+   });
+  }
  }
  function render(){
   result=F.evaluate(fit);const section=S.get(fit.section),members=fit.items.flatMap((p,i)=>p.section===fit.section?[i]:[]);
@@ -70,26 +68,45 @@
   $('fit-section-target').textContent='Damage test · '+section.name;$('fit-section-hit').disabled=!members.some(i=>fit.states[i].condition>0);$('fit-section-repair').disabled=!members.some(i=>fit.states[i].condition<100);
   $('fit-manifest-title').textContent=section.name+' equipment';$('fit-manifest-space').textContent=members.length+' installed';$('fit-catalog-target').textContent='Adding to '+section.name.toLowerCase();
   const installed=$('fit-installed'),focus=installed.contains(document.activeElement)?document.activeElement.dataset.uid:null;installed.replaceChildren();
-  for(const i of members){const p=fit.items[i],c=C.get(p.type),b=node('button',undefined,'fit-installed '+status(i));b.dataset.uid=p.uid;b.setAttribute('aria-pressed',String(p.uid===fit.selected));b.append(node('span',c.name),node('small',c.size+' · '+c.space+' sp · '+fit.states[i].condition+'%'));b.addEventListener('click',()=>select(p.uid));installed.append(b);if(focus===String(p.uid))b.focus({preventScroll:true});}
-  if(!members.length)installed.append(node('p','Empty section. Add hardware below.','outfit-caption'));
+  for(const i of members){const p=fit.items[i],c=C.get(p.type),b=node('button',undefined,'fit-installed '+status(i));b.dataset.uid=p.uid;b.setAttribute('aria-pressed',String(p.uid===fit.selected));b.append(node('span',c.name),node('small',result.unmounted.has(p.uid)?'Needs a compatible mount':c.size+' · '+c.space+' sp · '+fit.states[i].condition+'%'));b.addEventListener('click',()=>select(p.uid));installed.append(b);if(focus===String(p.uid))b.focus({preventScroll:true});}
+  if(!members.length)installed.append(node('p','Empty section. Add hardware here.','outfit-caption'));
   $('fit-component').hidden=!members.length;
   if(members.length){
    const i=index(),p=fit.items[i],c=C.get(p.type),s=fit.states[i],r=result.rows[i];
    $('fit-kind').textContent=c.locked?'Fixed core installation':'Installation '+p.uid;$('fit-name').textContent=c.name;$('fit-state').textContent=r.reason;$('fit-state').className=status(i);$('fit-note').textContent=c.note;
    const facts=[['Size / space',c.size+' · '+c.space+' spaces'],['Build cost',num(c.cost)+' cr'],[c.generation?'Output range':'Power draw',power(c).replace(/^(Output|Draw) /,'')],['Allocated now',watts(r.allocated)]];
+   if(c.reserve)facts.push(['Shield reserve',c.reserve+'× stock'],['Recharge rate',c.recharge+'× stock']);
    if(c.generation)facts.push(['Output now',watts(r.output)]);
    if(c.quantity&&!c.generation)facts.push([c.kind==='fuel_tank'?'Propellant':'Ammunition',num(s.quantity)+(c.kind==='fuel_tank'?' kg':' rounds')]);
    $('fit-facts').replaceChildren(...facts.map(([k,v])=>{const d=node('div');d.append(node('dt',k),node('dd',v));return d;}));
-   $('fit-location').value=p.section;$('fit-location').disabled=!!c.locked;for(const o of $('fit-location').options)o.disabled=!!c.section&&o.value!==c.section;
+   $('fit-swap').hidden=!c.family;$('fit-variant').replaceChildren();
+   if(c.family)for(const other of D.catalog.filter(o=>o.family===c.family)){
+    const option=node('option',other.name+' · '+other.space+' sp · '+num(other.cost)+' cr');option.value=other.id;option.disabled=other.id!==c.id&&!!F.canAssign(fit.items,{...p,type:other.id},p.uid);$('fit-variant').append(option);
+   }
+   $('fit-variant').value=c.id;$('fit-swap-hint').textContent='Keeps condition and power priority. Changes the visible article.';
+   $('fit-location').value=p.section;$('fit-location').disabled=!!c.locked;for(const o of $('fit-location').options)o.disabled=o.value!==p.section&&!!F.canAssign(fit.items,{...p,section:o.value},p.uid);
    $('fit-remove').disabled=!!c.locked;$('fit-condition').value=s.condition;$('fit-condition-label').textContent=s.condition+'%';$('fit-enabled').checked=s.enabled;$('fit-priority').value=s.priority;$('fit-priority').disabled=!!c.generation||result.model.machines[i].DemandWatts===0;
    $('fit-hit').disabled=s.condition===0;$('fit-repair').disabled=s.condition===100;
    const store=$('fit-store');store.hidden=!['gun','fuel_tank','magazine'].includes(c.kind);store.disabled=c.kind==='gun'?!r.ready:!s.quantity;store.textContent=c.kind==='gun'?'Test fire · spend 1 round':'Simulate empty store';
   }
-  $('fit-undo').disabled=!history.length;
+  updateAdd();$('fit-undo').disabled=!history.length;
   for(const[id,{button,hint}]of catalogButtons){const problem=F.canAssign(fit.items,{type:id,section:fit.section});button.disabled=!!problem;hint.textContent=problem||'Add to '+section.name.toLowerCase()+' +';}
   $('fit-readiness').replaceChildren(metric('Main thrust',(result.thrust/1e6).toLocaleString('en-US',{maximumFractionDigits:1})+' MN','Available in this model'),metric('Weapons',result.guns+' / '+result.gunTotal,'Ready with ammunition'),metric('Shields',result.shields+' / '+result.shieldTotal,'Powered emitters'),metric('Mission',result.jumpCount?'Jump-equipped':'Local defense',result.jumpCount?'Charging needs available power':'Local / assisted travel'));
   draw();
  }
+ function updateAdd(){
+  const type=$('fit-add-type').value,problem=F.canAssign(fit.items,{type,section:fit.section}),c=C.get(type);
+  $('fit-add-now').disabled=!!problem;$('fit-add-hint').textContent=problem||c.space+' spaces · '+num(c.cost)+' cr · '+power(c);
+ }
+ for(const c of D.catalog.filter(c=>!c.locked)){const o=node('option',c.name);o.value=c.id;$('fit-add-type').append(o);}
+ $('fit-add-type').value='gun';$('fit-add-type').addEventListener('change',updateAdd);
+ $('fit-add-now').addEventListener('click',()=>add($('fit-add-type').value));
+ $('fit-variant').addEventListener('change',e=>{
+  const i=index(),p=fit.items[i],c=C.get(p.type),next=C.get(e.target.value);
+  if(!next||!c.family||c.family!==next.family)return;
+  const problem=F.canAssign(fit.items,{...p,type:next.id},p.uid);if(problem){message=problem;render();return;}
+  mutate(()=>{fit.items[i]={...p,type:next.id};},next.name+' fitted. Condition and power settings preserved.');
+ });
  for(const s of D.sections){const b=node('button');b.addEventListener('click',()=>chooseSection(s.id));$('fit-sections').append(b);sectionButtons.set(s.id,b);}
  for(const c of D.catalog.filter(c=>!c.locked)){
   const card=node('div',undefined,'fit-catalog-item type-'+c.id),button=node('button'),hint=node('span');button.append(hint);button.setAttribute('aria-label','Add '+c.name);card.append(node('strong',c.name),node('span',c.size+' · '+c.space+' spaces · '+num(c.cost)+' cr'),node('small',power(c)),button);button.addEventListener('click',()=>add(c.id));$('fit-catalog').append(card);catalogButtons.set(c.id,{button,hint});

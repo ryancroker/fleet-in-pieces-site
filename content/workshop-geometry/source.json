@@ -1,0 +1,12 @@
+{
+  "definition": "vf.kestrel.escort.10",
+  "definitionHash": "7EC3E329E9129189F5E73D8D455BA9F8E15640D6",
+  "export": "20261006T204809Z_74DB9F98",
+  "nativePlySha256": "344775e885bd094aa8e476fcddc2eaaffa94e09b8d5b38de4b484ffd953f1510",
+  "articleSources": {
+    "Plugins/GPUShipCombat/Source/FleetSimCore/Private/FleetVoxelOutfitter.cpp": "ddd5b4813ed94834b5d04abfe9f47b21e0da74672f73bb7223906e6c50edf14d",
+    "Plugins/GPUShipCombat/Source/FleetSimCore/Private/FleetVoxelCustomization.cpp": "f8b85409e814686d04226a5f91d5f7ea5b72aefee6b597920659d189e5387ea8",
+    "Plugins/GPUShipCombat/Source/FleetSimCore/Private/FleetVoxelEscort.cpp": "218b728575499d73d02632f5efbb747a6f96c3181249bd449ca4e7de7431bbe3"
+  },
+  "boundary": "Native stock mesh. Alternate article geometry translates native construction primitives; no game execution or native manufacturing validation. Space and credit prices are UI tuning. The stock hull, internal machinery and drives remain reference geometry."
+}

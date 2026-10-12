@@ -54,3 +54,56 @@ Generation, syntax and bounded local browser checks precede normal GitHub deploy
 ## Section focus treatment
 
 The custom workshop dims the native transparent artwork to22% opacity and reveals the selected front/middle/rear region with an SVG gradient mask along the projected fore/aft axis. The region boundaries are halfway between existing section markers, with a soft edge; this is approximate visual focus, not geometry segmentation. A restrained light edge and brighter active callout reinforce selection. Section buttons, markers and assignments all use the same selected-section state. No image bytes, recipe tuning, model, persistence or native inspection behavior changes.
+# Visible fittings / sections-3 — October 11, 2026
+
+The custom view now renders the pinned KESTREL mesh, not its flattened PNG. The
+native builder was inspected first: `FOutfitSelection`, `BuildOutfit`,
+`Customization::MixedGuns` and `Customization::Emitter` own the native articles.
+`content/workshop-geometry/source.json` records the exact export and source hashes.
+`scripts/build-workshop-geometry.py` converts the saved native PLY and translates
+the alternate articles' box/taper/plane construction into bounded web geometry.
+Run it explicitly with Python when changing geometry; generated binary and JS are
+committed. `prepare-site.mjs` fingerprints the JS and links it into both routes.
+No game or renderer process is launched. Stock surfaces retain native AO; new
+articles use the native authored colors and the registrar's editorial lighting.
+
+`outfit-renderer.js` uses one WebGL canvas and a depth buffer. It draws on recipe,
+selection and size changes only, without an animation/poll loop. Original hull,
+reactors and drives remain reference geometry. Only fitted weapons and emitters
+are drawn from the custom recipe. Removing one exposes the underlying native
+mount. Source-derived alternate articles are Standard/Rapid/Lance weapons and
+Stock/Reservoir/Cascade/Facet emitters. Independent mounted articles replace each
+other; there are no hidden stock guns under an overlay. Render failure is explicit
+and does not substitute a misleading intact picture. This is a visual adapter,
+not a port of native manufacturing, simulation or campaign admission. In
+particular, it does not certify native combinations affected by the previously
+reported native `barrel.forward.finish` construction issue.
+
+There is one front weapon mount, one middle defensive weapon mount, and two
+emitter mounts each in front and rear. Approximate section capacity and physical
+mount count must both admit new additions/moves/swaps. Ordered installation UID
+assigns articles to the available native mounts. Existing excess fits remain
+editable drafts: every item, its condition, stores, space and price is retained,
+but unmounted weapons/emitters are marked and cannot operate or consume power.
+No automatic movement or discarding. Future explicit slot selection would need a
+new versioned contract. Marker buttons and the adjacent list both select fittings;
+empty mounts select the corresponding add control. New add/swap controls are in
+the inspector. Swaps preserve condition, enabled state and power priority.
+
+Released sections-2 item ratings/prices are retained. New prototype prices/space:
+Rapid 180cr/6, Lance 240cr/8, Reservoir 160cr/6, Cascade 150cr/4, Facet 140cr/4.
+Weapon draw follows native 1.10/1.20 multipliers. Emitter draw follows native
+1.10/1.60/1.00 multipliers; reserve/recharge family multipliers are displayed,
+not a time-stepped shield-combat simulation. Front/middle guns use the same
+prototype package rating even though the native physical assemblies differ.
+
+Storage is `fleet-outfit:sections-3`, falling back to `fleet-outfit:sections-2`,
+then the frozen interior-1 converter. Prior keys remain intact. Old section links
+accept only old type IDs before conversion; legacy grid links keep their frozen
+validation. Native #setup links and Inspect native ships remain unchanged.
+
+Bounded local 1440/390 review checked gun removal, add at the second mount,
+Rapid/Lance swaps, emitter removal and Reservoir/Cascade changes, preserved damage,
+sharing/restoration and no horizontal mobile overflow. Static generation, syntax
+and narrow migration/admission checks passed. Ryan owns usability and visual
+acceptance. No backend, D1, production QA records, infrastructure or game changes.

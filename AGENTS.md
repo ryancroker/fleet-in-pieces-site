@@ -1,5 +1,9 @@
 # Fleet in Pieces website
 
+## Visible native fittings - October 11, 2026
+
+sections-3 replaces the custom flat image with a native PLY part renderer. Weapons and emitters add/remove/swap visibly at the two gun and four projector mounts; inspector controls sit beside the equipment list. Read docs/ship-workshop.md before changes. Geometry/provenance lives in content/workshop-geometry; build-workshop-geometry.py translates native alternate article construction without running the game. Browser fitting is still not BuildOutfit or engine-save parity. Prior sections-2/interior-1 recipes remain accepted with preserved hardware/state; excess mount drafts are explicitly inactive, never silently discarded. No backend/D1/infrastructure or game-source change. Ryan tests usability.
+
 ## Section focus - October 11, 2026
 
 Custom outfitting highlights the selected region on the original native art, with other regions faded. outfit.js owns the SVG fore/aft gradient mask; ship-lab.css owns brightness, muted opacity and active callout emphasis. Regions are approximate visual focus only; no art bytes, fitting values, model, state schema or backend changes. Preserve keyboard section selection and native inspection. Ryan owns visual acceptance.

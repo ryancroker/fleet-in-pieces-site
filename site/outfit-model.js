@@ -7,6 +7,8 @@
   const c=C.get(p.type),s=S.get(p.section);if(!c||!s)return 'Unknown equipment or section';
   if(c.section&&c.section!==s.id)return c.name+' belongs in the '+S.get(c.section).name.toLowerCase();
   if(ignore===null&&items.length>=48)return 'This study supports up to 48 installations';
+  const limit=D.mounts[c.kind]?.[s.id];
+  if(limit!==undefined&&items.filter(i=>i.uid!==ignore&&i.section===s.id&&C.get(i.type).kind===c.kind).length>=limit)return limit?s.name+' has no free '+(c.kind==='gun'?'weapon':'emitter')+' mount':s.name+' has no '+(c.kind==='gun'?'weapon':'emitter')+' mount';
   const used=items.filter(i=>i.uid!==ignore&&i.section===s.id).reduce((n,i)=>n+C.get(i.type).space,0);
   return used+c.space>s.capacity?s.name+' has '+Math.max(0,s.capacity-used)+' spaces free; this needs '+c.space:'';
  }
@@ -34,6 +36,10 @@
  }
  function validate(v){
   if(v?.version===D.legacy.version)return migrate(v);
+  if(v?.version===D.previous.version){
+   if(!Array.isArray(v.items)||v.items.some(p=>!p||!D.previous.types.includes(p.type)))return null;
+   return validate({...v,version:D.version});
+  }
   if(!v||v.version!==D.version||!Array.isArray(v.items)||v.items.length<2||v.items.length>48||!Array.isArray(v.states)||v.states.length!==v.items.length||!['normal','jump'].includes(v.phase)||!Number.isInteger(v.budget)||v.budget<0||v.budget>100000)return null;
   const items=[],states=[],ids=new Set();
   for(let i=0;i<v.items.length;i++){
@@ -58,11 +64,18 @@
    const c=C.get(p.type),fuel=c.kind==='drive'?store('fuel'):-1,ammo=c.kind==='gun'?store('ammo'):-1;
    return {index:i,name:c.name+' #'+p.uid,kind_name:c.kind,part:i,core_position_m:S.get(p.section).point,power_sources:c.generation?[]:source,dependencies:c.generation||i===bus?[]:i===control?[bus]:[control,bus,...(fuel>=0?[fuel]:[]),...(ammo>=0?[ammo]:[])],fuel_store:fuel,ammo_store:ammo,DemandWatts:c.kind==='jump'?(v.phase==='jump'?c.chargeDemand:0):c.demand,GenerationWatts:c.generation||0,InitialQuantity:c.quantity||0,MaxForce:c.force||0,missing_supply:c.kind==='drive'&&fuel<0?'No propellant tank fitted':c.kind==='gun'&&ammo<0?'No magazine fitted':null};
   });
-  const model={machines},r=window.FleetLabModel.evaluate(model,states),count=type=>find(type).filter(i=>r.rows[i].ready).length;
+  const unmounted=new Set(),mountCounts={};
+  for(const p of [...items].sort((a,b)=>a.uid-b.uid)){
+   const kind=C.get(p.type).kind,limit=D.mounts[kind]?.[p.section];if(limit===undefined)continue;
+   const key=kind+':'+p.section;mountCounts[key]=(mountCounts[key]||0)+1;if(mountCounts[key]>limit)unmounted.add(p.uid);
+  }
+  for(let i=0;i<items.length;i++)if(unmounted.has(items[i].uid))machines[i].missing_supply='No compatible exterior mount. Move or remove this draft installation.';
+  const model={machines},r=window.FleetLabModel.evaluate(model,states),count=type=>items.flatMap((p,i)=>(type==='gun'||type==='shield'?C.get(p.type).kind===type:p.type===type)?[i]:[]).filter(i=>r.rows[i].ready).length;
   const sections=D.sections.map(s=>({...s,used:items.filter(p=>p.section===s.id).reduce((n,p)=>n+C.get(p.type).space,0)}));
   const occupied=sections.reduce((n,s)=>n+s.used,0),total=sections.reduce((n,s)=>n+s.capacity,0);
   const cost=D.hullCost+items.reduce((n,p)=>n+C.get(p.type).cost,0),normalDemand=items.reduce((n,p,i)=>n+(states[i].enabled&&states[i].condition?C.get(p.type).demand:0),0),jumpPeak=find('jump').reduce((n,i)=>n+(states[i].enabled&&states[i].condition?C.get('jump').chargeDemand:0),0);
   const warnings=sections.filter(s=>s.used>s.capacity).map(s=>s.name+' is over capacity by '+(s.used-s.capacity)+' spaces. Move or remove equipment.');
+  if(unmounted.size)warnings.push(unmounted.size+' draft installation'+(unmounted.size===1?' has':'s have')+' no compatible exterior mount. Preserved in your list, but not drawn or operational. Move or remove it.');
   if(!count('reactor'))warnings.push('No working reactor. The ship has no power.');
   if(!count('drive'))warnings.push('No working main drive. This fit cannot propel itself.');
   if(!count('crew'))warnings.push('Crew and life support are missing or offline. Incomplete crewed design.');
@@ -71,7 +84,7 @@
   if(r.used+1<r.requested)warnings.push('Demand exceeds available allocation. Inspect offline systems or change priorities.');
   const jumpCount=find('jump').length,jumpReady=count('jump');
   const jumpStatus=!jumpCount?'No independent jump':v.phase==='normal'?'Fitted · charging idle':jumpReady?jumpReady+' charging package'+(jumpReady===1?'':'s'):'Charging blocked';
-  return {...r,model,sections,occupied,total,cost,normalDemand,jumpPeak,jumpCount,jumpStatus,warnings};
+  return {...r,model,sections,occupied,total,cost,normalDemand,jumpPeak,jumpCount,jumpStatus,warnings,unmounted};
  }
  window.FleetOutfit={data:D,catalog:C,sections:S,canAssign,freshState,preset,validate,evaluate};
 })();

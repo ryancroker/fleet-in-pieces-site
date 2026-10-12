@@ -3,17 +3,18 @@
 (() => {
  'use strict';
  const D=window.FleetOutfitData,C=new Map(D.catalog.map(c=>[c.id,c])),S=new Map(D.sections.map(s=>[s.id,s]));
- function canAssign(items,p,ignore=null){
+ function capacity(section,v){return D.allocations[v?.allocation||D.allocation][section];}
+ function canAssign(items,p,ignore=null,v=null){
   const c=C.get(p.type),s=S.get(p.section);if(!c||!s)return 'Unknown equipment or section';
   if(c.section&&c.section!==s.id)return c.name+' belongs in the '+S.get(c.section).name.toLowerCase();
   if(ignore===null&&items.length>=48)return 'This study supports up to 48 installations';
   const limit=D.mounts[c.kind]?.[s.id];
   if(limit!==undefined&&items.filter(i=>i.uid!==ignore&&i.section===s.id&&C.get(i.type).kind===c.kind).length>=limit)return limit?s.name+' has no free '+(c.kind==='gun'?'weapon':'emitter')+' mount':s.name+' has no '+(c.kind==='gun'?'weapon':'emitter')+' mount';
-  const used=items.filter(i=>i.uid!==ignore&&i.section===s.id).reduce((n,i)=>n+C.get(i.type).space,0);
-  return used+c.space>s.capacity?s.name+' has '+Math.max(0,s.capacity-used)+' spaces free; this needs '+c.space:'';
+  const limitSpace=capacity(s.id,v),used=items.filter(i=>i.uid!==ignore&&i.section===s.id).reduce((n,i)=>n+C.get(i.type).space,0);
+  return used+c.space>limitSpace?s.name+' has '+Math.max(0,limitSpace-used)+' spaces free; this needs '+c.space+'. Move equipment to another section or choose a smaller package':'';
  }
  function freshState(p){const c=C.get(p.type);return {condition:100,enabled:true,priority:0,quantity:c.quantity||0};}
- function preset(key){const def=D.presets[key];if(!def)return null;const items=D.fixed.map(p=>({...p}));def.items.forEach(([type,section],i)=>items.push({uid:i+3,type,section}));return {version:D.version,items,states:items.map(freshState),phase:'normal',budget:D.budget,selected:3,section:'middle'};}
+ function preset(key){const def=D.presets[key];if(!def)return null;const items=D.fixed.map(p=>({...p}));def.items.forEach(([type,section],i)=>items.push({uid:i+3,type,section}));return {version:D.version,allocation:D.allocation,items,states:items.map(freshState),phase:'normal',budget:D.budget,selected:3,section:'middle'};}
  // Validate released grid recipes before converting them. Keep all hardware and
  // state; section overages remain visible rather than silently dropping items.
  function migrate(v){
@@ -32,15 +33,16 @@
    }
   }
   const items=v.items.map(p=>{const fixed=D.fixed.find(f=>f.uid===p.uid),size=L.sizes[p.type],centre=p.x+(p.rotated?size[1]:size[0])/2;return {uid:p.uid,type:p.type,section:fixed?fixed.section:centre<16/3?'rear':centre<32/3?'middle':'front'};});
-  return validate({...v,version:D.version,items,section:items.find(p=>p.uid===v.selected)?.section||'middle',converted:true});
+  return validate({...v,version:D.version,allocation:'legacy',items,section:items.find(p=>p.uid===v.selected)?.section||'middle',converted:true});
  }
  function validate(v){
   if(v?.version===D.legacy.version)return migrate(v);
-  if(v?.version===D.previous.version){
-   if(!Array.isArray(v.items)||v.items.some(p=>!p||!D.previous.types.includes(p.type)))return null;
-   return validate({...v,version:D.version});
+  const previous=D.previous.find(p=>p.version===v?.version);
+  if(previous){
+   if(!Array.isArray(v.items)||v.items.some(p=>!p||!previous.types.includes(p.type)))return null;
+   return validate({...v,version:D.version,allocation:'legacy'});
   }
-  if(!v||v.version!==D.version||!Array.isArray(v.items)||v.items.length<2||v.items.length>48||!Array.isArray(v.states)||v.states.length!==v.items.length||!['normal','jump'].includes(v.phase)||!Number.isInteger(v.budget)||v.budget<0||v.budget>100000)return null;
+  if(!v||v.version!==D.version||!Object.hasOwn(D.allocations,v.allocation)||!Array.isArray(v.items)||v.items.length<2||v.items.length>48||!Array.isArray(v.states)||v.states.length!==v.items.length||!['normal','jump'].includes(v.phase)||!Number.isInteger(v.budget)||v.budget<0||v.budget>100000)return null;
   const items=[],states=[],ids=new Set();
   for(let i=0;i<v.items.length;i++){
    const p=v.items[i],s=v.states[i],c=p&&C.get(p.type);
@@ -52,7 +54,7 @@
   }
   if(D.fixed.some(f=>!ids.has(f.uid)))return null;
   // Over-capacity imports are editable drafts, never reported as valid fits.
-  return {version:D.version,items,states,phase:v.phase,budget:v.budget,selected:ids.has(v.selected)?v.selected:items[0].uid,section:S.has(v.section)?v.section:'middle',...(v.converted===true?{converted:true}:{})};
+  return {version:D.version,allocation:v.allocation,items,states,phase:v.phase,budget:v.budget,selected:ids.has(v.selected)?v.selected:items[0].uid,section:S.has(v.section)?v.section:'middle',...(v.converted===true?{converted:true}:{})};
  }
  function evaluate(v){
   const items=v.items,states=v.states,source=items.flatMap((p,i)=>C.get(p.type).generation?[i]:[]),find=type=>items.flatMap((p,i)=>p.type===type?[i]:[]);
@@ -71,7 +73,7 @@
   }
   for(let i=0;i<items.length;i++)if(unmounted.has(items[i].uid))machines[i].missing_supply='No compatible exterior mount. Move or remove this draft installation.';
   const model={machines},r=window.FleetLabModel.evaluate(model,states),count=type=>items.flatMap((p,i)=>(type==='gun'||type==='shield'?C.get(p.type).kind===type:p.type===type)?[i]:[]).filter(i=>r.rows[i].ready).length;
-  const sections=D.sections.map(s=>({...s,used:items.filter(p=>p.section===s.id).reduce((n,p)=>n+C.get(p.type).space,0)}));
+  const sections=D.sections.map(s=>({...s,capacity:capacity(s.id,v),used:items.filter(p=>p.section===s.id).reduce((n,p)=>n+C.get(p.type).space,0)}));
   const occupied=sections.reduce((n,s)=>n+s.used,0),total=sections.reduce((n,s)=>n+s.capacity,0);
   const cost=D.hullCost+items.reduce((n,p)=>n+C.get(p.type).cost,0),normalDemand=items.reduce((n,p,i)=>n+(states[i].enabled&&states[i].condition?C.get(p.type).demand:0),0),jumpPeak=find('jump').reduce((n,i)=>n+(states[i].enabled&&states[i].condition?C.get('jump').chargeDemand:0),0);
   const warnings=sections.filter(s=>s.used>s.capacity).map(s=>s.name+' is over capacity by '+(s.used-s.capacity)+' spaces. Move or remove equipment.');
@@ -86,5 +88,5 @@
   const jumpStatus=!jumpCount?'No independent jump':v.phase==='normal'?'Fitted · charging idle':jumpReady?jumpReady+' charging package'+(jumpReady===1?'':'s'):'Charging blocked';
   return {...r,model,sections,occupied,total,cost,normalDemand,jumpPeak,jumpCount,jumpStatus,warnings,unmounted};
  }
- window.FleetOutfit={data:D,catalog:C,sections:S,canAssign,freshState,preset,validate,evaluate};
+ window.FleetOutfit={data:D,catalog:C,sections:S,capacity,canAssign,freshState,preset,validate,evaluate};
 })();

@@ -1,5 +1,5 @@
 {
-  "version": "sections-3",
+  "version": "sections-4",
   "name": "KESTREL / equipment study",
   "hullCost": 400,
   "budget": 2500,
@@ -15,7 +15,9 @@
       "locked": true,
       "note": "Fixed command and sensors in the front section.",
       "space": 4,
-      "size": "Core"
+      "size": "Core",
+      "summary": "Directs the ship and its systems.",
+      "description": "Directs the ship and keeps its systems coordinated. Losing command disables the engines, weapons, shields and jump charging in this workshop."
     },
     {
       "id": "bus",
@@ -27,7 +29,9 @@
       "locked": true,
       "note": "Fixed shared distribution in the middle. Losing it disconnects fitted systems.",
       "space": 2,
-      "size": "Core"
+      "size": "Core",
+      "summary": "Carries power to the ship’s systems.",
+      "description": "Distributes reactor power to the rest of the ship. If this trunk fails, the reactors can still generate power, but connected equipment cannot use it."
     },
     {
       "id": "reactor",
@@ -40,7 +44,9 @@
       "quantity": 250000000,
       "note": "60 kW at full condition. A large package reserves room for machinery, cooling and servicing.",
       "space": 12,
-      "size": "Large"
+      "size": "Large",
+      "summary": "Generates power; takes up substantial room.",
+      "description": "Generates power for engines, weapons, shields and other equipment. Extra reactors support heavier loads, but use room you could spend on something else. Damage reduces their output sharply."
     },
     {
       "id": "jump",
@@ -52,7 +58,9 @@
       "chargeDemand": 90000,
       "note": "Compact and expensive. Requests 90 kW while charging. Proposed tuning; fitting none removes independent jump capability.",
       "space": 4,
-      "size": "Compact"
+      "size": "Compact",
+      "summary": "Independent travel; a large charging load.",
+      "description": "Lets the ship make its own jumps. It takes little room but costs a lot and needs a large burst of power to charge. Leave it out of a ship meant only for local defense."
     },
     {
       "id": "drive",
@@ -65,7 +73,9 @@
       "note": "24 MN native main-drive rating. Assigned to the rear; needs a live propellant store. Attitude control is not simulated.",
       "space": 6,
       "size": "Medium",
-      "section": "rear"
+      "section": "rear",
+      "summary": "Turns propellant and power into thrust.",
+      "description": "Pushes the ship using reactor power and stored propellant. More drives provide more thrust, but need more power and room. Drives belong at the rear."
     },
     {
       "id": "fuel",
@@ -77,7 +87,9 @@
       "quantity": 8000,
       "note": "8,000 kg native store. Occupied space remains reserved when empty or damaged.",
       "space": 6,
-      "size": "Medium"
+      "size": "Medium",
+      "summary": "Stores propellant for the engines.",
+      "description": "Holds propellant for the main drives. If no working tank has propellant left, the engines cannot fire. An empty tank still takes up space."
     },
     {
       "id": "gun",
@@ -90,7 +102,9 @@
       "space": 6,
       "size": "Medium",
       "article": "stock",
-      "family": "gun"
+      "family": "gun",
+      "summary": "Standard weapon; needs power and ammunition.",
+      "description": "An ammunition-fed weapon for the front or middle mount. It needs power and a working, stocked magazine. Test fire spends one round."
     },
     {
       "id": "ammo",
@@ -102,7 +116,9 @@
       "quantity": 60,
       "note": "60 rounds. Test fire spends a round; removing the last live magazine blocks weapons.",
       "space": 4,
-      "size": "Compact"
+      "size": "Compact",
+      "summary": "Feeds the weapons with finite rounds.",
+      "description": "Stores ammunition for the ship’s guns. Test fire uses one round; when every usable magazine is empty, the weapons stop firing."
     },
     {
       "id": "shield",
@@ -117,7 +133,9 @@
       "article": "stock",
       "family": "shield",
       "reserve": 1,
-      "recharge": 1
+      "recharge": 1,
+      "summary": "Projects a shield around the ship.",
+      "description": "Projects part of the ship’s protective shield. Each emitter needs power and an exterior mount. Adding another uses another mount; removing one removes that projector."
     },
     {
       "id": "crew",
@@ -128,7 +146,9 @@
       "demand": 5000,
       "note": "Proposed accommodation and life-support allocation. Required for a complete design; crew movement and endurance are not simulated.",
       "space": 4,
-      "size": "Compact"
+      "size": "Compact",
+      "summary": "Room and life support for the crew.",
+      "description": "Reserves accommodation and life-support power for the crew. Without a working package, this workshop marks the crewed ship as incomplete."
     },
     {
       "id": "gun-rapid",
@@ -137,11 +157,13 @@
       "kind": "gun",
       "cost": 180,
       "demand": 7700,
-      "note": "Short barrel and faster native cycle. Draw is 1.10\u00d7 the standard weapon. One finite round per test shot.",
+      "note": "Short barrel and faster native cycle. Draw is 1.10× the standard weapon. One finite round per test shot.",
       "space": 6,
       "size": "Medium",
       "article": "rapid",
-      "family": "gun"
+      "family": "gun",
+      "summary": "Short barrel; favors faster firing.",
+      "description": "The native builder’s short-barrel weapon: faster shots, with less work per shot and slightly more power draw than Standard. This workshop checks its power and ammunition; firing cadence is not simulated."
     },
     {
       "id": "gun-lance",
@@ -150,11 +172,13 @@
       "kind": "gun",
       "cost": 240,
       "demand": 8400,
-      "note": "Long barrel and higher native shot work with a slower cycle. Draw is 1.20\u00d7 standard. Prototype space and price.",
+      "note": "Long barrel and higher native shot work with a slower cycle. Draw is 1.20× standard. Prototype space and price.",
       "space": 8,
       "size": "Medium",
       "article": "lance",
-      "family": "gun"
+      "family": "gun",
+      "summary": "Long barrel; favors harder individual shots.",
+      "description": "The native builder’s long-barrel weapon: higher shot work and speed, with a slower firing cycle. It takes more room and power here. Firing cadence and projectile impacts are not simulated."
     },
     {
       "id": "shield-reservoir",
@@ -169,7 +193,9 @@
       "article": "reservoir",
       "family": "shield",
       "reserve": 1.6,
-      "recharge": 0.65
+      "recharge": 0.65,
+      "summary": "More shield reserve; slower recovery.",
+      "description": "Tall capacitor forks trade slower recovery for more stored shield energy. Compared with Stock, the native design has 1.6× reserve and 0.65× recharge. Reserve is the energy available to absorb a hit."
     },
     {
       "id": "shield-cascade",
@@ -184,7 +210,9 @@
       "article": "cascade",
       "family": "shield",
       "reserve": 0.7,
-      "recharge": 1.6
+      "recharge": 1.6,
+      "summary": "Faster shield recovery; higher power draw.",
+      "description": "Cooling ribs favor quick recovery between hits. Compared with Stock, the native design has 0.7× stored shield energy and 1.6× recharge, with a larger power demand."
     },
     {
       "id": "shield-facet",
@@ -199,7 +227,9 @@
       "article": "facet",
       "family": "shield",
       "reserve": 1.1,
-      "recharge": 0.85
+      "recharge": 0.85,
+      "summary": "A little more reserve at stock power draw.",
+      "description": "A sloped projector with modestly more stored shield energy and slower recovery: 1.1× reserve and 0.85× recharge at Stock power draw. Its shape does not grant an extra shield arc."
     }
   ],
   "fixed": [
@@ -257,11 +287,17 @@
         [
           "jump",
           "middle"
+        ],
+        [
+          "reactor",
+          "front"
         ]
-      ]
+      ],
+      "description": "Three reactors support jump charging alongside the fitted engines and weapon. Fewer shields leave room and credits for travel."
     },
     "defense": {
-      "name": "Local-defense escort",
+      "name": "Reservoir defense",
+      "description": "Four high-reserve emitters and two weapons. No jump drive: the credits go into local defense. Rear machinery and emitters use all 36 spaces.",
       "items": [
         [
           "reactor",
@@ -284,20 +320,36 @@
           "middle"
         ],
         [
-          "gun",
-          "front"
-        ],
-        [
           "ammo",
-          "front"
-        ],
-        [
-          "shield",
           "front"
         ],
         [
           "crew",
           "middle"
+        ],
+        [
+          "gun-lance",
+          "front"
+        ],
+        [
+          "gun-rapid",
+          "middle"
+        ],
+        [
+          "shield-reservoir",
+          "front"
+        ],
+        [
+          "shield-reservoir",
+          "front"
+        ],
+        [
+          "shield-reservoir",
+          "rear"
+        ],
+        [
+          "shield-reservoir",
+          "rear"
         ]
       ]
     },
@@ -323,6 +375,65 @@
         [
           "reactor",
           "middle"
+        ]
+      ],
+      "description": "Five reactors produce plenty of power, but this is an incomplete study: it still needs engines, fuel, crew and weapons."
+    },
+    "cascade": {
+      "name": "Cascade defense",
+      "description": "Four fast-recovery emitters and two Rapid weapons. Less stored shielding, higher power demand and more spare room. No jump drive.",
+      "items": [
+        [
+          "reactor",
+          "middle"
+        ],
+        [
+          "reactor",
+          "rear"
+        ],
+        [
+          "drive",
+          "rear"
+        ],
+        [
+          "drive",
+          "rear"
+        ],
+        [
+          "fuel",
+          "middle"
+        ],
+        [
+          "ammo",
+          "front"
+        ],
+        [
+          "crew",
+          "middle"
+        ],
+        [
+          "gun-rapid",
+          "front"
+        ],
+        [
+          "gun-rapid",
+          "middle"
+        ],
+        [
+          "shield-cascade",
+          "front"
+        ],
+        [
+          "shield-cascade",
+          "front"
+        ],
+        [
+          "shield-cascade",
+          "rear"
+        ],
+        [
+          "shield-cascade",
+          "rear"
         ]
       ]
     }
@@ -444,7 +555,7 @@
     {
       "id": "middle",
       "name": "Middle",
-      "capacity": 40,
+      "capacity": 36,
       "point": [
         3,
         0,
@@ -454,7 +565,7 @@
     {
       "id": "rear",
       "name": "Rear",
-      "capacity": 32,
+      "capacity": 36,
       "point": [
         -25,
         0,
@@ -462,21 +573,43 @@
       ]
     }
   ],
-  "previous": {
-    "version": "sections-2",
-    "types": [
-      "bridge",
-      "bus",
-      "reactor",
-      "jump",
-      "drive",
-      "fuel",
-      "gun",
-      "ammo",
-      "shield",
-      "crew"
-    ]
-  },
+  "previous": [
+    {
+      "version": "sections-2",
+      "types": [
+        "bridge",
+        "bus",
+        "reactor",
+        "jump",
+        "drive",
+        "fuel",
+        "gun",
+        "ammo",
+        "shield",
+        "crew"
+      ]
+    },
+    {
+      "version": "sections-3",
+      "types": [
+        "bridge",
+        "bus",
+        "reactor",
+        "jump",
+        "drive",
+        "fuel",
+        "gun",
+        "ammo",
+        "shield",
+        "crew",
+        "gun-rapid",
+        "gun-lance",
+        "shield-reservoir",
+        "shield-cascade",
+        "shield-facet"
+      ]
+    }
+  ],
   "mounts": {
     "gun": {
       "front": 1,
@@ -487,6 +620,19 @@
       "front": 2,
       "middle": 0,
       "rear": 2
+    }
+  },
+  "allocation": "balanced",
+  "allocations": {
+    "balanced": {
+      "front": 30,
+      "middle": 36,
+      "rear": 36
+    },
+    "legacy": {
+      "front": 30,
+      "middle": 40,
+      "rear": 32
     }
   }
 }

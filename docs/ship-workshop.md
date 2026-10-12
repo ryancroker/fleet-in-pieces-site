@@ -107,3 +107,45 @@ Rapid/Lance swaps, emitter removal and Reservoir/Cascade changes, preserved dama
 sharing/restoration and no horizontal mobile overflow. Static generation, syntax
 and narrow migration/admission checks passed. Ryan owns usability and visual
 acceptance. No backend, D1, production QA records, infrastructure or game changes.
+
+## Space and clarity / sections-4 — October 11, 2026
+
+The section buttons now follow the ship's screen order: Rear / Middle / Front.
+Every catalog article has a short purpose summary and a visible explanation in
+the add/inspection controls. The selected section shows used/free space and
+weapon/emitter mount counts; blocked additions explain the limiting resource.
+
+New fits keep 102 total prototype spaces, redistributed from front30/middle40/
+rear32 to front30/middle36/rear36. This is an explicit UI-design rebalance, not
+exported empty volume or native construction admission. One reactor12 + two
+drives12 + two Reservoir emitters12 now fits the rear exactly. Supporting service
+space remains reserved even for exterior articles; the separate physical mount
+count still applies. A third rear emitter remains impossible. Equipment size,
+price, electrical ratings, state and native geometry are unchanged.
+
+The native outfitter was checked: physical mounting, material overlap and support
+admit actual articles, and occupied lattice volume is not interchangeable free
+interior space (Docs/ShipCustomization_20261009.md). The browser's coarse budgets
+are deliberately not a replacement for those native checks. Internal reactor
+and drive geometry still represents the stock reference, not moved installations.
+
+Complete starting fits, at full condition with stocked stores:
+
+| Fit | Front / middle / rear | Credits | Normal power | Generation |
+| --- | --- | --- | --- | --- |
+| Jump escort, three reactors | 30 / 28 / 24 | 2380 | 63.181 kW | 180 kW |
+| Reservoir defense, four emitters + Lance/Rapid | 28 / 30 / 36 | 2340 | 92.754 kW | 120 kW |
+| Cascade defense, four emitters + two Rapid | 22 / 30 / 32 | 2240 | 104.104 kW | 120 kW |
+
+The jump escort asks153.181kW while charging; both defenses omit the jump drive.
+The five-reactor study stays intentionally incomplete. These are prototype
+feasibility examples, not certified native recipes or balance acceptance.
+
+New recipes/storage use sections-4 and an allowlisted `allocation` field:
+`balanced` is30/36/36; `legacy` is30/40/32. Released sections-3/sections-2 and
+validated interior-1 imports retain the legacy allocation, all equipment and all
+state. Their original storage keys remain untouched. A visible **Use revised
+section space** action changes only the allocation, is undoable and warns if a
+previously packed middle is overfilled. It never relocates/deletes equipment.
+Sharing/export round-trips the chosen allocation. Unknown allocations fail
+validation. No old link is silently interpreted using new capacity limits.

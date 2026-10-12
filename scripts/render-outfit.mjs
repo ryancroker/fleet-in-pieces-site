@@ -1,5 +1,5 @@
 export const outfitBody=()=>`
-<div class="workshop-modes" role="group" aria-label="Workshop mode"><button data-workshop="design" aria-pressed="true">Outfit a ship</button><button data-workshop="native" aria-pressed="false">Inspect native ships</button></div>
+<div class="workshop-modes" role="group" aria-label="Workshop mode"><button data-workshop="design" aria-pressed="true">Fit KESTREL</button><button data-workshop="native" aria-pressed="false">Inspect native ships</button></div>
 <section id="outfit-workshop" class="lab outfit" aria-label="Ship equipment workshop">
  <div class="lab-topline"><div><p class="eyebrow">KESTREL / equipment study</p><h2>Same hull. Different job.</h2><p class="outfit-caption">Three sections. Your choice of hardware.</p></div><div class="lab-top-actions"><button id="fit-share">Share fit ↗</button><button id="fit-export">Export fit</button><button id="fit-undo" disabled>Undo</button></div></div>
  <div class="outfit-presets" role="group" aria-label="Starting designs"><span>Start from</span><button data-fit-preset="expedition">Jump escort · 3 reactors</button><button data-fit-preset="defense">Reservoir defense</button><button data-fit-preset="cascade">Cascade defense</button><button data-fit-preset="reactors">Five reactors. Now what?</button></div>

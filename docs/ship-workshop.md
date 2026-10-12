@@ -1,3 +1,19 @@
+## Crew and shared hull selection / local October 12 work
+
+`FleetCrewDesigner_20261012` received joint schema review; see the root release receipt for actual commit/deployment status. Ryan authorized coordination in Shipyard. Shipyard owns native quarters, staffing and exact exports; Website owns this adapter and UI. Shipyard cleared this static selector/unknown-crew release after review. New quarters still require matching native packets before activation. The old Commander Notes checkout remains separate.
+
+`render-designer.mjs` validates all 99 already-published native editions and emits a small `designer-data.js` directory plus lazy, immutable JSON models under `site/assets/designer`. `content/designer-hulls.json` records the selected editions. The default group is Warships; a directly opened hull selects its own group. KESTREL and KITE retain their independent fitting editors. All other hulls are native-system inspections with fixed reference artwork, not general manufacture or fitting support. KITE's fitter remains .4; its separately labeled earlier dossier inspection remains .2. Do not use the earlier thumbnail as current .4 art.
+
+`ship-lab.js` now loads allowlisted model URLs on demand, checks exact identity, guards stale selection responses, and preserves revision-scoped local states and #setup links. Missing drives/failure categories are disabled and no-drive thrust reads as absent. New hull models allow exact fractional stores; the three existing KESTREL models retain their released integer-state rules. Sharing and damage remain browser-only; no API calls, polling, analytics writes or D1 changes were added.
+
+`crew-contract.mjs` accepts only `native-crew-1` packets matching the model's exact recipe/hash. Five disjoint departments are Operators, Engineers, Pilots, Marines/operator detachments and Command. The validator requires integer role/capacity totals, viable native defaults, exact room part/machine identity and Feed kind, unique rooms, matching summed capacities/watts, and valid role-source references. All current published packets lack this contract: their inputs stay disabled with Unknown values. The KESTREL abstract crew package is never converted to fabricated bunks.
+
+`crew-plan.js` is planning UI, not conserved people or recruitment. Future exact packets enable per-role planned counts, hardware-derived minimums, fitted bunks, powered life support and spare berths. Native defaults, minimum and selected plan stay separate. Each room's browser support is floor(capacity * condition / 100), only when the common evaluator says its machine is ready. Actual structural attachment, breached voxels, bunk witness cells, atmosphere/endurance and crew casualties are not simulated. Local plans are keyed to exact hash and quarters mode and are NOT yet included in released #fit/#carrier/#setup recipes. Old recipes are unchanged.
+
+Before activating new quarters choices, obtain the six reviewed KESTREL/KITE minimum/watch/reserve full native fit packets with exact identity/outfit metadata, machinery/parts, accommodation and matching art/meshes. Old base hashes must not receive the new ratings or geometry. Further fitting changes require an explicit compatible native crew export/rule contract. Current planning controls remain gated until that work; no fabricated runtime crew or simulated admission claim.
+
+Bounded local review covers RAVELIN 101-component inspection/reactor damage/share restore, GANNET fractional-store persistence, ANCHORAGE missing drive handling, a transport at 390px, shared selection/search, KITE fitting retention and unknown crew panels. Static generation/syntax and local reference checks are recorded in the root evidence folder. Ryan owns usability and native-game acceptance.
+
 # Ship workshop / October 11, 2026
 
 ## KITE carrier / kite-outfit-1

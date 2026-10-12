@@ -8,7 +8,7 @@
  const fresh=model=>model.machines.map(m=>({condition:100,enabled:true,priority:0,quantity:m.InitialQuantity}));
  function validate(model,values){
   if(!Array.isArray(values)||values.length!==model.machines.length)return null;
-  if(values.some((s,i)=>!s||![0,25,50,75,100].includes(s.condition)||typeof s.enabled!=='boolean'||![-1,0,1].includes(s.priority)||!Number.isFinite(s.quantity)||s.quantity<0||s.quantity>model.machines[i].InitialQuantity||!Number.isInteger(s.quantity)))return null;
+  if(values.some((s,i)=>!s||![0,25,50,75,100].includes(s.condition)||typeof s.enabled!=='boolean'||![-1,0,1].includes(s.priority)||!Number.isFinite(s.quantity)||s.quantity<0||s.quantity>model.machines[i].InitialQuantity||(!model.fractionalStores&&!Number.isInteger(s.quantity))))return null;
   return values.map(s=>({condition:s.condition,enabled:s.enabled,priority:s.priority,quantity:s.quantity}));
  }
  function evaluate(model,state){

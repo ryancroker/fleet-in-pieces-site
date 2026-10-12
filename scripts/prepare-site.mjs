@@ -9,6 +9,7 @@ import {guideDetail,guidePageBody} from './render-guide.mjs';
 import {renderShips} from './render-ships.mjs';
 import {renderLab} from './render-lab.mjs';
 import {renderCarrier} from './render-carrier.mjs';
+import {buildDesigner} from './render-designer.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
@@ -60,9 +61,10 @@ async function htmlFiles(folder) {
   return files;
 }
 const shipRoutes = await renderShips(root);
-const carrierReady=await renderCarrier(root);
-await renderLab(root,fleetRegister,discordURL,carrierReady);
-const assets = ['carrier-data.js','carrier-geometry.js','carrier-renderer.js','carrier.js','carrier.css','outfit-geometry.js','outfit-renderer.js','outfit-data.js','outfit-model.js','outfit.js','ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const designer=await buildDesigner(root,fleetRegister);
+const carrierReady=await renderCarrier(root,designer.entries);
+await renderLab(root,fleetRegister,discordURL,carrierReady,designer);
+const assets = ['designer-data.js','designer.js','designer.css','crew-plan.js','crew-plan.css','carrier-data.js','carrier-geometry.js','carrier-renderer.js','carrier.js','carrier.css','outfit-geometry.js','outfit-renderer.js','outfit-data.js','outfit-model.js','outfit.js','ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;

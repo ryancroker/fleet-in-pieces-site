@@ -52,6 +52,7 @@
   $('carrier-store').hidden=!m.InitialQuantity;$('carrier-store').textContent=s.quantity?'Use 25% of this store':'Store empty';$('carrier-store').disabled=!s.quantity;
   let serviced=0;const berths=D.berths.map((b,i)=>{const physical=result.rows[b.controller].ready&&result.rows[b.fuel_store].ready&&result.rows[b.ammo_store].ready&&state.states[b.fuel_store].quantity>0&&state.states[b.ammo_store].quantity>0;serviced+=Number(physical);const available=physical&&state.duty==='flight',button=el('button',undefined,available?'':'blocked');button.type='button';button.append(el('span',b.name),el('small',!physical?'Service unavailable':state.duty==='flight'?'Service ready':'Shield interlock'));button.addEventListener('click',()=>choose(b.controller));return button;});
   $('carrier-berths').replaceChildren(...berths);$('carrier-deck-summary').textContent=serviced+' / '+D.berths.length+' berths have working services. '+(state.duty==='flight'?'Shields are down; ready to examine launch and recovery tradeoffs.':'Launch and recovery are held while the shields are up.');
+  window.FleetCrewPlan?.update('carrier-crew',D,result,undefined,states);
   map();window.FleetCarrierRenderer?.update({...state,states});
  }
  for(const m of D.machines){const option=el('option',(m.index+1)+'. '+m.name);option.value=m.index;$('carrier-component').append(option);}

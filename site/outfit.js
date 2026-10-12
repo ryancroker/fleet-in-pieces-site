@@ -9,12 +9,12 @@
  const power=c=>c.generation?'Output 0–'+watts(c.generation):'Draw '+(c.chargeDemand?'0–'+watts(c.chargeDemand)+' · charging':c.demand?'0–'+watts(c.demand):'0 W');
  let fit=F.preset('expedition'),result,message='Choose a section, then add hardware. Choose a starting design to compare space, shielding and jump power.',storage=true;
  function setWorkshop(which){for(const b of document.querySelectorAll('[data-workshop]'))b.setAttribute('aria-pressed',String(b.dataset.workshop===which));$('outfit-workshop').hidden=which!=='design';$('outfit-method').hidden=which!=='design';$('ship-workshop').hidden=which!=='native';$('native-method').hidden=which!=='native';}
- for(const b of document.querySelectorAll('[data-workshop]'))b.addEventListener('click',()=>setWorkshop(b.dataset.workshop));
+ for(const b of document.querySelectorAll('[data-workshop]'))b.addEventListener('click',()=>{const which=b.dataset.workshop;setWorkshop(which);if(which==='design'){historyReplace();window.history.replaceState(null,'',location.pathname);dispatchEvent(new CustomEvent('fleet:inspection-loaded',{detail:{key:'kestrel'}}));}else dispatchEvent(new Event('fleet:inspect-open'));});
  function decode(hash){if(!hash.startsWith('#fit=')||hash.length>24000)return null;try{return F.validate(JSON.parse(atob(hash.slice(5))));}catch{return null;}}
  const shared=decode(location.hash),badLink=location.hash.startsWith('#fit=')&&!shared;
  if(shared){fit=shared;message='Shared fit opened as your own editable copy.';}else if(!badLink){try{const current=localStorage.getItem(saveKey),s=F.validate(JSON.parse(current||localStorage.getItem('fleet-outfit:sections-3')||localStorage.getItem('fleet-outfit:sections-2')||localStorage.getItem('fleet-interior:interior-1')));if(s){fit=s;message='Restored your equipment from this browser.';}}catch{storage=false;}}
  if(badLink)message='That fit link is invalid or from an unsupported catalog. An intact starter design is open.';
- setWorkshop(location.hash.startsWith('#setup=')?'native':'design');
+ setWorkshop(location.hash.startsWith('#setup=')||new URLSearchParams(location.search).has('ship')?'native':'design');
  function persist(){try{localStorage.setItem(saveKey,JSON.stringify(fit));$('fit-save').textContent='Fit saved in this browser · no account needed';}catch{storage=false;$('fit-save').textContent='Browser storage unavailable · keep a Share fit link';}}
  const index=()=>fit.items.findIndex(p=>p.uid===fit.selected);
  function snapshot(){history.push(copy(fit));if(history.length>20)history.shift();}
@@ -59,6 +59,7 @@
   }
  }
  function render(){
+  window.FleetCrewPlan?.update('fit-crew',null,null,'Crew capacity for this custom KESTREL fitting study is not available yet.');
   result=F.evaluate(fit);const section=S.get(fit.section),members=fit.items.flatMap((p,i)=>p.section===fit.section?[i]:[]);
   const signature=items=>items.map(p=>p.type+':'+p.section).sort().join(','),matching=Object.keys(D.presets).find(key=>signature(F.preset(key).items)===signature(fit.items));
   $('fit-preset-description').textContent=matching?D.presets[matching].description:'Custom fit. Space and mount counts limit installation; power and stores determine what can run.';

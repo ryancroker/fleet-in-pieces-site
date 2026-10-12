@@ -6,7 +6,7 @@ export const outfitBody=()=>`
  <div id="fit-budget" class="lab-telemetry" aria-label="Space, power and cost"></div>
  <div class="outfit-strip"><label for="fit-phase">Power state<select id="fit-phase"><option value="normal">Normal operation</option><option value="jump">Charge jump drive</option></select></label><label for="fit-budget-target">Budget · design credits<input id="fit-budget-target" type="number" min="0" max="100000" step="1" value="2500"></label><p id="fit-jump-status"></p></div>
  <div class="lab-layout"><div class="lab-visual">
-  <div class="fit-art-heading"><span>KESTREL</span><span>Front · middle · rear</span></div>
+  <div class="fit-art-heading"><span>KESTREL</span><span id="fit-focus-label">Editing: middle</span></div>
   <svg id="fit-map" viewBox="0 0 2048 1536" role="group" aria-label="KESTREL artwork. Select front, middle or rear."></svg>
   <div class="lab-map-caption"><span>Native ship art · approximate section markers</span><span>Artwork stays unchanged as you refit</span></div>
   <div id="fit-sections" class="fit-sections" role="group" aria-label="Ship sections"></div>

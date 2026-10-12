@@ -29,14 +29,32 @@
   if(problem||uid>10000){message=problem||'Installation limit reached. Start from a preset.';render();return;}
   mutate(()=>{fit.items.push(p);fit.states.push(F.freshState(p));fit.selected=uid;},C.get(type).name+' added to '+S.get(p.section).name.toLowerCase()+'.');
  }
- // The native picture stays intact. Tethers only indicate approximate sections.
+ // Fade the intact native art, then reveal the selected section through a soft
+ // screen-space mask along its projected fore/aft axis. These are UI regions,
+ // not geometry cuts or changes to equipment placement/capacity.
  function draw(){
   const map=$('fit-map'),focused=map.contains(document.activeElement)?document.activeElement.dataset.section:null;
-  map.replaceChildren(svg('image',{href:'/assets/fleet-register/'+art.path,width:art.width,height:art.height}));
   const P=art.projection,dot=(a,b)=>a.reduce((n,v,i)=>n+v*b[i],0),labels={rear:[240,290],middle:[1270,330],front:[1530,1230]};
+  const project=p=>[art.width/2+(dot(p,P.right)-P.centre_x_m)*P.pixels_per_metre,art.height/2-(dot(p,P.up)-P.centre_y_m)*P.pixels_per_metre];
+  const [x1,y1]=project([-50,0,0]),[x2,y2]=project([50,0,0]);
+  const a=(S.get('rear').point[0]+S.get('middle').point[0])/2/100+.5,b=(S.get('middle').point[0]+S.get('front').point[0])/2/100+.5,feather=.018;
+  const stops=fit.section==='rear'?[[0,1],[a-feather,1],[a+feather,0],[1,0]]:fit.section==='front'?[[0,0],[b-feather,0],[b+feather,1],[1,1]]:[[0,0],[a-feather,0],[a+feather,1],[b-feather,1],[b+feather,0],[1,0]];
+  const defs=svg('defs',{}),gradient=svg('linearGradient',{id:'fit-section-fade',gradientUnits:'userSpaceOnUse',x1,y1,x2,y2});
+  for(const [offset,opacity]of stops)gradient.append(svg('stop',{offset,'stop-color':'white','stop-opacity':opacity}));
+  const mask=svg('mask',{id:'fit-section-focus',maskUnits:'userSpaceOnUse',x:0,y:0,width:art.width,height:art.height});
+  mask.append(svg('rect',{width:art.width,height:art.height,fill:'url(#fit-section-fade)'}));defs.append(gradient,mask);
+  const image={href:'/assets/fleet-register/'+art.path,width:art.width,height:art.height,'pointer-events':'none','aria-hidden':'true'};
+  const focus=svg('g',{class:'fit-art-focus','pointer-events':'none'});focus.append(svg('image',{...image,mask:'url(#fit-section-focus)'}));
+  map.replaceChildren(defs,svg('image',{...image,class:'fit-art-muted'}),focus);
+  map.setAttribute('aria-label','KESTREL artwork. '+S.get(fit.section).name+' highlighted; other sections faded. Select front, middle or rear.');
+  $('fit-focus-label').textContent='Editing: '+S.get(fit.section).name;
   for(const s of result.sections){
    const x=art.width/2+(dot(s.point,P.right)-P.centre_x_m)*P.pixels_per_metre,y=art.height/2-(dot(s.point,P.up)-P.centre_y_m)*P.pixels_per_metre,[lx,ly]=labels[s.id];
    const damaged=fit.items.some((p,i)=>p.section===s.id&&fit.states[i].condition<100),g=svg('g',{class:'fit-section-marker'+(s.id===fit.section?' selected':'')+(damaged?' damaged':''),tabindex:0,role:'button','aria-label':'Select '+s.name+' section','aria-pressed':String(s.id===fit.section),'data-section':s.id});
+   // A continuous hit target covers the callout and its tether, including the
+   // empty space between them, for touch and ordinary button activation.
+   const hitX=Math.min(x-22,lx-145),hitY=Math.min(y-22,ly-35);
+   g.append(svg('rect',{class:'fit-marker-hit',x:hitX,y:hitY,width:Math.max(x+22,lx+145)-hitX,height:Math.max(y+22,ly+85)-hitY}));
    g.append(svg('path',{d:`M${x} ${y} L${lx} ${ly+35}`}),svg('circle',{cx:x,cy:y,r:18}),svg('rect',{x:lx-145,y:ly-35,width:290,height:120,rx:5}),svg('text',{x:lx,y:ly+12,'text-anchor':'middle',class:'fit-marker-title'},s.name.toUpperCase()),svg('text',{x:lx,y:ly+55,'text-anchor':'middle',class:'fit-marker-space'},s.used+' / '+s.capacity+' SPACE'));
    g.addEventListener('click',()=>chooseSection(s.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chooseSection(s.id);}});map.append(g);
    if(focused===s.id)g.focus({preventScroll:true});

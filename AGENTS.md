@@ -1,5 +1,10 @@
 # Fleet in Pieces website
 
+## Section focus - October 11, 2026
+
+Custom outfitting highlights the selected region on the original native art, with other regions faded. outfit.js owns the SVG fore/aft gradient mask; ship-lab.css owns brightness, muted opacity and active callout emphasis. Regions are approximate visual focus only; no art bytes, fitting values, model, state schema or backend changes. Preserve keyboard section selection and native inspection. Ryan owns visual acceptance.
+
+
 ## Three-section equipment workshop - October 11, 2026
 
 Ryan rejected literal grid packing. Default Outfit a ship restores native KESTREL artwork with front/middle/rear markers. sections-2 catalog uses 30/40/32 capacity budgets, size classes, prices and power ranges; equipment is assigned by section. Section damage hits all assigned components; individual tests remain under a disclosure. Read docs/ship-workshop.md. Legacy interior-1 links/local recipes are validated and explicitly converted without losing hardware/state; overfull sections remain flagged editable drafts. Never silently change versioned fit values. Native inspection/evaluator, old #setup links and all community/backend controls remain intact. Static changes only; no game source, D1, infrastructure, billing or production test writes. Ryan tests UI/balance. Continue normal website releases only from this isolated checkout.

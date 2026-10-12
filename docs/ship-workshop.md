@@ -50,3 +50,7 @@ New recipes use `fleet-outfit:sections-2` localStorage and bounded #fit fragment
 Conversion is explicitly disclosed. Section overages are retained as visibly invalid editable drafts; nothing is silently deleted or relocated to make a fit pass. New adds/moves still obey destination capacity. Unknown versions fail safely. Keep the frozen legacy metadata and bump the new version before changing its capacities or equipment ratings. Exports identify a UI prototype, never an engine save; no account or credential data is included.
 
 Generation, syntax and bounded local browser checks precede normal GitHub deployment. Ryan owns usability and balance acceptance; do not expand this into a game test harness or production social tests.
+
+## Section focus treatment
+
+The custom workshop dims the native transparent artwork to22% opacity and reveals the selected front/middle/rear region with an SVG gradient mask along the projected fore/aft axis. The region boundaries are halfway between existing section markers, with a soft edge; this is approximate visual focus, not geometry segmentation. A restrained light edge and brighter active callout reinforce selection. Section buttons, markers and assignments all use the same selected-section state. No image bytes, recipe tuning, model, persistence or native inspection behavior changes.

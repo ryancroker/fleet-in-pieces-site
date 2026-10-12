@@ -1,0 +1,4624 @@
+{
+	"id": "vf.carrier.kite.4",
+	"definition_hash": "154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+	"state": "intact definition rest pose",
+	"art_method": "Exact native FMesher surfaces; orthographic editorial lighting, authored palette; not an Unreal screenshot. No invented room plan or damage.",
+	"installation": false,
+	"airframe": 0,
+	"surface_bounds_min_m": [
+		-124.80000305175781,
+		-32,
+		-16
+	],
+	"surface_bounds_max_m": [
+		124.80000305175781,
+		32,
+		24
+	],
+	"assembled_dimensions_m": [
+		249.60000610351562,
+		64,
+		40
+	],
+	"root_dimensions_m": [
+		249.60000000000002,
+		64,
+		36
+	],
+	"propulsion_base_hash": "AF3443366E92A72C7B2051811084BCE45ACCCE6A",
+	"jump_base_hash": "",
+	"jump_research_base_hash": "",
+	"sensor_base_hash": "6687E12CFE2F2C0C453D476C619162F13C316A49",
+	"command_base_hash": "7C348A725CBBC31FD120A40B8E25B4D2FC219084",
+	"sensor_revision": 1,
+	"command_revision": 1,
+	"outfit_code": 119543039,
+	"outfit_base_hash": "5635BFD640F79CFEA1ADF115A62479AF76231A80",
+	"fitting_contract":
+	{
+		"schema": "native-fitting-1",
+		"recipe_id": "vf.carrier.kite.4",
+		"definition_hash": "154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+		"base_recipe_id": "vf.carrier.kite.4",
+		"base_definition_hash": "5635BFD640F79CFEA1ADF115A62479AF76231A80",
+		"available": true,
+		"equipment_recipe_revision": 6,
+		"sensor_recipe_revision": 6,
+		"crew_recipe_revision": 7,
+		"admission": "Capabilities only. Each candidate still requires native material, clearance, power, construction and campaign admission. Existing installed recipes keep their recorded revision.",
+		"new_recipe_revision": 7,
+		"selected_recipe_revision": 7,
+		"selected_sensor_suite": 0,
+		"selected_quarters": 1,
+		"legacy_armor": false,
+		"slots": [
+			{
+				"key": "chamber",
+				"available": false,
+				"choices": []
+			},
+			{
+				"key": "nozzle",
+				"available": false,
+				"choices": []
+			},
+			{
+				"key": "jets",
+				"available": false,
+				"choices": []
+			},
+			{
+				"key": "emitter",
+				"available": true,
+				"selected": 3,
+				"choices": [
+					0,
+					1,
+					2,
+					3
+				]
+			},
+			{
+				"key": "armor",
+				"available": false,
+				"choices": []
+			},
+			{
+				"key": "drive_limit",
+				"available": true,
+				"selected": 1,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "jet_limit",
+				"available": true,
+				"selected": 1,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "main_gun",
+				"available": true,
+				"selected": 0,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "aft_gun",
+				"available": true,
+				"selected": 0,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			}
+		],
+		"sensor_suite_available": true,
+		"quarters_available": true,
+		"reactor_replacement_available": false,
+		"equipment_removal_available": false,
+		"additional_bays_available": false
+	},
+	"crew_accommodation":
+	{
+		"schema": "native-crew-1",
+		"available": true,
+		"recipe_id": "vf.carrier.kite.4",
+		"definition_hash": "154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+		"quarters_mode": 1,
+		"role_order": [
+			"operators",
+			"engineers",
+			"pilots",
+			"troops",
+			"command"
+		],
+		"notes": "Five disjoint departments. Operators are ship operating crew; troops include marine/operator detachments. Aircraft retain their own pilots. Spare bunks do not create personnel. Legacy accommodation is unknown. Life-support rating is operating capacity, not an atmosphere/endurance or casualty simulation.",
+		"minimum": [
+			23,
+			7,
+			0,
+			0,
+			2
+		],
+		"complement": [
+			23,
+			7,
+			0,
+			0,
+			2
+		],
+		"role_sources": [
+			[
+				2,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				71,
+				72,
+				33,
+				36,
+				39,
+				41,
+				43,
+				45,
+				47,
+				49,
+				51,
+				54,
+				57,
+				59,
+				61,
+				63,
+				65,
+				67
+			],
+			[
+				0,
+				12,
+				13,
+				32,
+				33,
+				36,
+				39,
+				41,
+				43,
+				45,
+				47,
+				49,
+				51,
+				54,
+				57,
+				59,
+				61,
+				63,
+				65,
+				67
+			],
+			[],
+			[],
+			[
+				73,
+				2
+			]
+		],
+		"bunks": 56,
+		"life_support_capacity": 56,
+		"spare_berths": 24,
+		"life_support_watts": 2720,
+		"compartments": [
+			{
+				"part": 34,
+				"machine": 74,
+				"bunks": 28,
+				"life_support_capacity": 28,
+				"demand_watts": 1360,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						4
+					],
+					[
+						3,
+						17,
+						1
+					],
+					[
+						3,
+						17,
+						4
+					],
+					[
+						8,
+						2,
+						1
+					],
+					[
+						8,
+						2,
+						4
+					],
+					[
+						8,
+						17,
+						1
+					],
+					[
+						8,
+						17,
+						4
+					],
+					[
+						13,
+						2,
+						1
+					],
+					[
+						13,
+						2,
+						4
+					],
+					[
+						13,
+						17,
+						1
+					],
+					[
+						13,
+						17,
+						4
+					],
+					[
+						18,
+						2,
+						1
+					],
+					[
+						18,
+						2,
+						4
+					],
+					[
+						18,
+						17,
+						1
+					],
+					[
+						18,
+						17,
+						4
+					],
+					[
+						23,
+						2,
+						1
+					],
+					[
+						23,
+						2,
+						4
+					],
+					[
+						23,
+						17,
+						1
+					],
+					[
+						23,
+						17,
+						4
+					],
+					[
+						28,
+						2,
+						1
+					],
+					[
+						28,
+						2,
+						4
+					],
+					[
+						28,
+						17,
+						1
+					],
+					[
+						28,
+						17,
+						4
+					],
+					[
+						33,
+						2,
+						1
+					],
+					[
+						33,
+						2,
+						4
+					],
+					[
+						33,
+						17,
+						1
+					],
+					[
+						33,
+						17,
+						4
+					]
+				]
+			},
+			{
+				"part": 35,
+				"machine": 75,
+				"bunks": 28,
+				"life_support_capacity": 28,
+				"demand_watts": 1360,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						4
+					],
+					[
+						3,
+						17,
+						1
+					],
+					[
+						3,
+						17,
+						4
+					],
+					[
+						8,
+						2,
+						1
+					],
+					[
+						8,
+						2,
+						4
+					],
+					[
+						8,
+						17,
+						1
+					],
+					[
+						8,
+						17,
+						4
+					],
+					[
+						13,
+						2,
+						1
+					],
+					[
+						13,
+						2,
+						4
+					],
+					[
+						13,
+						17,
+						1
+					],
+					[
+						13,
+						17,
+						4
+					],
+					[
+						18,
+						2,
+						1
+					],
+					[
+						18,
+						2,
+						4
+					],
+					[
+						18,
+						17,
+						1
+					],
+					[
+						18,
+						17,
+						4
+					],
+					[
+						23,
+						2,
+						1
+					],
+					[
+						23,
+						2,
+						4
+					],
+					[
+						23,
+						17,
+						1
+					],
+					[
+						23,
+						17,
+						4
+					],
+					[
+						28,
+						2,
+						1
+					],
+					[
+						28,
+						2,
+						4
+					],
+					[
+						28,
+						17,
+						1
+					],
+					[
+						28,
+						17,
+						4
+					],
+					[
+						33,
+						2,
+						1
+					],
+					[
+						33,
+						2,
+						4
+					],
+					[
+						33,
+						17,
+						1
+					],
+					[
+						33,
+						17,
+						4
+					]
+				]
+			}
+		]
+	},
+	"cruise_target_m_s": 72,
+	"sensor_rating_m": 2600,
+	"reactor_rating_w": 128000.00000000003,
+	"vertices": 473634,
+	"triangles": 236796,
+	"material_assembled_dimensions_m": [
+		249.60000000000002,
+		64,
+		40
+	],
+	"parts": [
+		{
+			"index": 0,
+			"name": "Osprey continuous internal-bay carrier hull",
+			"parent": -1,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "1780E48EFB35A5943A0681D958FFC57A797453F5",
+			"material_kg": 135721449.59999871,
+			"sockets": []
+		},
+		{
+			"index": 1,
+			"name": "Fore light defensive battery",
+			"parent": 0,
+			"offset_m": [
+				104,
+				19.200000000000003,
+				15.200000000000001
+			],
+			"rig": 1,
+			"required_supports": 18,
+			"material_hash": "9F714EAE2BFE00FFF3CE371E4B439C1015227551",
+			"material_kg": 15244.000000000007,
+			"sockets": []
+		},
+		{
+			"index": 2,
+			"name": "Fore light defensive battery.elevation",
+			"parent": 1,
+			"offset_m": [
+				0,
+				0,
+				1.2000000000000002
+			],
+			"rig": 2,
+			"required_supports": 3,
+			"material_hash": "D05A4F1A0B26C2E0F000B3220240C9434EC1D215",
+			"material_kg": 7104,
+			"sockets": []
+		},
+		{
+			"index": 3,
+			"name": "Fore light defensive battery.recoil",
+			"parent": 2,
+			"offset_m": [
+				1.6000000000000001,
+				0,
+				0
+			],
+			"rig": 3,
+			"required_supports": 2,
+			"material_hash": "BB337CD287773623BE9370DB5472CAAB764528C6",
+			"material_kg": 17049.600000000006,
+			"sockets": [
+				{
+					"name": "muzzle",
+					"point_m": [
+						5.6000000000000005,
+						0.20000000000000001,
+						0.20000000000000001
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"index": 4,
+			"name": "Aft light defensive battery",
+			"parent": 0,
+			"offset_m": [
+				-100,
+				-4.8000000000000007,
+				18.400000000000002
+			],
+			"rig": 1,
+			"required_supports": 18,
+			"material_hash": "71EBDB8B13A3B7E1091A391066CD840966E86D18",
+			"material_kg": 15244.000000000007,
+			"sockets": []
+		},
+		{
+			"index": 5,
+			"name": "Aft light defensive battery.elevation",
+			"parent": 4,
+			"offset_m": [
+				0,
+				0,
+				1.2000000000000002
+			],
+			"rig": 2,
+			"required_supports": 3,
+			"material_hash": "25FB316C987222AA64B08CC275A96F40A5302054",
+			"material_kg": 7104,
+			"sockets": []
+		},
+		{
+			"index": 6,
+			"name": "Aft light defensive battery.recoil",
+			"parent": 5,
+			"offset_m": [
+				1.6000000000000001,
+				0,
+				0
+			],
+			"rig": 3,
+			"required_supports": 2,
+			"material_hash": "BD83BF443FD26819AEEA2A0811035C76A8BAFA03",
+			"material_kg": 17049.600000000006,
+			"sockets": [
+				{
+					"name": "muzzle",
+					"point_m": [
+						5.6000000000000005,
+						0.20000000000000001,
+						0.20000000000000001
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"index": 7,
+			"name": "Fore-port shield emitter",
+			"parent": 0,
+			"offset_m": [
+				82.400000000000006,
+				-24.800000000000001,
+				17.600000000000001
+			],
+			"rig": 0,
+			"required_supports": 32,
+			"material_hash": "29432FC3A4D9AD7A5329DD81FA358C0B1FAD93B1",
+			"material_kg": 61459.199999999924,
+			"sockets": []
+		},
+		{
+			"index": 8,
+			"name": "Fore-starboard shield emitter",
+			"parent": 0,
+			"offset_m": [
+				82.400000000000006,
+				24.800000000000001,
+				17.600000000000001
+			],
+			"rig": 0,
+			"required_supports": 32,
+			"material_hash": "29432FC3A4D9AD7A5329DD81FA358C0B1FAD93B1",
+			"material_kg": 61459.199999999924,
+			"sockets": []
+		},
+		{
+			"index": 9,
+			"name": "Aft-starboard shield emitter",
+			"parent": 0,
+			"offset_m": [
+				-86.400000000000006,
+				24.800000000000001,
+				17.600000000000001
+			],
+			"rig": 0,
+			"required_supports": 32,
+			"material_hash": "29432FC3A4D9AD7A5329DD81FA358C0B1FAD93B1",
+			"material_kg": 61459.199999999924,
+			"sockets": []
+		},
+		{
+			"index": 10,
+			"name": "Aft-port shield emitter",
+			"parent": 0,
+			"offset_m": [
+				-86.400000000000006,
+				-24.800000000000001,
+				17.600000000000001
+			],
+			"rig": 0,
+			"required_supports": 32,
+			"material_hash": "29432FC3A4D9AD7A5329DD81FA358C0B1FAD93B1",
+			"material_kg": 61459.199999999924,
+			"sockets": []
+		},
+		{
+			"index": 11,
+			"name": "Port Heavy Ember",
+			"parent": 0,
+			"offset_m": [
+				-94.400000000000006,
+				-9.6000000000000014,
+				9.6000000000000014
+			],
+			"rig": 0,
+			"required_supports": 14,
+			"material_hash": "90845EAF9018F62F97B0D9FEB9110F22146A4F5A",
+			"material_kg": 161558.39999999851,
+			"sockets": []
+		},
+		{
+			"index": 12,
+			"name": "Starboard Heavy Ember",
+			"parent": 0,
+			"offset_m": [
+				-94.400000000000006,
+				4.8000000000000007,
+				9.6000000000000014
+			],
+			"rig": 0,
+			"required_supports": 14,
+			"material_hash": "7C04F3C00541F641D96F4939CB6DCBF3CA1B15AB",
+			"material_kg": 161558.39999999851,
+			"sockets": []
+		},
+		{
+			"index": 13,
+			"name": "Port carrier main drive / universal drive cartridge",
+			"parent": 0,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 28,
+			"material_hash": "9F2F280BB6045F4E8404DB7E842360CC468E1D48",
+			"material_kg": 477388.79999999696,
+			"sockets": [
+				{
+					"name": "exhaust",
+					"point_m": [
+						-124,
+						-20.800000000000001,
+						-3.2000000000000002
+					],
+					"axis": [
+						-1,
+						-0,
+						-0
+					]
+				}
+			]
+		},
+		{
+			"index": 14,
+			"name": "Starboard carrier main drive / universal drive cartridge",
+			"parent": 0,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 29,
+			"material_hash": "B1B42122664178CABC26740FAB1A1D6B469CDF98",
+			"material_kg": 477388.79999999696,
+			"sockets": [
+				{
+					"name": "exhaust",
+					"point_m": [
+						-124,
+						20.800000000000001,
+						-3.2000000000000002
+					],
+					"axis": [
+						-1,
+						-0,
+						-0
+					]
+				}
+			]
+		},
+		{
+			"index": 15,
+			"name": "Rack 01 / PIKE bomber",
+			"parent": 0,
+			"offset_m": [
+				-57.600000000000001,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "918EFEBCD7D5DBD0AE003DB055DB14C2E6F786E7",
+			"material_kg": 15078.400000000007,
+			"sockets": []
+		},
+		{
+			"index": 16,
+			"name": "Rack 02 / PIKE bomber",
+			"parent": 0,
+			"offset_m": [
+				-57.600000000000001,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "26408A8F7B81138E14568465A4558920740788C7",
+			"material_kg": 15078.400000000007,
+			"sockets": []
+		},
+		{
+			"index": 17,
+			"name": "Rack 03 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				-19.200000000000003,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "0CF6D28C9E72DEA1A2E291663248017EB270D44A",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 18,
+			"name": "Rack 04 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				-19.200000000000003,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "8DA4A28B780C8D69745064C1239BEBD6B67A93B1",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 19,
+			"name": "Rack 05 / WISP scout",
+			"parent": 0,
+			"offset_m": [
+				19.200000000000003,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "6AA92D4FDAF1EA00C9FD6B221B7A4A26B2D8E7D2",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 20,
+			"name": "Rack 06 / WISP scout",
+			"parent": 0,
+			"offset_m": [
+				19.200000000000003,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "850C13ED405A9BE0479E1012EB5F250572CE8F48",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 21,
+			"name": "Rack 07 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				57.600000000000001,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "AE7D5CA8FD3E783284C8A133A4116E182E9B2C9C",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 22,
+			"name": "Rack 08 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				57.600000000000001,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "14276DF10C456F30FF87F7C7C5AFA39EEB11D023",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 23,
+			"name": "Rack 09 / PIKE bomber",
+			"parent": 0,
+			"offset_m": [
+				-44.800000000000004,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "22D0CEC9D7198318B886772EFB3EAC48E8BAFA90",
+			"material_kg": 15078.400000000007,
+			"sockets": []
+		},
+		{
+			"index": 24,
+			"name": "Rack 10 / PIKE bomber",
+			"parent": 0,
+			"offset_m": [
+				-44.800000000000004,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "AFC64B45344C699885D53E47CD397351DF6DFE7C",
+			"material_kg": 15078.400000000007,
+			"sockets": []
+		},
+		{
+			"index": 25,
+			"name": "Rack 11 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				-6.4000000000000004,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "261D49122E1982E5B05A6F06B431A5EE97541719",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 26,
+			"name": "Rack 12 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				-6.4000000000000004,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "753A29956493BB3C202728267C8E1227EE23973D",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 27,
+			"name": "Rack 13 / WISP scout",
+			"parent": 0,
+			"offset_m": [
+				32,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "F89EF0067268BAD2D71720C806721ECF559D23B9",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 28,
+			"name": "Rack 14 / WISP scout",
+			"parent": 0,
+			"offset_m": [
+				32,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "9296210B418DCAC7987C4F264B25436EFFC1A847",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 29,
+			"name": "Rack 15 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				70.400000000000006,
+				-11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "66F0AE5E08CF37D5A3C7A4FD839905287EC247DB",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 30,
+			"name": "Rack 16 / TALON fighter",
+			"parent": 0,
+			"offset_m": [
+				70.400000000000006,
+				11.200000000000001,
+				-5.6000000000000005
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "EB9A93FB20679C64803878AC5C52DACB08D22A5A",
+			"material_kg": 15257.600000000008,
+			"sockets": []
+		},
+		{
+			"index": 31,
+			"name": "KITE aviation repair cabinet",
+			"parent": 0,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 4,
+			"material_hash": "F33B042A3C7734DB25F47584F5F21D369C34275B",
+			"material_kg": 153894.40000000113,
+			"sockets": []
+		},
+		{
+			"index": 32,
+			"name": "Standard sensor/comms assembly 1",
+			"parent": 0,
+			"offset_m": [
+				85.600000000000009,
+				-14,
+				16
+			],
+			"rig": 0,
+			"required_supports": 3,
+			"material_hash": "D38554EE5AFEC55C064A7C06C33092262985C6EE",
+			"material_kg": 46750,
+			"sockets": []
+		},
+		{
+			"index": 33,
+			"name": "Armored command bridge",
+			"parent": 0,
+			"offset_m": [
+				-86,
+				2,
+				16
+			],
+			"rig": 0,
+			"required_supports": 2,
+			"material_hash": "22551396B84E02B3E34F31DD26DB5E719A843C71",
+			"material_kg": 1786100,
+			"sockets": []
+		},
+		{
+			"index": 34,
+			"name": "Crew quarters 1 / 28 bunks",
+			"parent": 0,
+			"offset_m": [
+				-38.400000000000006,
+				-4,
+				6.4000000000000004
+			],
+			"rig": 0,
+			"required_supports": 86,
+			"material_hash": "26DFD20235331AC60664750A14A37003FDFD3FC2",
+			"material_kg": 392179.20000000362,
+			"sockets": []
+		},
+		{
+			"index": 35,
+			"name": "Crew quarters 2 / 28 bunks",
+			"parent": 0,
+			"offset_m": [
+				25.600000000000001,
+				-4,
+				6.4000000000000004
+			],
+			"rig": 0,
+			"required_supports": 86,
+			"material_hash": "9AD4E4972EA679BCD08B8435E6275C45242AB119",
+			"material_kg": 392179.20000000362,
+			"sockets": []
+		}
+	],
+	"machines": [
+		{
+			"index": 0,
+			"name": "Port Heavy Ember",
+			"kind": 1,
+			"part": 11,
+			"core_position_m": [
+				-90.200000000000003,
+				-7.0000000000000018,
+				12.200000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 64000.000000000015,
+			"DemandWatts": 12.800000000000002,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 307200000.00000006,
+			"InitialQuantity": 307200000.00000006,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 1,
+			"name": "Central protected power trunk",
+			"kind": 8,
+			"part": 0,
+			"core_position_m": [
+				0.20000000000000001,
+				0.20000000000000001,
+				-1.8
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 2,
+			"name": "Protected aviation command and sensors",
+			"kind": 0,
+			"part": 0,
+			"core_position_m": [
+				-92.600000000000009,
+				15.4,
+				17.800000000000001
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460.80000000000013,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 3,
+			"name": "Port hangar and emitter feed",
+			"kind": 8,
+			"part": 0,
+			"core_position_m": [
+				-79,
+				-5.4000000000000004,
+				-3.4000000000000004
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 4,
+			"name": "Starboard hangar and emitter feed",
+			"kind": 8,
+			"part": 0,
+			"core_position_m": [
+				-79,
+				5.8000000000000007,
+				-3.4000000000000004
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 5,
+			"name": "Paid command window supply",
+			"kind": 8,
+			"part": 0,
+			"core_position_m": [
+				-31.400000000000002,
+				0.20000000000000001,
+				-1.8
+			],
+			"dependencies": [
+				1,
+				3,
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 40.960000000000008,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 6,
+			"name": "Port ship propellant",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				-96.600000000000009,
+				-10.200000000000001,
+				-0.20000000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 122880.00000000003,
+			"InitialQuantity": 122880.00000000003,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 7,
+			"name": "Port finite aviation fuel",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				-17,
+				1.8,
+				0.60000000000000009
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 51200.000000000007,
+			"InitialQuantity": 51200.000000000007,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 8,
+			"name": "Fore defence finite magazine",
+			"kind": 3,
+			"part": 0,
+			"core_position_m": [
+				104.2,
+				19.800000000000001,
+				1
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 240,
+			"InitialQuantity": 240,
+			"ItemKg": 18,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 9,
+			"name": "Starboard ship propellant",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				-96.600000000000009,
+				10.600000000000001,
+				-0.20000000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 122880.00000000003,
+			"InitialQuantity": 122880.00000000003,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 10,
+			"name": "Starboard finite aviation fuel",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				7,
+				1.8,
+				0.60000000000000009
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 51200.000000000007,
+			"InitialQuantity": 51200.000000000007,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 11,
+			"name": "Aft defence finite magazine",
+			"kind": 3,
+			"part": 0,
+			"core_position_m": [
+				-99.800000000000011,
+				-4.2000000000000002,
+				1
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 240,
+			"InitialQuantity": 240,
+			"ItemKg": 18,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 12,
+			"name": "Port carrier main drive",
+			"kind": 4,
+			"part": 13,
+			"core_position_m": [
+				-111,
+				-20.600000000000001,
+				-3
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 14592.000000000004,
+			"MaxForce": 23040000.000000007,
+			"ExhaustSpeed": 450000,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 13,
+			"name": "Starboard carrier main drive",
+			"kind": 4,
+			"part": 14,
+			"core_position_m": [
+				-111,
+				21,
+				-3
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 14592.000000000004,
+			"MaxForce": 23040000.000000007,
+			"ExhaustSpeed": 450000,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 14,
+			"name": "Fore-port shield emitter",
+			"kind": 6,
+			"part": 7,
+			"core_position_m": [
+				82.600000000000009,
+				-24.600000000000001,
+				19.800000000000001
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 9216.0000000000018,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 15,
+			"name": "Fore-starboard shield emitter",
+			"kind": 6,
+			"part": 8,
+			"core_position_m": [
+				82.600000000000009,
+				25,
+				19.800000000000001
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 9216.0000000000018,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 16,
+			"name": "Aft-starboard shield emitter",
+			"kind": 6,
+			"part": 9,
+			"core_position_m": [
+				-86.200000000000003,
+				25,
+				19.800000000000001
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 9216.0000000000018,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 17,
+			"name": "Aft-port shield emitter",
+			"kind": 6,
+			"part": 10,
+			"core_position_m": [
+				-86.200000000000003,
+				-24.600000000000001,
+				19.800000000000001
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 9216.0000000000018,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 18,
+			"name": "Carrier attitude jet 1",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-116.60000000000001,
+				-28.200000000000003,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 19,
+			"name": "Carrier attitude jet 2",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-116.60000000000001,
+				28.600000000000001,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 20,
+			"name": "Carrier attitude jet 3",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				112.2,
+				-26.600000000000001,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 21,
+			"name": "Carrier attitude jet 4",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				112.2,
+				27,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 22,
+			"name": "Carrier attitude jet 5",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				123.80000000000001,
+				-19,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 23,
+			"name": "Carrier attitude jet 6",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				123.80000000000001,
+				19.400000000000002,
+				0.20000000000000001
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 2112.0000000000005,
+			"MaxForce": 7680000.0000000019,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 24,
+			"name": "Carrier attitude jet 7",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-114.2,
+				-21.400000000000002,
+				13
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 3072000.0000000009,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 25,
+			"name": "Carrier attitude jet 8",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-114.2,
+				21.800000000000001,
+				13
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 3072000.0000000009,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 26,
+			"name": "Carrier attitude jet 9",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				113,
+				-19,
+				-11
+			],
+			"dependencies": [
+				1,
+				6
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 6,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 3072000.0000000009,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 27,
+			"name": "Carrier attitude jet 10",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				113,
+				19.400000000000002,
+				-11
+			],
+			"dependencies": [
+				1,
+				9
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": 9,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 3072000.0000000009,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 28,
+			"name": "Fore light defensive battery",
+			"kind": 7,
+			"part": 1,
+			"core_position_m": [
+				104.2,
+				19.400000000000002,
+				15.4
+			],
+			"dependencies": [
+				1,
+				8
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": 8,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 1300,
+			"RoundSpeed": 420,
+			"RoundRadius": 0.14000000000000001,
+			"ReloadSeconds": 1.3999999999999999,
+			"Range": 450,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 29,
+			"name": "Aft light defensive battery",
+			"kind": 7,
+			"part": 4,
+			"core_position_m": [
+				-99.799999999999997,
+				-4.6000000000000005,
+				18.600000000000001
+			],
+			"dependencies": [
+				1,
+				11
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": 11,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1536.0000000000005,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 1300,
+			"RoundSpeed": 420,
+			"RoundRadius": 0.14000000000000001,
+			"ReloadSeconds": 1.3999999999999999,
+			"Range": 450,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 30,
+			"name": "Port Heavy Ember cooling manifold",
+			"kind": 8,
+			"part": 11,
+			"core_position_m": [
+				-94.200000000000003,
+				-5.0000000000000009,
+				12.200000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 31,
+			"name": "Starboard Heavy Ember cooling manifold",
+			"kind": 8,
+			"part": 12,
+			"core_position_m": [
+				-94.200000000000003,
+				9.4000000000000021,
+				12.200000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 32,
+			"name": "Starboard Heavy Ember",
+			"kind": 1,
+			"part": 12,
+			"core_position_m": [
+				-90.200000000000003,
+				7.4000000000000004,
+				12.200000000000001
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 64000.000000000015,
+			"DemandWatts": 12.800000000000002,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 307200000.00000006,
+			"InitialQuantity": 307200000.00000006,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 33,
+			"name": "Rack 01 / PIKE bomber / arrest and service",
+			"kind": 8,
+			"part": 15,
+			"core_position_m": [
+				-57.399999999999999,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 34,
+			"name": "Rack 01 / PIKE bomber / finite cannon rounds",
+			"kind": 3,
+			"part": 15,
+			"core_position_m": [
+				-57.399999999999999,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.58533599999999986,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 35,
+			"name": "Rack 01 / PIKE bomber / four reserve torpedoes",
+			"kind": 3,
+			"part": 15,
+			"core_position_m": [
+				-57.399999999999999,
+				-11.000000000000002,
+				-3.8000000000000007
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 4,
+			"InitialQuantity": 4,
+			"ItemKg": 240,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 36,
+			"name": "Rack 02 / PIKE bomber / arrest and service",
+			"kind": 8,
+			"part": 16,
+			"core_position_m": [
+				-57.399999999999999,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 37,
+			"name": "Rack 02 / PIKE bomber / finite cannon rounds",
+			"kind": 3,
+			"part": 16,
+			"core_position_m": [
+				-57.399999999999999,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.58533599999999986,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 38,
+			"name": "Rack 02 / PIKE bomber / four reserve torpedoes",
+			"kind": 3,
+			"part": 16,
+			"core_position_m": [
+				-57.399999999999999,
+				11.4,
+				-3.8000000000000007
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 4,
+			"InitialQuantity": 4,
+			"ItemKg": 240,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 39,
+			"name": "Rack 03 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 17,
+			"core_position_m": [
+				-19.000000000000004,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 40,
+			"name": "Rack 03 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 17,
+			"core_position_m": [
+				-19.000000000000004,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 41,
+			"name": "Rack 04 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 18,
+			"core_position_m": [
+				-19.000000000000004,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 42,
+			"name": "Rack 04 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 18,
+			"core_position_m": [
+				-19.000000000000004,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 43,
+			"name": "Rack 05 / WISP scout / arrest and service",
+			"kind": 8,
+			"part": 19,
+			"core_position_m": [
+				19.400000000000002,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 44,
+			"name": "Rack 05 / WISP scout / finite cannon rounds",
+			"kind": 3,
+			"part": 19,
+			"core_position_m": [
+				19.400000000000002,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.22226399999999999,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 45,
+			"name": "Rack 06 / WISP scout / arrest and service",
+			"kind": 8,
+			"part": 20,
+			"core_position_m": [
+				19.400000000000002,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 46,
+			"name": "Rack 06 / WISP scout / finite cannon rounds",
+			"kind": 3,
+			"part": 20,
+			"core_position_m": [
+				19.400000000000002,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.22226399999999999,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 47,
+			"name": "Rack 07 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 21,
+			"core_position_m": [
+				57.800000000000004,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 48,
+			"name": "Rack 07 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 21,
+			"core_position_m": [
+				57.800000000000004,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 49,
+			"name": "Rack 08 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 22,
+			"core_position_m": [
+				57.800000000000004,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 50,
+			"name": "Rack 08 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 22,
+			"core_position_m": [
+				57.800000000000004,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 51,
+			"name": "Rack 09 / PIKE bomber / arrest and service",
+			"kind": 8,
+			"part": 23,
+			"core_position_m": [
+				-44.600000000000001,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 52,
+			"name": "Rack 09 / PIKE bomber / finite cannon rounds",
+			"kind": 3,
+			"part": 23,
+			"core_position_m": [
+				-44.600000000000001,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.58533599999999986,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 53,
+			"name": "Rack 09 / PIKE bomber / four reserve torpedoes",
+			"kind": 3,
+			"part": 23,
+			"core_position_m": [
+				-44.600000000000001,
+				-11.000000000000002,
+				-3.8000000000000007
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 4,
+			"InitialQuantity": 4,
+			"ItemKg": 240,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 54,
+			"name": "Rack 10 / PIKE bomber / arrest and service",
+			"kind": 8,
+			"part": 24,
+			"core_position_m": [
+				-44.600000000000001,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 55,
+			"name": "Rack 10 / PIKE bomber / finite cannon rounds",
+			"kind": 3,
+			"part": 24,
+			"core_position_m": [
+				-44.600000000000001,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.58533599999999986,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 56,
+			"name": "Rack 10 / PIKE bomber / four reserve torpedoes",
+			"kind": 3,
+			"part": 24,
+			"core_position_m": [
+				-44.600000000000001,
+				11.4,
+				-3.8000000000000007
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 4,
+			"InitialQuantity": 4,
+			"ItemKg": 240,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 57,
+			"name": "Rack 11 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 25,
+			"core_position_m": [
+				-6.2000000000000002,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 58,
+			"name": "Rack 11 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 25,
+			"core_position_m": [
+				-6.2000000000000002,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 59,
+			"name": "Rack 12 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 26,
+			"core_position_m": [
+				-6.2000000000000002,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 60,
+			"name": "Rack 12 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 26,
+			"core_position_m": [
+				-6.2000000000000002,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 61,
+			"name": "Rack 13 / WISP scout / arrest and service",
+			"kind": 8,
+			"part": 27,
+			"core_position_m": [
+				32.200000000000003,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 62,
+			"name": "Rack 13 / WISP scout / finite cannon rounds",
+			"kind": 3,
+			"part": 27,
+			"core_position_m": [
+				32.200000000000003,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.22226399999999999,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 63,
+			"name": "Rack 14 / WISP scout / arrest and service",
+			"kind": 8,
+			"part": 28,
+			"core_position_m": [
+				32.200000000000003,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 64,
+			"name": "Rack 14 / WISP scout / finite cannon rounds",
+			"kind": 3,
+			"part": 28,
+			"core_position_m": [
+				32.200000000000003,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.22226399999999999,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 65,
+			"name": "Rack 15 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 29,
+			"core_position_m": [
+				70.600000000000009,
+				-11.000000000000002,
+				-5
+			],
+			"dependencies": [
+				3
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 66,
+			"name": "Rack 15 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 29,
+			"core_position_m": [
+				70.600000000000009,
+				-11.000000000000002,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 67,
+			"name": "Rack 16 / TALON fighter / arrest and service",
+			"kind": 8,
+			"part": 30,
+			"core_position_m": [
+				70.600000000000009,
+				11.4,
+				-5
+			],
+			"dependencies": [
+				4
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1200,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 68,
+			"name": "Rack 16 / TALON fighter / finite cannon rounds",
+			"kind": 3,
+			"part": 30,
+			"core_position_m": [
+				70.600000000000009,
+				11.4,
+				-4.6000000000000005
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 360,
+			"InitialQuantity": 360,
+			"ItemKg": 0.375,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 69,
+			"name": "KITE aviation tools",
+			"kind": 8,
+			"part": 31,
+			"core_position_m": [
+				4.6000000000000005,
+				10.200000000000001,
+				-3.4000000000000004
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 8000,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 70,
+			"name": "KITE aviation spares / kg",
+			"kind": 3,
+			"part": 31,
+			"core_position_m": [
+				7.4000000000000004,
+				10.200000000000001,
+				-3.4000000000000004
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 4000,
+			"InitialQuantity": 4000,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 71,
+			"name": "Standard sensor 1 / receiver",
+			"kind": 8,
+			"part": 32,
+			"core_position_m": [
+				86.350000000000009,
+				-13.75,
+				22.75
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 500,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 72,
+			"name": "Standard sensor 1 / comms output",
+			"kind": 8,
+			"part": 32,
+			"core_position_m": [
+				83.850000000000009,
+				-13.75,
+				23.25
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 150,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 73,
+			"name": "Command bridge",
+			"kind": 8,
+			"part": 33,
+			"core_position_m": [
+				-85.75,
+				2.25,
+				22.25
+			],
+			"dependencies": [
+				1
+			],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460.80000000000013,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 74,
+			"name": "Quarters 1 / life support for 28",
+			"kind": 8,
+			"part": 34,
+			"core_position_m": [
+				-23.000000000000007,
+				-3.3999999999999999,
+				7.4000000000000004
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1360,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 75,
+			"name": "Quarters 2 / life support for 28",
+			"kind": 8,
+			"part": 35,
+			"core_position_m": [
+				41,
+				-3.3999999999999999,
+				7.4000000000000004
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				32
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 1360,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		}
+	],
+	"berths": [
+		{
+			"name": "Rack 01 / PIKE bomber",
+			"kind": 1,
+			"datum_m": [
+				-57.600000000000001,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 33,
+			"fuel_store": 7,
+			"ammo_store": 34,
+			"initial_craft": 3
+		},
+		{
+			"name": "Rack 02 / PIKE bomber",
+			"kind": 1,
+			"datum_m": [
+				-57.600000000000001,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 36,
+			"fuel_store": 10,
+			"ammo_store": 37,
+			"initial_craft": 3
+		},
+		{
+			"name": "Rack 03 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				-19.200000000000003,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 39,
+			"fuel_store": 7,
+			"ammo_store": 40,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 04 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				-19.200000000000003,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 41,
+			"fuel_store": 10,
+			"ammo_store": 42,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 05 / WISP scout",
+			"kind": 1,
+			"datum_m": [
+				19.200000000000003,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 43,
+			"fuel_store": 7,
+			"ammo_store": 44,
+			"initial_craft": 2
+		},
+		{
+			"name": "Rack 06 / WISP scout",
+			"kind": 1,
+			"datum_m": [
+				19.200000000000003,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 45,
+			"fuel_store": 10,
+			"ammo_store": 46,
+			"initial_craft": 2
+		},
+		{
+			"name": "Rack 07 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				57.600000000000001,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 47,
+			"fuel_store": 7,
+			"ammo_store": 48,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 08 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				57.600000000000001,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 49,
+			"fuel_store": 10,
+			"ammo_store": 50,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 09 / PIKE bomber",
+			"kind": 1,
+			"datum_m": [
+				-44.800000000000004,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 51,
+			"fuel_store": 7,
+			"ammo_store": 52,
+			"initial_craft": 3
+		},
+		{
+			"name": "Rack 10 / PIKE bomber",
+			"kind": 1,
+			"datum_m": [
+				-44.800000000000004,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 54,
+			"fuel_store": 10,
+			"ammo_store": 55,
+			"initial_craft": 3
+		},
+		{
+			"name": "Rack 11 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				-6.4000000000000004,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 57,
+			"fuel_store": 7,
+			"ammo_store": 58,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 12 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				-6.4000000000000004,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 59,
+			"fuel_store": 10,
+			"ammo_store": 60,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 13 / WISP scout",
+			"kind": 1,
+			"datum_m": [
+				32,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 61,
+			"fuel_store": 7,
+			"ammo_store": 62,
+			"initial_craft": 2
+		},
+		{
+			"name": "Rack 14 / WISP scout",
+			"kind": 1,
+			"datum_m": [
+				32,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 63,
+			"fuel_store": 10,
+			"ammo_store": 64,
+			"initial_craft": 2
+		},
+		{
+			"name": "Rack 15 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				70.400000000000006,
+				-24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 65,
+			"fuel_store": 7,
+			"ammo_store": 66,
+			"initial_craft": 1
+		},
+		{
+			"name": "Rack 16 / TALON fighter",
+			"kind": 1,
+			"datum_m": [
+				70.400000000000006,
+				24,
+				-3.6000000000000001
+			],
+			"half_size_m": [
+				12,
+				5,
+				4
+			],
+			"controller": 67,
+			"fuel_store": 10,
+			"ammo_store": 68,
+			"initial_craft": 1
+		}
+	],
+	"boarding_sections": [
+		{
+			"index": 0,
+			"name": "FORE PORT",
+			"purpose": "Flight deck"
+		},
+		{
+			"index": 1,
+			"name": "FORE CENTER",
+			"purpose": "Hull / support"
+		},
+		{
+			"index": 2,
+			"name": "FORE STARBOARD",
+			"purpose": "Flight deck"
+		},
+		{
+			"index": 3,
+			"name": "MID PORT",
+			"purpose": "Flight deck"
+		},
+		{
+			"index": 4,
+			"name": "MID CENTER",
+			"purpose": "Hull / support"
+		},
+		{
+			"index": 5,
+			"name": "MID STARBOARD",
+			"purpose": "Flight deck"
+		},
+		{
+			"index": 6,
+			"name": "AFT PORT",
+			"purpose": "Flight deck"
+		},
+		{
+			"index": 7,
+			"name": "AFT CENTER",
+			"purpose": "Engineering"
+		},
+		{
+			"index": 8,
+			"name": "AFT STARBOARD",
+			"purpose": "Flight deck"
+		}
+	],
+	"definition_material_mass_kg": 140338483.59999862,
+	"initial_fuel_and_magazine_mass_kg": 366882.94400000019,
+	"mass_basis": "Definition material includes modeled hardware; initial fuel/magazine stock is separate. Does not include crew, passengers, aircraft, escape capsules or other live payloads. Not a certified loaded mass.",
+	"name": "KITE / quarters 1",
+	"folder": "vf.carrier.kite.4_154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+	"exported_utc": "2026-10-12T19:33:58.602Z",
+	"views": [
+		{
+			"file": "three-quarter.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				0.70710678118654746,
+				0.70710678118654746,
+				0
+			],
+			"up": [
+				-0.40824829046386307,
+				0.40824829046386307,
+				0.81649658092772615
+			],
+			"toward": [
+				0.57735026918962584,
+				-0.57735026918962584,
+				0.57735026918962584
+			],
+			"centre_x_m": -2.2627415649270404,
+			"centre_y_m": 1.3063952302889987,
+			"pixels_per_metre": 8.9516708057383134,
+			"sha1": "DAE763B178F9350152A1B98206642C18011355D6"
+		},
+		{
+			"file": "top.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				-1,
+				0
+			],
+			"toward": [
+				0,
+				0,
+				1
+			],
+			"centre_x_m": 0,
+			"centre_y_m": 0,
+			"pixels_per_metre": 7.6282049416712017,
+			"sha1": "0106987ED569DEC93C40D6CCAFA0479DA7B3A97E"
+		},
+		{
+			"file": "side.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				0,
+				1
+			],
+			"toward": [
+				0,
+				-1,
+				0
+			],
+			"centre_x_m": 0,
+			"centre_y_m": 4,
+			"pixels_per_metre": 7.6282049416712017,
+			"sha1": "F447433ADB8BBCF5D8DB674D4EA2FBCD27415E52"
+		},
+		{
+			"file": "boarding.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				-1,
+				0
+			],
+			"toward": [
+				0,
+				0,
+				1
+			],
+			"centre_x_m": 0,
+			"centre_y_m": 0,
+			"pixels_per_metre": 7.6282049416712017,
+			"sha1": "BB61A00FA8AEA5762ACD07F0DF1CB8147BFB8631"
+		}
+	]
+}

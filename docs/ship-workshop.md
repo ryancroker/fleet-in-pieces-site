@@ -1,3 +1,48 @@
+## Six exact crew fits / October 12, 2026
+
+`FleetCrewPackets_20261012` activates Minimum, Watch and Reserve quarters for
+KESTREL and KITE. The shared directory now has 105 editions: the previous 99
+remain unchanged, plus six exact native revision7 packages. Their source is only
+`Saved/FleetRegister/Exports/20261012T193325Z_76604A81`; the reviewed root
+`CrewFitsExport_20261012/CrewPackets.json` pins all artifact hashes.
+`import-crew-fits.py` validates that receipt, copies immutable matching art and
+ship JSON, and converts the existing PLY into lazy part-addressable meshes.
+`content/crew-fits.json` retains the receipt, definition and mesh provenance.
+
+Both hulls keep the exported 75% main-drive and thruster limits. KESTREL has
+32/64/64 bunks, 12/24/12 default crew and 1.84/3.28/3.28kW life support;
+KITE has 56/112/112 bunks, 32/64/32 default crew and 2.72/5.24/5.24kW life
+support. Watch doubles the default operating complement; Reserve keeps the
+minimum aboard with extra accommodation. Five departments remain disjoint;
+Command is not added to Operators, and aircraft keep their own pilots.
+
+The exported `native-fitting-1` contract explicitly disallows equipment removal,
+reactor replacement and extra bays for these packages. Their hardware therefore
+stays fixed. The 74 historical draft-editable hulls and 463 module positions are
+unchanged; the existing KESTREL/KITE article editors remain separate. No claim of
+universal native customization or manufacture admission is made.
+
+`/ship-lab/refit?ship=kite-crew-watch#refit-crew` (and equivalent family/mode keys)
+offers five-role planning, exact minimums, live capacity and quarters inspection.
+Room condition/enable controls use the native Feed machine. Locate quarters
+highlights its physical part. Powered/ready capacity is floor(room capacity *
+condition / 100); physical bunk damage, detached compartments, atmosphere,
+endurance and casualties remain native-game checks. Plans do not create people.
+
+`hull-fit-1` gains an optional five-integer `crewPlan` only for matching exact crew
+contracts. It persists with component damage in local drafts and share links;
+old recipes still validate. Native-complement reset changes the plan without
+repairing damage. Historical unknown capacities remain unknown/disabled.
+Crew-to-historical hash navigation restores the ordinary hardware controls and
+headings. No #fit, #carrier or #setup schema was changed.
+
+Generation, hash/contract checks and bounded 1440/390 review are recorded under
+root `Saved/SourceChanges/FleetCrewPackets_20261012`. Shipyard reviewed the native
+adapter. No engine launch, source/build, saves, backend, D1 or infrastructure
+changes; Ryan owns usability and native-game acceptance. Root release receipt
+records actual publication status. This section supersedes the older
+crew-packets-pending descriptions below.
+
 ## All-hull registered-module planning / October 12, 2026
 
 `FleetAllHullFitting_20261012` adds `/ship-lab/refit?ship=<key>`. This is a browser

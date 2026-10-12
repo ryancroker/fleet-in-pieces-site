@@ -13,3 +13,4 @@
 *.mp4 binary
 # Provenance hash refers to exact native exporter bytes, including line endings.
 content/workshop-geometry/kite-native.json -text whitespace=cr-at-eol
+content/crew-fits/*.json -text whitespace=cr-at-eol

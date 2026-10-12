@@ -1,0 +1,1548 @@
+{
+  "schema": "crew-fits-1",
+  "receiptSha256": "a92ee74873db3bb4666b4dd4fde7da2f4adf1644bcfe321f65569f8b04622969",
+  "entries": [
+    {
+      "key": "kestrel-crew-minimum",
+      "family": "kestrel",
+      "mode": 1,
+      "name": "KESTREL / Minimum quarters",
+      "category": "Warships",
+      "native": "crew-fits/08a58040a27c1f84af06450752e261ce33a67788.json",
+      "sourceSha256": "73829f95be62783bb4b89da9ea5254daf5b4922532ca966cbb25eb40159b9e0d",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "70330E50BF8E10DB4E95753158F43C348B6B8AF3B3DDC356DFF21540612B5C28",
+        "ship.json": "73829F95BE62783BB4B89DA9EA5254DAF5B4922532CA966CBB25EB40159B9E0D",
+        "ship.ply": "DE0D301A529E935B364294EE0E3189398DECAB7B05B4D258E5EF29C1EECF0E35",
+        "side.png": "3736A219FB4BC60D187067667B30C129B82D1C60FF17B84F51727917AE952C6E",
+        "systems.svg": "E45A904C8A218B566D9E3B86E66F6065C1F1B533BB02825C18C5739F3F1BE032",
+        "three-quarter.png": "07CC632F69196DD028A6DE842BD0BCF91F8AF9CAB71232E34DA0980CD64CDAEA",
+        "top.png": "2D91D5C099BF2A9EE8E7872DD5995B323944526DF989F6E40AD38032CF4A82B0"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/07cc632f69196dd028a6de842bd0bcf91f8af9cab71232e34da0980cd64cdaea.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": 3.358757210636103,
+            "centre_y_m": -1.2247448713915876,
+            "pixels_per_metre": 25.04802439775231
+          }
+        },
+        "top": {
+          "path": "assets/2d91d5c099bf2a9ee8e7872dd5995b323944526df989f6e40ad38032cf4a82b0.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "side": {
+          "path": "assets/3736a219fb4bc60d187067667b30c129b82d1c60ff17b84f51727917ae952c6e.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": -0.25,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "boarding": {
+          "path": "assets/70330e50bf8e10db4e95753158f43c348b6b8af3b3ddc356dff21540612b5c28.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.kestrel.escort.10",
+        "definitionHash": "08A58040A27C1F84AF06450752E261CE33A67788",
+        "asset": "/assets/hull-mesh/6a4ec7e0ef1470bad5c8.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 70230
+          },
+          "1": {
+            "first": 70230,
+            "count": 2748
+          },
+          "2": {
+            "first": 72978,
+            "count": 144
+          },
+          "3": {
+            "first": 73122,
+            "count": 1452
+          },
+          "4": {
+            "first": 74574,
+            "count": 2184
+          },
+          "5": {
+            "first": 76758,
+            "count": 144
+          },
+          "6": {
+            "first": 76902,
+            "count": 504
+          },
+          "7": {
+            "first": 77406,
+            "count": 4362
+          },
+          "8": {
+            "first": 81768,
+            "count": 4362
+          },
+          "9": {
+            "first": 86130,
+            "count": 4362
+          },
+          "10": {
+            "first": 90492,
+            "count": 4362
+          },
+          "11": {
+            "first": 94854,
+            "count": 2148
+          },
+          "12": {
+            "first": 97002,
+            "count": 2148
+          },
+          "13": {
+            "first": 99150,
+            "count": 60
+          },
+          "14": {
+            "first": 99210,
+            "count": 60
+          },
+          "15": {
+            "first": 99270,
+            "count": 546
+          },
+          "16": {
+            "first": 99816,
+            "count": 1128
+          },
+          "17": {
+            "first": 100944,
+            "count": 1656
+          },
+          "18": {
+            "first": 102600,
+            "count": 1656
+          },
+          "19": {
+            "first": 104256,
+            "count": 1656
+          },
+          "20": {
+            "first": 105912,
+            "count": 1656
+          }
+        },
+        "bounds": [
+          [
+            -44.0,
+            -8.0,
+            -13.5
+          ],
+          [
+            57.0,
+            8.0,
+            13.0
+          ]
+        ],
+        "bytes": 1721088,
+        "compressedBytes": 200192,
+        "sourceSha256": "de0d301a529e935b364294ee0e3189398decab7b05b4d258e5ef29c1eecf0e35"
+      }
+    },
+    {
+      "key": "kestrel-crew-watch",
+      "family": "kestrel",
+      "mode": 2,
+      "name": "KESTREL / Watch quarters",
+      "category": "Warships",
+      "native": "crew-fits/6acdb29a8eaef369f0e3e54050c00c27f58af564.json",
+      "sourceSha256": "e88cc3f6e7e3263d5c3f3b4b46307146f96ae226758b6f143caf59a546ba13d5",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "70330E50BF8E10DB4E95753158F43C348B6B8AF3B3DDC356DFF21540612B5C28",
+        "ship.json": "E88CC3F6E7E3263D5C3F3B4B46307146F96AE226758B6F143CAF59A546BA13D5",
+        "ship.ply": "577077CBBA431599B754D5E72FBFB2BD8BAA79637CD46A54149D81C0883EBAAC",
+        "side.png": "396E228788FFDAF57FB78009C1B6E1209F07DF45F3BC3D976DE910E07597CEE3",
+        "systems.svg": "A6F525A1D7335386E90CA3D63A03D9CE3E79C91805EE80660256F9E6EEC15F79",
+        "three-quarter.png": "586A80C24D65D001057D994120255520B4D5AEEDBBA25AB420A81EFCCC5DA8F5",
+        "top.png": "2D91D5C099BF2A9EE8E7872DD5995B323944526DF989F6E40AD38032CF4A82B0"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/586a80c24d65d001057d994120255520b4d5aeedbba25ab420a81efccc5da8f5.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": 3.358757210636103,
+            "centre_y_m": -0.9185586535436912,
+            "pixels_per_metre": 25.04802439775231
+          }
+        },
+        "top": {
+          "path": "assets/2d91d5c099bf2a9ee8e7872dd5995b323944526df989f6e40ad38032cf4a82b0.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "side": {
+          "path": "assets/396e228788ffdaf57fb78009c1b6e1209f07df45f3bc3d976de910e07597cee3.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": -0.25,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "boarding": {
+          "path": "assets/70330e50bf8e10db4e95753158f43c348b6b8af3b3ddc356dff21540612b5c28.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.kestrel.escort.10",
+        "definitionHash": "6ACDB29A8EAEF369F0E3E54050C00C27F58AF564",
+        "asset": "/assets/hull-mesh/9ed723e62ae15c0c8c14.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 70230
+          },
+          "1": {
+            "first": 70230,
+            "count": 2748
+          },
+          "2": {
+            "first": 72978,
+            "count": 144
+          },
+          "3": {
+            "first": 73122,
+            "count": 1452
+          },
+          "4": {
+            "first": 74574,
+            "count": 2184
+          },
+          "5": {
+            "first": 76758,
+            "count": 144
+          },
+          "6": {
+            "first": 76902,
+            "count": 504
+          },
+          "7": {
+            "first": 77406,
+            "count": 4362
+          },
+          "8": {
+            "first": 81768,
+            "count": 4362
+          },
+          "9": {
+            "first": 86130,
+            "count": 4362
+          },
+          "10": {
+            "first": 90492,
+            "count": 4362
+          },
+          "11": {
+            "first": 94854,
+            "count": 2148
+          },
+          "12": {
+            "first": 97002,
+            "count": 2148
+          },
+          "13": {
+            "first": 99150,
+            "count": 60
+          },
+          "14": {
+            "first": 99210,
+            "count": 60
+          },
+          "15": {
+            "first": 99270,
+            "count": 546
+          },
+          "16": {
+            "first": 99816,
+            "count": 1128
+          },
+          "17": {
+            "first": 100944,
+            "count": 3276
+          },
+          "18": {
+            "first": 104220,
+            "count": 3276
+          },
+          "19": {
+            "first": 107496,
+            "count": 3276
+          },
+          "20": {
+            "first": 110772,
+            "count": 3276
+          }
+        },
+        "bounds": [
+          [
+            -44.0,
+            -8.0,
+            -13.5
+          ],
+          [
+            57.0,
+            8.0,
+            13.0
+          ]
+        ],
+        "bytes": 1824768,
+        "compressedBytes": 211898,
+        "sourceSha256": "577077cbba431599b754d5e72fbfb2bd8baa79637cd46a54149d81c0883ebaac"
+      }
+    },
+    {
+      "key": "kestrel-crew-reserve",
+      "family": "kestrel",
+      "mode": 3,
+      "name": "KESTREL / Reserve quarters",
+      "category": "Warships",
+      "native": "crew-fits/9cb73875599d9a0f8c7db1d2941769b27d9f4fe3.json",
+      "sourceSha256": "44aa2f25dab52d264d5ca13b94fa021904f6bce7911424c7dff743daa4ad5a9a",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "70330E50BF8E10DB4E95753158F43C348B6B8AF3B3DDC356DFF21540612B5C28",
+        "ship.json": "44AA2F25DAB52D264D5CA13B94FA021904F6BCE7911424C7DFF743DAA4AD5A9A",
+        "ship.ply": "577077CBBA431599B754D5E72FBFB2BD8BAA79637CD46A54149D81C0883EBAAC",
+        "side.png": "396E228788FFDAF57FB78009C1B6E1209F07DF45F3BC3D976DE910E07597CEE3",
+        "systems.svg": "A6F525A1D7335386E90CA3D63A03D9CE3E79C91805EE80660256F9E6EEC15F79",
+        "three-quarter.png": "586A80C24D65D001057D994120255520B4D5AEEDBBA25AB420A81EFCCC5DA8F5",
+        "top.png": "2D91D5C099BF2A9EE8E7872DD5995B323944526DF989F6E40AD38032CF4A82B0"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/586a80c24d65d001057d994120255520b4d5aeedbba25ab420a81efccc5da8f5.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": 3.358757210636103,
+            "centre_y_m": -0.9185586535436912,
+            "pixels_per_metre": 25.04802439775231
+          }
+        },
+        "top": {
+          "path": "assets/2d91d5c099bf2a9ee8e7872dd5995b323944526df989f6e40ad38032cf4a82b0.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "side": {
+          "path": "assets/396e228788ffdaf57fb78009c1b6e1209f07df45f3bc3d976de910e07597cee3.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": -0.25,
+            "pixels_per_metre": 18.85148514851485
+          }
+        },
+        "boarding": {
+          "path": "assets/70330e50bf8e10db4e95753158f43c348b6b8af3b3ddc356dff21540612b5c28.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 6.5,
+            "centre_y_m": 0,
+            "pixels_per_metre": 18.85148514851485
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.kestrel.escort.10",
+        "definitionHash": "9CB73875599D9A0F8C7DB1D2941769B27D9F4FE3",
+        "asset": "/assets/hull-mesh/9ed723e62ae15c0c8c14.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 70230
+          },
+          "1": {
+            "first": 70230,
+            "count": 2748
+          },
+          "2": {
+            "first": 72978,
+            "count": 144
+          },
+          "3": {
+            "first": 73122,
+            "count": 1452
+          },
+          "4": {
+            "first": 74574,
+            "count": 2184
+          },
+          "5": {
+            "first": 76758,
+            "count": 144
+          },
+          "6": {
+            "first": 76902,
+            "count": 504
+          },
+          "7": {
+            "first": 77406,
+            "count": 4362
+          },
+          "8": {
+            "first": 81768,
+            "count": 4362
+          },
+          "9": {
+            "first": 86130,
+            "count": 4362
+          },
+          "10": {
+            "first": 90492,
+            "count": 4362
+          },
+          "11": {
+            "first": 94854,
+            "count": 2148
+          },
+          "12": {
+            "first": 97002,
+            "count": 2148
+          },
+          "13": {
+            "first": 99150,
+            "count": 60
+          },
+          "14": {
+            "first": 99210,
+            "count": 60
+          },
+          "15": {
+            "first": 99270,
+            "count": 546
+          },
+          "16": {
+            "first": 99816,
+            "count": 1128
+          },
+          "17": {
+            "first": 100944,
+            "count": 3276
+          },
+          "18": {
+            "first": 104220,
+            "count": 3276
+          },
+          "19": {
+            "first": 107496,
+            "count": 3276
+          },
+          "20": {
+            "first": 110772,
+            "count": 3276
+          }
+        },
+        "bounds": [
+          [
+            -44.0,
+            -8.0,
+            -13.5
+          ],
+          [
+            57.0,
+            8.0,
+            13.0
+          ]
+        ],
+        "bytes": 1824768,
+        "compressedBytes": 211898,
+        "sourceSha256": "577077cbba431599b754d5e72fbfb2bd8baa79637cd46a54149d81c0883ebaac"
+      }
+    },
+    {
+      "key": "kite-crew-minimum",
+      "family": "kite",
+      "mode": 1,
+      "name": "KITE / Minimum quarters",
+      "category": "Carriers & aircraft",
+      "native": "crew-fits/154c108fbe29f4ca659753dac520e1f168b5cbe5.json",
+      "sourceSha256": "f9f46f114fd6dfb989fe067353eedc71f993801c24db52315341296e80cce1fd",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "9704490AE1309E044D1CACE5A1255A4D7DA40447703276533921ABBCD47E226C",
+        "ship.json": "F9F46F114FD6DFB989FE067353EEDC71F993801C24DB52315341296E80CCE1FD",
+        "ship.ply": "5D118E45792A1CF29D8C88C1F219AEB5A70E308470187E637C0AC3AD70024F26",
+        "side.png": "CF1524B59F194B7DFA8ED256D6C103BD2FF93E11840CFDD30FF938EC01B76BA7",
+        "systems.svg": "55DBE9892BECFDB26E218AF58A6DADCE1D5C3651CF845E9CCA65B6ACEC112199",
+        "three-quarter.png": "AA4ED0FD0082704F209BBD97961016BD7057186514A5DF6CAAB530060098CF34",
+        "top.png": "595D4B658D8BCCEB016B72375197BCB79B29776F4D022A4C955FA64486836FCF"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/aa4ed0fd0082704f209bbd97961016bd7057186514a5df6caab530060098cf34.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": -2.2627415649270404,
+            "centre_y_m": 1.3063952302889987,
+            "pixels_per_metre": 8.951670805738313
+          }
+        },
+        "top": {
+          "path": "assets/595d4b658d8bcceb016b72375197bcb79b29776f4d022a4c955fa64486836fcf.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "side": {
+          "path": "assets/cf1524b59f194b7dfa8ed256d6c103bd2ff93e11840cfdd30ff938ec01b76ba7.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 4,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "boarding": {
+          "path": "assets/9704490ae1309e044d1cace5a1255a4d7da40447703276533921abbcd47e226c.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.carrier.kite.4",
+        "definitionHash": "154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+        "asset": "/assets/hull-mesh/4bf1f814f0d6c073ccb4.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 656892
+          },
+          "1": {
+            "first": 656892,
+            "count": 1620
+          },
+          "2": {
+            "first": 658512,
+            "count": 144
+          },
+          "3": {
+            "first": 658656,
+            "count": 504
+          },
+          "4": {
+            "first": 659160,
+            "count": 1620
+          },
+          "5": {
+            "first": 660780,
+            "count": 144
+          },
+          "6": {
+            "first": 660924,
+            "count": 504
+          },
+          "7": {
+            "first": 661428,
+            "count": 4362
+          },
+          "8": {
+            "first": 665790,
+            "count": 4362
+          },
+          "9": {
+            "first": 670152,
+            "count": 4362
+          },
+          "10": {
+            "first": 674514,
+            "count": 4362
+          },
+          "11": {
+            "first": 678876,
+            "count": 3354
+          },
+          "12": {
+            "first": 682230,
+            "count": 3354
+          },
+          "13": {
+            "first": 685584,
+            "count": 36
+          },
+          "14": {
+            "first": 685620,
+            "count": 36
+          },
+          "15": {
+            "first": 685656,
+            "count": 516
+          },
+          "16": {
+            "first": 686172,
+            "count": 516
+          },
+          "17": {
+            "first": 686688,
+            "count": 468
+          },
+          "18": {
+            "first": 687156,
+            "count": 468
+          },
+          "19": {
+            "first": 687624,
+            "count": 468
+          },
+          "20": {
+            "first": 688092,
+            "count": 468
+          },
+          "21": {
+            "first": 688560,
+            "count": 468
+          },
+          "22": {
+            "first": 689028,
+            "count": 468
+          },
+          "23": {
+            "first": 689496,
+            "count": 516
+          },
+          "24": {
+            "first": 690012,
+            "count": 516
+          },
+          "25": {
+            "first": 690528,
+            "count": 468
+          },
+          "26": {
+            "first": 690996,
+            "count": 468
+          },
+          "27": {
+            "first": 691464,
+            "count": 468
+          },
+          "28": {
+            "first": 691932,
+            "count": 468
+          },
+          "29": {
+            "first": 692400,
+            "count": 468
+          },
+          "30": {
+            "first": 692868,
+            "count": 468
+          },
+          "31": {
+            "first": 693336,
+            "count": 2616
+          },
+          "32": {
+            "first": 695952,
+            "count": 564
+          },
+          "33": {
+            "first": 696516,
+            "count": 1896
+          },
+          "34": {
+            "first": 698412,
+            "count": 5988
+          },
+          "35": {
+            "first": 704400,
+            "count": 5988
+          }
+        },
+        "bounds": [
+          [
+            -124.80000305175781,
+            -32.0,
+            -16.0
+          ],
+          [
+            124.80000305175781,
+            32.0,
+            24.0
+          ]
+        ],
+        "bytes": 11366208,
+        "compressedBytes": 1396450,
+        "sourceSha256": "5d118e45792a1cf29d8c88c1f219aeb5a70e308470187e637c0ac3ad70024f26"
+      }
+    },
+    {
+      "key": "kite-crew-watch",
+      "family": "kite",
+      "mode": 2,
+      "name": "KITE / Watch quarters",
+      "category": "Carriers & aircraft",
+      "native": "crew-fits/2fbb2fa455627147e3672c05e89c2afaf9aff3cc.json",
+      "sourceSha256": "b6186b357d85b26d3219200b90c2f0ffc85ce33f6a832f44dc021880dc41679e",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "9704490AE1309E044D1CACE5A1255A4D7DA40447703276533921ABBCD47E226C",
+        "ship.json": "B6186B357D85B26D3219200B90C2F0FFC85CE33F6A832F44DC021880DC41679E",
+        "ship.ply": "97BB54795445B4D41082FA14EDC8334F839797010B76700A4D7BBDD96894A1C4",
+        "side.png": "5A451F64549C9EC067DBEDB8210E61F69D182AAABF216B35A9F0CB3061024BF9",
+        "systems.svg": "518685316A5213BAD9ACEB617931571091B069C784BC8CAA5F6D288CF15639B8",
+        "three-quarter.png": "01AF70C8CB627056B7BEFCFECDD6F6101AC3E67F58EFBB579517129FD4A0D166",
+        "top.png": "595D4B658D8BCCEB016B72375197BCB79B29776F4D022A4C955FA64486836FCF"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/01af70c8cb627056b7befcfecdd6f6101ac3e67f58efbb579517129fd4a0d166.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": -2.2627415649270404,
+            "centre_y_m": 1.3063952302889987,
+            "pixels_per_metre": 8.951670805738313
+          }
+        },
+        "top": {
+          "path": "assets/595d4b658d8bcceb016b72375197bcb79b29776f4d022a4c955fa64486836fcf.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "side": {
+          "path": "assets/5a451f64549c9ec067dbedb8210e61f69d182aaabf216b35a9f0cb3061024bf9.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 4,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "boarding": {
+          "path": "assets/9704490ae1309e044d1cace5a1255a4d7da40447703276533921abbcd47e226c.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.carrier.kite.4",
+        "definitionHash": "2FBB2FA455627147E3672C05E89C2AFAF9AFF3CC",
+        "asset": "/assets/hull-mesh/dad5966b02963504b1c4.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 656892
+          },
+          "1": {
+            "first": 656892,
+            "count": 1620
+          },
+          "2": {
+            "first": 658512,
+            "count": 144
+          },
+          "3": {
+            "first": 658656,
+            "count": 504
+          },
+          "4": {
+            "first": 659160,
+            "count": 1620
+          },
+          "5": {
+            "first": 660780,
+            "count": 144
+          },
+          "6": {
+            "first": 660924,
+            "count": 504
+          },
+          "7": {
+            "first": 661428,
+            "count": 4362
+          },
+          "8": {
+            "first": 665790,
+            "count": 4362
+          },
+          "9": {
+            "first": 670152,
+            "count": 4362
+          },
+          "10": {
+            "first": 674514,
+            "count": 4362
+          },
+          "11": {
+            "first": 678876,
+            "count": 3354
+          },
+          "12": {
+            "first": 682230,
+            "count": 3354
+          },
+          "13": {
+            "first": 685584,
+            "count": 36
+          },
+          "14": {
+            "first": 685620,
+            "count": 36
+          },
+          "15": {
+            "first": 685656,
+            "count": 516
+          },
+          "16": {
+            "first": 686172,
+            "count": 516
+          },
+          "17": {
+            "first": 686688,
+            "count": 468
+          },
+          "18": {
+            "first": 687156,
+            "count": 468
+          },
+          "19": {
+            "first": 687624,
+            "count": 468
+          },
+          "20": {
+            "first": 688092,
+            "count": 468
+          },
+          "21": {
+            "first": 688560,
+            "count": 468
+          },
+          "22": {
+            "first": 689028,
+            "count": 468
+          },
+          "23": {
+            "first": 689496,
+            "count": 516
+          },
+          "24": {
+            "first": 690012,
+            "count": 516
+          },
+          "25": {
+            "first": 690528,
+            "count": 468
+          },
+          "26": {
+            "first": 690996,
+            "count": 468
+          },
+          "27": {
+            "first": 691464,
+            "count": 468
+          },
+          "28": {
+            "first": 691932,
+            "count": 468
+          },
+          "29": {
+            "first": 692400,
+            "count": 468
+          },
+          "30": {
+            "first": 692868,
+            "count": 468
+          },
+          "31": {
+            "first": 693336,
+            "count": 2616
+          },
+          "32": {
+            "first": 695952,
+            "count": 564
+          },
+          "33": {
+            "first": 696516,
+            "count": 1896
+          },
+          "34": {
+            "first": 698412,
+            "count": 11916
+          },
+          "35": {
+            "first": 710328,
+            "count": 11916
+          }
+        },
+        "bounds": [
+          [
+            -124.80000305175781,
+            -32.0,
+            -16.0
+          ],
+          [
+            124.80000305175781,
+            32.0,
+            24.0
+          ]
+        ],
+        "bytes": 11555904,
+        "compressedBytes": 1419301,
+        "sourceSha256": "97bb54795445b4d41082fa14edc8334f839797010b76700a4d7bbdd96894a1c4"
+      }
+    },
+    {
+      "key": "kite-crew-reserve",
+      "family": "kite",
+      "mode": 3,
+      "name": "KITE / Reserve quarters",
+      "category": "Carriers & aircraft",
+      "native": "crew-fits/386755e3544f66ff8a40c9c9690e36407225ab54.json",
+      "sourceSha256": "554e673f2187dfafdff2adc64307a1958398467f3637aaa8050a05f5d8ef058b",
+      "sourceExport": "20261012T193325Z_76604A81",
+      "sourceFiles": {
+        "boarding.png": "9704490AE1309E044D1CACE5A1255A4D7DA40447703276533921ABBCD47E226C",
+        "ship.json": "554E673F2187DFAFDFF2ADC64307A1958398467F3637AAA8050A05F5D8EF058B",
+        "ship.ply": "97BB54795445B4D41082FA14EDC8334F839797010B76700A4D7BBDD96894A1C4",
+        "side.png": "5A451F64549C9EC067DBEDB8210E61F69D182AAABF216B35A9F0CB3061024BF9",
+        "systems.svg": "518685316A5213BAD9ACEB617931571091B069C784BC8CAA5F6D288CF15639B8",
+        "three-quarter.png": "01AF70C8CB627056B7BEFCFECDD6F6101AC3E67F58EFBB579517129FD4A0D166",
+        "top.png": "595D4B658D8BCCEB016B72375197BCB79B29776F4D022A4C955FA64486836FCF"
+      },
+      "art": {
+        "hero": {
+          "path": "assets/01af70c8cb627056b7befcfecdd6f6101ac3e67f58efbb579517129fd4a0d166.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              0.7071067811865475,
+              0.7071067811865475,
+              0
+            ],
+            "up": [
+              -0.4082482904638631,
+              0.4082482904638631,
+              0.8164965809277261
+            ],
+            "toward": [
+              0.5773502691896258,
+              -0.5773502691896258,
+              0.5773502691896258
+            ],
+            "centre_x_m": -2.2627415649270404,
+            "centre_y_m": 1.3063952302889987,
+            "pixels_per_metre": 8.951670805738313
+          }
+        },
+        "top": {
+          "path": "assets/595d4b658d8bcceb016b72375197bcb79b29776f4d022a4c955fa64486836fcf.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "side": {
+          "path": "assets/5a451f64549c9ec067dbedb8210e61f69d182aaabf216b35a9f0cb3061024bf9.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ],
+            "toward": [
+              0,
+              -1,
+              0
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 4,
+            "pixels_per_metre": 7.628204941671202
+          }
+        },
+        "boarding": {
+          "path": "assets/9704490ae1309e044d1cace5a1255a4d7da40447703276533921abbcd47e226c.png",
+          "width": 2048,
+          "height": 1536,
+          "projection": {
+            "right": [
+              1,
+              0,
+              0
+            ],
+            "up": [
+              0,
+              -1,
+              0
+            ],
+            "toward": [
+              0,
+              0,
+              1
+            ],
+            "centre_x_m": 0,
+            "centre_y_m": 0,
+            "pixels_per_metre": 7.628204941671202
+          }
+        }
+      },
+      "geometry": {
+        "recipe": "vf.carrier.kite.4",
+        "definitionHash": "386755E3544F66FF8A40C9C9690E36407225AB54",
+        "asset": "/assets/hull-mesh/dad5966b02963504b1c4.bin.gz",
+        "groups": {
+          "0": {
+            "first": 0,
+            "count": 656892
+          },
+          "1": {
+            "first": 656892,
+            "count": 1620
+          },
+          "2": {
+            "first": 658512,
+            "count": 144
+          },
+          "3": {
+            "first": 658656,
+            "count": 504
+          },
+          "4": {
+            "first": 659160,
+            "count": 1620
+          },
+          "5": {
+            "first": 660780,
+            "count": 144
+          },
+          "6": {
+            "first": 660924,
+            "count": 504
+          },
+          "7": {
+            "first": 661428,
+            "count": 4362
+          },
+          "8": {
+            "first": 665790,
+            "count": 4362
+          },
+          "9": {
+            "first": 670152,
+            "count": 4362
+          },
+          "10": {
+            "first": 674514,
+            "count": 4362
+          },
+          "11": {
+            "first": 678876,
+            "count": 3354
+          },
+          "12": {
+            "first": 682230,
+            "count": 3354
+          },
+          "13": {
+            "first": 685584,
+            "count": 36
+          },
+          "14": {
+            "first": 685620,
+            "count": 36
+          },
+          "15": {
+            "first": 685656,
+            "count": 516
+          },
+          "16": {
+            "first": 686172,
+            "count": 516
+          },
+          "17": {
+            "first": 686688,
+            "count": 468
+          },
+          "18": {
+            "first": 687156,
+            "count": 468
+          },
+          "19": {
+            "first": 687624,
+            "count": 468
+          },
+          "20": {
+            "first": 688092,
+            "count": 468
+          },
+          "21": {
+            "first": 688560,
+            "count": 468
+          },
+          "22": {
+            "first": 689028,
+            "count": 468
+          },
+          "23": {
+            "first": 689496,
+            "count": 516
+          },
+          "24": {
+            "first": 690012,
+            "count": 516
+          },
+          "25": {
+            "first": 690528,
+            "count": 468
+          },
+          "26": {
+            "first": 690996,
+            "count": 468
+          },
+          "27": {
+            "first": 691464,
+            "count": 468
+          },
+          "28": {
+            "first": 691932,
+            "count": 468
+          },
+          "29": {
+            "first": 692400,
+            "count": 468
+          },
+          "30": {
+            "first": 692868,
+            "count": 468
+          },
+          "31": {
+            "first": 693336,
+            "count": 2616
+          },
+          "32": {
+            "first": 695952,
+            "count": 564
+          },
+          "33": {
+            "first": 696516,
+            "count": 1896
+          },
+          "34": {
+            "first": 698412,
+            "count": 11916
+          },
+          "35": {
+            "first": 710328,
+            "count": 11916
+          }
+        },
+        "bounds": [
+          [
+            -124.80000305175781,
+            -32.0,
+            -16.0
+          ],
+          [
+            124.80000305175781,
+            32.0,
+            24.0
+          ]
+        ],
+        "bytes": 11555904,
+        "compressedBytes": 1419301,
+        "sourceSha256": "97bb54795445b4d41082fa14edc8334f839797010b76700a4d7bbdd96894a1c4"
+      }
+    }
+  ]
+}

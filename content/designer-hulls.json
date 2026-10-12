@@ -1393,6 +1393,132 @@
       "fitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
       "registeredFitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
       "modules": 0
+    },
+    {
+      "key": "kestrel-crew-minimum",
+      "name": "KESTREL / Minimum quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Warships",
+      "recipe": "vf.kestrel.escort.10",
+      "definitionHash": "08A58040A27C1F84AF06450752E261CE33A67788",
+      "revision": "crew7-08a58040a27c1f84af06450752e261ce33a67788",
+      "exported": "2026-10-12T19:33:26.897Z",
+      "inspectRoute": "/ship-lab?ship=kestrel-crew-minimum#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kestrel-crew-minimum",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel-crew-minimum",
+      "modules": 0,
+      "crew": {
+        "family": "kestrel",
+        "mode": 1,
+        "bunks": 32,
+        "complement": 12,
+        "watts": 1840
+      }
+    },
+    {
+      "key": "kestrel-crew-watch",
+      "name": "KESTREL / Watch quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Warships",
+      "recipe": "vf.kestrel.escort.10",
+      "definitionHash": "6ACDB29A8EAEF369F0E3E54050C00C27F58AF564",
+      "revision": "crew7-6acdb29a8eaef369f0e3e54050c00c27f58af564",
+      "exported": "2026-10-12T19:33:28.089Z",
+      "inspectRoute": "/ship-lab?ship=kestrel-crew-watch#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kestrel-crew-watch",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel-crew-watch",
+      "modules": 0,
+      "crew": {
+        "family": "kestrel",
+        "mode": 2,
+        "bunks": 64,
+        "complement": 24,
+        "watts": 3280
+      }
+    },
+    {
+      "key": "kestrel-crew-reserve",
+      "name": "KESTREL / Reserve quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Warships",
+      "recipe": "vf.kestrel.escort.10",
+      "definitionHash": "9CB73875599D9A0F8C7DB1D2941769B27D9F4FE3",
+      "revision": "crew7-9cb73875599d9a0f8c7db1d2941769b27d9f4fe3",
+      "exported": "2026-10-12T19:33:29.272Z",
+      "inspectRoute": "/ship-lab?ship=kestrel-crew-reserve#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kestrel-crew-reserve",
+      "registeredFitRoute": "/ship-lab/refit?ship=kestrel-crew-reserve",
+      "modules": 0,
+      "crew": {
+        "family": "kestrel",
+        "mode": 3,
+        "bunks": 64,
+        "complement": 12,
+        "watts": 3280
+      }
+    },
+    {
+      "key": "kite-crew-minimum",
+      "name": "KITE / Minimum quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Carriers & aircraft",
+      "recipe": "vf.carrier.kite.4",
+      "definitionHash": "154C108FBE29F4CA659753DAC520E1F168B5CBE5",
+      "revision": "crew7-154c108fbe29f4ca659753dac520e1f168b5cbe5",
+      "exported": "2026-10-12T19:33:58.602Z",
+      "inspectRoute": "/ship-lab?ship=kite-crew-minimum#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kite-crew-minimum",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite-crew-minimum",
+      "modules": 0,
+      "crew": {
+        "family": "kite",
+        "mode": 1,
+        "bunks": 56,
+        "complement": 32,
+        "watts": 2720
+      }
+    },
+    {
+      "key": "kite-crew-watch",
+      "name": "KITE / Watch quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Carriers & aircraft",
+      "recipe": "vf.carrier.kite.4",
+      "definitionHash": "2FBB2FA455627147E3672C05E89C2AFAF9AFF3CC",
+      "revision": "crew7-2fbb2fa455627147e3672c05e89c2afaf9aff3cc",
+      "exported": "2026-10-12T19:34:01.229Z",
+      "inspectRoute": "/ship-lab?ship=kite-crew-watch#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kite-crew-watch",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite-crew-watch",
+      "modules": 0,
+      "crew": {
+        "family": "kite",
+        "mode": 2,
+        "bunks": 112,
+        "complement": 64,
+        "watts": 5240
+      }
+    },
+    {
+      "key": "kite-crew-reserve",
+      "name": "KITE / Reserve quarters",
+      "role": "Crew fit · 75% propulsion",
+      "category": "Carriers & aircraft",
+      "recipe": "vf.carrier.kite.4",
+      "definitionHash": "386755E3544F66FF8A40C9C9690E36407225AB54",
+      "revision": "crew7-386755e3544f66ff8a40c9c9690e36407225ab54",
+      "exported": "2026-10-12T19:34:03.880Z",
+      "inspectRoute": "/ship-lab?ship=kite-crew-reserve#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=kite-crew-reserve",
+      "registeredFitRoute": "/ship-lab/refit?ship=kite-crew-reserve",
+      "modules": 0,
+      "crew": {
+        "family": "kite",
+        "mode": 3,
+        "bunks": 112,
+        "complement": 32,
+        "watts": 5240
+      }
     }
   ]
 }

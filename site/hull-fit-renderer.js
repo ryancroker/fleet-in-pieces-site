@@ -18,10 +18,10 @@
   buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,bytes,gl.STATIC_DRAW);
   for(const name of ['position','color']){const a=gl.getAttribLocation(program,name);gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,name==='position'?3:4,name==='position'?gl.FLOAT:gl.UNSIGNED_BYTE,name==='color',16,name==='position'?0:12);}
   for(const n of ['right','up','toward','camera','imageSize','bounds','section','selected','condition','powered'])U[n]=gl.getUniformLocation(program,n);
-  gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.BLEND);gl.clearColor(0,0,0,0);ready=true;canvas.hidden=false;status.textContent='Native parts · removing a module changes this view';schedule();
+  gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.BLEND);gl.clearColor(0,0,0,0);ready=true;canvas.hidden=false;status.textContent=model.crewFamily?'Native crew-fit geometry · quarters and life support are physical assemblies':'Native parts · removing a module changes this view';schedule();
  }
  function draw(){frame=0;if(!ready||!latest||!model)return;
-  const {fit,derived,view}=latest,art=model.art[view],p=art.projection,range=model.refit.geometry.bounds;
+  const {fit,derived,view,crewRoom}=latest,art=model.art[view],p=art.projection,range=model.refit.geometry.bounds;
   const w=Math.min(2048,Math.max(320,Math.round(canvas.clientWidth*Math.min(devicePixelRatio||1,2))));
   const h=Math.round(w*art.height/art.width);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
   gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
@@ -32,8 +32,8 @@
   const selected=model.refit.modules.find(m=>m.id===fit.selected),drawn=[];
   for(const [id,g]of Object.entries(model.refit.geometry.groups)){
    const part=Number(id);if(derived.parts.has(part))continue;
-   const owner=model.refit.modules.find(m=>m.parts.includes(part)),state=owner?fit.states[owner.primary]:null;
-   gl.uniform1f(U.selected,selected?.parts.includes(part)?1:0);gl.uniform1f(U.condition,state?state.condition/100:1);gl.uniform1f(U.powered,state?Number(derived.result.rows[owner.primary].ready):1);
+   const owner=model.refit.modules.find(m=>m.parts.includes(part)),room=model.crew_accommodation?.compartments.find(r=>r.part===part),machine=owner?.primary??room?.machine,state=machine!==undefined?fit.states[machine]:null;
+   gl.uniform1f(U.selected,selected?.parts.includes(part)||crewRoom?.part===part?1:0);gl.uniform1f(U.condition,state?state.condition/100:1);gl.uniform1f(U.powered,state?Number(derived.result.rows[machine].ready):1);
    gl.drawArrays(gl.TRIANGLES,g.first,g.count);drawn.push(part);
   }
   canvas.dataset.parts=drawn.join(',');canvas.dataset.removed=fit.removed.join(',');

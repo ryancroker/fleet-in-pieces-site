@@ -2,12 +2,13 @@
  * new sockets, replacement articles, people, persistence or network in this layer. */
 (()=>{'use strict';
  const api=window.FleetLabModel;
- function fresh(model){return {version:'hull-fit-1',ship:model.key,revision:model.revision,hash:model.definitionHash,removed:[],states:api.fresh(model),selected:model.refit.modules[0]?.id??null,section:'all'};}
+ function fresh(model){return {version:'hull-fit-1',ship:model.key,revision:model.revision,hash:model.definitionHash,removed:[],states:api.fresh(model),selected:model.refit.modules[0]?.id??null,section:'all',...(model.crew_accommodation?{crewPlan:[...model.crew_accommodation.complement]}:{})};}
  function validate(model,value){
   if(!value||value.version!=='hull-fit-1'||value.ship!==model.key||value.revision!==model.revision||value.hash!==model.definitionHash||!Array.isArray(value.removed)||value.removed.length>model.refit.modules.length||new Set(value.removed).size!==value.removed.length||value.removed.some(id=>!Number.isInteger(id)||!model.refit.modules.some(m=>m.id===id))||!['all','rear','middle','front'].includes(value.section))return null;
   const states=api.validate(model,value.states);
   if(!states||(value.selected!==null&&!model.refit.modules.some(m=>m.id===value.selected)))return null;
-  return {...fresh(model),removed:[...value.removed],states,selected:value.selected,section:value.section};
+  if(value.crewPlan!==undefined&&(!model.crew_accommodation||!Array.isArray(value.crewPlan)||value.crewPlan.length!==5||value.crewPlan.some(n=>!Number.isSafeInteger(n)||n<0||n>1000000)))return null;
+  return {...fresh(model),removed:[...value.removed],states,selected:value.selected,section:value.section,...(value.crewPlan?{crewPlan:[...value.crewPlan]}:{})};
  }
  function section(model,module){const [lo,hi]=model.refit.geometry.bounds,x=module.position[0],fraction=(x-lo[0])/Math.max(.001,hi[0]-lo[0]);return fraction<1/3?'rear':fraction>2/3?'front':'middle';}
  function evaluate(model,fit){

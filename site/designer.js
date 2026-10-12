@@ -14,10 +14,13 @@
   $('designer-art').hidden=articleEditor&&!!current.fitting;document.querySelector('.designer-selection').classList.toggle('designer-no-thumbnail',articleEditor&&!!current.fitting);
   $('designer-name').textContent=current.name+' · '+current.role;
   $('designer-edition').textContent=edition.recipe+' · exported '+edition.exported.slice(0,10);
-  $('designer-capability').textContent=articleEditor?'Article fitting · hull-specific alternatives and limits.':current.modules?current.modules+' draft modules · original mounts; native build validation pending.':'Fixed architecture · inspect its systems; article fitting is not available yet.';
+  $('designer-capability').textContent=current.crew?current.crew.bunks+' bunks · '+current.crew.complement+' native crew · '+(current.crew.watts/1000).toLocaleString('en-US')+' kW life support.':articleEditor?'Article fitting · hull-specific alternatives and limits.':current.modules?current.modules+' draft modules · original mounts; native build validation pending.':'Fixed architecture · inspect its systems; article fitting is not available yet.';
   $('designer-open').href=registeredView?current.registeredFitRoute:current.fitRoute;$('designer-open').textContent='Fit this ship →';
   $('designer-inspect').hidden=false;$('designer-inspect').href=current.inspectRoute;
   $('designer-inspect').textContent=articleEditor&&current.fitting?'Inspect earlier published edition →':'Inspect all systems →';
+  const choices=data.entries.filter(e=>e.crew?.family===(current.crew?.family||current.key)),nav=$('designer-crew-options');
+  nav.hidden=!choices.length;nav.replaceChildren();
+  if(choices.length){const label=document.createElement('span');label.textContent='Crew fits';nav.append(label);for(const e of choices){const a=document.createElement('a');a.href=e.fitRoute+'#refit-crew';a.textContent=['','Minimum','Watch','Reserve'][e.crew.mode]+' · '+e.crew.bunks+' bunks';if(e.key===current.key)a.setAttribute('aria-current','page');nav.append(a);}}
  }
  function filter(){
   const query=search.value.trim().toLowerCase(),items=data.entries.filter(e=>(!category.value||e.category===category.value)&&(!query||(e.name+' '+e.role).toLowerCase().includes(query)));

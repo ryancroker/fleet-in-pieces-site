@@ -1,18 +1,19 @@
 (()=>{'use strict';
  const $=id=>document.getElementById(id),M=window.FleetHullFit,R=window.FleetHullRenderer,D=window.FleetDesignerData;
  if(!$('refit-workshop')||!M||!R||!D)return;
+ const standardPresentation=['.lab-intro h1','.lab-intro>div>p:not(.eyebrow)','.lab-build-tag','.refit-scope'].map(selector=>({selector,text:document.querySelector(selector).textContent}));
  const element=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
  const svg=(tag,attrs)=>{const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);return n;};
  const kw=n=>n>0&&n<1000?n.toLocaleString('en-US',{maximumFractionDigits:1})+' W':(n/1000).toLocaleString('en-US',{maximumFractionDigits:1})+' kW';
  const tonnes=n=>(n/1000).toLocaleString('en-US',{maximumFractionDigits:1})+' t';
  const description={gun:'Weapon and its native mounting assembly. Removing it frees its power demand; its ammunition supply stays a separate system.',shield:'A physical shield projector. Removing it leaves this mount empty and removes its local power demand.',reactor:'Power generation and its attached machinery. Equipment still needs a surviving reactor connected through its exported feeds.',drive:'Main propulsion hardware. Removing it reduces thrust and demand. Other drives keep their own fuel and power requirements.',jet:'A physical attitude thruster. Removing it reduces available maneuvering hardware; this preview does not simulate flight.',fuel_tank:'A finite propellant store. Emptying or removing it can starve dependent propulsion.',magazine:'A finite ammunition store. Dependent weapons need a fitted, nonempty supply.'};
- let model,fit,derived,view='hero',filter='all',machine=-1,loading=false,loadTicket=0,undo=[],pins=[],storage=true;
+ let model,fit,derived,crewRoom=null,view='hero',filter='all',machine=-1,loading=false,loadTicket=0,undo=[],pins=[],storage=true;
  const selected=()=>model?.refit.modules.find(m=>m.id===fit?.selected);
  const key=()=> 'fleet-hull-fit:hull-fit-1:'+model.definitionHash;
  const visible=m=>(fit.section==='all'||M.section(model,m)===fit.section)&&(filter==='all'||filter==='empty'&&fit.removed.includes(m.id)||filter===m.kind);
  const save=()=>{try{localStorage.setItem(key(),JSON.stringify(fit));$('refit-save-status').textContent='Loadout saved in this browser · no account needed';}catch{storage=false;$('refit-save-status').textContent='Storage unavailable · share a link to keep your loadout';}};
  function change(message,mutate){if(loading||!fit)return;undo.push(JSON.stringify(fit));if(undo.length>20)undo.shift();mutate();save();render();$('refit-event').textContent=message;$('refit-share-result').hidden=true;}
- function updateControls(){const m=selected();$('refit-controls').hidden=!m;if(!m){$('refit-component').textContent='Fixed native architecture';$('refit-description').textContent='This edition has no independently removable modules in the current contract. Its integrated systems remain available for inspection.';return;}
+ function updateControls(){const m=selected();$('refit-controls').hidden=!m;if(!m){$('refit-kind').textContent=model.crewFamily?'CREW FIT / EXACT NATIVE PACKAGE':'NATIVE EQUIPMENT';$('refit-component').textContent=model.crewFamily?'Room for the crew.':'Fixed native architecture';$('refit-description').textContent=model.crewFamily?'This complete fit includes its own quarters and life support. Main drives and thrusters retain the exported 75% limits. Compare Minimum, Watch and Reserve, then plan the people below.':'This edition has no independently removable modules in the current contract. Its integrated systems remain available for inspection.';return;}
   const empty=fit.removed.includes(m.id);$('refit-component').textContent=m.name;$('refit-kind').textContent=M.section(model,m)+' / '+m.kind.replaceAll('_',' ');$('refit-description').textContent=description[m.kind]||'Registered hardware on its original mount.';
   $('refit-article').value=empty?'empty':'stock';$('refit-toggle').textContent=empty?'Install registered module':'Remove module';
   const off=m.machines.filter(i=>!derived.result.rows[i].ready);
@@ -43,14 +44,19 @@
  function render(){if(!model||!fit)return;derived=M.evaluate(model,fit);
   if(selected()&&!visible(selected())){const first=model.refit.modules.find(visible);if(first){fit.selected=first.id;machine=first.primary;}}
   $('refit-metrics').replaceChildren(metric('Fitted power',kw(derived.requested),derived.storedPower?'Stored-energy supply · endurance unverified':kw(derived.rated)+' generation'),metric('Available now',derived.storedPower?'Unverified':kw(derived.result.supply),derived.storedPower?'Stored-energy discharge is not simulated':kw(derived.result.used)+' allocated'),metric('Weapons / shields',derived.guns+' / '+derived.shields,'Installed equipment'),metric('Material fitted',tonnes(derived.materialKg),tonnes(derived.removedMassKg)+' removed · no stores, crew or aircraft'));
-  $('refit-count').textContent=(model.refit.modules.length-fit.removed.length)+' installed / '+model.refit.modules.length+' removable modules';
+  $('refit-count').textContent=model.crewFamily?'Exact crew fit · equipment retained':(model.refit.modules.length-fit.removed.length)+' installed / '+model.refit.modules.length+' removable modules';
   $('refit-warnings').replaceChildren(...derived.warnings.map(s=>element('li',s)));
   const mods=model.refit.modules.filter(visible).sort((a,b)=>a.position[0]-b.position[0]||a.id-b.id);
   $('refit-list').replaceChildren(...mods.map(m=>{const empty=fit.removed.includes(m.id),offline=!derived.result.rows[m.primary].ready;const b=element('button',undefined,'refit-module'+(empty?' empty':offline?' offline':''));b.type='button';b.dataset.module=m.id;b.setAttribute('aria-pressed',String(fit.selected===m.id));b.append(element('strong',m.name),element('span',M.section(model,m)+' · '+(empty?'Empty mount · install module':offline?'Fitted · '+derived.result.rows[m.primary].reason:'Fitted · ready')),element('span',tonnes(m.massKg)+' · '+kw(m.machines.reduce((n,i)=>n+model.machines[i].DemandWatts,0))));b.addEventListener('click',()=>choose(m.id));return b;}));
-  if(!mods.length)$('refit-list').append(element('p','No removable modules match this filter. Try Whole ship or All modules.','field-hint'));
+  if(!mods.length)$('refit-list').append(element('p',model.crewFamily?'This exported package keeps its equipment fitted. Explore quarters and crew below.':'No removable modules match this filter. Try Whole ship or All modules.','field-hint'));
   for(const b of document.querySelectorAll('[data-refit-section]'))b.setAttribute('aria-pressed',String(b.dataset.refitSection===fit.section));
   $('refit-undo').disabled=!undo.length||loading;$('refit-share').disabled=loading;$('refit-stock').disabled=loading;
-  updateControls();drawPins();R.update({fit,derived,view});window.FleetCrewPlan?.update('refit-crew',model,derived.result,undefined,derived.states);
+  updateControls();drawPins();R.update({fit,derived,view,crewRoom});window.FleetCrewPlan?.update('refit-crew',model,derived.result,undefined,derived.states,{
+   plan:fit.crewPlan,
+   onPlanChange:plan=>change('Crew complement updated.',()=>{fit.crewPlan=plan;}),
+   onRoomChange:(i,patch)=>{if(!model.crew_accommodation?.compartments.some(r=>r.machine===i))return;change('Quarters life support updated.',()=>{Object.assign(fit.states[i],patch);});},
+   onRoomSelect:room=>{crewRoom=room;fit.section='all';render();$('refit-kind').textContent='QUARTERS / LIFE SUPPORT';$('refit-component').textContent=model.machines[room.machine].name;$('refit-description').textContent=room.bunks+' bunks, '+room.demand_watts+' W life support. The highlighted assembly supplies '+room.life_support_capacity+' places when intact and powered.';$('refit-canvas').scrollIntoView({block:'center'});}
+  });
  }
  function setInstalled(installed){const m=selected();if(!m)return;const removed=fit.removed.includes(m.id);if(removed===!installed)return;change(m.name+(installed?' reinstalled with its previous condition and supplies.':' removed. Its mount is now empty.'),()=>{fit.removed=installed?fit.removed.filter(id=>id!==m.id):[...fit.removed,m.id];});}
  function fragment(){if(!location.hash.startsWith('#loadout=')||location.hash.length>24000)return null;try{return JSON.parse(atob(location.hash.slice(9)));}catch{return null;}}
@@ -60,14 +66,23 @@
    if(n!==loadTicket)return;if(next.key!==entry.key||next.definitionHash!==entry.definitionHash||next.recipe!==entry.recipe||next.revision!==entry.revision||next.refit?.version!=='hull-fit-1')throw Error('Identity');
    let restored=null,rejected=false;
    if(shared){restored=expandShared(shared,next);rejected=!restored;}else try{const saved=localStorage.getItem('fleet-hull-fit:hull-fit-1:'+next.definitionHash);if(saved)restored=M.validate(next,JSON.parse(saved));}catch{storage=false;}
-   model=next;fit=restored||M.fresh(model);undo=[];filter='all';$('refit-filter').value=filter;machine=selected()?.primary??-1;loading=false;
+   model=next;fit=restored||M.fresh(model);undo=[];crewRoom=null;filter='all';$('refit-filter').value=filter;machine=selected()?.primary??-1;loading=false;
    $('refit-name').textContent=model.name;$('refit-edition').textContent='· '+model.recipe+' · '+model.exported.slice(0,10);$('refit-inspect').href=entry.inspectRoute;$('refit-discuss').href=model.dossier+'#suggest';
+   for(const item of standardPresentation)document.querySelector(item.selector).textContent=item.text;
+   document.querySelector('.lab-equipment').hidden=!!model.crewFamily;$('refit-filter').parentElement.hidden=!!model.crewFamily;
+   if(model.crewFamily){
+    document.querySelector('.lab-intro h1').textContent='Make room for the crew.';
+    document.querySelector('.lab-intro>div>p:not(.eyebrow)').textContent='Choose the quarters. Plan the watch. See what happens when life support goes down.';
+    document.querySelector('.lab-build-tag').textContent='Native crew fit';
+    document.querySelector('.refit-scope').textContent='Exact exported quarters and machinery. Plan your complement below; this package keeps its registered hardware and 75% propulsion limits.';
+   }
    for(const option of $('refit-filter').options)option.disabled=!['all','empty'].includes(option.value)&&!model.refit.modules.some(m=>m.kind===option.value);
    dispatchEvent(new CustomEvent('fleet:inspection-loaded',{detail:{key:model.key}}));render();R.load(model);
-   $('refit-event').textContent=rejected?'This shared loadout was invalid. The untouched registered ship is shown.':!model.refit.modules.length?'This edition’s hardware stays fixed. Use Inspect all internal systems to explore it.':restored?'Your loadout is open. Choose a module or an empty mount.':'Registered hardware loaded. Select a module to change its fitting.';
+   $('refit-event').textContent=rejected?'This shared loadout was invalid. The untouched registered ship is shown.':model.crewFamily?'Exact crew fit loaded. Plan the complement and inspect its life support below.':!model.refit.modules.length?'This edition’s hardware stays fixed. Use Inspect all internal systems to explore it.':restored?'Your loadout is open. Choose a module or an empty mount.':'Registered hardware loaded. Select a module to change its fitting.';
+   $('refit-crew-shortcut').hidden=!model.crewFamily;
    $('refit-save-status').textContent=restored?'Restored local draft · separate from your inspection setups':storage?'Local fitting draft · no account needed':'Storage unavailable · share a link to keep your loadout';
    if(shared&&!rejected)save();
-   const url=new URL(location.href);url.searchParams.set('ship',model.key);if(!shared)url.hash='';history.replaceState(null,'',url.pathname+url.search+url.hash);
+   const url=new URL(location.href);url.searchParams.set('ship',model.key);if(!shared&&!['#refit-crew','#refit-workshop'].includes(url.hash))url.hash='';history.replaceState(null,'',url.pathname+url.search+url.hash);
   }catch{if(n!==loadTicket)return;loading=false;$('refit-event').textContent='This hull could not be loaded. Your saved loadouts have not changed. Reload to try again.';if(model)render();}
  }
  $('refit-toggle').addEventListener('click',()=>setInstalled(fit.removed.includes(selected()?.id)));

@@ -1,0 +1,2374 @@
+{
+	"id": "vf.kestrel.escort.10",
+	"definition_hash": "08A58040A27C1F84AF06450752E261CE33A67788",
+	"state": "intact definition rest pose",
+	"art_method": "Exact native FMesher surfaces; orthographic editorial lighting, authored palette; not an Unreal screenshot. No invented room plan or damage.",
+	"installation": false,
+	"airframe": 0,
+	"surface_bounds_min_m": [
+		-44,
+		-8,
+		-13.5
+	],
+	"surface_bounds_max_m": [
+		57,
+		8,
+		13
+	],
+	"assembled_dimensions_m": [
+		101,
+		16,
+		26.5
+	],
+	"root_dimensions_m": [
+		101,
+		16,
+		26.5
+	],
+	"propulsion_base_hash": "874FE8C107143F3B5301BDBC85B1BB8B653D6597",
+	"jump_base_hash": "",
+	"jump_research_base_hash": "",
+	"sensor_base_hash": "717DDAC9CA482C600D15187593824D9AEF6D613C",
+	"command_base_hash": "1E24AC5526AB296AC197C8D1A6BC96B3BC9756F2",
+	"sensor_revision": 1,
+	"command_revision": 1,
+	"outfit_code": 119543039,
+	"outfit_base_hash": "A90982351FF01400876EDDEA6A92C833C6C3457E",
+	"fitting_contract":
+	{
+		"schema": "native-fitting-1",
+		"recipe_id": "vf.kestrel.escort.10",
+		"definition_hash": "08A58040A27C1F84AF06450752E261CE33A67788",
+		"base_recipe_id": "vf.kestrel.escort.10",
+		"base_definition_hash": "A90982351FF01400876EDDEA6A92C833C6C3457E",
+		"available": true,
+		"equipment_recipe_revision": 5,
+		"sensor_recipe_revision": 5,
+		"crew_recipe_revision": 7,
+		"admission": "Capabilities only. Each candidate still requires native material, clearance, power, construction and campaign admission. Existing installed recipes keep their recorded revision.",
+		"new_recipe_revision": 7,
+		"selected_recipe_revision": 7,
+		"selected_sensor_suite": 0,
+		"selected_quarters": 1,
+		"legacy_armor": false,
+		"slots": [
+			{
+				"key": "chamber",
+				"available": true,
+				"selected": 3,
+				"choices": [
+					0,
+					1,
+					2,
+					3
+				]
+			},
+			{
+				"key": "nozzle",
+				"available": true,
+				"selected": 3,
+				"choices": [
+					0,
+					1,
+					2,
+					3
+				]
+			},
+			{
+				"key": "jets",
+				"available": true,
+				"selected": 3,
+				"choices": [
+					0,
+					1,
+					3
+				]
+			},
+			{
+				"key": "emitter",
+				"available": true,
+				"selected": 3,
+				"choices": [
+					0,
+					1,
+					2,
+					3
+				]
+			},
+			{
+				"key": "armor",
+				"available": true,
+				"selected": 0,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "drive_limit",
+				"available": true,
+				"selected": 1,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "jet_limit",
+				"available": true,
+				"selected": 1,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "main_gun",
+				"available": true,
+				"selected": 0,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			},
+			{
+				"key": "aft_gun",
+				"available": true,
+				"selected": 0,
+				"choices": [
+					0,
+					1,
+					2
+				]
+			}
+		],
+		"sensor_suite_available": true,
+		"quarters_available": true,
+		"reactor_replacement_available": false,
+		"equipment_removal_available": false,
+		"additional_bays_available": false
+	},
+	"crew_accommodation":
+	{
+		"schema": "native-crew-1",
+		"available": true,
+		"recipe_id": "vf.kestrel.escort.10",
+		"definition_hash": "08A58040A27C1F84AF06450752E261CE33A67788",
+		"quarters_mode": 1,
+		"role_order": [
+			"operators",
+			"engineers",
+			"pilots",
+			"troops",
+			"command"
+		],
+		"notes": "Five disjoint departments. Operators are ship operating crew; troops include marine/operator detachments. Aircraft retain their own pilots. Spare bunks do not create personnel. Legacy accommodation is unknown. Life-support rating is operating capacity, not an atmosphere/endurance or casualty simulation.",
+		"minimum": [
+			7,
+			3,
+			0,
+			0,
+			2
+		],
+		"complement": [
+			7,
+			3,
+			0,
+			0,
+			2
+		],
+		"role_sources": [
+			[
+				1,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				28,
+				29
+			],
+			[
+				0,
+				7,
+				8,
+				27
+			],
+			[],
+			[],
+			[
+				30,
+				1
+			]
+		],
+		"bunks": 32,
+		"life_support_capacity": 32,
+		"spare_berths": 20,
+		"life_support_watts": 1840,
+		"compartments": [
+			{
+				"part": 17,
+				"machine": 31,
+				"bunks": 8,
+				"life_support_capacity": 8,
+				"demand_watts": 460,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						3
+					],
+					[
+						3,
+						8,
+						1
+					],
+					[
+						3,
+						8,
+						3
+					],
+					[
+						7,
+						2,
+						1
+					],
+					[
+						7,
+						2,
+						3
+					],
+					[
+						7,
+						8,
+						1
+					],
+					[
+						7,
+						8,
+						3
+					]
+				]
+			},
+			{
+				"part": 18,
+				"machine": 32,
+				"bunks": 8,
+				"life_support_capacity": 8,
+				"demand_watts": 460,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						3
+					],
+					[
+						3,
+						8,
+						1
+					],
+					[
+						3,
+						8,
+						3
+					],
+					[
+						7,
+						2,
+						1
+					],
+					[
+						7,
+						2,
+						3
+					],
+					[
+						7,
+						8,
+						1
+					],
+					[
+						7,
+						8,
+						3
+					]
+				]
+			},
+			{
+				"part": 19,
+				"machine": 33,
+				"bunks": 8,
+				"life_support_capacity": 8,
+				"demand_watts": 460,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						3
+					],
+					[
+						3,
+						8,
+						1
+					],
+					[
+						3,
+						8,
+						3
+					],
+					[
+						7,
+						2,
+						1
+					],
+					[
+						7,
+						2,
+						3
+					],
+					[
+						7,
+						8,
+						1
+					],
+					[
+						7,
+						8,
+						3
+					]
+				]
+			},
+			{
+				"part": 20,
+				"machine": 34,
+				"bunks": 8,
+				"life_support_capacity": 8,
+				"demand_watts": 460,
+				"bunk_witness_cells": [
+					[
+						3,
+						2,
+						1
+					],
+					[
+						3,
+						2,
+						3
+					],
+					[
+						3,
+						8,
+						1
+					],
+					[
+						3,
+						8,
+						3
+					],
+					[
+						7,
+						2,
+						1
+					],
+					[
+						7,
+						2,
+						3
+					],
+					[
+						7,
+						8,
+						1
+					],
+					[
+						7,
+						8,
+						3
+					]
+				]
+			}
+		]
+	},
+	"cruise_target_m_s": 96,
+	"sensor_rating_m": 2200,
+	"reactor_rating_w": 120000,
+	"vertices": 71376,
+	"triangles": 35856,
+	"material_assembled_dimensions_m": [
+		101,
+		16,
+		26.5
+	],
+	"parts": [
+		{
+			"index": 0,
+			"name": "hull",
+			"parent": -1,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "E076083AF7E021A1E31EB255FEDE3A66F4B7AF24",
+			"material_kg": 11259156.25,
+			"sockets": []
+		},
+		{
+			"index": 1,
+			"name": "battery.forward",
+			"parent": 0,
+			"offset_m": [
+				27.5,
+				0,
+				7
+			],
+			"rig": 1,
+			"required_supports": 8,
+			"material_hash": "A073554E91592C0C045C80EE336C474B40D6570B",
+			"material_kg": 155226.5625,
+			"sockets": []
+		},
+		{
+			"index": 2,
+			"name": "battery.forward.elevation",
+			"parent": 1,
+			"offset_m": [
+				0,
+				0,
+				1.5
+			],
+			"rig": 2,
+			"required_supports": 3,
+			"material_hash": "47C944FCD328F011F77EEC9995F57F9C30BD9516",
+			"material_kg": 13875,
+			"sockets": []
+		},
+		{
+			"index": 3,
+			"name": "battery.forward.recoil",
+			"parent": 2,
+			"offset_m": [
+				2,
+				0,
+				0
+			],
+			"rig": 3,
+			"required_supports": 2,
+			"material_hash": "1C8D414DF0EE71606A44F485A07825F0B2CF8D2D",
+			"material_kg": 79550,
+			"sockets": [
+				{
+					"name": "muzzle",
+					"point_m": [
+						12,
+						0,
+						0
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"index": 4,
+			"name": "battery.light",
+			"parent": 0,
+			"offset_m": [
+				-3.5,
+				0,
+				9.5
+			],
+			"rig": 1,
+			"required_supports": 12,
+			"material_hash": "A8620536BFE87EA130CFBF9E492FBDAD954A47E6",
+			"material_kg": 54748.4375,
+			"sockets": []
+		},
+		{
+			"index": 5,
+			"name": "battery.light.elevation",
+			"parent": 4,
+			"offset_m": [
+				0,
+				0,
+				1.5
+			],
+			"rig": 2,
+			"required_supports": 3,
+			"material_hash": "8A5538517AE4E7740376B319FA16BAA03AFC6AED",
+			"material_kg": 13875,
+			"sockets": []
+		},
+		{
+			"index": 6,
+			"name": "battery.light.recoil",
+			"parent": 5,
+			"offset_m": [
+				2,
+				0,
+				0
+			],
+			"rig": 3,
+			"required_supports": 2,
+			"material_hash": "5085C7031D406EBEB67E0871D8357CB1B234710F",
+			"material_kg": 33300,
+			"sockets": [
+				{
+					"name": "muzzle",
+					"point_m": [
+						7,
+						0.25,
+						0.25
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"index": 7,
+			"name": "Fore-port shield emitter",
+			"parent": 0,
+			"offset_m": [
+				17,
+				-4.5,
+				4.5
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "ED5F413EB19863A86F26215DA411F81DD19FC8C6",
+			"material_kg": 120037.5,
+			"sockets": []
+		},
+		{
+			"index": 8,
+			"name": "Fore-starboard shield emitter",
+			"parent": 0,
+			"offset_m": [
+				17,
+				4.5,
+				4.5
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "ED5F413EB19863A86F26215DA411F81DD19FC8C6",
+			"material_kg": 120037.5,
+			"sockets": []
+		},
+		{
+			"index": 9,
+			"name": "Aft-starboard shield emitter",
+			"parent": 0,
+			"offset_m": [
+				-15.5,
+				3.5,
+				5
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "ED5F413EB19863A86F26215DA411F81DD19FC8C6",
+			"material_kg": 120037.5,
+			"sockets": []
+		},
+		{
+			"index": 10,
+			"name": "Aft-port shield emitter",
+			"parent": 0,
+			"offset_m": [
+				-15.5,
+				-3.5,
+				5
+			],
+			"rig": 0,
+			"required_supports": 1,
+			"material_hash": "ED5F413EB19863A86F26215DA411F81DD19FC8C6",
+			"material_kg": 120037.5,
+			"sockets": []
+		},
+		{
+			"index": 11,
+			"name": "Aft Ember",
+			"parent": 0,
+			"offset_m": [
+				-25,
+				-2,
+				-2
+			],
+			"rig": 0,
+			"required_supports": 8,
+			"material_hash": "21F3F4D8904E07A8057039FEBD6E4A8260C89A5F",
+			"material_kg": 88756.25,
+			"sockets": []
+		},
+		{
+			"index": 12,
+			"name": "Fore Ember",
+			"parent": 0,
+			"offset_m": [
+				15,
+				-2,
+				-2
+			],
+			"rig": 0,
+			"required_supports": 8,
+			"material_hash": "21F3F4D8904E07A8057039FEBD6E4A8260C89A5F",
+			"material_kg": 88756.25,
+			"sockets": []
+		},
+		{
+			"index": 13,
+			"name": "Port main drive / universal drive cartridge",
+			"parent": 0,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 15,
+			"material_hash": "5A2D8E1CD1B4F1FDF9363AEDA453592638CC3B95",
+			"material_kg": 11100,
+			"sockets": [
+				{
+					"name": "exhaust",
+					"point_m": [
+						-38,
+						-3,
+						0
+					],
+					"axis": [
+						-1,
+						-0,
+						-0
+					]
+				}
+			]
+		},
+		{
+			"index": 14,
+			"name": "Starboard main drive / universal drive cartridge",
+			"parent": 0,
+			"offset_m": [
+				0,
+				0,
+				0
+			],
+			"rig": 0,
+			"required_supports": 15,
+			"material_hash": "CE491B9DB6DDDA94C3FEB9B7455441663D627A13",
+			"material_kg": 11100,
+			"sockets": [
+				{
+					"name": "exhaust",
+					"point_m": [
+						-38,
+						3,
+						0
+					],
+					"axis": [
+						-1,
+						-0,
+						-0
+					]
+				}
+			]
+		},
+		{
+			"index": 15,
+			"name": "Standard sensor/comms assembly 1",
+			"parent": 0,
+			"offset_m": [
+				36,
+				-1,
+				1.5
+			],
+			"rig": 0,
+			"required_supports": 3,
+			"material_hash": "974C857C87E228E3982759AE4D45809184A16BAC",
+			"material_kg": 32500,
+			"sockets": []
+		},
+		{
+			"index": 16,
+			"name": "Armored command bridge",
+			"parent": 0,
+			"offset_m": [
+				-22,
+				-4.5,
+				2.5
+			],
+			"rig": 0,
+			"required_supports": 3,
+			"material_hash": "9C7A1121A4AF909862FF5FE07A7E863A59647AF1",
+			"material_kg": 282850,
+			"sockets": []
+		},
+		{
+			"index": 17,
+			"name": "Crew quarters 1 / 8 bunks",
+			"parent": 0,
+			"offset_m": [
+				-32,
+				-6,
+				3
+			],
+			"rig": 0,
+			"required_supports": 8,
+			"material_hash": "6E8EDEA58056FCA2A43F6774E6B4B09381184E0E",
+			"material_kg": 139500,
+			"sockets": []
+		},
+		{
+			"index": 18,
+			"name": "Crew quarters 2 / 8 bunks",
+			"parent": 0,
+			"offset_m": [
+				-32,
+				1,
+				3
+			],
+			"rig": 0,
+			"required_supports": 8,
+			"material_hash": "A06A9725E95532374712DE4DF448BA4CD8911EDD",
+			"material_kg": 139500,
+			"sockets": []
+		},
+		{
+			"index": 19,
+			"name": "Crew quarters 3 / 8 bunks",
+			"parent": 0,
+			"offset_m": [
+				-40,
+				-6,
+				3
+			],
+			"rig": 0,
+			"required_supports": 6,
+			"material_hash": "C11AB5B946437CF2719170348B038D3EFBC70E72",
+			"material_kg": 139500,
+			"sockets": []
+		},
+		{
+			"index": 20,
+			"name": "Crew quarters 4 / 8 bunks",
+			"parent": 0,
+			"offset_m": [
+				-25,
+				1,
+				2.5
+			],
+			"rig": 0,
+			"required_supports": 8,
+			"material_hash": "978F2BB385F7A4FC3EB7DE690346582CCE9E2BEA",
+			"material_kg": 139500,
+			"sockets": []
+		}
+	],
+	"machines": [
+		{
+			"index": 0,
+			"name": "Aft Ember",
+			"kind": 1,
+			"part": 11,
+			"core_position_m": [
+				-21.75,
+				0.25,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 60000,
+			"DemandWatts": 12,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 250000000,
+			"InitialQuantity": 250000000,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 1,
+			"name": "Command and sensors",
+			"kind": 0,
+			"part": 0,
+			"core_position_m": [
+				3.25,
+				0.75,
+				2.75
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 540,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 2,
+			"name": "Power distribution",
+			"kind": 8,
+			"part": 0,
+			"core_position_m": [
+				5.25,
+				0.25,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 3,
+			"name": "Port propellant",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				-5.25,
+				-3.75,
+				-0.75
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 80000,
+			"InitialQuantity": 80000,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 4,
+			"name": "Starboard propellant",
+			"kind": 2,
+			"part": 0,
+			"core_position_m": [
+				-5.25,
+				4.25,
+				-0.75
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 80000,
+			"InitialQuantity": 80000,
+			"ItemKg": 1,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 5,
+			"name": "Kinetic magazine",
+			"kind": 3,
+			"part": 0,
+			"core_position_m": [
+				11.25,
+				0.75,
+				0.75
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 60,
+			"InitialQuantity": 60,
+			"ItemKg": 600,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 6,
+			"name": "Light ammunition",
+			"kind": 3,
+			"part": 0,
+			"core_position_m": [
+				13.25,
+				1.75,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 240,
+			"InitialQuantity": 240,
+			"ItemKg": 18,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 7,
+			"name": "Port main drive",
+			"kind": 4,
+			"part": 13,
+			"core_position_m": [
+				-32.75,
+				-2.75,
+				0.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 16515,
+			"MaxForce": 18000000,
+			"ExhaustSpeed": 450000,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 8,
+			"name": "Starboard main drive",
+			"kind": 4,
+			"part": 14,
+			"core_position_m": [
+				-32.75,
+				3.25,
+				0.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 16515,
+			"MaxForce": 18000000,
+			"ExhaustSpeed": 450000,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 9,
+			"name": "Fore-port shield emitter",
+			"kind": 6,
+			"part": 7,
+			"core_position_m": [
+				17.25,
+				-4.25,
+				7.25
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 6025,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 10,
+			"name": "Fore-starboard shield emitter",
+			"kind": 6,
+			"part": 8,
+			"core_position_m": [
+				17.25,
+				4.75,
+				7.25
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 6025,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 11,
+			"name": "Aft-starboard shield emitter",
+			"kind": 6,
+			"part": 9,
+			"core_position_m": [
+				-15.25,
+				3.75,
+				7.75
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 6025,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 12,
+			"name": "Aft-port shield emitter",
+			"kind": 6,
+			"part": 10,
+			"core_position_m": [
+				-15.25,
+				-3.25,
+				7.75
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 6025,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 13,
+			"name": "Attitude jet 1",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-22.75,
+				-4.25,
+				0.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 14,
+			"name": "Attitude jet 2",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-22.75,
+				4.75,
+				0.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 15,
+			"name": "Attitude jet 3",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				36.25,
+				-2.75,
+				-0.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 16,
+			"name": "Attitude jet 4",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				36.25,
+				3.25,
+				-0.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 17,
+			"name": "Attitude jet 5",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				46.25,
+				-1.75,
+				-0.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 18,
+			"name": "Attitude jet 6",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				46.25,
+				2.25,
+				-0.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 9000000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 19,
+			"name": "Attitude jet 7",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-2.25,
+				-6.25,
+				1.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 2250000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 20,
+			"name": "Attitude jet 8",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				-2.25,
+				6.75,
+				1.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 2250000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 21,
+			"name": "Attitude jet 9",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				3.75,
+				-6.25,
+				1.25
+			],
+			"dependencies": [
+				2,
+				3
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 3,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 2250000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 22,
+			"name": "Attitude jet 10",
+			"kind": 5,
+			"part": 0,
+			"core_position_m": [
+				3.75,
+				6.75,
+				1.25
+			],
+			"dependencies": [
+				2,
+				4
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": 4,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 2250000,
+			"ExhaustSpeed": 337500,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 23,
+			"name": "Forward kinetic battery",
+			"kind": 7,
+			"part": 1,
+			"core_position_m": [
+				27.75,
+				0.25,
+				7.25
+			],
+			"dependencies": [
+				2,
+				5
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": 5,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 7000,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 8000,
+			"RoundSpeed": 330,
+			"RoundRadius": 0.35999999999999999,
+			"ReloadSeconds": 2.7999999999999998,
+			"Range": 1200,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 24,
+			"name": "Light defensive battery",
+			"kind": 7,
+			"part": 4,
+			"core_position_m": [
+				-3.25,
+				0.25,
+				9.75
+			],
+			"dependencies": [
+				2,
+				6
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": 6,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 3000,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 1300,
+			"RoundSpeed": 420,
+			"RoundRadius": 0.14000000000000001,
+			"ReloadSeconds": 1.3999999999999999,
+			"Range": 450,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 25,
+			"name": "Aft Ember cooling manifold",
+			"kind": 8,
+			"part": 11,
+			"core_position_m": [
+				-24.75,
+				1.75,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 26,
+			"name": "Fore Ember cooling manifold",
+			"kind": 8,
+			"part": 12,
+			"core_position_m": [
+				15.25,
+				1.75,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 0,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 27,
+			"name": "Fore Ember",
+			"kind": 1,
+			"part": 12,
+			"core_position_m": [
+				18.25,
+				0.25,
+				0.25
+			],
+			"dependencies": [],
+			"power_sources": [],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 60000,
+			"DemandWatts": 12,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 250000000,
+			"InitialQuantity": 250000000,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 28,
+			"name": "Standard sensor 1 / receiver",
+			"kind": 8,
+			"part": 15,
+			"core_position_m": [
+				36.75,
+				-0.75,
+				6.25
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 350,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 29,
+			"name": "Standard sensor 1 / comms output",
+			"kind": 8,
+			"part": 15,
+			"core_position_m": [
+				34.75,
+				-0.75,
+				6.75
+			],
+			"dependencies": [
+				2
+			],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 100,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 30,
+			"name": "Command bridge",
+			"kind": 8,
+			"part": 16,
+			"core_position_m": [
+				-21.75,
+				-4.25,
+				5.75
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 540,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 31,
+			"name": "Quarters 1 / life support for 8",
+			"kind": 8,
+			"part": 17,
+			"core_position_m": [
+				-26.75,
+				-5.25,
+				4.25
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 32,
+			"name": "Quarters 2 / life support for 8",
+			"kind": 8,
+			"part": 18,
+			"core_position_m": [
+				-26.75,
+				1.75,
+				4.25
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 33,
+			"name": "Quarters 3 / life support for 8",
+			"kind": 8,
+			"part": 19,
+			"core_position_m": [
+				-34.75,
+				-5.25,
+				4.25
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		},
+		{
+			"index": 34,
+			"name": "Quarters 4 / life support for 8",
+			"kind": 8,
+			"part": 20,
+			"core_position_m": [
+				-19.75,
+				1.75,
+				3.75
+			],
+			"dependencies": [],
+			"power_sources": [
+				0,
+				27
+			],
+			"fuel_store": -1,
+			"ammo_store": -1,
+			"weapon_role": 0,
+			"GenerationWatts": 0,
+			"DemandWatts": 460,
+			"MaxForce": 0,
+			"ExhaustSpeed": 0,
+			"Capacity": 0,
+			"InitialQuantity": 0,
+			"ItemKg": 0,
+			"WorkPerShot": 0,
+			"RoundSpeed": 0,
+			"RoundRadius": 0,
+			"ReloadSeconds": 0,
+			"Range": 0,
+			"RailChargeJ": 0,
+			"RailCommitSeconds": 0,
+			"RailHalfArc": 0,
+			"MissileFuelKg": 0,
+			"MissileExhaustSpeed": 0,
+			"MissileAcceleration": 0,
+			"MissileTurnRate": 0,
+			"MissileMaxSpeed": 0,
+			"MissileLifetime": 0
+		}
+	],
+	"berths": [],
+	"boarding_sections": [
+		{
+			"index": 0,
+			"name": "FORE PORT",
+			"purpose": "Shield systems"
+		},
+		{
+			"index": 1,
+			"name": "FORE CENTER",
+			"purpose": "Sensors / comms"
+		},
+		{
+			"index": 2,
+			"name": "FORE STARBOARD",
+			"purpose": "Shield systems"
+		},
+		{
+			"index": 3,
+			"name": "AFT PORT",
+			"purpose": "Command"
+		},
+		{
+			"index": 4,
+			"name": "AFT CENTER",
+			"purpose": "Command"
+		},
+		{
+			"index": 5,
+			"name": "AFT STARBOARD",
+			"purpose": "Engineering"
+		}
+	],
+	"definition_material_mass_kg": 13162943.75,
+	"initial_fuel_and_magazine_mass_kg": 200320,
+	"mass_basis": "Definition material includes modeled hardware; initial fuel/magazine stock is separate. Does not include crew, passengers, aircraft, escape capsules or other live payloads. Not a certified loaded mass.",
+	"name": "KESTREL / quarters 1",
+	"folder": "vf.kestrel.escort.10_08A58040A27C1F84AF06450752E261CE33A67788",
+	"exported_utc": "2026-10-12T19:33:26.897Z",
+	"views": [
+		{
+			"file": "three-quarter.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				0.70710678118654746,
+				0.70710678118654746,
+				0
+			],
+			"up": [
+				-0.40824829046386307,
+				0.40824829046386307,
+				0.81649658092772615
+			],
+			"toward": [
+				0.57735026918962584,
+				-0.57735026918962584,
+				0.57735026918962584
+			],
+			"centre_x_m": 3.358757210636103,
+			"centre_y_m": -1.2247448713915876,
+			"pixels_per_metre": 25.048024397752311,
+			"sha1": "3129C48795E3626E3059834328E1AB2274B00C40"
+		},
+		{
+			"file": "top.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				-1,
+				0
+			],
+			"toward": [
+				0,
+				0,
+				1
+			],
+			"centre_x_m": 6.5,
+			"centre_y_m": 0,
+			"pixels_per_metre": 18.85148514851485,
+			"sha1": "41B01E23F0CA4C8351662878CF1B92A5FC9C1B46"
+		},
+		{
+			"file": "side.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				0,
+				1
+			],
+			"toward": [
+				0,
+				-1,
+				0
+			],
+			"centre_x_m": 6.5,
+			"centre_y_m": -0.25,
+			"pixels_per_metre": 18.85148514851485,
+			"sha1": "955457573192430E0EA0851C1303D8B57867F334"
+		},
+		{
+			"file": "boarding.png",
+			"width": 2048,
+			"height": 1536,
+			"right": [
+				1,
+				0,
+				0
+			],
+			"up": [
+				0,
+				-1,
+				0
+			],
+			"toward": [
+				0,
+				0,
+				1
+			],
+			"centre_x_m": 6.5,
+			"centre_y_m": 0,
+			"pixels_per_metre": 18.85148514851485,
+			"sha1": "A4A4964D0A5A957DEF2AB61BD335E476D61EC28A"
+		}
+	]
+}

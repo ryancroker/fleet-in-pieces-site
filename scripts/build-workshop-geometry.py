@@ -6,10 +6,14 @@ FleetVoxelCustomization.cpp/Emitter. This is a visual adapter, not BuildOutfit.
 Run explicitly when the pinned geometry changes; output is committed for Pages.
 """
 from pathlib import Path
-import hashlib, json, math, struct
+import hashlib, json, math, struct, argparse
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'content/workshop-geometry'
+parser=argparse.ArgumentParser()
+parser.add_argument('--ship',choices=['kestrel','kite'],default='kestrel')
+args=parser.parse_args()
+grain=.4 if args.ship=='kite' else .5
 palette = {3:(.19,.225,.26),4:(.30,.345,.38),9:(.019,.024,.031),13:(.08,.67,.92),16:(.045,.065,.084),17:(.36,.42,.46),18:(.085,.108,.123),19:(.34,.39,.40)}
 light = (-.35,-.5,1)
 light = tuple(x / math.sqrt(sum(v*v for v in light)) for x in light)
@@ -21,13 +25,13 @@ def color(rgb,n):
     shade=.42+.58*max(0,sum(a*b for a,b in zip(n,light)))
     return tuple(gamma(min(1,max(0,v*shade))) for v in rgb)
 
-blob=(SOURCE/'kestrel.ply').read_bytes()
+blob=(SOURCE/(args.ship+'.ply')).read_bytes()
 end=blob.index(b'end_header\n')+11
 head=blob[:end].decode()
 nv=int(head.split('element vertex ')[1].splitlines()[0])
 nf=int(head.split('element face ')[1].splitlines()[0])
 verts=[struct.unpack_from('<6f3Bi',blob,end+i*31) for i in range(nv)]
-groups={str(i):[] for i in range(15)}
+groups={str(i):[] for i in sorted({v[-1] for v in verts})}
 for i in range(nf):
     count,a,b,c=struct.unpack_from('<B3I',blob,end+nv*31+i*13)
     assert count==3 and len({verts[j][-1] for j in (a,b,c)})==1
@@ -91,7 +95,7 @@ class Article:
         for poly,n,finish in faces.values():
             rgb=color(palette[finish],n)
             for i in range(1,len(poly)-1):
-                for p in (poly[0],poly[i],poly[i+1]):vertices.append((*[v*.5 for v in p],*rgb))
+                for p in (poly[0],poly[i],poly[i+1]):vertices.append((*[v*grain for v in p],*rgb))
         return vertices
 
 for family in ('reservoir','cascade','facet'):
@@ -128,8 +132,8 @@ for key,vs in groups.items():
     meta[key]={'first':len(out)//16,'count':len(vs)}
     for x,y,z,r,g,b in vs:out.extend(struct.pack('<3f4B',x,y,z,r,g,b,255))
 digest=hashlib.sha256(out).hexdigest()[:12]
-asset='workshop-mesh.'+digest+'.bin'
+asset=('carrier-mesh.' if args.ship=='kite' else 'workshop-mesh.')+digest+'.bin'
 (ROOT/'site/assets'/asset).write_bytes(out)
 payload={'asset':'/assets/'+asset,'groups':meta,'sourceSha256':hashlib.sha256(blob).hexdigest()}
-(ROOT/'site/outfit-geometry.js').write_text('// Generated native parts and source-derived alternate articles. See scripts/build-workshop-geometry.py.\nwindow.FleetOutfitGeometry = '+json.dumps(payload,separators=(',',':'))+';\n',encoding='utf-8')
+(ROOT/('site/carrier-geometry.js' if args.ship=='kite' else 'site/outfit-geometry.js')).write_text('// Generated native parts and source-derived alternate articles. See scripts/build-workshop-geometry.py.\nwindow.FleetOutfitGeometry = '+json.dumps(payload,separators=(',',':'))+';\n',encoding='utf-8')
 print(f'{asset}: {len(out):,} bytes, {len(meta)} independently drawn parts')

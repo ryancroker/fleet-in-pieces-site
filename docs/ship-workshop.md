@@ -1,5 +1,17 @@
 # Ship workshop / October 11, 2026
 
+## KITE carrier / kite-outfit-1
+
+`/ship-lab/kite` is the first carrier workspace, linked beside KESTREL on the homepage and workshop. It pins actual sixteen-berth `vf.carrier.kite.4`, hash `AF3443366E92A72C7B2051811084BCE45ACCCE6A`, exported 2026-10-12T04:28:51Z with Ryan's explicit art-only launch approval. `content/workshop-geometry/kite-native.json` and `kite.ply` retain the exact native export. No published dossier pointers change.
+
+`import-carrier.py` validates current identity and sixteen berths; `build-workshop-geometry.py --ship kite` emits an 11,444,352-byte mesh. The 32 native parts remain intact, with source-derived projector and light-barrel alternatives on original mounts. `render-carrier.mjs`, `carrier.js`, `carrier-renderer.js` and `carrier.css` own this independent workspace. Existing KESTREL editing and the pure power evaluator remain unchanged.
+
+Browser and native outfitter revision6 use matching Standard/Reservoir/Cascade/Facet projectors, independent Standard/Rapid/Lance light guns and 50/75/100% propulsion force/demand limits. Native hull, engines, jets, armor, sixteen berths and service machinery are fixed in this first carrier pass. Native sensor choices and enriched command/endurance fittings are not modeled by this base-export browser packet; displayed headroom cannot certify manufacture admission. Native BuildOutfit, clearance, paid yard work, crew and launch gates remain authoritative.
+
+Baseline all-installed load is about132.1kW against128kW generation: full propulsion and every service exceed supply. Shield reserve gives14.2kW headroom (75% engines/50% jets), and Fast shield recovery gives5.5kW (50% both), both with Rapid guns. Scenario power separately includes damage and disabled hardware. Flight duty lowers all shields. Service readiness checks each berth controller, its feed, fuel and cannon stores; no aircraft movement, crew, torpedo cycle or clearance simulation is claimed.
+
+Damage/repair, fitting changes, undo, local persistence and validated `#carrier=` sharing preserve finite stores. Repair never refills supplies; Restore stock explicitly starts a fresh scenario. Local storage is scoped by `kite-outfit-1` and native definition hash; future tuning needs a version bump. All workshop actions stay in the browser, without backend writes or polling. Local1440/390 review covers visible swaps, section focus, power/berth loss, stores and sharing. Ryan owns gameplay and usability acceptance.
+
 The homepage is the interactive workshop. The default **Outfit a ship** mode is the custom fitting study; **Inspect native ships** retains the original three published layouts. `/ship-lab` is its stable sharing route. `/ship-design` remains the existing ship discussion feed. The game introduction lives at `/game`; explanatory system pages live under `/systems`, with the existing carrier and rescue guides under `/ships`.
 
 ## Data and code boundaries

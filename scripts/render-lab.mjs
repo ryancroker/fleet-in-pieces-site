@@ -4,7 +4,7 @@ import {page} from './render-pages.mjs';
 import {outfitBody} from './render-outfit.mjs';
 
 // Build only from the already-published native packets. No live engine or database access.
-export async function renderLab(root,register,discordURL){
+export async function renderLab(root,register,discordURL,carrierReady=false){
  const models=[];
  const outfit=JSON.parse(await readFile(path.join(root,'content/workshop-outfit.json'),'utf8'));
  await writeFile(path.join(root,'site/outfit-data.js'),'// Generated prototype tuning; see content/workshop-outfit.json.\nwindow.FleetOutfitData = '+JSON.stringify(outfit)+';\n');
@@ -17,6 +17,7 @@ export async function renderLab(root,register,discordURL){
  }
  await writeFile(path.join(root,'site/ship-lab-data.js'),'// Generated from pinned native export packets; do not hand edit.\nwindow.FleetLabData = '+JSON.stringify(models)+';\n');
  const body=`<section class="lab-intro"><div><p class="eyebrow">Fleet in Pieces / open design workshop</p><h1>Choose the hardware. <span>Know the tradeoff.</span></h1><p>Space is finite. Power is finite. Choose what this ship can do—and what it can afford to leave behind.</p></div><div class="lab-intro-side"><span class="lab-build-tag">UI prototype / 04</span><p>Equipment, sections and damage control.</p><a href="/game" class="back-link">What is Fleet in Pieces? →</a></div></section>
+${carrierReady?'<nav class="carrier-hulls" aria-label="Choose workshop hull"><a href="/ship-lab" aria-current="page">KESTREL &middot; escort</a><a href="/ship-lab/kite">KITE &middot; carrier</a></nav>':''}
 ${outfitBody()}
  <section hidden id="ship-workshop" class="lab" aria-label="Interactive ship design workspace">
  <div class="lab-topline"><div><label for="lab-ship">Vessel / exported configuration</label><select id="lab-ship">${models.map(m=>`<option value="${m.key}">${m.name} · ${m.role}</option>`).join('')}</select></div><div class="lab-top-actions"><button type="button" id="lab-share">Share this setup ↗</button><button type="button" id="lab-export">Export setup</button><button type="button" id="lab-reset">Reset ship</button></div></div>
@@ -33,7 +34,7 @@ ${outfitBody()}
  <!-- fleet-status -->
  <section class="lab-next"><article><p class="eyebrow">The game</p><h2>A finite fleet. <br>A very large war.</h2><p>Physical ships, imperfect information and the people who have to bring them home.</p><a class="back-link" href="/game">Understand the game →</a></article><article><p class="eyebrow">The field guide</p><h2>Every system <br>has consequences.</h2><p>Learn how power, sensors, jumping, crew, recovery and logistics fit together.</p><a class="back-link" href="/systems">Explore the systems →</a></article><article><p class="eyebrow">Built in public</p><h2>Help shape <br>the controls.</h2><p>Try a setup. Find something confusing. Bring the ship and the question.</p><a class="back-link" href="${discordURL}" target="_blank" rel="noopener noreferrer">Join the Discord ↗</a></article></section>`;
  for(const route of ['','ship-lab']){
-  const html=page('Ship design workshop','Explore Fleet in Pieces through its working ship systems. Inspect real equipment, change power priorities and simulate component damage.','/'+route,body).replace('visitor-page"','visitor-page lab-page"').replace('</head>','<link rel="stylesheet" href="/ship-lab.css"><script src="/ship-lab-data.js" defer></script><script src="/ship-lab-model.js" defer></script><script src="/outfit-data.js" defer></script><script src="/outfit-model.js" defer></script><script src="/outfit-geometry.js" defer></script><script src="/outfit-renderer.js" defer></script><script src="/outfit.js" defer></script><script src="/ship-lab.js" defer></script></head>');
+  const html=page('Ship design workshop','Explore Fleet in Pieces through its working ship systems. Inspect real equipment, change power priorities and simulate component damage.','/'+route,body).replace('visitor-page"','visitor-page lab-page"').replace('</head>','<link rel="stylesheet" href="/ship-lab.css"><link rel="stylesheet" href="/carrier.css"><script src="/ship-lab-data.js" defer></script><script src="/ship-lab-model.js" defer></script><script src="/outfit-data.js" defer></script><script src="/outfit-model.js" defer></script><script src="/outfit-geometry.js" defer></script><script src="/outfit-renderer.js" defer></script><script src="/outfit.js" defer></script><script src="/ship-lab.js" defer></script></head>');
   await writeFile(path.join(root,'site',route||'index')+'.html',html);
  }
 }

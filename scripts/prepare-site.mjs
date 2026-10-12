@@ -8,6 +8,7 @@ import {renderPages, page} from './render-pages.mjs';
 import {guideDetail,guidePageBody} from './render-guide.mjs';
 import {renderShips} from './render-ships.mjs';
 import {renderLab} from './render-lab.mjs';
+import {renderCarrier} from './render-carrier.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
@@ -59,8 +60,9 @@ async function htmlFiles(folder) {
   return files;
 }
 const shipRoutes = await renderShips(root);
-await renderLab(root,fleetRegister,discordURL);
-const assets = ['outfit-geometry.js','outfit-renderer.js','outfit-data.js','outfit-model.js','outfit.js','ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
+const carrierReady=await renderCarrier(root);
+await renderLab(root,fleetRegister,discordURL,carrierReady);
+const assets = ['carrier-data.js','carrier-geometry.js','carrier-renderer.js','carrier.js','carrier.css','outfit-geometry.js','outfit-renderer.js','outfit-data.js','outfit-model.js','outfit.js','ship-lab-data.js','ship-lab-model.js','ship-lab.js','ship-lab.css','field-guide.css','ships.js','ships.css','social.js','social.css','styles.css','community.css','visitor.css','creator.css','creator.js','creator-tools.js','network.js','community.js','crew.js','dashboard.js','hub.js','register.css','register.js','profile.js','config.js','script.js'];
 const releases=[];
 for(const asset of assets){
   let bytes;
@@ -113,6 +115,6 @@ for(const file of await htmlFiles(site)){
   }
   await writeFile(file,html);
 }
-const routes = [...new Set(['/', '/ship-lab', '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...guides.map(g=>g.path), ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`),...shipRoutes])];
+const routes = [...new Set(['/', '/ship-lab', ...(carrierReady?['/ship-lab/kite']:[]), '/game', '/systems', '/ships', '/community', '/developer-replies', '/dev-log', '/quartermaster', '/fleet', '/register', '/people', '/recruitment', '/mess-deck', '/feedback', '/activity', ...guides.map(g=>g.path), ...contents.map(c=>`/${c.kind === 'ship' ? 'ships' : 'systems'}/${c.slug}`),...shipRoutes])];
 await writeFile(path.join(site,'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(route=>`  <url><loc>https://fleetinpieces.space${route}</loc></url>`).join('\n')+'\n</urlset>\n');
 console.log('Prepared content and fingerprinted assets: '+releases.map(r=>r.filename).join(', '));

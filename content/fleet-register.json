@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "bundle_id": "frb1-6b4407e775cc563d8762f0c085f972b4d16402d0960c82361281f80b07875c74",
-  "manifest_sha256": "1190ecfc23e1f9a09c4482122b6f11bc01eb0fd2f984854158b1c4f2276a4e64",
+  "bundle_id": "frb1-60c717a80c760cfca96f7200e8f3c166d25368eb96a5f7503678e587d8230a88",
+  "manifest_sha256": "f3ad0f1a951140b126d419e00def9029ee9b44821189fe7eab14bc69cb6f82be",
   "sections": {
     "boarding": "Boarding and damage",
     "bridge": "Bridge and command",
@@ -2184,7 +2184,7 @@
         }
       ],
       "default_exported_revision": "fr1-946f87e29773239b3b1f88f6225751b4ea7f0bfcfcd17d35d5fbf7908e36a97d",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "ANCHORAGE",
       "installation": true,
       "publication_state": "candidate",
@@ -2242,7 +2242,7 @@
         }
       ],
       "default_exported_revision": "fr1-80d631567141bbf7118a60aadbca9f5e079a49facdd505764f0b8b0a51b1ae4f",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "ANCHORAGE / EXPANDED YARD",
       "installation": true,
       "publication_state": "candidate",
@@ -2300,7 +2300,7 @@
         }
       ],
       "default_exported_revision": "fr1-a0c8e874a4320b2e9c0c95d9775f87cdb5d5300857c1f21a9894cce26cb6fe85",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "ANCHORAGE / SHIPYARD",
       "installation": true,
       "publication_state": "candidate",
@@ -2358,7 +2358,7 @@
         }
       ],
       "default_exported_revision": "fr1-835fe213b7ccb0999cf2f20b71c00dfd89ae110a6537cf9f38bfb47585355a3b",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BASTION / fleet oiler",
       "installation": false,
       "publication_state": "candidate",
@@ -2416,7 +2416,7 @@
         }
       ],
       "default_exported_revision": "fr1-39ab8720e72f17d7c5c3baba98fd5c3b851278b14faaf7050fda35625f7d336a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BOLLARD",
       "installation": false,
       "publication_state": "candidate",
@@ -2471,10 +2471,52 @@
           "path": "revisions/fr1-6e0acb4ae31700d9494902d0da42e47f4c143596cde55732d08a649de93d8d41.json",
           "recipe_id": "vf.bramble.mine-tender.1",
           "revision_id": "fr1-6e0acb4ae31700d9494902d0da42e47f4c143596cde55732d08a649de93d8d41"
+        },
+        {
+          "assembled_dimensions_m": [
+            301,
+            68,
+            42
+          ],
+          "definition_hash": "FB6855F9685A65884148A84AD79F419AD268E916",
+          "exported_utc": "2026-10-06T22:51:46.309Z",
+          "hero": {
+            "bytes": 296824,
+            "height": 1536,
+            "media_type": "image/png",
+            "path": "assets/9a400329cc92f57d1423c2b7d6922d5456272c545a422297abde5f346b5fd467.png",
+            "projection": {
+              "centre_x_m": -4.242640687119291,
+              "centre_y_m": 8.981462390204989,
+              "pixels_per_metre": 7.966457463782168,
+              "right": [
+                0.7071067811865475,
+                0.7071067811865475,
+                0
+              ],
+              "toward": [
+                0.5773502691896258,
+                -0.5773502691896258,
+                0.5773502691896258
+              ],
+              "up": [
+                -0.4082482904638631,
+                0.4082482904638631,
+                0.8164965809277261
+              ]
+            },
+            "sha256": "9a400329cc92f57d1423c2b7d6922d5456272c545a422297abde5f346b5fd467",
+            "source_sha1": "1E51140CC0D89C747D27AD20EA634A75CAB06140",
+            "title": "Three-quarter view from above",
+            "width": 2048
+          },
+          "path": "revisions/fr1-60b43f4d4b1a5dadd6fc74da401d7d71f7eb92e952267f41f5b382ebb0db7c59.json",
+          "recipe_id": "vf.bramble.mine-tender.3",
+          "revision_id": "fr1-60b43f4d4b1a5dadd6fc74da401d7d71f7eb92e952267f41f5b382ebb0db7c59"
         }
       ],
       "default_exported_revision": "fr1-6e0acb4ae31700d9494902d0da42e47f4c143596cde55732d08a649de93d8d41",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BRAMBLE",
       "export_status": "newer_design_awaiting_art_export",
       "installation": false,
@@ -2482,7 +2524,8 @@
       "publication_state": "candidate",
       "recipe_aliases": [
         "vf.bramble.mine-tender.1",
-        "vf.bramble.mine-tender.2"
+        "vf.bramble.mine-tender.2",
+        "vf.bramble.mine-tender.3"
       ],
       "revision_notice": "A newer design was compiled on 2026-10-06. The available art and measurements describe the earlier recipe shown here. The newer design still requires its own matching export and gameplay acceptance.",
       "role": "Mine layer and drone repair tender",
@@ -2536,7 +2579,7 @@
         }
       ],
       "default_exported_revision": "fr1-87d574a71faf650f167e299fea07fbef988f9399614cbde3e547910c6f793041",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BREACH",
       "installation": false,
       "publication_state": "candidate",
@@ -2594,7 +2637,7 @@
         }
       ],
       "default_exported_revision": "fr1-8de155acb9387d1374f0400a471074e68ba4057392801c161e33c9543ffbe32b",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BREACH / BASTION",
       "installation": false,
       "publication_state": "candidate",
@@ -2652,7 +2695,7 @@
         }
       ],
       "default_exported_revision": "fr1-a8ae4788eb35850da2e5993b9347d6181222e1ab5773f8943e1d70a2debea375",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BREACH / BULWARK",
       "installation": false,
       "publication_state": "candidate",
@@ -2710,7 +2753,7 @@
         }
       ],
       "default_exported_revision": "fr1-c0cfa40553edcf5ea508887fe43454fa296d276de4807816ffe65b177ea4dbaf",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "BULWARK",
       "installation": false,
       "publication_state": "candidate",
@@ -2768,7 +2811,7 @@
         }
       ],
       "default_exported_revision": "fr1-c8160248689657205ad703f13cf1a5d626edd011efcdc1a5ed7adc8205148d15",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CALIPER",
       "installation": false,
       "publication_state": "candidate",
@@ -2826,7 +2869,7 @@
         }
       ],
       "default_exported_revision": "fr1-97aea433abdecb32eb29ef1eed695a44bd182872d532c026627bcc22506f4b38",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CARTOGRAPHER",
       "installation": false,
       "publication_state": "candidate",
@@ -2884,7 +2927,7 @@
         }
       ],
       "default_exported_revision": "fr1-02fd6645a98dc4c5f4057573c6743ce9be6769d930e8163d56087fa4e3fc2387",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CISTERN",
       "installation": false,
       "publication_state": "candidate",
@@ -2942,7 +2985,7 @@
         }
       ],
       "default_exported_revision": "fr1-edeac16b39b8b0a4530c972fcd1b1c50c8a8a5a10317a16f28169913ca2bf737",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CISTERN / bulk tanker",
       "installation": false,
       "publication_state": "candidate",
@@ -3000,7 +3043,7 @@
         }
       ],
       "default_exported_revision": "fr1-8f9aad8b54e94cfc440e8c3c629c313ad5b3022a0560f6559cc55ea78e1ba08f",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CITADEL / military fuel depot",
       "installation": true,
       "publication_state": "candidate",
@@ -3058,7 +3101,7 @@
         }
       ],
       "default_exported_revision": "fr1-3d9886d4ad780cf15a5e854f20c73079885e76bd1c95b11b00766ea38b27f176",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CITADEL / storage expansion",
       "installation": true,
       "publication_state": "candidate",
@@ -3116,7 +3159,7 @@
         }
       ],
       "default_exported_revision": "fr1-6fe706546bc199de338c2eebdf48abb746d8f7153cec73429e17fae9f3c3ca9b",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "COMMERCE / PRIVATE YARD",
       "installation": true,
       "publication_state": "candidate",
@@ -3174,7 +3217,7 @@
         }
       ],
       "default_exported_revision": "fr1-5f44df70e83b12b00bd2dd365dc505a94da498376b0cd1936da4b84fddc08c12",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "COMMON / PORT",
       "installation": true,
       "publication_state": "candidate",
@@ -3232,7 +3275,7 @@
         }
       ],
       "default_exported_revision": "fr1-49b712e00f0dc165442649cf56d12078a0e4a1e78a4f2e57e3c766212c8cbead",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "COURIER / fast replenisher",
       "installation": false,
       "publication_state": "candidate",
@@ -3290,7 +3333,7 @@
         }
       ],
       "default_exported_revision": "fr1-e97b83b5787a20112103d5051fc7c684339dbfb4143d050ed3c70eab60faa424",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CROWN",
       "installation": true,
       "publication_state": "candidate",
@@ -3348,7 +3391,7 @@
         }
       ],
       "default_exported_revision": "fr1-677ebeb39960fd22a418f7e7cf9bb50b04c480e35644e70e60cedc6df50eea94",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CROWNBREAKER",
       "installation": false,
       "publication_state": "candidate",
@@ -3406,7 +3449,7 @@
         }
       ],
       "default_exported_revision": "fr1-036237c238cd48d3816e28b7a3246d105bd933740795db616acf768bef876b39",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "CRUCIBLE / SMELTER",
       "installation": true,
       "publication_state": "candidate",
@@ -3464,7 +3507,7 @@
         }
       ],
       "default_exported_revision": "fr1-77a32c35e7f6d07187f1d7bd3ccb5c2fae77157d4e769891d7c6440fe001b874",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "DISTILLERY / FUEL WORKS",
       "installation": true,
       "publication_state": "candidate",
@@ -3522,7 +3565,7 @@
         }
       ],
       "default_exported_revision": "fr1-b7c1e1c010f5b57ab9364b5b434620702535c53d2e7437079f2a5f61ecce024a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "GANNET",
       "installation": false,
       "publication_state": "candidate",
@@ -3580,7 +3623,7 @@
         }
       ],
       "default_exported_revision": "fr1-47ddfd578fbb9aa6fff4b82e8497acc98f818c6d9fb8ec07f0c8fc2eb2e10795",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "GOSHAWK",
       "installation": false,
       "publication_state": "candidate",
@@ -3638,7 +3681,7 @@
         }
       ],
       "default_exported_revision": "fr1-d2a94e6bede983b34716825c890f5e5768f6f373916e236fc079360c015e06da",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "GOSHAWK / LONGREACH",
       "installation": false,
       "publication_state": "candidate",
@@ -3696,7 +3739,7 @@
         }
       ],
       "default_exported_revision": "fr1-027680095acacf4f4d97da8a9a8084d1ff813b3af989f318ba066fc3e0d81f0c",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "GOSHAWK / LONGREACH / RAPID",
       "installation": false,
       "publication_state": "candidate",
@@ -3754,7 +3797,7 @@
         }
       ],
       "default_exported_revision": "fr1-9e978457ba2485ce206a15286ef641d5ebff8f5bfba9dcf033834d563a7ff7ed",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "HARRIER",
       "installation": false,
       "publication_state": "candidate",
@@ -3812,7 +3855,7 @@
         }
       ],
       "default_exported_revision": "fr1-bfa86f449a259f9a6b8fe3efe7a724043d913a0f32c04a4d5b1b207b62b8c0cc",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "HELIOS / refinery expansion",
       "installation": true,
       "publication_state": "candidate",
@@ -3870,7 +3913,7 @@
         }
       ],
       "default_exported_revision": "fr1-e63717255ea44a6a5dd5c535d6042b4f31d507082618da14bad7d8e62b9f38d8",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "HELIOS / stellar collector",
       "installation": true,
       "publication_state": "candidate",
@@ -3928,7 +3971,7 @@
         }
       ],
       "default_exported_revision": "fr1-1c99b74e2838c2b8363358c1b49806393d104e03c16a58e0d89b686c3d438cf4",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KESTREL",
       "installation": false,
       "publication_state": "candidate",
@@ -3986,7 +4029,7 @@
         }
       ],
       "default_exported_revision": "fr1-47dfa3e56f093add24d4ea6806867917f0f6acf5869ea29cd89bb05cf791681a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KESTREL / PD",
       "installation": false,
       "publication_state": "candidate",
@@ -4044,7 +4087,7 @@
         }
       ],
       "default_exported_revision": "fr1-c883840e83f058f287d4f8225257bcb8489b85425df1c308f8fd50070b2b917c",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KESTREL / SIGNAL",
       "installation": false,
       "publication_state": "candidate",
@@ -4102,7 +4145,7 @@
         }
       ],
       "default_exported_revision": "fr1-3be500af3c7e88960c2361252beb5985ffc7b91db0928e22b8a5a4df97e3780c",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KEYSTONE",
       "installation": true,
       "publication_state": "candidate",
@@ -4160,7 +4203,7 @@
         }
       ],
       "default_exported_revision": "fr1-e86c5a34fc793419cb8f6cff2177cb38ee8f4bd185ac67d00ec6a37df916bc85",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KITE",
       "installation": false,
       "publication_state": "candidate",
@@ -4218,7 +4261,7 @@
         }
       ],
       "default_exported_revision": "fr1-dbf5e7dca42ee3199394d3460120ffc4550fd578db5db06dc9c3829cae281e0a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KITE / RACK",
       "installation": false,
       "publication_state": "candidate",
@@ -4276,7 +4319,7 @@
         }
       ],
       "default_exported_revision": "fr1-86ee3ad6bde8651c35f59875f1af20d16ff906898a76d704189337266558084f",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "KITE / RACK / RAPID",
       "installation": false,
       "publication_state": "candidate",
@@ -4670,7 +4713,7 @@
         }
       ],
       "default_exported_revision": "fr1-a6800f97f08e22a0aece2d1c481f0d850a93de2e3907ee862bfa692dfb7fd8a5",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "LANCE",
       "installation": false,
       "publication_state": "candidate",
@@ -4728,7 +4771,7 @@
         }
       ],
       "default_exported_revision": "fr1-a08d1aa6b7a3f0945e3b06834d02683f5a9908bd46a5a35b4635409561abdefc",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "LANCET",
       "installation": false,
       "publication_state": "candidate",
@@ -4786,7 +4829,7 @@
         }
       ],
       "default_exported_revision": "fr1-91352ad33cce0658b23b36b3c16528934483eca296cd555742b74122621bad8a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "LONGSHOT",
       "installation": false,
       "publication_state": "candidate",
@@ -4844,7 +4887,7 @@
         }
       ],
       "default_exported_revision": "fr1-f28d87d4dea490d665acd55e1dbe633065eb1fae2c43e22018839beff05695ed",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MANTICORE",
       "installation": false,
       "publication_state": "candidate",
@@ -4902,7 +4945,7 @@
         }
       ],
       "default_exported_revision": "fr1-db5157272664ce06e18e3770b21e8f36fffddb7c2a16a2f44ca4f1549b5db91e",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MAUL",
       "installation": false,
       "publication_state": "candidate",
@@ -4960,7 +5003,7 @@
         }
       ],
       "default_exported_revision": "fr1-035434ec03dfdbf78f61d3797095a19639acbb03e49090f89c997f9744ccb2ef",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MAUL / ANVIL",
       "installation": false,
       "publication_state": "candidate",
@@ -5018,7 +5061,7 @@
         }
       ],
       "default_exported_revision": "fr1-e383a35b8f3cd8310c9c083a7746f5a341ec05d4b7604e47af2b333b40df08ed",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MAUL / LANCER",
       "installation": false,
       "publication_state": "candidate",
@@ -5076,7 +5119,7 @@
         }
       ],
       "default_exported_revision": "fr1-c7f1187c158f101a89c2b72630d49ebb467f127ae67332a8d53218f35c0055b3",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MENDER",
       "installation": false,
       "publication_state": "candidate",
@@ -5134,7 +5177,7 @@
         }
       ],
       "default_exported_revision": "fr1-21318808087310e9de2e9324593121410da459230b3c4c73e312046921dc3e7d",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "MERLIN",
       "installation": false,
       "publication_state": "candidate",
@@ -5192,7 +5235,7 @@
         }
       ],
       "default_exported_revision": "fr1-8cff4446b402d476b3c565d80fec8025f284666bc0d06338898a3613fa107026",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "OSPREY",
       "installation": false,
       "publication_state": "candidate",
@@ -5250,7 +5293,7 @@
         }
       ],
       "default_exported_revision": "fr1-b517eae90dd0cd7a88874953fb01bfdccad40445938e4283ab09837247b747aa",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "OSPREY / BASTION",
       "installation": false,
       "publication_state": "candidate",
@@ -5308,7 +5351,7 @@
         }
       ],
       "default_exported_revision": "fr1-468030fead49682fbcf9897821cbbffb2850a7bdcb41c36b7845888bb4016a17",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "OSPREY / BASTION / RAPID",
       "installation": false,
       "publication_state": "candidate",
@@ -5366,7 +5409,7 @@
         }
       ],
       "default_exported_revision": "fr1-547ffba49ad26323eb14edf1f16ff66d0668876a7cc33e8f5d407491529630e5",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "OSPREY / FLIGHT DECK",
       "installation": false,
       "publication_state": "candidate",
@@ -5424,7 +5467,7 @@
         }
       ],
       "default_exported_revision": "fr1-c739eb3bac415301469e4666cbdab2df5e305cd7a4f21fb67410c91cb317888a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PATCHWORK",
       "installation": false,
       "publication_state": "candidate",
@@ -5482,7 +5525,7 @@
         }
       ],
       "default_exported_revision": "fr1-e40250e267998b601b36c3f15707367741dc4d16df2230e99a8f70940d1babd8",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PEARL",
       "installation": false,
       "publication_state": "candidate",
@@ -5540,7 +5583,7 @@
         }
       ],
       "default_exported_revision": "fr1-c796f8e4bb72d56e7f87a74252494093fde5838e050b488565e974424c4ae506",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PEREGRINE",
       "installation": false,
       "publication_state": "candidate",
@@ -5598,7 +5641,7 @@
         }
       ],
       "default_exported_revision": "fr1-f7016b157cc8f101abd93c3fe25881d78e371d67bc9422d38d9169d971feafbb",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PIKE",
       "installation": false,
       "publication_state": "candidate",
@@ -5656,7 +5699,7 @@
         }
       ],
       "default_exported_revision": "fr1-dd4f177e14d49b0094825f8dacca15d7625a19c6f1d9083f87304aca68c20e89",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PIKE / HAMMER",
       "installation": false,
       "publication_state": "candidate",
@@ -5714,7 +5757,7 @@
         }
       ],
       "default_exported_revision": "fr1-6e2cf0354345efeb63a67ca985801954f7de65b711217e58e0c905f2de7d9f00",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PORTER",
       "installation": false,
       "publication_state": "candidate",
@@ -5772,7 +5815,7 @@
         }
       ],
       "default_exported_revision": "fr1-a43a82adcd40be03555c9d0c7411600ced531ead03444027fa84e7c9d3041ab3",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PORTER / FIELD SERVICE",
       "installation": false,
       "publication_state": "candidate",
@@ -5830,7 +5873,7 @@
         }
       ],
       "default_exported_revision": "fr1-6650e48db1b9f561dd3795619b670e48720341aae5fd24c53596c618e629f3d3",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PORTER / FIELD SERVICE II",
       "installation": false,
       "publication_state": "candidate",
@@ -5888,7 +5931,7 @@
         }
       ],
       "default_exported_revision": "fr1-29450ec0479f0faa958075f8f8b33e789d2629fbd8263899ca13340ba12acbbf",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "PRIVATE ARMED MERCHANT",
       "installation": false,
       "publication_state": "candidate",
@@ -5946,7 +5989,7 @@
         }
       ],
       "default_exported_revision": "fr1-01bc166b06d437e96bbc8298cc804d98e6f6a1a7c836fd4c1e4e0e4e451ea356",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUARRY / ORE MINE / DEPOSIT 0",
       "installation": true,
       "publication_state": "candidate",
@@ -6004,7 +6047,7 @@
         }
       ],
       "default_exported_revision": "fr1-8e802dbaa2b0ef55eef4e82ecabe862d654d1e5ade79ba558dcc6527ed36b2fa",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUARRY / ORE MINE / DEPOSIT 1",
       "installation": true,
       "publication_state": "candidate",
@@ -6062,7 +6105,7 @@
         }
       ],
       "default_exported_revision": "fr1-2d96a70abcab33f25fc328c0bb22d9344ab570c1732d4b433fafd0b085224b7d",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUARRY / ORE MINE / DEPOSIT 2",
       "installation": true,
       "publication_state": "candidate",
@@ -6120,7 +6163,7 @@
         }
       ],
       "default_exported_revision": "fr1-9ab65640641954adc33fd57730745e1d7f9f9234d2bb56b586df308e30ec776b",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUARRY / ORE MINE / DEPOSIT 3",
       "installation": true,
       "publication_state": "candidate",
@@ -6178,7 +6221,7 @@
         }
       ],
       "default_exported_revision": "fr1-f366850254e65d70a43b7ce43bacf9aae19c5670e8f876281de04650308a8dfd",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUIVER",
       "installation": false,
       "publication_state": "candidate",
@@ -6236,7 +6279,7 @@
         }
       ],
       "default_exported_revision": "fr1-c9262053dc2a1aba91da7d9b4a1040d2205e65833c2e95c2d43498fa4f2596e5",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "QUIVER / ARMED",
       "installation": false,
       "publication_state": "candidate",
@@ -6294,7 +6337,7 @@
         }
       ],
       "default_exported_revision": "fr1-dc5bde46761d9c5839d300a4942fd43947e0e7eebc7db9ed7146f52d524ce93e",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RAVELIN",
       "installation": false,
       "publication_state": "candidate",
@@ -6352,7 +6395,7 @@
         }
       ],
       "default_exported_revision": "fr1-54c0aa5bb5aca98a17cb8a32417e5ca2c7368cd6347ddfc1142c0aea9b194dab",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "REDOUBT",
       "installation": true,
       "publication_state": "candidate",
@@ -6410,7 +6453,7 @@
         }
       ],
       "default_exported_revision": "fr1-ab1ea34591fadc2c67ed44000737e2a68bb534ef5a809856427ec59ff851e6a7",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RILL / feeder tanker",
       "installation": false,
       "publication_state": "candidate",
@@ -6468,7 +6511,7 @@
         }
       ],
       "default_exported_revision": "fr1-eb5b970632a087ebb96d9d5eeb8be85aed20ccb6691bd755f133cb148f77c82b",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RIME / ICE MINE / DEPOSIT 0",
       "installation": true,
       "publication_state": "candidate",
@@ -6526,7 +6569,7 @@
         }
       ],
       "default_exported_revision": "fr1-35d00906f1f4849d85ec71dc7a8a9e7a0888ed872c898db3b1afa12f49ae9f7c",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RIME / ICE MINE / DEPOSIT 1",
       "installation": true,
       "publication_state": "candidate",
@@ -6584,7 +6627,7 @@
         }
       ],
       "default_exported_revision": "fr1-cff5c9be3fa83c73b4cbdf09cb0df40119a58a5c7393a30a6f9666d00ac9d570",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RIME / ICE MINE / DEPOSIT 2",
       "installation": true,
       "publication_state": "candidate",
@@ -6642,7 +6685,7 @@
         }
       ],
       "default_exported_revision": "fr1-16c343345dd38aeb659e0fcf9c036fe8c276e2dde985bf64917fb3e586c67bfc",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "RIME / ICE MINE / DEPOSIT 3",
       "installation": true,
       "publication_state": "candidate",
@@ -6700,7 +6743,7 @@
         }
       ],
       "default_exported_revision": "fr1-c07bc612d77cb5911e7b4371e1b0654b99172a3ca86e11323c0b98c78eb68f2d",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "SENTRY",
       "installation": false,
       "publication_state": "candidate",
@@ -6758,7 +6801,7 @@
         }
       ],
       "default_exported_revision": "fr1-22e1907912afcf0273fd64695a38b1b274837b08d1ad200f471aa84a9f115583",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "SHRIKE",
       "installation": false,
       "publication_state": "candidate",
@@ -6816,7 +6859,7 @@
         }
       ],
       "default_exported_revision": "fr1-c602e44a993e5e3c8ffeddeae004b06f91b2593b290536163f0af4638cc59f42",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "SPARROW / service launch",
       "installation": false,
       "publication_state": "candidate",
@@ -6874,7 +6917,7 @@
         }
       ],
       "default_exported_revision": "fr1-df8200a2bde47119cfc19477b9e18b01b437eca167779e3cb4e4ecd2ad2c1934",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "STITCH",
       "installation": false,
       "publication_state": "candidate",
@@ -6932,7 +6975,7 @@
         }
       ],
       "default_exported_revision": "fr1-fa19773a8e2d8725b2c7faefc69aaa68a0de246767c03b0a4723ad079be462fe",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-01 / COMMAND",
       "installation": false,
       "publication_state": "candidate",
@@ -6990,7 +7033,7 @@
         }
       ],
       "default_exported_revision": "fr1-04b2b4864d957a08492db628f4e4297aef8c1d8bfaadd8b79eacf721fb4c8856",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-01 / TEAM TRANSPORT",
       "installation": false,
       "publication_state": "candidate",
@@ -7048,7 +7091,7 @@
         }
       ],
       "default_exported_revision": "fr1-e06f2a3ec22957c8bae3f7b7d93e6994764b68aa8e1d94bc5368c0997aa41cfa",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-01 / WORKSHOP",
       "installation": false,
       "publication_state": "candidate",
@@ -7106,7 +7149,7 @@
         }
       ],
       "default_exported_revision": "fr1-0728c03d4585a06135c5147c42444c0ae06c235d2a9632723bb77e8b40d67b5d",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-02 / COURIER",
       "installation": false,
       "publication_state": "candidate",
@@ -7164,7 +7207,7 @@
         }
       ],
       "default_exported_revision": "fr1-dcd328986e9c46ccca655b14e81b2f039c64b24753ff6fc6d02f9940a6309b83",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-02 / CREW SHUTTLE",
       "installation": false,
       "publication_state": "candidate",
@@ -7222,7 +7265,7 @@
         }
       ],
       "default_exported_revision": "fr1-5c7ea3da1146e1cb489a006b6ffecff5becdc18955a1d7fbbea0adb22e888560",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-02 / PERSONNEL LIFT",
       "installation": false,
       "publication_state": "candidate",
@@ -7280,7 +7323,7 @@
         }
       ],
       "default_exported_revision": "fr1-4921a69e4fac3ce1c2065bc6070c6c3604b4b0cff6e92a5ad47650f73a76f966",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-03 / INSERTION",
       "installation": false,
       "publication_state": "candidate",
@@ -7338,7 +7381,7 @@
         }
       ],
       "default_exported_revision": "fr1-443fec52088cfa6e968c2514161f4a08fb9be8cfe9668cadf9b4229f815c4a8f",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-03 / MARINE BOARDER",
       "installation": false,
       "publication_state": "candidate",
@@ -7396,7 +7439,7 @@
         }
       ],
       "default_exported_revision": "fr1-9b46b135121a036c8f3e92b20cd16398a31c14251ee9351b34cf2ea7a1faba86",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-03 / PRIZE CREW",
       "installation": false,
       "publication_state": "candidate",
@@ -7454,7 +7497,7 @@
         }
       ],
       "default_exported_revision": "fr1-64d8a20f3628f96497e9e5f3a0a0895bed5e9808c50ed87d183b01d9c285e08e",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-04 / ASSAULT LIFT",
       "installation": false,
       "publication_state": "candidate",
@@ -7512,7 +7555,7 @@
         }
       ],
       "default_exported_revision": "fr1-2b62446a4aca43082b3f7342bbbd3f838947391c9fa554ee86cf6e1d19f130ed",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-04 / BASTION",
       "installation": false,
       "publication_state": "candidate",
@@ -7570,7 +7613,7 @@
         }
       ],
       "default_exported_revision": "fr1-6a2d03888c2ee86e483484b654fe0f9932fb4187a6b2f4d3f1f0151a035d2f2e",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "T-04 / HEAVY ASSAULT",
       "installation": false,
       "publication_state": "candidate",
@@ -7628,7 +7671,7 @@
         }
       ],
       "default_exported_revision": "fr1-765a03d3ba3ab06c1c74fb40cb05413748e6dfe30623c6de4e98e246d1c67953",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "TALON",
       "installation": false,
       "publication_state": "candidate",
@@ -7686,7 +7729,7 @@
         }
       ],
       "default_exported_revision": "fr1-fc9ba5aae623343489dd1323b0b9fcb099b9ddf90cee1157ca9335f70dee02db",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "TALON / RAZOR",
       "installation": false,
       "publication_state": "candidate",
@@ -7744,7 +7787,7 @@
         }
       ],
       "default_exported_revision": "fr1-4d5411785c602b1f081086ad454748bf78efb449efc7369e745e20ea7c70e307",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "TERN",
       "installation": false,
       "publication_state": "candidate",
@@ -7802,7 +7845,7 @@
         }
       ],
       "default_exported_revision": "fr1-b3f42d5edc6a056f8b3285bae024be871e5c39e599c0606ae3fe6849c61cd018",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "UC-A1",
       "installation": true,
       "publication_state": "candidate",
@@ -7860,7 +7903,7 @@
         }
       ],
       "default_exported_revision": "fr1-00e556a95769d3399f12a4a282deb86e384c85f282291522c60b0c2a31233ce0",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "VERDANT / AGRICULTURE",
       "installation": true,
       "publication_state": "candidate",
@@ -7918,7 +7961,7 @@
         }
       ],
       "default_exported_revision": "fr1-5035955c7783a896e5965e22310408c238410c9908db56e88533b3236679d687",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "VIREO",
       "installation": false,
       "publication_state": "candidate",
@@ -7973,10 +8016,52 @@
           "path": "revisions/fr1-5a70f0c9c59723e2793d2de134dd1a7a53398e0a1d456e0a5fe93a500e636981.json",
           "recipe_id": "vf.watchman.sensor-frigate.1",
           "revision_id": "fr1-5a70f0c9c59723e2793d2de134dd1a7a53398e0a1d456e0a5fe93a500e636981"
+        },
+        {
+          "assembled_dimensions_m": [
+            240,
+            48,
+            58
+          ],
+          "definition_hash": "407C9BAA7293F74D17BB02261ABBB31526207D85",
+          "exported_utc": "2026-10-06T22:51:48.190Z",
+          "hero": {
+            "bytes": 292756,
+            "height": 1536,
+            "media_type": "image/png",
+            "path": "assets/735b9f9838b119cad12624143215d92382b6128b74fa9f1528b741064866dc88.png",
+            "projection": {
+              "centre_x_m": -2.8284271247461916,
+              "centre_y_m": 7.5525933735814625,
+              "pixels_per_metre": 10.356394702916818,
+              "right": [
+                0.7071067811865475,
+                0.7071067811865475,
+                0
+              ],
+              "toward": [
+                0.5773502691896258,
+                -0.5773502691896258,
+                0.5773502691896258
+              ],
+              "up": [
+                -0.4082482904638631,
+                0.4082482904638631,
+                0.8164965809277261
+              ]
+            },
+            "sha256": "735b9f9838b119cad12624143215d92382b6128b74fa9f1528b741064866dc88",
+            "source_sha1": "D92E2D415DD94F5C5880359C9F785ED6F1CC2F3B",
+            "title": "Three-quarter view from above",
+            "width": 2048
+          },
+          "path": "revisions/fr1-0de55a305658b81817dc6b8ee78760c141af5a616b4486e1c111750e32f1a13b.json",
+          "recipe_id": "vf.watchman.sensor-frigate.3",
+          "revision_id": "fr1-0de55a305658b81817dc6b8ee78760c141af5a616b4486e1c111750e32f1a13b"
         }
       ],
       "default_exported_revision": "fr1-5a70f0c9c59723e2793d2de134dd1a7a53398e0a1d456e0a5fe93a500e636981",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "WATCHMAN",
       "export_status": "newer_design_awaiting_art_export",
       "installation": false,
@@ -7984,7 +8069,8 @@
       "publication_state": "candidate",
       "recipe_aliases": [
         "vf.watchman.sensor-frigate.1",
-        "vf.watchman.sensor-frigate.2"
+        "vf.watchman.sensor-frigate.2",
+        "vf.watchman.sensor-frigate.3"
       ],
       "revision_notice": "A newer design was compiled on 2026-10-06. The available art and measurements describe the earlier recipe shown here. The newer design still requires its own matching export and gameplay acceptance.",
       "role": "Military sensor frigate",
@@ -8038,7 +8124,7 @@
         }
       ],
       "default_exported_revision": "fr1-a43762e9a13d7916027d0b28edff27fa68325965bd756eac6416a7648d6106bd",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "WAYSTATION / expeditionary tender",
       "installation": false,
       "publication_state": "candidate",
@@ -8096,7 +8182,7 @@
         }
       ],
       "default_exported_revision": "fr1-095159bfce5ccead521d3c951f0fcdc169b10dac416954d793c6c999fb954b1a",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "WISP",
       "installation": false,
       "publication_state": "candidate",
@@ -8154,7 +8240,7 @@
         }
       ],
       "default_exported_revision": "fr1-edfdf72234c35a7073efe0c924a11d415628398f54112d1ba5c56a9be79a5ff4",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "WISP / GHOST",
       "installation": false,
       "publication_state": "candidate",
@@ -8212,7 +8298,7 @@
         }
       ],
       "default_exported_revision": "fr1-7d54f75ad4aaf47db81e9e5c6748b5c64b9ecbd8361cff1f2d97208c1eb2b961",
-      "default_selection_basis": "First configuration in the selected native export; catalog order. Not a current-build or website-published pointer.",
+      "default_selection_basis": "Preserved reviewed Website selection during another ship intake.",
       "display_name": "WORKYARD / MANUFACTURING",
       "installation": true,
       "publication_state": "candidate",
@@ -8222,6 +8308,64 @@
       "role": "Voxel industrial installation",
       "ship_key": "workyard-manufacturing",
       "current_revision": "fr1-7d54f75ad4aaf47db81e9e5c6748b5c64b9ecbd8361cff1f2d97208c1eb2b961"
+    },
+    "ironclad": {
+      "category": "Warships",
+      "configurations": [
+        {
+          "assembled_dimensions_m": [
+            288,
+            60,
+            49.5
+          ],
+          "definition_hash": "FDDDF7FA143D944641A4C2F552AA23D6D543A4D2",
+          "exported_utc": "2026-10-13T23:23:11.379Z",
+          "hero": {
+            "bytes": 291727,
+            "height": 1536,
+            "media_type": "image/png",
+            "path": "assets/8d0d2a20c1acfc1cc4ec1883f865a57d823b3ff1b2702b080a125e1dbc62eefe.png",
+            "projection": {
+              "centre_x_m": -5.656854249492376,
+              "centre_y_m": 2.143303524935277,
+              "pixels_per_metre": 8.362306281858302,
+              "right": [
+                0.7071067811865475,
+                0.7071067811865475,
+                0
+              ],
+              "toward": [
+                0.5773502691896258,
+                -0.5773502691896258,
+                0.5773502691896258
+              ],
+              "up": [
+                -0.4082482904638631,
+                0.4082482904638631,
+                0.8164965809277261
+              ]
+            },
+            "sha256": "8d0d2a20c1acfc1cc4ec1883f865a57d823b3ff1b2702b080a125e1dbc62eefe",
+            "source_sha1": "E7D8FE19BF4FF5021A1929215108D726CCC70968",
+            "title": "Three-quarter view from above",
+            "width": 2048
+          },
+          "path": "revisions/fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a.json",
+          "recipe_id": "vf.ironclad.battleship.1",
+          "revision_id": "fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a"
+        }
+      ],
+      "default_exported_revision": "fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a",
+      "default_selection_basis": "Explicit per-ship native configuration and reviewed design intake. Website publication remains a separate decision.",
+      "display_name": "IRONCLAD",
+      "installation": false,
+      "publication_state": "candidate",
+      "recipe_aliases": [
+        "vf.ironclad.battleship.1"
+      ],
+      "role": "Heavy armored battleship",
+      "ship_key": "ironclad",
+      "current_revision": "fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a"
     }
   },
   "revisions": {
@@ -9080,6 +9224,30 @@
       "recipe_id": "vf.trade.station.7.1",
       "definition_hash": "7AD97F3DD50A061D72E1ABC3357A384E375542CC",
       "exported_utc": "2026-10-06T20:57:47.861Z"
+    },
+    "fr1-60b43f4d4b1a5dadd6fc74da401d7d71f7eb92e952267f41f5b382ebb0db7c59": {
+      "ship_key": "bramble",
+      "path": "revisions/fr1-60b43f4d4b1a5dadd6fc74da401d7d71f7eb92e952267f41f5b382ebb0db7c59.json",
+      "sha256": "64bc480fc4018cea11a58b87b3a3964878672c7aeae1c215fe9df4d087650670",
+      "recipe_id": "vf.bramble.mine-tender.3",
+      "definition_hash": "FB6855F9685A65884148A84AD79F419AD268E916",
+      "exported_utc": "2026-10-06T22:51:46.309Z"
+    },
+    "fr1-0de55a305658b81817dc6b8ee78760c141af5a616b4486e1c111750e32f1a13b": {
+      "ship_key": "watchman",
+      "path": "revisions/fr1-0de55a305658b81817dc6b8ee78760c141af5a616b4486e1c111750e32f1a13b.json",
+      "sha256": "4cbf549095559fd2e44223842067ee2984d1243b7473af457a53c7fe97ed15f4",
+      "recipe_id": "vf.watchman.sensor-frigate.3",
+      "definition_hash": "407C9BAA7293F74D17BB02261ABBB31526207D85",
+      "exported_utc": "2026-10-06T22:51:48.190Z"
+    },
+    "fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a": {
+      "ship_key": "ironclad",
+      "path": "revisions/fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a.json",
+      "sha256": "82e99ec1b289ff309f9fe336107c158036aa8f2fec773828d3f74d246e8da4e3",
+      "recipe_id": "vf.ironclad.battleship.1",
+      "definition_hash": "FDDDF7FA143D944641A4C2F552AA23D6D543A4D2",
+      "exported_utc": "2026-10-13T23:23:11.379Z"
     }
   }
 }

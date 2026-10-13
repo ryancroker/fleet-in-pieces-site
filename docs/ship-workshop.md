@@ -269,3 +269,10 @@ validation. No old link is silently interpreted using new capacity limits.
 ## Hull selection - October 13, 2026
 
 The shared selector opens the selected ship workspace immediately. In native inspection it retains inspection mode; in the registered-module editor it retains that editor. Category/search filters leave the loaded ship intact and show a choose prompt when it is not among the results. Selecting a thumbnail is no longer a separate preview-only step. Existing local fits and immutable recipe data are unchanged.
+
+
+## IRONCLAD admitted edition - October 13, 2026
+
+Warships now includes IRONCLAD .1, exact admitted definition FDDDF7FA143D944641A4C2F552AA23D6D543A4D2. The browser receives its native 98-part surfaces, 131 machinery records and fitting contract. Registered-module drafts can omit and restore 27 weapons, four emitters and two drive/fuel assemblies on their existing mounts. This is browser planning, not proof of native equipment-removal or build eligibility; those flags remain false. Sensor-suite authority remains separate. No alternate articles, added capacity or crew counts are invented. Existing 99 selected editions and six crew fits stay intact.
+
+New reviewed hull JSON may be bound through content/designer-native-sources.json; the raw bytes must match both its SHA-256 and the immutable dossier evidence. Preserve content/native-hulls/*.json with -text, like crew packets. build-fleet-geometry.py --ship KEY imports only the requested exact edition without regenerating other hull receipts.

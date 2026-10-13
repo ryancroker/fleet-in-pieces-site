@@ -1,3 +1,9 @@
+## IRONCLAD builder intake - RELEASE READY - October 13, 2026
+
+IRONCLAD .1 admitted packet FDDDF7FA143D944641A4C2F552AA23D6D543A4D2 is added to Warships and /ship-lab/refit?ship=ironclad. Real98parts/131machines/27guns,33registered draft modules. Exact1.19MB compressed native geometry plus immutable art, source JSON and native fitting flags. Directory106entries; all99prior selected editions/geometry/models and six crew packages retained. Two pre-existing Registrar BRAMBLE/WATCHMAN .3 editions are added as history only; their default selections remain unchanged. Browser module removal remains explicitly a draft, not native admission. Unknown crew stays unknown.
+
+prepare-site generation and syntax pass. Local1440/390 review: weapon removal/reinstall updates rendered geometry and power, no mobile horizontal overflow/errors. Existing six crew-label replacement characters regenerated as the intended middle dot. No backend logic, D1, DNS, billing or account change. Native export window already released to HAWKEYE; no more native work needed. Root evidence/actual publication receipt Saved/SourceChanges/FleetHullSelection_20261013. Ryan owns usability and ordinary-game acceptance.
+
 ## Hull selector routing - RELEASE READY - October 13, 2026
 
 Choosing a hull now opens that hull's fitting workspace, or preserves native inspection mode. Category/search filtering does not relabel the current editor as the first result. This fixes preview/editor disagreement. CROWNBREAKER .3 native art is preserved; Ryan reports it is working now. Local 1440/390 selection, filtering and mode checks passed; no overflow or console errors. No production QA records or backend changes. IRONCLAD is separately pending an approved exact admitted export after Fleet Main releases its runtime window; do not claim it is available yet. Root evidence Saved/SourceChanges/FleetHullSelection_20261013.

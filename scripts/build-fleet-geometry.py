@@ -10,19 +10,25 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--exports', type=Path, required=True)
+parser.add_argument('--ship', action='append', help='Rebuild only this published ship key; keep other mesh receipts exact')
 args = parser.parse_args()
 register = json.loads((ROOT/'content/fleet-register.json').read_text())
+selected = set(args.ship or register['ships'])
+if selected-set(register['ships']):
+    raise ValueError('Unknown published ship key: '+', '.join(sorted(selected-set(register['ships']))))
 output = ROOT/'site/assets/hull-mesh'
 output.mkdir(parents=True, exist_ok=True)
 index = {}
 for file in sorted(args.exports.glob('*/*/ship.json')):
     index.setdefault(file.parent.name, []).append(file)
-receipt = {}
+receipt_path = ROOT/'content/fleet-geometry.json'
+receipt = json.loads(receipt_path.read_text()) if args.ship else {}
 light = np.array([-.35, -.5, 1.]); light /= np.linalg.norm(light)
 vertex_type = np.dtype([('position','<f4',3),('normal','<f4',3),('rgb','u1',3),('part','<i4')])
 face_type = np.dtype([('count','u1'),('indices','<u4',3)])
 packed_type = np.dtype([('position','<f4',3),('rgba','u1',4)])
 for key, ship in register['ships'].items():
+    if key not in selected: continue
     edition = next(x for x in ship['configurations'] if x['revision_id']==ship['current_revision'])
     dossier = json.loads((ROOT/'site/assets/fleet-register'/edition['path']).read_text())
     identity = edition['recipe_id']+'_'+edition['definition_hash']
@@ -75,5 +81,5 @@ for key, ship in register['ships'].items():
                     'bytes':len(binary),'compressedBytes':len(compressed),
                     'sourceSha256':hashlib.sha256(raw).hexdigest()}
     print(key+': '+str(len(compressed))+' bytes',flush=True)
-(ROOT/'content/fleet-geometry.json').write_text(json.dumps(receipt,separators=(',',':'))+'\n')
+receipt_path.write_text(json.dumps(receipt,separators=(',',':'))+'\n')
 print('Total: '+str(len(receipt))+' hulls / '+str(sum(x['compressedBytes'] for x in receipt.values()))+' bytes')

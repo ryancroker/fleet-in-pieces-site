@@ -1,0 +1,9 @@
+{
+  "schema": "designer-native-1",
+  "ships": {
+    "ironclad": {
+      "path": "native-hulls/fdddf7fa143d944641a4c2f552aa23d6d543a4d2.json",
+      "sha256": "d12878363110d238a3207ec44373ac10e9a16c8a8f735051d2136d895057284a"
+    }
+  }
+}

@@ -8,6 +8,9 @@ const fields=['index','name','kind','kind_name','part','core_position_m','power_
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export async function buildDesigner(root,register){
  const geometry=JSON.parse(await readFile(path.join(root,'content/fleet-geometry.json'),'utf8'));
+ let nativeSources={schema:'designer-native-1',ships:{}};
+ try{nativeSources=JSON.parse(await readFile(path.join(root,'content/designer-native-sources.json'),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}
+ if(nativeSources.schema!=='designer-native-1'||!nativeSources.ships)throw Error('Invalid native designer source index');
  const folder=path.join(root,'site/assets/designer');await mkdir(folder,{recursive:true});
  const entries=[],models=[];
  for(const [key,ship] of Object.entries(register.ships)){
@@ -24,8 +27,20 @@ export async function buildDesigner(root,register){
   }
   const model={key,name:d.display_name,role:ship.role,revision:d.revision_id,recipe:d.configuration.recipe_id,definitionHash:d.configuration.definition_hash,exported:d.configuration.exported_utc,machines,parts:d.parts.map(p=>({index:p.index,name:p.name,parent:p.parent,material_kg:p.material_kg})),art:d.art,dimensions:edition.assembled_dimensions_m,dossier:'/ships/designs/'+key};
   if(model.parts.some(p=>!Number.isFinite(p.material_kg)||p.material_kg<0))throw Error('Missing native material mass: '+key);
+  let native=null;
+  const source=nativeSources.ships[key];
+  if(source){
+   if(!/^native-hulls\/[a-f0-9]{40}\.json$/.test(source.path))throw Error('Invalid native hull source path');
+   const raw=await readFile(path.join(root,'content',source.path));
+   if(createHash('sha256').update(raw).digest('hex')!==source.sha256||d.evidence.native_packet_sha256?.['ship.json']!==source.sha256)throw Error('Native hull source provenance mismatch: '+key);
+   native=JSON.parse(raw.toString('utf8').replace(/^\uFEFF/,''));
+   if(native.id!==model.recipe||native.definition_hash!==model.definitionHash||native.parts.length!==model.parts.length||native.machines.length!==machines.length)throw Error('Native hull edition mismatch: '+key);
+   const f=native.fitting_contract;
+   if(f?.schema!=='native-fitting-1'||f.recipe_id!==model.recipe||f.definition_hash!==model.definitionHash)throw Error('Missing exact native fitting contract: '+key);
+   model.fitting_contract=f;model.nativeSourceSha256=source.sha256;
+  }
   model.refit=refitContract(model,geometry[key]);
-  model.crew_accommodation=validateCrew(d.crew_accommodation,model);
+  model.crew_accommodation=validateCrew(native?.crew_accommodation||d.crew_accommodation,model);
   // New hull packets retain exact finite store quantities, including fractional kg/J.
   if(!['kestrel','kestrel-pd','kestrel-signal'].includes(key))model.fractionalStores=true;
   const bytes=JSON.stringify(model),sha=createHash('sha256').update(bytes).digest('hex');

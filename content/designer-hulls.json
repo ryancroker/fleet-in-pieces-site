@@ -1,6 +1,6 @@
 {
   "schema": "designer-hulls-1",
-  "source": "frb1-6b4407e775cc563d8762f0c085f972b4d16402d0960c82361281f80b07875c74",
+  "source": "frb1-60c717a80c760cfca96f7200e8f3c166d25368eb96a5f7503678e587d8230a88",
   "policy": "Exact published editions support registered-module planning; native admission and alternate articles require separate contracts.",
   "hulls": [
     {
@@ -1393,6 +1393,20 @@
       "fitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
       "registeredFitRoute": "/ship-lab/refit?ship=workyard-manufacturing",
       "modules": 0
+    },
+    {
+      "key": "ironclad",
+      "name": "IRONCLAD",
+      "role": "Heavy armored battleship",
+      "category": "Warships",
+      "recipe": "vf.ironclad.battleship.1",
+      "definitionHash": "FDDDF7FA143D944641A4C2F552AA23D6D543A4D2",
+      "revision": "fr1-68e2437da905849b92ace745d4a91231b1a9e5480cdf9b9571b8ce54cf57459a",
+      "exported": "2026-10-13T23:23:11.379Z",
+      "inspectRoute": "/ship-lab?ship=ironclad#ship-workshop",
+      "fitRoute": "/ship-lab/refit?ship=ironclad",
+      "registeredFitRoute": "/ship-lab/refit?ship=ironclad",
+      "modules": 33
     },
     {
       "key": "kestrel-crew-minimum",

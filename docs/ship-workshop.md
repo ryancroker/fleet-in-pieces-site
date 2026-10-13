@@ -265,3 +265,7 @@ section space** action changes only the allocation, is undoable and warns if a
 previously packed middle is overfilled. It never relocates/deletes equipment.
 Sharing/export round-trips the chosen allocation. Unknown allocations fail
 validation. No old link is silently interpreted using new capacity limits.
+
+## Hull selection - October 13, 2026
+
+The shared selector opens the selected ship workspace immediately. In native inspection it retains inspection mode; in the registered-module editor it retains that editor. Category/search filters leave the loaded ship intact and show a choose prompt when it is not among the results. Selecting a thumbnail is no longer a separate preview-only step. Existing local fits and immutable recipe data are unchanged.

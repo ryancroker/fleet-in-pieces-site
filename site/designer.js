@@ -4,8 +4,8 @@
  if(!data||!$('designer-hull'))return;
  const select=$('designer-hull'),category=$('designer-category'),search=$('designer-search');
  const initial=location.pathname.includes('/kite')?'kite':new URLSearchParams(location.search).get('ship')||'kestrel';
- let current=data.entries.find(e=>e.key===initial)||data.entries[0];
- category.value=current.category;
+ let current=data.entries.find(e=>e.key===initial)||null;
+ if(current)category.value=current.category;
  function show(){
   if(!current)return;
   const registeredView=location.pathname==='/ship-lab/refit',articleEditor=!registeredView&&['kestrel','kite'].includes(current.key);
@@ -25,12 +25,20 @@
  function filter(){
   const query=search.value.trim().toLowerCase(),items=data.entries.filter(e=>(!category.value||e.category===category.value)&&(!query||(e.name+' '+e.role).toLowerCase().includes(query)));
   select.replaceChildren(...items.map(e=>new Option(e.name+' · '+e.role,e.key)));
-  if(!items.some(e=>e.key===current?.key))current=items[0];
-  if(current)select.value=current.key;
-  select.disabled=!items.length;document.querySelector('.designer-selection').hidden=!items.length;
-  $('designer-result').textContent=items.length+' matching hull'+(items.length===1?'':'s')+'. Published editions may predate current game changes.';show();
+  const selected=items.some(e=>e.key===current?.key);
+  if(selected)select.value=current.key;
+  else {const prompt=new Option(items.length?'Choose a hull…':'No matching hulls','',true,true);prompt.disabled=true;select.prepend(prompt);}
+  select.disabled=!items.length;document.querySelector('.designer-selection').hidden=!selected;
+  if(!selected)$('designer-crew-options').hidden=true;
+  $('designer-result').textContent=items.length+' matching hull'+(items.length===1?'':'s')+'. Choose a hull to open its workspace.';if(selected)show();
  }
  category.addEventListener('change',filter);search.addEventListener('input',filter);
- select.addEventListener('change',()=>{current=data.entries.find(e=>e.key===select.value);show();});filter();
+ select.addEventListener('change',()=>{
+  const next=data.entries.find(e=>e.key===select.value);if(!next)return;
+  // A chosen hull must replace the working ship, not only its preview card.
+  const inspecting=$('ship-workshop')&&!$('ship-workshop').hidden;
+  const route=location.pathname==='/ship-lab/refit'?next.registeredFitRoute:inspecting?next.inspectRoute:next.fitRoute;
+  select.disabled=true;$('designer-result').textContent='Opening '+next.name+'…';location.assign(route);
+ });filter();
  addEventListener('fleet:inspection-loaded',event=>{const active=data.entries.find(e=>e.key===event.detail?.key);if(!active)return;current=active;category.value=current.category;search.value='';filter();});
 })();

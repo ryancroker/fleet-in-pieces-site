@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /crew
-Disallow: /idea
-Disallow: /profile
-
+Disallow: /i/
+Disallow: /u/
+Disallow: /topics/
 Sitemap: https://fleetinpieces.space/sitemap.xml

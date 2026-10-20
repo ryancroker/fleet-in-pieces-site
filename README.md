@@ -1,5 +1,13 @@
 # Fleet in Pieces
 
+## Public site - October 20, 2026
+
+The public website is now one stripped-down game overview. Discord is the place to chat: https://discord.gg/PRSTCxCeH. November 4, 2026 is the **Steam store page target**, while the playable release date remains unannounced.
+
+Edit `templates/game-information.html`, `content/game-information.json`, and `site/game-information.css` / `.js`, then run `node scripts/prepare-site.mjs`. This builds the overview, new content-fingerprinted assets, a one-page sitemap and explicit temporary redirects for retired public tools/social pages. It does not regenerate the retired workshop or inject account/community scripts. The existing API, admin, historical records and cost protections remain independent.
+
+Preview with `python preview.py --port 4178`. Publishing still uses GitHub `main` and the existing Cloudflare Pages project; no new hosting/account/storage setup is needed. The sections below document the retained historical implementation, not the current public navigation.
+
 Game and development-community website for **https://fleetinpieces.space**. Public pages use HTML, CSS and vanilla JavaScript. Cloudflare Pages Functions provide the D1-backed community and optional Fleet Register. There is no frontend framework or external font service. Cloudflare supplies the existing analytics beacon; Fourthwall handles external merchandise checkout.
 
 **Prior community expansion release — October 3, 2026.** Published through GitHub main commit `3293639b39af460f181135fb735f694af08873dd`, Cloudflare deployment `1a0b0abb-3c18-4284-899b-1c9dc6dc62c4` (October 3, 2026). Apex and www HTTPS, Register API/RP, Pages noindex/canonical-host auth guard, original /i/1, canonical/OG resources, release asset hashes and 390/1440px layouts verified in Chrome. All original 10 ideas, 2 replies, 10 votes and 10 history rows compared unchanged after migrations 0002/0003. Local anonymous posting/reply/vote/report, developer implementation filter/discovery, native WebAuthn with virtual credentials (signup/signin/add key/recovery/claim), profile and whole-branch move/leave/cycle checks passed. No public QA identities/posts. Ryan owns real-phone/Windows Hello prompts and passkey sync acceptance. Evidence: `../../Saved/SourceChanges/FleetCommunityExpansion_20261003`.

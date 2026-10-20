@@ -1,0 +1,14 @@
+{
+  "updated": "2026-10-20",
+  "steamPageTarget": "2026-11-04",
+  "steamPageTargetLabel": "November 4",
+  "releaseStatus": "Release date to be announced",
+  "heroImage": "/assets/fleet-register/assets/8d0d2a20c1acfc1cc4ec1883f865a57d823b3ff1b2702b080a125e1dbc62eefe.png",
+  "heroImageAlt": "IRONCLAD, an armoured warship built from the game's native ship geometry",
+  "description": "Fleet in Pieces is a space fleet simulation in development for PC. Physical ships, finite resources, and the people who have to bring them home.",
+  "currentFocus": [
+    {"title": "Combat", "description": "Clearer targeting, damage feedback and repair controls."},
+    {"title": "Exploration", "description": "Surveying systems, investigating discoveries and developing new equipment."},
+    {"title": "Fleet operations", "description": "Orbital construction, repairs and keeping ships supplied."}
+  ]
+}

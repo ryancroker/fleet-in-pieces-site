@@ -1,5 +1,9 @@
 # Fleet in Pieces
 
+## Public community archive - October 21, 2026
+
+Public account and community writes are disabled through the existing COMMUNITY_WRITES_ENABLED switch (configuration and server fallback both false). Historical content remains readable; Fleet Command keeps its existing authenticated access. Visitors attempting old signup/posting actions receive an archive notice with the Discord link. No community data was deleted.
+
 ## Public site - October 20, 2026
 
 The public website is now one stripped-down game overview. Discord is the place to chat: https://discord.gg/PRSTCxCeH. November 4, 2026 is the **Steam store page target**, while the playable release date remains unannounced.

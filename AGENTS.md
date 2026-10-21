@@ -1,3 +1,7 @@
+## Retired public community writes - October 21, 2026
+
+Ryan authorized a small security cleanup after the game-information rebuild. COMMUNITY_WRITES_ENABLED is false in wrangler.toml and the server fallback. The existing gate rejects public account/authentication, posting, voting and social mutation routes. Verified creator sessions and /api/admin retain their original authorization and access. Historical GET routes and D1 records remain. Rejections direct visitors to Discord. Preserve this default; do not reopen the old public tools by restoring the historical true value. No database migration, deletion, dependency, secret, DNS or account-setting change. Deployment and bounded traffic review evidence: Saved/SourceChanges/FleetWebsiteSafety_20261021 in the main PixelSimShips workspace.
+
 ## Stripped-down game information site - October 20, 2026
 
 Ryan explicitly retired public shipbuilder, ship-library navigation, website accounts/social flows and shop navigation in favour of one concise game-information page. Discord https://discord.gg/PRSTCxCeH is the prominent place to chat. November4,2026 is ONLY the target for the Steam STORE PAGE; the playable release date is unannounced. Never turn it into a confirmed game launch/countdown or invent a Steam app URL.

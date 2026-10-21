@@ -11,7 +11,7 @@ cpu_ms = 100
 subrequests = 50
 
 [vars]
-COMMUNITY_WRITES_ENABLED = "true"
+COMMUNITY_WRITES_ENABLED = "false"
 
 [[d1_databases]]
 binding = "COMMUNITY_DB"

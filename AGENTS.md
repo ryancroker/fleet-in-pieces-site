@@ -68,12 +68,12 @@ Custom outfitting highlights the selected region on the original native art, wit
 Ryan rejected literal grid packing. Default Outfit a ship restores native KESTREL artwork with front/middle/rear markers. sections-2 catalog uses 30/40/32 capacity budgets, size classes, prices and power ranges; equipment is assigned by section. Section damage hits all assigned components; individual tests remain under a disclosure. Read docs/ship-workshop.md. Legacy interior-1 links/local recipes are validated and explicitly converted without losing hardware/state; overfull sections remain flagged editable drafts. Never silently change versioned fit values. Native inspection/evaluator, old #setup links and all community/backend controls remain intact. Static changes only; no game source, D1, infrastructure, billing or production test writes. Ryan tests UI/balance. Continue normal website releases only from this isolated checkout.
 
 
-## Custom interior workshop ï¿½ October 11, 2026
+## Custom interior workshop — October 11, 2026
 
 The homepage now defaults to Design an interior; Inspect native ships preserves the previous three native views and old #setup links. Read docs/ship-workshop.md. The custom catalog in content/workshop-outfit.json explicitly proposes footprints, a 102-space envelope, design-credit prices and high-demand jump charging. These are design tuning, not exported native cavities or campaign prices. outfit-model.js validates placements and adapts to the shared FleetLabModel; outfit.js owns UI/local recipes. Fixed bridge/bus, corridor clearance, aft drives, non-overlap and finite power remain enforced. Damage/disable/empty stores do not refund space or cost. #fit recipes and JSON export are versioned prototypes, never engine saves. No backend, D1, production QA, game-source, schema, infrastructure or account changes. Continue normal website GitHub releases from this isolated checkout; Ryan owns UI/balance acceptance.
 
 
-## Ship workshop and game field guide ï¿½ October 11, 2026
+## Ship workshop and game field guide — October 11, 2026
 
 The homepage now leads with the interactive native-data ship workshop; /ship-lab is its sharing route. Do not revert to a generic marketing/forum home. /game explains command and campaign; content/field-guide.json authors 12 system explanations. Existing community records, forms and /ship-design discussions remain intact; Discord is the main social invitation.
 

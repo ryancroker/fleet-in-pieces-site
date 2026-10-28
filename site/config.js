@@ -4,7 +4,7 @@ window.FLEET_CONFIG = Object.freeze({
   SITE_URL: 'https://fleetinpieces.space',
   STEAM_URL: '',
   TIKTOK_URL: 'https://www.tiktok.com/@fleet_in_pieces',
-  DISCORD_URL: 'https://discord.gg/PRSTCxCeH',
+  DISCORD_URL: 'https://discord.gg/ASV7xWfQQ2',
   QUARTERMASTER_URL: 'https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt',
   YOUTUBE_URL: '',
   CONTACT_EMAIL: '',

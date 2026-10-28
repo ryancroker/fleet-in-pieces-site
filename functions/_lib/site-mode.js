@@ -8,7 +8,7 @@ export function writesConfigured(env) {
   return value === true || value === 'true'; // Invalid values fail closed.
 }
 export function readOnly() {
-  fail(503, 'community_read_only', 'Website discussions are archived. Join us on Discord: https://discord.gg/PRSTCxCeH. Existing posts remain available.');
+  fail(503, 'community_read_only', 'Website discussions are archived. Join us on Discord: https://discord.gg/ASV7xWfQQ2. Existing posts remain available.');
 }
 export function checkCommunityWrites(request, path, env) {
   if (request.method !== 'GET' && path[0] !== 'admin' && !writesConfigured(env)) readOnly();

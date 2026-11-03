@@ -1,3 +1,11 @@
+## Private support intake - authorized release - November 2, 2026
+
+Ryan requested /support to gather private game/website concerns. /crew-support uses the existing Fleet Command creator cookie for the owner-only inbox. Reports, optional reply email and private notes never become public content; no automatic email, attachments, accounts or polling. Support copy calls the recipient the development team.
+
+SUPPORT_WRITES_ENABLED must equal the literal string true. COMMUNITY_WRITES_ENABLED remains false. Only functions/api/support.js passes the support flag to the shared fuse through a scoped environment copy; stored pause/budget/pending-receipt guards remain. Same-origin bounded JSON, plain text, honeypot, exact UUID retries, actor/network limits and44+6statement accounting apply. Every private read/update requires current creatorSession; updates also check revision and session in SQL. Private support controls never enable retired community routes or erase budgets/unknown receipts.
+
+The initial preflight stopped at an older accounting_incomplete latch. The November 2 recovery privately backed up/restored the database and reconciled only that exact October 12 receipt: unsampled D1 usage for October 11-13 totaled382rows; a conservative1000row charge preceded exact guarded settlement/resume. All27 unrelated tables were preserved; original failure cause remains unknown. The community switch stayed false. Recovery receipt: Saved/SourceChanges/FleetSupportRecovery_20261102/ApplyReceipt.json. Never replay recovery helpers. Only additive0014_support_requests.sql belongs to this staged change. Number0013 is reserved in the separately unpublished Commander Notes branch; never import it. Before approved release: private production backup, exact0014, preservation comparison, normal reviewed GitHub main push to existing Pages. SUPPORT.md records verification limits; root Saved/SourceChanges/FleetSupport_20261102 contains local/release evidence. Do not call the feature live without a verified release receipt. Keep original historical documentation bytes below unchanged.
+
 ## Permanent Discord invite - October 28, 2026
 
 Ryan requires Discord links with no expiry and unlimited uses. The replacement invite is https://discord.gg/ASV7xWfQQ2, configured with max_age=0, max_uses=0 and temporary=false for the Fleet in Pieces server's general channel. The former PRSTCxCeH invite returned Discord's Invite is expired error; older notes calling that code permanent are superseded.
@@ -68,12 +76,12 @@ Custom outfitting highlights the selected region on the original native art, wit
 Ryan rejected literal grid packing. Default Outfit a ship restores native KESTREL artwork with front/middle/rear markers. sections-2 catalog uses 30/40/32 capacity budgets, size classes, prices and power ranges; equipment is assigned by section. Section damage hits all assigned components; individual tests remain under a disclosure. Read docs/ship-workshop.md. Legacy interior-1 links/local recipes are validated and explicitly converted without losing hardware/state; overfull sections remain flagged editable drafts. Never silently change versioned fit values. Native inspection/evaluator, old #setup links and all community/backend controls remain intact. Static changes only; no game source, D1, infrastructure, billing or production test writes. Ryan tests UI/balance. Continue normal website releases only from this isolated checkout.
 
 
-## Custom interior workshop — October 11, 2026
+## Custom interior workshop ï¿½ October 11, 2026
 
 The homepage now defaults to Design an interior; Inspect native ships preserves the previous three native views and old #setup links. Read docs/ship-workshop.md. The custom catalog in content/workshop-outfit.json explicitly proposes footprints, a 102-space envelope, design-credit prices and high-demand jump charging. These are design tuning, not exported native cavities or campaign prices. outfit-model.js validates placements and adapts to the shared FleetLabModel; outfit.js owns UI/local recipes. Fixed bridge/bus, corridor clearance, aft drives, non-overlap and finite power remain enforced. Damage/disable/empty stores do not refund space or cost. #fit recipes and JSON export are versioned prototypes, never engine saves. No backend, D1, production QA, game-source, schema, infrastructure or account changes. Continue normal website GitHub releases from this isolated checkout; Ryan owns UI/balance acceptance.
 
 
-## Ship workshop and game field guide — October 11, 2026
+## Ship workshop and game field guide ï¿½ October 11, 2026
 
 The homepage now leads with the interactive native-data ship workshop; /ship-lab is its sharing route. Do not revert to a generic marketing/forum home. /game explains command and campaign; content/field-guide.json authors 12 system explanations. Existing community records, forms and /ship-design discussions remain intact; Discord is the main social invitation.
 

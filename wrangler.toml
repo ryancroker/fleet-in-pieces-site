@@ -12,6 +12,8 @@ subrequests = 50
 
 [vars]
 COMMUNITY_WRITES_ENABLED = "false"
+# Independent private support intake; the retired public community stays disabled.
+SUPPORT_WRITES_ENABLED = "true"
 
 [[d1_databases]]
 binding = "COMMUNITY_DB"

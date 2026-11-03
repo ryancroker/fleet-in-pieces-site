@@ -126,3 +126,5 @@ h2{font-family:Bahnschrift,"Arial Narrow","Segoe UI",sans-serif;font-size:clamp(
 .focus-list strong{font-size:16px}
 .steam-card .release-note{font-size:14px!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+.support-callout{padding:40px 0;border-top:1px solid #263747}.support-callout h2{font-size:28px;margin:5px 0 12px}.support-callout p{color:#b1bfcc;max-width:650px;line-height:1.7}.support-callout .text-link{display:inline-block;margin-top:10px}

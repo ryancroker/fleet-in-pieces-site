@@ -2,3 +2,5 @@
 import {fileURLToPath} from 'node:url';
 import {prepareGameInformation} from './prepare-game-information.mjs';
 await prepareGameInformation(fileURLToPath(new URL('../', import.meta.url)));
+import {prepareSupport} from './prepare-support.mjs';
+await prepareSupport(fileURLToPath(new URL('../', import.meta.url)));

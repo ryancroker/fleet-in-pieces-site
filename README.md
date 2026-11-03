@@ -1,3 +1,7 @@
+# Private support intake - November 2, 2026
+
+/support gathers private reports; /crew-support provides the owner inbox through existing Fleet Command sign-in. See [SUPPORT.md](SUPPORT.md). The retired community forms remain disabled. Consult the release receipt before calling this live.
+
 # Fleet in Pieces
 
 ## Public community archive - October 21, 2026

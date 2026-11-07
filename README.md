@@ -1,3 +1,9 @@
+# Steam wishlist and Discord links - November 7, 2026
+
+The public overview now promotes the live [Fleet in Pieces Steam store](https://store.steampowered.com/app/5547060/Fleet_In_Pieces/) and the [Discord community](https://discord.gg/ASV7xWfQQ2). Both links appear in the navigation, hero and footer; the Steam panel and FAQ describe wishlisting and ongoing development. A compact publisher section uses the original Death Gets Flowers logo and presentation credit. The earlier November 4 store-page target is historical. No playable release date is announced here.
+
+Edit external destinations in site/config.js, then run node scripts/prepare-site.mjs to render them into the HTML. Keep the existing Cloudflare Pages/GitHub main release workflow and retained fingerprints.
+
 # Private support intake - November 2, 2026
 
 /support gathers private reports; /crew-support provides the owner inbox through existing Fleet Command sign-in. See [SUPPORT.md](SUPPORT.md). The retired community forms remain disabled. Consult the release receipt before calling this live.

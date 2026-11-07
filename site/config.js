@@ -1,8 +1,8 @@
-// EXTERNAL LINKS: change these values, commit, and push. No build step.
-// Filling STEAM_URL changes every Steam CTA to WISHLIST ON STEAM.
+// External links are rendered into the public HTML by scripts/prepare-site.mjs.
+// Prepare the site before committing; Cloudflare's build command remains blank.
 window.FLEET_CONFIG = Object.freeze({
   SITE_URL: 'https://fleetinpieces.space',
-  STEAM_URL: '',
+  STEAM_URL: 'https://store.steampowered.com/app/5547060/Fleet_In_Pieces/',
   TIKTOK_URL: 'https://www.tiktok.com/@fleet_in_pieces',
   DISCORD_URL: 'https://discord.gg/ASV7xWfQQ2',
   QUARTERMASTER_URL: 'https://fleet-in-pieces-shop.fourthwall.com/products/first-it-was-a-ship-now-its-a-shirt',

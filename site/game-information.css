@@ -128,3 +128,34 @@ h2{font-family:Bahnschrift,"Arial Narrow","Segoe UI",sans-serif;font-size:clamp(
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 
 .support-callout{padding:40px 0;border-top:1px solid #263747}.support-callout h2{font-size:28px;margin:5px 0 12px}.support-callout p{color:#b1bfcc;max-width:650px;line-height:1.7}.support-callout .text-link{display:inline-block;margin-top:10px}
+
+/* Live Steam wishlisting and Discord are the two primary destinations. */
+.masthead nav .nav-steam{color:var(--blue)}
+.button-steam{background:var(--blue);color:#152832}
+.button-steam:hover{background:#d4edf8;color:#10232c;transform:translateY(-2px)}
+.hero-actions{gap:12px}
+.hero-platform-note{font-size:13px;line-height:1.7;color:var(--muted);margin-top:19px}
+.gameplay-link{margin-top:6px}
+.publisher{display:flex;align-items:center;gap:28px;padding-block:30px 38px;border-top:1px solid var(--line)}
+.publisher>img{width:136px;height:136px;flex:0 0 136px;object-fit:contain;border:1px solid #dccfbb}
+.publisher h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin:8px 0 10px}
+.publisher>div>p:last-child{font-size:14px;color:var(--muted)}
+.publisher>div>p:last-child span{color:var(--ink)}
+.steam-card h3{white-space:normal}
+.steam-card .button-steam{display:flex;justify-content:space-between;width:100%;gap:16px;background:#183c4b;color:#eff7fa;text-decoration:none;font-size:15px;line-height:1.4;min-height:56px;padding:14px 20px;margin-top:24px}
+.steam-card .button-steam:hover{background:#254f60;color:#fff}
+@media(min-width:621px) and (max-width:1000px){.hero-actions{display:grid;grid-template-columns:1fr;max-width:320px}.hero-actions .button{width:100%;font-size:15px}}
+@media(max-width:620px){
+  .masthead{flex-direction:column;align-items:flex-start;gap:14px;padding-block:18px;min-height:0}
+  .brand,.brand img{flex-basis:auto;width:174px}
+  .masthead nav{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:12px}
+  .masthead nav>a.nav-steam{display:inline-flex;justify-content:center;border:1px solid #476578;padding:0 12px;font-size:12px;min-height:44px;gap:12px}
+  .masthead nav>.nav-discord{justify-content:center;font-size:12px;min-height:44px;gap:12px}
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:12px;max-width:390px}
+  .hero-actions .button{width:100%;font-size:15px;min-height:56px;padding-inline:20px}
+  .hero-platform-note{font-size:13px;margin-top:17px}
+  .publisher{align-items:flex-start;gap:20px;padding-block:26px 30px}
+  .publisher>img{width:104px;height:104px;flex-basis:104px}
+  .publisher h2{font-size:24px}
+  .publisher>div>p:last-child{font-size:13px;line-height:1.7}
+}

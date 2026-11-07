@@ -1,3 +1,11 @@
+## Live Steam store and Discord promotion - November 7, 2026
+
+Ryan requested prominent links to the now-public Steam store page and Discord. site/config.js is authoritative: STEAM_URL is https://store.steampowered.com/app/5547060/Fleet_In_Pieces/ and DISCORD_URL remains https://discord.gg/ASV7xWfQQ2. The overview renders both destinations directly in its navigation, hero and footer, with a live wishlist panel and updated FAQ. Links work without JavaScript. The old November 4 store-page target is retired; this does not announce a playable release date.
+
+Ryan also requested a small publisher section. Use the supplied original Death Gets Flowers skull-and-hibiscus logo at site/assets/logo/death-gets-flowers.png, preserved byte-for-byte from D:/6d7ecad4-0656-4400-936b-159aa6fcdb05.png. Its credit is Death Gets Flowers presents Fleet in Pieces; do not substitute the game avatar or an earlier studio name. The below-the-fold image is lazy-loaded.
+
+Continue authoring templates/game-information.html, content/game-information.json and site/game-information.css, then run node scripts/prepare-site.mjs and review the generated HTML/fingerprints. The generator validates the expected Steam app and requires the current store URL. This release is based on production fd17a950 in isolated branch codex/steam-discord-20261107. Preserve the original main checkout's unpublished Commander Notes/0013. Only this reviewed static update is authorized for the normal GitHub main deployment. Existing support, private/admin tools, archived community settings and historical data stay independent.
+
 ## Private support intake - authorized release - November 2, 2026
 
 Ryan requested /support to gather private game/website concerns. /crew-support uses the existing Fleet Command creator cookie for the owner-only inbox. Reports, optional reply email and private notes never become public content; no automatic email, attachments, accounts or polling. Support copy calls the recipient the development team.
